@@ -1,2 +1,13 @@
 [workspace]
-members = ["autogen", "rspirv"]
+members = ["crates/*", "autogen", "xtask"]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.88"
+version = "0.12.0"
+
+[workspace.dependencies]
+log = { default-features = false, version = "0.4.22" }
+strum = { version = "0.27.1", features = ["derive"] }
+rstest = "0.26.1"
+tracel-xtask = { version = "=2.1.11" }
