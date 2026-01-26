@@ -77,6 +77,7 @@ Building a SPIR-V module, assembling it, parsing it, and then disassembling it:
 ```rust
 use tracel_rspirv::binary::Assemble;
 use tracel_rspirv::binary::Disassemble;
+use tracel_rspirv::spirv;
 
 fn main() {
     // Building

@@ -52,6 +52,7 @@ type BuildResult<T> = result::Result<T, Error>;
 ///
 /// ```
 /// use tracel_rspirv::binary::Disassemble;
+/// use tracel_rspirv::spirv;
 ///
 /// let mut b = tracel_rspirv::dr::Builder::new();
 /// b.set_version(1, 0);

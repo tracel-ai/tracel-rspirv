@@ -12,11 +12,12 @@ jobs:
           submodules: true
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
       - uses: actions-rs/cargo@v1
         with:
           command: run
           args: -p rspirv-autogen
+          toolchain: nightly
       - name: Diff autogen result
         run: git diff --quiet || (echo "::error::Generated files are different, please regenerate with cargo run -p rspirv-autogen!"; git diff; false)
   fmt:
