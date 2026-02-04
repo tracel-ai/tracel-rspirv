@@ -1,2 +1,14 @@
 [workspace]
-members = ["autogen", "rspirv"]
+members = ["autogen", "rspirv", "xtask"]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.88"
+version = "0.12.1+sdk-1.4.341.0"
+
+[workspace.dependencies]
+log = { default-features = false, version = "0.4.22" }
+rstest = "0.26.1"
+strum = { version = "0.27.1", features = ["derive"] }
+tracel-xtask = { version = "=4.12.3" }

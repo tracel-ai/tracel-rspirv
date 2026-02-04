@@ -2,7 +2,7 @@
 authors = ["Lei Zhang <antiagainst@gmail.com>"]
 edition = "2018"
 name = "tracel-rspirv"
-version = "0.12.1+sdk-1.4.341.0"
+version = { workspace = true }
 
 description = "Rust library APIs for SPIR-V module manipulation"
 documentation = "https://docs.rs/rspirv"
