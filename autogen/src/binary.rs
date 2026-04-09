@@ -153,7 +153,7 @@ fn gen_operand_param_parse_methods(grammar: &[structs::OperandKind]) -> Vec<(&st
             // For each operand kind in the BitEnum category, its
             // enumerants are bit masks. If a certain bit having associated
             // parameters is set, we also need to decode the corresponding
-            // parameters. E.g., for MemoryAccess Aigned, an additional
+            // parameters. E.g., for MemoryAccess Aligned, an additional
             // LiteralInteger, which stands for the known alignment, should
             // be decoded.
 

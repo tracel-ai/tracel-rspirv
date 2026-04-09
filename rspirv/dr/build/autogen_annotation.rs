@@ -8,19 +8,17 @@ impl Builder {
         &mut self,
         target: spirv::Word,
         decoration: spirv::Decoration,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::Decorate,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(target),
-                dr::Operand::Decoration(decoration),
-            ],
+            vec![dr::Operand::IdRef(target)],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::Decoration(decoration));
+        inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
     }
     #[doc = "Appends an OpMemberDecorate instruction."]
@@ -29,7 +27,7 @@ impl Builder {
         structure_type: spirv::Word,
         member: u32,
         decoration: spirv::Decoration,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -39,10 +37,10 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(structure_type),
                 dr::Operand::LiteralBit32(member),
-                dr::Operand::Decoration(decoration),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::Decoration(decoration));
+        inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
     }
     #[doc = "Appends an OpGroupDecorate instruction."]
@@ -86,19 +84,17 @@ impl Builder {
         &mut self,
         target: spirv::Word,
         decoration: spirv::Decoration,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::DecorateId,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(target),
-                dr::Operand::Decoration(decoration),
-            ],
+            vec![dr::Operand::IdRef(target)],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::Decoration(decoration));
+        inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
     }
     #[doc = "Appends an OpMemberDecorateIdEXT instruction."]
@@ -107,7 +103,7 @@ impl Builder {
         structure_type: spirv::Word,
         member: u32,
         decoration: spirv::Decoration,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -117,10 +113,10 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(structure_type),
                 dr::Operand::LiteralBit32(member),
-                dr::Operand::Decoration(decoration),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::Decoration(decoration));
+        inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
     }
     #[doc = "Appends an OpDecorateString instruction."]
@@ -128,19 +124,17 @@ impl Builder {
         &mut self,
         target: spirv::Word,
         decoration: spirv::Decoration,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::DecorateString,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(target),
-                dr::Operand::Decoration(decoration),
-            ],
+            vec![dr::Operand::IdRef(target)],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::Decoration(decoration));
+        inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
     }
     #[doc = "Appends an OpMemberDecorateString instruction."]
@@ -149,7 +143,7 @@ impl Builder {
         struct_type: spirv::Word,
         member: u32,
         decoration: spirv::Decoration,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -159,10 +153,10 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(struct_type),
                 dr::Operand::LiteralBit32(member),
-                dr::Operand::Decoration(decoration),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::Decoration(decoration));
+        inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
     }
 }
