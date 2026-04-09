@@ -20579,6 +20579,51 @@ impl Builder {
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
+    #[doc = "Appends an OpCooperativeMatrixPerElementOpNV instruction to the current block."]
+    pub fn cooperative_matrix_per_element_op_nv(
+        &mut self,
+        result_type: spirv::Word,
+        result_id: Option<spirv::Word>,
+        matrix: spirv::Word,
+        func: spirv::Word,
+        operands: impl IntoIterator<Item = spirv::Word>,
+    ) -> BuildResult<spirv::Word> {
+        let _id = result_id.unwrap_or_else(|| self.id());
+        #[allow(unused_mut)]
+        let mut inst = dr::Instruction::new(
+            spirv::Op::CooperativeMatrixPerElementOpNV,
+            Some(result_type),
+            Some(_id),
+            vec![dr::Operand::IdRef(matrix), dr::Operand::IdRef(func)],
+        );
+        inst.operands
+            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        self.insert_into_block(InsertPoint::End, inst)?;
+        Ok(_id)
+    }
+    #[doc = "Appends an OpCooperativeMatrixPerElementOpNV instruction to the current block."]
+    pub fn insert_cooperative_matrix_per_element_op_nv(
+        &mut self,
+        insert_point: InsertPoint,
+        result_type: spirv::Word,
+        result_id: Option<spirv::Word>,
+        matrix: spirv::Word,
+        func: spirv::Word,
+        operands: impl IntoIterator<Item = spirv::Word>,
+    ) -> BuildResult<spirv::Word> {
+        let _id = result_id.unwrap_or_else(|| self.id());
+        #[allow(unused_mut)]
+        let mut inst = dr::Instruction::new(
+            spirv::Op::CooperativeMatrixPerElementOpNV,
+            Some(result_type),
+            Some(_id),
+            vec![dr::Operand::IdRef(matrix), dr::Operand::IdRef(func)],
+        );
+        inst.operands
+            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        self.insert_into_block(insert_point, inst)?;
+        Ok(_id)
+    }
     #[doc = "Appends an OpCreateTensorLayoutNV instruction to the current block."]
     pub fn create_tensor_layout_nv(
         &mut self,

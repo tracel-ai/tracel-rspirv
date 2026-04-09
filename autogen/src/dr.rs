@@ -982,9 +982,11 @@ pub fn gen_dr_builder_normal_insts(grammar: &structs::Grammar) -> TokenStream {
                     | "OpTypeOpaque"
                     | "OpUndef"
                     | "OpVariable"
+                    | "OpFunction"
+                    | "OpFunctionParameter"
+                    | "OpFunctionEnd"
                     | "OpSamplerImageAddressingModeNV" // https://github.com/gfx-rs/rspirv/pull/226#issuecomment-979469790
-            ) || (inst.class == Some(FunctionStruct) && inst.opname != "OpFunctionCall")
-                || is_terminator_instruction(inst)
+            ) || is_terminator_instruction(inst)
                 || inst.opname.starts_with("OpType");
             !skip
         })
