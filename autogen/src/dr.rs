@@ -33,7 +33,7 @@ fn get_param_or_arg_list(
     kinds: &[structs::OperandKind],
     is_params: bool,
 ) -> Vec<TokenStream> {
-    let mut list: Vec<_> = params
+    params
         .iter()
         .enumerate()
         .filter_map(|(param_index, param)| {
@@ -49,6 +49,16 @@ fn get_param_or_arg_list(
                 } else {
                     None
                 }
+            } else if operand_has_additional_params(param, kinds) {
+                let arg_ty = match param.quantifier {
+                    structs::Quantifier::One => quote! { #kind },
+                    structs::Quantifier::ZeroOrOne => quote! { Option<#kind> },
+                    structs::Quantifier::ZeroOrMore => {
+                        panic!("Zero or more with extra params breaks things, review manually");
+                    }
+                };
+                let extra_args_name = get_extra_args_name(&name);
+                Some(quote! { #name: #arg_ty, #extra_args_name: impl IntoIterator<Item = dr::Operand> })
             } else if is_params {
                 Some(match param.quantifier {
                     structs::Quantifier::One => quote! { #name: #kind },
@@ -61,18 +71,7 @@ fn get_param_or_arg_list(
                 Some(quote! { #name })
             }
         })
-        .collect();
-    // The last operand may require additional parameters.
-    if let Some(o) = params.last() {
-        if operand_has_additional_params(o, kinds) {
-            if is_params {
-                list.push(quote! { additional_params: impl IntoIterator<Item = dr::Operand> });
-            } else {
-                list.push(quote! { additional_params });
-            }
-        }
-    }
-    list
+        .collect()
 }
 
 /// Returns the parameter list excluding result id.
@@ -119,30 +118,43 @@ fn get_function_name_with_prepend(prepend: &str, opname: &str) -> TokenStream {
 
 /// Returns the initializer list for all the parameters required to appear
 /// once and only once.
-fn get_init_list(params: &[structs::Operand]) -> Vec<TokenStream> {
+fn get_init_list(params: &[structs::Operand], kinds: &[OperandKind]) -> Vec<TokenStream> {
     params
         .iter()
         .enumerate()
+        .take_while(|(_, param)| {
+            param.quantifier == structs::Quantifier::One
+                && !operand_has_additional_params(param, kinds)
+        })
         .filter_map(|(param_index, param)| {
-            if param.quantifier == structs::Quantifier::One {
-                if param.kind == "IdResult" || param.kind == "IdResultType" {
-                    // These two operands are not stored in the operands field.
-                    None
-                } else {
-                    let name = get_param_name(params, param_index);
-                    let kind = get_dr_operand_kind(&param.kind);
-                    let value = if kind == "LiteralString" {
-                        quote! { #name.into() }
-                    } else {
-                        quote! { #name }
-                    };
-                    Some(quote! { dr::Operand::#kind(#value) })
-                }
-            } else {
+            if param.kind == "IdResult" || param.kind == "IdResultType" {
+                // These two operands are not stored in the operands field.
                 None
+            } else {
+                let name = get_param_name(params, param_index);
+                let kind = get_dr_operand_kind(&param.kind);
+                let value = if kind == "LiteralString" {
+                    quote! { #name.into() }
+                } else {
+                    quote! { #name }
+                };
+                Some(quote! { dr::Operand::#kind(#value) })
             }
         })
         .collect()
+}
+
+/// Returns the number of fields to skip, aka the last index without an extra push
+fn push_extras_skip(params: &[structs::Operand], kinds: &[OperandKind]) -> usize {
+    params
+        .iter()
+        .enumerate()
+        .find(|(_, param)| {
+            param.quantifier != structs::Quantifier::One
+                || operand_has_additional_params(param, kinds)
+        })
+        .map(|(i, _)| i)
+        .unwrap_or(params.len())
 }
 
 fn get_push_extras(
@@ -150,13 +162,18 @@ fn get_push_extras(
     kinds: &[structs::OperandKind],
     container: TokenStream,
 ) -> Vec<TokenStream> {
-    let mut list: Vec<_> = params
+    params
         .iter()
         .enumerate()
-        .filter_map(|(param_index, param)| {
+        .skip(push_extras_skip(params, kinds))
+        .map(|(param_index, param)| {
             let name = get_param_name(params, param_index);
-            match param.quantifier {
-                structs::Quantifier::One => None,
+
+            let base_push = match param.quantifier {
+                structs::Quantifier::One => {
+                    let kind = get_dr_operand_kind(&param.kind);
+                    quote![#container.push(dr::Operand::#kind(#name));]
+                }
                 structs::Quantifier::ZeroOrOne => {
                     let kind = get_dr_operand_kind(&param.kind);
                     let value = if kind == "LiteralString" {
@@ -164,53 +181,52 @@ fn get_push_extras(
                     } else {
                         quote! { v }
                     };
-                    Some(quote! {
+                    quote! {
                         if let Some(v) = #name {
                             #container.push(dr::Operand::#kind(#value));
                         }
-                    })
+                    }
                 }
                 structs::Quantifier::ZeroOrMore => {
                     if param.kind == "PairLiteralIntegerIdRef" {
-                        Some(quote! {
+                        quote! {
                             for v in #name {
                                 #container.push(v.0);
                                 #container.push(dr::Operand::IdRef(v.1));
                             }
-                        })
+                        }
                     } else if param.kind == "PairIdRefLiteralInteger" {
-                        Some(quote! {
+                        quote! {
                             for v in #name {
                                 #container.push(dr::Operand::IdRef(v.0));
                                 #container.push(dr::Operand::LiteralBit32(v.1));
                             }
-                        })
+                        }
                     } else if param.kind == "PairIdRefIdRef" {
-                        Some(quote! {
+                        quote! {
                             for v in #name {
                                 #container.push(dr::Operand::IdRef(v.0));
                                 #container.push(dr::Operand::IdRef(v.1));
                             }
-                        })
+                        }
                     } else {
                         let kind = get_dr_operand_kind(&param.kind);
-                        Some(quote! {
+                        quote! {
                             #container.extend(#name.into_iter().map(dr::Operand::#kind));
-                        })
+                        }
                     }
                 }
-            }
-        })
-        .collect();
-    // The last operand may require additional parameters.
-    if let Some(o) = params.last() {
-        if operand_has_additional_params(o, kinds) {
-            list.push(quote! {
-                #container.extend(additional_params);
+            };
+            let extra_push = operand_has_additional_params(param, kinds).then(|| {
+                let extra_args_name = get_extra_args_name(&name);
+                quote! {
+                    #base_push
+                    #container.extend(#extra_args_name);
+                }
             });
-        }
-    }
-    list
+            extra_push.unwrap_or(base_push)
+        })
+        .collect()
 }
 
 /// Returns the generated dr::Operand and its fmt::Display implementation by
@@ -658,7 +674,7 @@ pub fn gen_dr_builder_types(grammar: &structs::Grammar) -> TokenStream {
         let arg_list = get_arg_list(&inst.operands, false, kinds);
         // Initializer list for constructing the operands parameter
         // for Instruction.
-        let init_list = get_init_list(&inst.operands);
+        let init_list = get_init_list(&inst.operands, kinds);
         let extras = get_push_extras(&inst.operands,
                                      kinds,
                                      quote! { inst.operands });
@@ -716,7 +732,7 @@ pub fn gen_dr_builder_ext(
         let arg_list = get_arg_list(&inst.operands, false, kinds);
         // Initializer list for constructing the operands parameter
         // for Instruction.
-        let init_list = get_init_list(&inst.operands);
+        let init_list = get_init_list(&inst.operands, kinds);
         let extras = get_push_extras(&inst.operands,
                                      kinds,
                                      quote![args]);
@@ -805,7 +821,7 @@ pub fn gen_dr_builder_debug_ext(
             let arg_list = get_arg_list(&inst.operands, false, kinds);
             // Initializer list for constructing the operands parameter
             // for Instruction.
-            let init_list = get_init_list(&inst.operands);
+            let init_list = get_init_list(&inst.operands, kinds);
             let extras = get_push_extras(&inst.operands,
                                          kinds,
                                          quote![args]);
@@ -843,7 +859,7 @@ pub fn gen_dr_builder_debug_ext(
         let arg_list = get_arg_list(&inst.operands, false, kinds);
         // Initializer list for constructing the operands parameter
         // for Instruction.
-        let init_list = get_init_list(&inst.operands);
+        let init_list = get_init_list(&inst.operands, kinds);
         let extras = get_push_extras(&inst.operands,
                                      kinds,
                                      quote![inst.operands]);
@@ -919,7 +935,6 @@ pub fn gen_dr_builder_terminator(grammar: &structs::Grammar) -> TokenStream {
         .filter(|inst| is_terminator_instruction(inst))
         .map(|inst| {
             let params = get_param_list(&inst.operands, false, kinds);
-            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             let opcode = as_ident(&inst.opname[2..]);
             let comment = format!(
                 "Appends an Op{} instruction and ends the current block.",
@@ -930,7 +945,8 @@ pub fn gen_dr_builder_terminator(grammar: &structs::Grammar) -> TokenStream {
                 opcode
             );
             let name = get_function_name(&inst.opname);
-            let init = get_init_list(&inst.operands);
+            let init = get_init_list(&inst.operands, kinds);
+            let extras = get_push_extras(&inst.operands, kinds,  quote! { inst.operands });
             let insert_name = get_function_name_with_prepend("insert_", &inst.opname);
 
             quote! {
@@ -992,12 +1008,12 @@ pub fn gen_dr_builder_normal_insts(grammar: &structs::Grammar) -> TokenStream {
         })
         .map(|inst| {
             let params = get_param_list(&inst.operands, true, kinds);
-            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             let opcode = as_ident(&inst.opname[2..]);
             let comment = format!("Appends an Op{} instruction to the current block.", opcode);
             let name = get_function_name(&inst.opname);
             let insert_name = get_function_name_with_prepend("insert_", &inst.opname);
-            let init = get_init_list(&inst.operands);
+            let init = get_init_list(&inst.operands, kinds);
+            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
 
             let mut result_get = quote!(None);
             let mut id_typ = quote!(());
@@ -1076,11 +1092,11 @@ pub fn gen_dr_builder_constants(grammar: &structs::Grammar) -> TokenStream {
         })
         .map(|inst| {
             let params = get_param_list(&inst.operands, false, kinds);
-            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             let opcode = as_ident(&inst.opname[2..]);
             let comment = format!("Appends an Op{} instruction.", opcode);
             let name = get_function_name(&inst.opname);
-            let init = get_init_list(&inst.operands);
+            let init = get_init_list(&inst.operands, kinds);
+            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             quote! {
                 #[doc = #comment]
                 pub fn #name(&mut self,#(#params),*) -> spirv::Word {
@@ -1114,11 +1130,11 @@ pub fn gen_dr_builder_debug(grammar: &structs::Grammar) -> TokenStream {
         })
         .map(|inst| {
             let params = get_param_list(&inst.operands, false, kinds);
-            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             let opcode = as_ident(&inst.opname[2..]);
             let comment = format!("Appends an Op{} instruction.", opcode);
             let name = get_function_name(&inst.opname);
-            let init = get_init_list(&inst.operands);
+            let init = get_init_list(&inst.operands, kinds);
+            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             // The debug section is split into three subsections
             let section = match inst.opname.as_str() {
                 "OpSourceExtension" | "OpSource" | "OpSourceContinued" => {
@@ -1157,11 +1173,11 @@ pub fn gen_dr_builder_annotation(grammar: &structs::Grammar) -> TokenStream {
         })
         .map(|inst| {
             let params = get_param_list(&inst.operands, false, kinds);
-            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             let opcode = as_ident(&inst.opname[2..]);
             let comment = format!("Appends an Op{} instruction.", opcode);
             let name = get_function_name(&inst.opname);
-            let init = get_init_list(&inst.operands);
+            let init = get_init_list(&inst.operands, kinds);
+            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
 
             quote! {
                 #[doc = #comment]

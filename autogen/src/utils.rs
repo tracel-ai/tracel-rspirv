@@ -1,11 +1,12 @@
 use crate::structs;
 
+use core::fmt::Display;
 use std::fs;
 use std::io::Write;
 
 use heck::ToSnakeCase;
 use proc_macro2::{Ident, Span, TokenStream};
-use quote::quote;
+use quote::{format_ident, quote};
 
 #[rustfmt::skip]
 static AUTOGEN_COMMENT : &str = "\
@@ -116,4 +117,8 @@ pub fn get_param_name(params: &[structs::Operand], param_index: usize) -> Ident 
     }
 
     as_ident(&name)
+}
+
+pub fn get_extra_args_name(param_name: &impl Display) -> Ident {
+    format_ident!("{param_name}_extra")
 }

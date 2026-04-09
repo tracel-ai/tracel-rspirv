@@ -117,7 +117,7 @@ impl Builder {
         result_id: Option<spirv::Word>,
         pointer: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -130,7 +130,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -142,7 +142,7 @@ impl Builder {
         result_id: Option<spirv::Word>,
         pointer: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -155,7 +155,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -165,7 +165,7 @@ impl Builder {
         pointer: spirv::Word,
         object: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -177,7 +177,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -188,7 +188,7 @@ impl Builder {
         pointer: spirv::Word,
         object: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -200,7 +200,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -210,8 +210,9 @@ impl Builder {
         target: spirv::Word,
         source: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
         memory_access_2: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_2_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -223,10 +224,11 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
+        inst.operands.extend(memory_access_extra);
         if let Some(v) = memory_access_2 {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_2_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -237,8 +239,9 @@ impl Builder {
         target: spirv::Word,
         source: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
         memory_access_2: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_2_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -250,10 +253,11 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
+        inst.operands.extend(memory_access_extra);
         if let Some(v) = memory_access_2 {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_2_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -264,8 +268,9 @@ impl Builder {
         source: spirv::Word,
         size: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
         memory_access_2: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_2_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -281,10 +286,11 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
+        inst.operands.extend(memory_access_extra);
         if let Some(v) = memory_access_2 {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_2_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -296,8 +302,9 @@ impl Builder {
         source: spirv::Word,
         size: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
         memory_access_2: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_2_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -313,10 +320,11 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
+        inst.operands.extend(memory_access_extra);
         if let Some(v) = memory_access_2 {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_2_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -961,7 +969,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -977,7 +985,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -990,7 +998,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1006,7 +1014,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1018,7 +1026,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1029,10 +1037,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1045,7 +1054,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1056,10 +1065,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1072,7 +1082,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1089,7 +1099,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1103,7 +1113,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1120,7 +1130,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1133,7 +1143,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1145,10 +1155,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1162,7 +1173,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1174,10 +1185,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1189,7 +1201,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1205,7 +1217,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1218,7 +1230,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1234,7 +1246,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1246,7 +1258,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1257,10 +1269,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1273,7 +1286,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1284,10 +1297,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1300,7 +1314,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1317,7 +1331,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1331,7 +1345,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1348,7 +1362,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1361,7 +1375,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1373,10 +1387,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1390,7 +1405,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1402,10 +1417,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1417,7 +1433,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1430,7 +1446,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1443,7 +1459,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1456,7 +1472,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1469,7 +1485,7 @@ impl Builder {
         coordinate: spirv::Word,
         component: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1486,7 +1502,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1500,7 +1516,7 @@ impl Builder {
         coordinate: spirv::Word,
         component: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1517,7 +1533,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1530,7 +1546,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1547,7 +1563,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1561,7 +1577,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1578,7 +1594,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1590,7 +1606,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1603,7 +1619,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -1616,7 +1632,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -1629,7 +1645,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -1640,7 +1656,7 @@ impl Builder {
         coordinate: spirv::Word,
         texel: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -1656,7 +1672,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -1668,7 +1684,7 @@ impl Builder {
         coordinate: spirv::Word,
         texel: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -1684,7 +1700,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -7013,7 +7029,7 @@ impl Builder {
         merge_block: spirv::Word,
         continue_target: spirv::Word,
         loop_control: spirv::LoopControl,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        loop_control_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -7023,10 +7039,10 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(merge_block),
                 dr::Operand::IdRef(continue_target),
-                dr::Operand::LoopControl(loop_control),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::LoopControl(loop_control));
+        inst.operands.extend(loop_control_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -7037,7 +7053,7 @@ impl Builder {
         merge_block: spirv::Word,
         continue_target: spirv::Word,
         loop_control: spirv::LoopControl,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        loop_control_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -7047,10 +7063,10 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(merge_block),
                 dr::Operand::IdRef(continue_target),
-                dr::Operand::LoopControl(loop_control),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands.push(dr::Operand::LoopControl(loop_control));
+        inst.operands.extend(loop_control_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -9159,7 +9175,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9175,7 +9191,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9188,7 +9204,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9204,7 +9220,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9216,7 +9232,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9227,10 +9243,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9243,7 +9260,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9254,10 +9271,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9270,7 +9288,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9287,7 +9305,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9301,7 +9319,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9318,7 +9336,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9331,7 +9349,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9343,10 +9361,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9360,7 +9379,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9372,10 +9391,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9387,7 +9407,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9403,7 +9423,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9416,7 +9436,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9432,7 +9452,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9444,7 +9464,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9455,10 +9475,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9471,7 +9492,7 @@ impl Builder {
         sampled_image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9482,10 +9503,11 @@ impl Builder {
             vec![
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9498,7 +9520,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9515,7 +9537,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9529,7 +9551,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9546,7 +9568,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9559,7 +9581,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9571,10 +9593,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9588,7 +9611,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: spirv::ImageOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9600,10 +9623,11 @@ impl Builder {
                 dr::Operand::IdRef(sampled_image),
                 dr::Operand::IdRef(coordinate),
                 dr::Operand::IdRef(d_ref),
-                dr::Operand::ImageOperands(image_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9615,7 +9639,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9628,7 +9652,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9641,7 +9665,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9654,7 +9678,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9667,7 +9691,7 @@ impl Builder {
         coordinate: spirv::Word,
         component: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9684,7 +9708,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9698,7 +9722,7 @@ impl Builder {
         coordinate: spirv::Word,
         component: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9715,7 +9739,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9728,7 +9752,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9745,7 +9769,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9759,7 +9783,7 @@ impl Builder {
         coordinate: spirv::Word,
         d_ref: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9776,7 +9800,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9917,7 +9941,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9930,7 +9954,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9943,7 +9967,7 @@ impl Builder {
         image: spirv::Word,
         coordinate: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -9956,7 +9980,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -12286,7 +12310,7 @@ impl Builder {
         tensor: spirv::Word,
         coordinates: spirv::Word,
         tensor_operands: Option<spirv::TensorOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -12299,7 +12323,7 @@ impl Builder {
         if let Some(v) = tensor_operands {
             inst.operands.push(dr::Operand::TensorOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(tensor_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -12312,7 +12336,7 @@ impl Builder {
         tensor: spirv::Word,
         coordinates: spirv::Word,
         tensor_operands: Option<spirv::TensorOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -12325,7 +12349,7 @@ impl Builder {
         if let Some(v) = tensor_operands {
             inst.operands.push(dr::Operand::TensorOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(tensor_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -12336,7 +12360,7 @@ impl Builder {
         coordinates: spirv::Word,
         object: spirv::Word,
         tensor_operands: Option<spirv::TensorOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -12352,7 +12376,7 @@ impl Builder {
         if let Some(v) = tensor_operands {
             inst.operands.push(dr::Operand::TensorOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(tensor_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -12364,7 +12388,7 @@ impl Builder {
         coordinates: spirv::Word,
         object: spirv::Word,
         tensor_operands: Option<spirv::TensorOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -12380,7 +12404,7 @@ impl Builder {
         if let Some(v) = tensor_operands {
             inst.operands.push(dr::Operand::TensorOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(tensor_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -13336,8 +13360,9 @@ impl Builder {
         stride: spirv::Word,
         event: spirv::Word,
         destination_memory_operands: Option<spirv::MemoryAccess>,
+        destination_memory_operands_extra: impl IntoIterator<Item = dr::Operand>,
         source_memory_operands: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        source_memory_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -13358,10 +13383,11 @@ impl Builder {
         if let Some(v) = destination_memory_operands {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
+        inst.operands.extend(destination_memory_operands_extra);
         if let Some(v) = source_memory_operands {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(source_memory_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -13379,8 +13405,9 @@ impl Builder {
         stride: spirv::Word,
         event: spirv::Word,
         destination_memory_operands: Option<spirv::MemoryAccess>,
+        destination_memory_operands_extra: impl IntoIterator<Item = dr::Operand>,
         source_memory_operands: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        source_memory_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -13401,10 +13428,11 @@ impl Builder {
         if let Some(v) = destination_memory_operands {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
+        inst.operands.extend(destination_memory_operands_extra);
         if let Some(v) = source_memory_operands {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(source_memory_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -13880,7 +13908,7 @@ impl Builder {
         memory_layout: spirv::Word,
         stride: Option<spirv::Word>,
         memory_operand: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -13899,7 +13927,7 @@ impl Builder {
         if let Some(v) = memory_operand {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_operand_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -13913,7 +13941,7 @@ impl Builder {
         memory_layout: spirv::Word,
         stride: Option<spirv::Word>,
         memory_operand: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -13932,7 +13960,7 @@ impl Builder {
         if let Some(v) = memory_operand {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_operand_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -13944,7 +13972,7 @@ impl Builder {
         memory_layout: spirv::Word,
         stride: Option<spirv::Word>,
         memory_operand: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -13963,7 +13991,7 @@ impl Builder {
         if let Some(v) = memory_operand {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_operand_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -13976,7 +14004,7 @@ impl Builder {
         memory_layout: spirv::Word,
         stride: Option<spirv::Word>,
         memory_operand: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -13995,7 +14023,7 @@ impl Builder {
         if let Some(v) = memory_operand {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_operand_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -17407,7 +17435,7 @@ impl Builder {
         granularity: spirv::Word,
         coarse: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -17425,7 +17453,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -17440,7 +17468,7 @@ impl Builder {
         granularity: spirv::Word,
         coarse: spirv::Word,
         image_operands: Option<spirv::ImageOperands>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        image_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -17458,7 +17486,7 @@ impl Builder {
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -18036,7 +18064,7 @@ impl Builder {
         pointer: spirv::Word,
         offset: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -18049,7 +18077,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -18062,7 +18090,7 @@ impl Builder {
         pointer: spirv::Word,
         offset: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -18075,7 +18103,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -18086,7 +18114,7 @@ impl Builder {
         offset: spirv::Word,
         object: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -18102,7 +18130,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -18114,7 +18142,7 @@ impl Builder {
         offset: spirv::Word,
         object: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -18130,7 +18158,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -20179,7 +20207,7 @@ impl Builder {
         stride: spirv::Word,
         column_major: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -20196,7 +20224,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20210,7 +20238,7 @@ impl Builder {
         stride: spirv::Word,
         column_major: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -20227,7 +20255,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20239,7 +20267,7 @@ impl Builder {
         stride: spirv::Word,
         column_major: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -20256,7 +20284,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -20269,7 +20297,7 @@ impl Builder {
         stride: spirv::Word,
         column_major: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -20286,7 +20314,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -20472,8 +20500,9 @@ impl Builder {
         object: spirv::Word,
         tensor_layout: spirv::Word,
         memory_operand: spirv::MemoryAccess,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
         tensor_addressing_operands: spirv::TensorAddressingOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_addressing_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -20485,11 +20514,15 @@ impl Builder {
                 dr::Operand::IdRef(pointer),
                 dr::Operand::IdRef(object),
                 dr::Operand::IdRef(tensor_layout),
-                dr::Operand::MemoryAccess(memory_operand),
-                dr::Operand::TensorAddressingOperands(tensor_addressing_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.extend(memory_operand_extra);
+        inst.operands.push(dr::Operand::TensorAddressingOperands(
+            tensor_addressing_operands,
+        ));
+        inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20503,8 +20536,9 @@ impl Builder {
         object: spirv::Word,
         tensor_layout: spirv::Word,
         memory_operand: spirv::MemoryAccess,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
         tensor_addressing_operands: spirv::TensorAddressingOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_addressing_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
@@ -20516,11 +20550,15 @@ impl Builder {
                 dr::Operand::IdRef(pointer),
                 dr::Operand::IdRef(object),
                 dr::Operand::IdRef(tensor_layout),
-                dr::Operand::MemoryAccess(memory_operand),
-                dr::Operand::TensorAddressingOperands(tensor_addressing_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.extend(memory_operand_extra);
+        inst.operands.push(dr::Operand::TensorAddressingOperands(
+            tensor_addressing_operands,
+        ));
+        inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20531,8 +20569,9 @@ impl Builder {
         object: spirv::Word,
         tensor_layout: spirv::Word,
         memory_operand: spirv::MemoryAccess,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
         tensor_addressing_operands: spirv::TensorAddressingOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_addressing_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -20543,11 +20582,15 @@ impl Builder {
                 dr::Operand::IdRef(pointer),
                 dr::Operand::IdRef(object),
                 dr::Operand::IdRef(tensor_layout),
-                dr::Operand::MemoryAccess(memory_operand),
-                dr::Operand::TensorAddressingOperands(tensor_addressing_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.extend(memory_operand_extra);
+        inst.operands.push(dr::Operand::TensorAddressingOperands(
+            tensor_addressing_operands,
+        ));
+        inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -20559,8 +20602,9 @@ impl Builder {
         object: spirv::Word,
         tensor_layout: spirv::Word,
         memory_operand: spirv::MemoryAccess,
+        memory_operand_extra: impl IntoIterator<Item = dr::Operand>,
         tensor_addressing_operands: spirv::TensorAddressingOperands,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        tensor_addressing_operands_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -20571,11 +20615,15 @@ impl Builder {
                 dr::Operand::IdRef(pointer),
                 dr::Operand::IdRef(object),
                 dr::Operand::IdRef(tensor_layout),
-                dr::Operand::MemoryAccess(memory_operand),
-                dr::Operand::TensorAddressingOperands(tensor_addressing_operands),
             ],
         );
-        inst.operands.extend(additional_params);
+        inst.operands
+            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.extend(memory_operand_extra);
+        inst.operands.push(dr::Operand::TensorAddressingOperands(
+            tensor_addressing_operands,
+        ));
+        inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -24246,7 +24294,7 @@ impl Builder {
         ptr: spirv::Word,
         num_bytes: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -24258,7 +24306,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -24269,7 +24317,7 @@ impl Builder {
         ptr: spirv::Word,
         num_bytes: spirv::Word,
         memory_access: Option<spirv::MemoryAccess>,
-        additional_params: impl IntoIterator<Item = dr::Operand>,
+        memory_access_extra: impl IntoIterator<Item = dr::Operand>,
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -24281,7 +24329,7 @@ impl Builder {
         if let Some(v) = memory_access {
             inst.operands.push(dr::Operand::MemoryAccess(v));
         }
-        inst.operands.extend(additional_params);
+        inst.operands.extend(memory_access_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
