@@ -48,6 +48,10 @@ pub enum Branch {
         size: u32,
     },
     TerminateInvocation,
+    AbortKHR {
+        message_type: Token<Type>,
+        message: spirv::Word,
+    },
     DemoteToHelperInvocation,
 }
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -1723,6 +1727,10 @@ pub enum Op {
         structure_type: Token<Type>,
         member: u32,
         decoration: spirv::Decoration,
+    },
+    PoisonKHR,
+    FreezeKHR {
+        value: spirv::Word,
     },
     HitObjectRecordHitMotionNV {
         hit_object: spirv::Word,
@@ -3711,5 +3719,20 @@ pub enum Op {
     },
     ConvertHandleToSampledImageINTEL {
         operand: spirv::Word,
+    },
+    FDot2MixAcc32VALVE {
+        vector_1: spirv::Word,
+        vector_2: spirv::Word,
+        accumulator: spirv::Word,
+    },
+    FDot2MixAcc16VALVE {
+        vector_1: spirv::Word,
+        vector_2: spirv::Word,
+        accumulator: spirv::Word,
+    },
+    FDot4MixAcc32VALVE {
+        vector_1: spirv::Word,
+        vector_2: spirv::Word,
+        accumulator: spirv::Word,
     },
 }

@@ -4147,6 +4147,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
+    inst!(AbortKHR, [AbortKHR], [], [(IdRef, One), (IdRef, One)]),
     inst!(
         UntypedImageTexelPointerEXT,
         [DescriptorHeapEXT],
@@ -4169,6 +4170,38 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     inst!(
         ConstantSizeOfEXT,
         [DescriptorHeapEXT],
+        [],
+        [(IdResultType, One), (IdResult, One), (IdRef, One)]
+    ),
+    inst!(
+        ConstantDataKHR,
+        [ConstantDataKHR],
+        [],
+        [
+            (IdResultType, One),
+            (IdResult, One),
+            (LiteralInteger, ZeroOrMore)
+        ]
+    ),
+    inst!(
+        SpecConstantDataKHR,
+        [ConstantDataKHR],
+        [],
+        [
+            (IdResultType, One),
+            (IdResult, One),
+            (LiteralInteger, ZeroOrMore)
+        ]
+    ),
+    inst!(
+        PoisonKHR,
+        [PoisonFreezeKHR],
+        [],
+        [(IdResultType, One), (IdResult, One)]
+    ),
+    inst!(
+        FreezeKHR,
+        [PoisonFreezeKHR],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
@@ -8435,5 +8468,41 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [BindlessImagesINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
+    ),
+    inst!(
+        FDot2MixAcc32VALVE,
+        [DotProductFloat16AccFloat32VALVE, DotProductBFloat16AccVALVE],
+        [],
+        [
+            (IdResultType, One),
+            (IdResult, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One)
+        ]
+    ),
+    inst!(
+        FDot2MixAcc16VALVE,
+        [DotProductFloat16AccFloat16VALVE, DotProductBFloat16AccVALVE],
+        [],
+        [
+            (IdResultType, One),
+            (IdResult, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One)
+        ]
+    ),
+    inst!(
+        FDot4MixAcc32VALVE,
+        [DotProductFloat8AccFloat32VALVE],
+        [],
+        [
+            (IdResultType, One),
+            (IdResult, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One)
+        ]
     ),
 ];
