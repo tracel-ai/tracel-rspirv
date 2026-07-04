@@ -45,56 +45,14 @@ static GLSL_STD_450_INSTRUCTION_TABLE: &[ExtendedInstruction<'static>] = &[
     ext_inst!(FMax, 40u32, [], [], [(IdRef, One), (IdRef, One)]),
     ext_inst!(UMax, 41u32, [], [], [(IdRef, One), (IdRef, One)]),
     ext_inst!(SMax, 42u32, [], [], [(IdRef, One), (IdRef, One)]),
-    ext_inst!(
-        FClamp,
-        43u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
-    ext_inst!(
-        UClamp,
-        44u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
-    ext_inst!(
-        SClamp,
-        45u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
-    ext_inst!(
-        FMix,
-        46u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
-    ext_inst!(
-        IMix,
-        47u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
+    ext_inst!(FClamp, 43u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
+    ext_inst!(UClamp, 44u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
+    ext_inst!(SClamp, 45u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
+    ext_inst!(FMix, 46u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
+    ext_inst!(IMix, 47u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
     ext_inst!(Step, 48u32, [], [], [(IdRef, One), (IdRef, One)]),
-    ext_inst!(
-        SmoothStep,
-        49u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
-    ext_inst!(
-        Fma,
-        50u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
+    ext_inst!(SmoothStep, 49u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
+    ext_inst!(Fma, 50u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
     ext_inst!(Frexp, 51u32, [], [], [(IdRef, One), (IdRef, One)]),
     ext_inst!(FrexpStruct, 52u32, [], [], [(IdRef, One)]),
     ext_inst!(Ldexp, 53u32, [], [], [(IdRef, One), (IdRef, One)]),
@@ -114,21 +72,9 @@ static GLSL_STD_450_INSTRUCTION_TABLE: &[ExtendedInstruction<'static>] = &[
     ext_inst!(Distance, 67u32, [], [], [(IdRef, One), (IdRef, One)]),
     ext_inst!(Cross, 68u32, [], [], [(IdRef, One), (IdRef, One)]),
     ext_inst!(Normalize, 69u32, [], [], [(IdRef, One)]),
-    ext_inst!(
-        FaceForward,
-        70u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
+    ext_inst!(FaceForward, 70u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
     ext_inst!(Reflect, 71u32, [], [], [(IdRef, One), (IdRef, One)]),
-    ext_inst!(
-        Refract,
-        72u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
+    ext_inst!(Refract, 72u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
     ext_inst!(FindILsb, 73u32, [], [], [(IdRef, One)]),
     ext_inst!(FindSMsb, 74u32, [], [], [(IdRef, One)]),
     ext_inst!(FindUMsb, 75u32, [], [], [(IdRef, One)]),
@@ -155,11 +101,5 @@ static GLSL_STD_450_INSTRUCTION_TABLE: &[ExtendedInstruction<'static>] = &[
     ),
     ext_inst!(NMin, 79u32, [], [], [(IdRef, One), (IdRef, One)]),
     ext_inst!(NMax, 80u32, [], [], [(IdRef, One), (IdRef, One)]),
-    ext_inst!(
-        NClamp,
-        81u32,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (IdRef, One)]
-    ),
+    ext_inst!(NClamp, 81u32, [], [], [(IdRef, One), (IdRef, One), (IdRef, One)]),
 ];

@@ -91,11 +91,9 @@ impl fmt::Display for State {
                 index, offset
             ),
             State::OperandError(ref err) => write!(f, "operand decoding error: {}", err),
-            State::TypeUnsupported(offset, index) => write!(
-                f,
-                "unsupported type for instruction #{} at offset {}",
-                index, offset
-            ),
+            State::TypeUnsupported(offset, index) => {
+                write!(f, "unsupported type for instruction #{} at offset {}", index, offset)
+            }
             State::SpecConstantOpIntegerIncorrect(offset, index) => write!(
                 f,
                 "incorrect SpecConstantOp number for instruction #{} at offset {}",
@@ -290,10 +288,7 @@ impl<'c, 'd> Parser<'c, 'd> {
                 self.decoder.set_limit((wc - 1) as usize);
                 let result = self.parse_operands(grammar)?;
                 if !self.decoder.limit_reached() {
-                    return Err(State::OperandExceeded(
-                        self.decoder.offset(),
-                        self.inst_index,
-                    ));
+                    return Err(State::OperandExceeded(self.decoder.offset(), self.inst_index));
                 }
                 self.decoder.clear_limit();
                 Ok(result)
@@ -319,19 +314,13 @@ impl<'c, 'd> Parser<'c, 'd> {
                     16 => Ok(dr::Operand::LiteralBit32(self.decoder.bit32()?)),
                     32 => Ok(dr::Operand::LiteralBit32(self.decoder.bit32()?)),
                     64 => Ok(dr::Operand::LiteralBit64(self.decoder.bit64()?)),
-                    _ => Err(State::TypeUnsupported(
-                        self.decoder.offset(),
-                        self.inst_index,
-                    )),
+                    _ => Err(State::TypeUnsupported(self.decoder.offset(), self.inst_index)),
                 },
                 Type::Float(size) => match size {
                     16 => Ok(dr::Operand::LiteralBit32(self.decoder.bit32()?)),
                     32 => Ok(dr::Operand::LiteralBit32(self.decoder.bit32()?)),
                     64 => Ok(dr::Operand::LiteralBit64(self.decoder.bit64()?)),
-                    _ => Err(State::TypeUnsupported(
-                        self.decoder.offset(),
-                        self.inst_index,
-                    )),
+                    _ => Err(State::TypeUnsupported(self.decoder.offset(), self.inst_index)),
                 },
             },
             // Treat as a normal SPIR-V word if we don't know the type.
@@ -380,10 +369,7 @@ impl<'c, 'd> Parser<'c, 'd> {
                         // Only constant defining instructions use this kind.
                         // If it is not true, that means the grammar is wrong
                         // or has changed.
-                        assert!(
-                            grammar.opcode == spirv::Op::Constant
-                                || grammar.opcode == spirv::Op::SpecConstant
-                        );
+                        assert!(grammar.opcode == spirv::Op::Constant || grammar.opcode == spirv::Op::SpecConstant);
                         let id = rtype.expect(
                             "internal error: \
                             should already decoded result type id before context dependent number",
@@ -399,9 +385,7 @@ impl<'c, 'd> Parser<'c, 'd> {
                         coperands.push(self.parse_literal(selector)?);
                         coperands.push(dr::Operand::IdRef(self.decoder.id()?));
                     }
-                    GOpKind::LiteralSpecConstantOpInteger => {
-                        coperands.append(&mut self.parse_spec_constant_op()?)
-                    }
+                    GOpKind::LiteralSpecConstantOpInteger => coperands.append(&mut self.parse_spec_constant_op()?),
                     _ => coperands.append(&mut self.parse_operand(loperand.kind)?),
                 }
                 match loperand.quantifier {
@@ -411,12 +395,7 @@ impl<'c, 'd> Parser<'c, 'd> {
             } else {
                 // We still have logical operands to match but no no more words.
                 match loperand.quantifier {
-                    GOpCount::One => {
-                        return Err(State::OperandExpected(
-                            self.decoder.offset(),
-                            self.inst_index,
-                        ))
-                    }
+                    GOpCount::One => return Err(State::OperandExpected(self.decoder.offset(), self.inst_index)),
                     GOpCount::ZeroOrOne | GOpCount::ZeroOrMore => break,
                 }
             }
@@ -482,9 +461,7 @@ mod tests {
     // TODO: Should put this function and its duplicate in the decoder in
     // a utility module.
     fn w2b(word: spirv::Word) -> Vec<u8> {
-        (0..WORD_NUM_BYTES)
-            .map(|i| ((word >> (8 * i)) & 0xff) as u8)
-            .collect()
+        (0..WORD_NUM_BYTES).map(|i| ((word >> (8 * i)) & 0xff) as u8).collect()
     }
 
     /// A simple module builder for testing purpose.
@@ -538,10 +515,7 @@ mod tests {
         let v = vec![];
         let mut c = RetainingConsumer::new();
         let p = Parser::new(&v, &mut c);
-        assert_matches!(
-            p.parse(),
-            Err(State::HeaderIncomplete(DecodeError::StreamExpected(0)))
-        );
+        assert_matches!(p.parse(), Err(State::HeaderIncomplete(DecodeError::StreamExpected(0))));
     }
 
     #[test]
@@ -549,10 +523,7 @@ mod tests {
         let v = vec![0x03, 0x02, 0x23, 0x07];
         let mut c = RetainingConsumer::new();
         let p = Parser::new(&v, &mut c);
-        assert_matches!(
-            p.parse(),
-            Err(State::HeaderIncomplete(DecodeError::StreamExpected(4)))
-        );
+        assert_matches!(p.parse(), Err(State::HeaderIncomplete(DecodeError::StreamExpected(4))));
     }
 
     #[test]
@@ -643,10 +614,7 @@ mod tests {
         let p = Parser::new(&v, &mut c);
         // The missing operand to the OpMemoryModel instruction starts at
         // byte offset (20 + 4 + 4 + 4).
-        assert_matches!(
-            p.parse(),
-            Err(State::OperandError(DecodeError::StreamExpected(32)))
-        );
+        assert_matches!(p.parse(), Err(State::OperandError(DecodeError::StreamExpected(32))));
     }
 
     #[test]
@@ -684,10 +652,7 @@ mod tests {
         v.append(&mut vec![0x0b, 0x00, 0x00, 0x00]); // BuiltIn
         let mut c = RetainingConsumer::new();
         let p = Parser::new(&v, &mut c);
-        assert_matches!(
-            p.parse(),
-            Err(State::OperandError(DecodeError::StreamExpected(32)))
-        );
+        assert_matches!(p.parse(), Err(State::OperandError(DecodeError::StreamExpected(32))));
     }
 
     #[test]
@@ -805,10 +770,7 @@ mod tests {
         let p = Parser::new(&v, &mut c);
         let ret = p.parse();
         assert_matches!(ret, Err(State::ConsumerError(_)));
-        assert_eq!(
-            "consumer error: init error",
-            format!("{}", ret.unwrap_err())
-        );
+        assert_eq!("consumer error: init error", format!("{}", ret.unwrap_err()));
     }
 
     struct FinalizeErrorConsumer;
@@ -858,10 +820,7 @@ mod tests {
         let p = Parser::new(ZERO_BOUND_HEADER, &mut c);
         let ret = p.parse();
         assert_matches!(ret, Err(State::ConsumerError(_)));
-        assert_eq!(
-            "consumer error: parse header error",
-            format!("{}", ret.unwrap_err())
-        );
+        assert_eq!("consumer error: parse header error", format!("{}", ret.unwrap_err()));
     }
 
     struct ParseInstErrorConsumer;
@@ -888,10 +847,7 @@ mod tests {
         let p = Parser::new(b.get(), &mut c);
         let ret = p.parse();
         assert_matches!(ret, Err(State::ConsumerError(_)));
-        assert_eq!(
-            "consumer error: parse inst error",
-            format!("{}", ret.unwrap_err())
-        );
+        assert_eq!("consumer error: parse inst error", format!("{}", ret.unwrap_err()));
     }
 
     #[test]
@@ -942,10 +898,7 @@ mod tests {
         assert_eq!("Constant", inst.class.opname);
         assert_eq!(Some(1), inst.result_type);
         assert_eq!(Some(2), inst.result_id);
-        assert_eq!(
-            vec![dr::Operand::LiteralBit64(0xefcdab9078563412)],
-            inst.operands
-        );
+        assert_eq!(vec![dr::Operand::LiteralBit64(0xefcdab9078563412)], inst.operands);
     }
 
     #[test]
@@ -969,10 +922,7 @@ mod tests {
         assert_eq!("Constant", inst.class.opname);
         assert_eq!(Some(1), inst.result_type);
         assert_eq!(Some(2), inst.result_id);
-        assert_eq!(
-            vec![dr::Operand::LiteralBit32(42.42f32.to_bits())],
-            inst.operands
-        );
+        assert_eq!(vec![dr::Operand::LiteralBit32(42.42f32.to_bits())], inst.operands);
     }
 
     #[test]
@@ -996,10 +946,7 @@ mod tests {
         assert_eq!("Constant", inst.class.opname);
         assert_eq!(Some(1), inst.result_type);
         assert_eq!(Some(2), inst.result_id);
-        assert_eq!(
-            vec![dr::Operand::LiteralBit64((-12.34f64).to_bits())],
-            inst.operands
-        );
+        assert_eq!(vec![dr::Operand::LiteralBit64((-12.34f64).to_bits())], inst.operands);
     }
 
     #[test]
@@ -1063,10 +1010,7 @@ mod tests {
         assert_eq!("Store", inst.class.opname);
         assert_eq!(None, inst.result_type);
         assert_eq!(None, inst.result_id);
-        assert_eq!(
-            vec![dr::Operand::IdRef(1), dr::Operand::IdRef(2)],
-            inst.operands
-        );
+        assert_eq!(vec![dr::Operand::IdRef(1), dr::Operand::IdRef(2)], inst.operands);
     }
     #[test]
     fn test_parsing_bitmasks_requiring_params_mem_access_no_param() {
@@ -1183,9 +1127,6 @@ mod tests {
         assert_eq!("Capability", inst.class.opname);
         assert_eq!(None, inst.result_type);
         assert_eq!(None, inst.result_id);
-        assert_eq!(
-            vec![dr::Operand::Capability(spirv::Capability::Int16)],
-            inst.operands
-        );
+        assert_eq!(vec![dr::Operand::Capability(spirv::Capability::Int16)], inst.operands);
     }
 }

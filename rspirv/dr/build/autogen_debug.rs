@@ -58,10 +58,7 @@ impl Builder {
             spirv::Op::Name,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(target),
-                dr::Operand::LiteralString(name.into()),
-            ],
+            vec![dr::Operand::IdRef(target), dr::Operand::LiteralString(name.into())],
         );
         self.module.debug_names.push(inst);
     }

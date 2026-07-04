@@ -167,7 +167,7 @@ pub enum Class {
     Exclude,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize, Hash)]
 pub enum Category {
     BitEnum,
     Composite,

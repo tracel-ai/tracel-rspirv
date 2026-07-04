@@ -38,20 +38,15 @@ impl Error {
             Error::NestedFunction => Cow::Borrowed("found nested function"),
             Error::UnclosedFunction => Cow::Borrowed("found unclosed function"),
             Error::MismatchedFunctionEnd => Cow::Borrowed("found mismatched OpFunctionEnd"),
-            Error::DetachedFunctionParameter => {
-                Cow::Borrowed("found function OpFunctionParameter not inside function")
-            }
+            Error::DetachedFunctionParameter => Cow::Borrowed("found function OpFunctionParameter not inside function"),
             Error::DetachedBlock => Cow::Borrowed("found block not inside function"),
             Error::NestedBlock => Cow::Borrowed("found nested block"),
             Error::UnclosedBlock => Cow::Borrowed("found block without terminator"),
             Error::MismatchedTerminator => Cow::Borrowed("found mismatched terminator"),
-            Error::DetachedInstruction(Some(inst)) => Cow::Owned(format!(
-                "found instruction `{:?}` not inside block",
-                inst.class.opname
-            )),
-            Error::DetachedInstruction(None) => {
-                Cow::Borrowed("found unknown instruction not inside block")
+            Error::DetachedInstruction(Some(inst)) => {
+                Cow::Owned(format!("found instruction `{:?}` not inside block", inst.class.opname))
             }
+            Error::DetachedInstruction(None) => Cow::Borrowed("found unknown instruction not inside block"),
             Error::EmptyInstructionList => Cow::Borrowed("list of instructions is empty"),
             Error::WrongOpCapabilityOperand => Cow::Borrowed("wrong OpCapability operand"),
             Error::WrongOpExtensionOperand => Cow::Borrowed("wrong OpExtension operand"),
@@ -136,10 +131,9 @@ impl binary::Consumer for Loader {
             spirv::Op::MemoryModel => self.module.memory_model = Some(inst),
             spirv::Op::EntryPoint => self.module.entry_points.push(inst),
             spirv::Op::ExecutionMode => self.module.execution_modes.push(inst),
-            spirv::Op::String
-            | spirv::Op::SourceExtension
-            | spirv::Op::Source
-            | spirv::Op::SourceContinued => self.module.debug_string_source.push(inst),
+            spirv::Op::String | spirv::Op::SourceExtension | spirv::Op::Source | spirv::Op::SourceContinued => {
+                self.module.debug_string_source.push(inst)
+            }
             spirv::Op::Name | spirv::Op::MemberName => self.module.debug_names.push(inst),
             spirv::Op::ModuleProcessed => self.module.debug_module_processed.push(inst),
             opcode if grammar::reflect::is_location_debug(opcode) => {
@@ -151,17 +145,11 @@ impl binary::Consumer for Loader {
                 }
             }
             opcode if grammar::reflect::is_annotation(opcode) => self.module.annotations.push(inst),
-            opcode
-                if grammar::reflect::is_type(opcode) || grammar::reflect::is_constant(opcode) =>
-            {
+            opcode if grammar::reflect::is_type(opcode) || grammar::reflect::is_constant(opcode) => {
                 self.module.types_global_values.push(inst)
             }
-            spirv::Op::Variable if self.function.is_none() => {
-                self.module.types_global_values.push(inst)
-            }
-            spirv::Op::Undef if self.function.is_none() => {
-                self.module.types_global_values.push(inst)
-            }
+            spirv::Op::Variable if self.function.is_none() => self.module.types_global_values.push(inst),
+            spirv::Op::Undef if self.function.is_none() => self.module.types_global_values.push(inst),
             spirv::Op::Function => {
                 if_ret_err!(self.function.is_some(), NestedFunction);
                 let mut f = dr::Function::new();
@@ -190,11 +178,7 @@ impl binary::Consumer for Loader {
                 // we are certain the function exists because the above checks.
                 if_ret_err!(self.block.is_none(), MismatchedTerminator);
                 self.block.as_mut().unwrap().instructions.push(inst);
-                self.function
-                    .as_mut()
-                    .unwrap()
-                    .blocks
-                    .push(self.block.take().unwrap())
+                self.function.as_mut().unwrap().blocks.push(self.block.take().unwrap())
             }
             _ => {
                 if self.block.is_none() {

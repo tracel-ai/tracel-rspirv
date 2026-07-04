@@ -434,12 +434,10 @@ impl Disassemble for spirv::MatrixMultiplyAccumulateOperands {
             return "None".to_string();
         }
         let mut bits = vec![];
-        if self.contains(spirv::MatrixMultiplyAccumulateOperands::MATRIX_A_SIGNED_COMPONENTS_INTEL)
-        {
+        if self.contains(spirv::MatrixMultiplyAccumulateOperands::MATRIX_A_SIGNED_COMPONENTS_INTEL) {
             bits.push("MatrixASignedComponentsINTEL")
         }
-        if self.contains(spirv::MatrixMultiplyAccumulateOperands::MATRIX_B_SIGNED_COMPONENTS_INTEL)
-        {
+        if self.contains(spirv::MatrixMultiplyAccumulateOperands::MATRIX_B_SIGNED_COMPONENTS_INTEL) {
             bits.push("MatrixBSignedComponentsINTEL")
         }
         if self.contains(spirv::MatrixMultiplyAccumulateOperands::MATRIX_CB_FLOAT16_INTEL) {

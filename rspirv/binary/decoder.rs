@@ -292,10 +292,7 @@ mod tests {
     fn test_decoding_unknown_execution_model() {
         let b = vec![0xef, 0xbe, 0xad, 0xde];
         let mut d = Decoder::new(&b);
-        assert_eq!(
-            Err(Error::ExecutionModelUnknown(0, 0xdeadbeef)),
-            d.execution_model()
-        );
+        assert_eq!(Err(Error::ExecutionModelUnknown(0, 0xdeadbeef)), d.execution_model());
     }
 
     #[test]

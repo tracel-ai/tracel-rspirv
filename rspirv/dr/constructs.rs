@@ -186,11 +186,7 @@ impl Module {
             .chain(&mut self.debug_module_processed)
             .chain(&mut self.annotations)
             .chain(&mut self.types_global_values)
-            .chain(
-                self.functions
-                    .iter_mut()
-                    .flat_map(|f| f.all_inst_iter_mut()),
-            )
+            .chain(self.functions.iter_mut().flat_map(|f| f.all_inst_iter_mut()))
     }
 }
 
@@ -299,12 +295,7 @@ impl Block {
 
 impl Instruction {
     /// Creates a new `Instruction` instance.
-    pub fn new(
-        opcode: spirv::Op,
-        result_type: Option<Word>,
-        result_id: Option<Word>,
-        operands: Vec<Operand>,
-    ) -> Self {
+    pub fn new(opcode: spirv::Op, result_type: Option<Word>, result_id: Option<Word>, operands: Vec<Operand>) -> Self {
         Instruction {
             class: grammar::CoreInstructionTable::get(opcode),
             result_type,
@@ -328,10 +319,7 @@ mod tests {
 
     #[test]
     fn test_convert_from_string() {
-        assert_eq!(
-            dr::Operand::LiteralString("wow".to_string()),
-            dr::Operand::from("wow")
-        );
+        assert_eq!(dr::Operand::LiteralString("wow".to_string()), dr::Operand::from("wow"));
         assert_eq!(
             dr::Operand::LiteralString("wow".to_string()),
             dr::Operand::from("wow".to_string())
@@ -341,10 +329,7 @@ mod tests {
     #[test]
     fn test_convert_from_numbers() {
         assert_eq!(dr::Operand::LiteralBit32(16u32), dr::Operand::from(16u32));
-        assert_eq!(
-            dr::Operand::LiteralBit64(128934u64),
-            dr::Operand::from(128934u64)
-        );
+        assert_eq!(dr::Operand::LiteralBit64(128934u64), dr::Operand::from(128934u64));
         assert_eq!(
             dr::Operand::LiteralBit32(std::f32::consts::PI.to_bits()),
             dr::Operand::from(std::f32::consts::PI.to_bits())
@@ -392,9 +377,7 @@ mod tests {
         assert_eq!(
             format!(
                 "{}",
-                dr::Operand::FunctionControl(
-                    spirv::FunctionControl::INLINE | spirv::FunctionControl::CONST
-                )
+                dr::Operand::FunctionControl(spirv::FunctionControl::INLINE | spirv::FunctionControl::CONST)
             ),
             "FunctionControl(INLINE | CONST)",
         );

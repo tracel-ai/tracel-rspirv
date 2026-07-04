@@ -1,0 +1,18 @@
+[package]
+edition = "2024"
+name = "pliron-spirv"
+rust-version.workspace = true
+version.workspace = true
+
+[dependencies]
+derive-new = "0.7"
+derive_more = { version = "2", features = ["from", "into"] }
+itertools = "0.15"
+pliron = { workspace = true }
+thiserror = "2"
+
+[dependencies.tracel-rspirv]
+default-features = false
+features = ["pliron"]
+path = "../rspirv"
+version = "=0.13.1+sdk-1.4.350.0"

@@ -28,45 +28,32 @@ enum OperandTy<'a> {
 }
 
 impl OperandTokens {
-    fn new(
-        operands: &[structs::Operand],
-        operand_index: usize,
-        inst: Option<&structs::Instruction>,
-    ) -> Self {
+    fn new(operands: &[structs::Operand], operand_index: usize, inst: Option<&structs::Instruction>) -> Self {
         let operand = &operands[operand_index];
         let name = get_param_name(operands, operand_index);
         let iter = Ident::new(OPERAND_ITER, Span::call_site());
 
         // Can maybe make this more generic by using vendor suffix as the condition, since extensions
         // never use constants. But we don't have a list of vendor suffixes right now.
-        let dynamic_length_ops = [
-            "OpVariableLengthArrayINTEL",
-            "OpUntypedVariableLengthArrayINTEL",
-        ];
+        let dynamic_length_ops = ["OpVariableLengthArrayINTEL", "OpUntypedVariableLengthArrayINTEL"];
         let is_dynamic_length_op = || matches!(inst, Some(structs::Instruction { opname, .. }) if dynamic_length_ops.contains(&opname.as_str()));
 
         let (ty, lift_value, op_ty) = match operand.kind.as_str() {
             "IdRef" => {
                 let (ty, value) = match operand.name.trim_matches('\'') {
-                    "Length" if is_dynamic_length_op() => {
-                        (quote! { spirv::Word }, quote! { *value })
-                    }
+                    "Length" if is_dynamic_length_op() => (quote! { spirv::Word }, quote! { *value }),
                     "Length" => (
                         quote! { Token<Constant> },
                         quote! { self.constants.lookup_token(*value) },
                     ),
-                    "Parameter Types" | "Type" => (
-                        quote! { Token<Type> },
-                        quote! { self.types.lookup_token(*value) },
-                    ),
+                    "Parameter Types" | "Type" => (quote! { Token<Type> }, quote! { self.types.lookup_token(*value) }),
                     // Function type is manually linked by the code.
                     "Function Type" => (quote! { spirv::Word }, quote! { *value }),
                     // NodeSharesPayloadLimitsWithAMDX is reserved with no clearly defined operand meaning
                     "Payload Type" => (quote! { spirv::Word }, quote! { *value }),
-                    name if name.ends_with(" Type") => (
-                        quote! { Token<Type> },
-                        quote! { self.types.lookup_token(*value) },
-                    ),
+                    name if name.ends_with(" Type") => {
+                        (quote! { Token<Type> }, quote! { self.types.lookup_token(*value) })
+                    }
                     //TODO:
                     //"Condition" => Token<Instruction>,
                     //"Default" => Token<Block>,
@@ -85,10 +72,9 @@ impl OperandTokens {
                                     quote! { StructMember },
                                     quote! { StructMember::new(self.types.lookup_token(*value)) },
                                 )),
-                                "OpTypeFunction" => Some((
-                                    quote! { Token<Type> },
-                                    quote! { self.types.lookup_token(*value) },
-                                )),
+                                "OpTypeFunction" => {
+                                    Some((quote! { Token<Type> }, quote! { self.types.lookup_token(*value) }))
+                                }
                                 _ => None,
                             }
                         } else {
@@ -114,16 +100,8 @@ impl OperandTokens {
                 quote! { *value },
                 OperandTy::Single(operand.kind.as_str()),
             ),
-            "LiteralInteger" => (
-                quote! { u32 },
-                quote! { *value },
-                OperandTy::Single("LiteralBit32"),
-            ),
-            "LiteralFloat" => (
-                quote! { u32 },
-                quote! { *value },
-                OperandTy::Single("LiteralBit32"),
-            ),
+            "LiteralInteger" => (quote! { u32 }, quote! { *value }, OperandTy::Single("LiteralBit32")),
+            "LiteralFloat" => (quote! { u32 }, quote! { *value }, OperandTy::Single("LiteralBit32")),
             "LiteralExtInstInteger" => (
                 quote! { u32 },
                 quote! { *value },
@@ -265,10 +243,7 @@ pub fn gen_sr_code_from_operand_kind_grammar(
     grammar_operand_kinds: &[structs::OperandKind],
 ) -> CodeGeneratedFromOperandKindGrammar {
     // The decoration operand kind
-    let decoration = grammar_operand_kinds
-        .iter()
-        .find(|k| k.kind == "Decoration")
-        .unwrap();
+    let decoration = grammar_operand_kinds.iter().find(|k| k.kind == "Decoration").unwrap();
     // Go and compose all its enumerants
     let enumerants: Vec<_> = decoration
         .enumerants
@@ -414,10 +389,7 @@ pub fn gen_sr_code_from_instruction_grammar(
                         #( pub #field_names: #field_types ),*
                     }
                 });
-                let func_name = Ident::new(
-                    &format!("lift_{}", inst_name.to_snake_case()),
-                    Span::call_site(),
-                );
+                let func_name = Ident::new(&format!("lift_{}", inst_name.to_snake_case()), Span::call_site());
                 lifts.push(quote! {
                     #[allow(unused)] //TODO
                     pub fn #func_name(

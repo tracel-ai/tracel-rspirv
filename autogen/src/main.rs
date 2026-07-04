@@ -3,6 +3,7 @@
 mod binary;
 mod dr;
 mod header;
+mod pliron;
 mod sr;
 mod structs;
 mod table;
@@ -16,6 +17,8 @@ use std::{
     process,
 };
 use utils::write_autogen_comment;
+
+use crate::pliron::generate_pliron_dialect;
 
 fn write(path: &Path, contents: impl ToString) {
     let mut f = fs::File::create(path).unwrap_or_else(|_| panic!("cannot open file: {:?}", path));
@@ -50,46 +53,57 @@ fn map_reserved_instructions(grammar: &mut structs::Grammar) {
     }
 }
 
-fn opname_suffix_weight(opname: &str) -> u32 {
-    const VENDORS: [&str; 36] = [
-        "AMD",
-        "AMDX",
-        "ANDROID",
-        "ARM",
-        "BRCM",
-        "CHROMIUM",
-        "EXT",
-        "FB",
-        "FSL",
-        "FUCHSIA",
-        "GGP",
-        "GOOGLE",
-        "HUAWEI",
-        "IMG",
-        "INTEL",
-        "JUICE",
-        "KDAB",
-        "KHX",
-        "LUNARG",
-        "MESA",
-        "MVK",
-        "NN",
-        "NV",
-        "NVX",
-        "NXP",
-        "NZXT",
-        "QCOM",
-        "QNX",
-        "RASTERGRID",
-        "RENDERDOC",
-        "SAMSUNG",
-        "SEC",
-        "TIZEN",
-        "VALVE",
-        "VIV",
-        "VSI",
-    ];
+pub const VENDORS: [&str; 36] = [
+    "AMD",
+    "AMDX",
+    "ANDROID",
+    "ARM",
+    "BRCM",
+    "CHROMIUM",
+    "EXT",
+    "FB",
+    "FSL",
+    "FUCHSIA",
+    "GGP",
+    "GOOGLE",
+    "HUAWEI",
+    "IMG",
+    "INTEL",
+    "JUICE",
+    "KDAB",
+    "KHX",
+    "LUNARG",
+    "MESA",
+    "MVK",
+    "NN",
+    "NV",
+    "NVX",
+    "NXP",
+    "NZXT",
+    "QCOM",
+    "QNX",
+    "RASTERGRID",
+    "RENDERDOC",
+    "SAMSUNG",
+    "SEC",
+    "TIZEN",
+    "VALVE",
+    "VIV",
+    "VSI",
+];
 
+pub fn split_vendor_tag(opname: &str) -> (&str, Option<&'static str>) {
+    match opname {
+        _ if opname.ends_with("KHR") => (opname.strip_suffix("KHR").unwrap(), Some("KHR")),
+        _ if opname.ends_with("EXT") => (opname.strip_suffix("EXT").unwrap(), Some("EXT")),
+        _ if let Some(vendor) = VENDORS.iter().find(|v| opname.ends_with(**v)) => {
+            (opname.strip_suffix(vendor).unwrap(), Some(*vendor))
+        }
+        _ => (opname, None),
+    }
+}
+
+fn opname_suffix_weight(opname: &str) -> u32 {
     match opname {
         _ if opname.ends_with("KHR") => 1,
         _ if opname.ends_with("EXT") => 2,
@@ -107,6 +121,8 @@ fn sort_instructions(grammar: &mut structs::Grammar) {
 }
 
 fn main() {
+    let gen_pliron = env::args().any(|arg| arg == "--pliron");
+
     // Path to the SPIR-V core grammar file.
     let env_var = env::var("CARGO_MANIFEST_DIR").unwrap();
     let autogen_src_dir = PathBuf::from(&env_var);
@@ -118,8 +134,7 @@ fn main() {
     let grammar: structs::Grammar = {
         let mut original = serde_json::from_str(
             &fs::read_to_string(
-                autogen_src_dir
-                    .join("external/SPIRV-Headers/include/spirv/unified1/spirv.core.grammar.json"),
+                autogen_src_dir.join("external/SPIRV-Headers/include/spirv/unified1/spirv.core.grammar.json"),
             )
             .unwrap(),
         )
@@ -130,22 +145,45 @@ fn main() {
     };
 
     let extended_instruction_sets = [
-        ("GLSL.std.450", "GLOp", "gl_", true, "https://www.khronos.org/registry/spir-v/specs/unified1/GLSL.std.450.html"),
-        ("OpenCL.std.100", "CLOp", "cl_", true, "https://www.khronos.org/registry/spir-v/specs/unified1/OpenCL.ExtendedInstructionSet.100.html"),
-        ("NonSemantic.DebugPrintf", "DebugPrintfOp", "", false, "https://github.com/KhronosGroup/Vulkan-ValidationLayers/blob/master/docs/debug_printf.md"),
+        (
+            "GLSL.std.450",
+            "GLOp",
+            "gl_",
+            true,
+            "https://www.khronos.org/registry/spir-v/specs/unified1/GLSL.std.450.html",
+        ),
+        (
+            "OpenCL.std.100",
+            "CLOp",
+            "cl_",
+            true,
+            "https://www.khronos.org/registry/spir-v/specs/unified1/OpenCL.ExtendedInstructionSet.100.html",
+        ),
+        (
+            "NonSemantic.DebugPrintf",
+            "DebugPrintfOp",
+            "",
+            false,
+            "https://github.com/KhronosGroup/Vulkan-ValidationLayers/blob/master/docs/debug_printf.md",
+        ),
     ];
-    let extended_instruction_sets =
-        extended_instruction_sets.map(|(ext, op, prefix, with_result, url)| {
-            let grammar: structs::ExtInstSetGrammar = serde_json::from_str(
-                &std::fs::read_to_string(autogen_src_dir.join(format!(
-                    "external/SPIRV-Headers/include/spirv/unified1/extinst.{}.grammar.json",
-                    ext.to_lowercase()
-                )))
-                .unwrap(),
-            )
-            .unwrap();
-            (ext, op, prefix, url, with_result, grammar)
-        });
+    let extended_instruction_sets = extended_instruction_sets.map(|(ext, op, prefix, with_result, url)| {
+        let grammar: structs::ExtInstSetGrammar = serde_json::from_str(
+            &std::fs::read_to_string(autogen_src_dir.join(format!(
+                "external/SPIRV-Headers/include/spirv/unified1/extinst.{}.grammar.json",
+                ext.to_lowercase()
+            )))
+            .unwrap(),
+        )
+        .unwrap();
+        (ext, op, prefix, url, with_result, grammar)
+    });
+
+    if gen_pliron {
+        println!("Generating Pliron dialect");
+        generate_pliron_dialect(&autogen_src_dir, grammar);
+        return;
+    }
 
     // Extended instruction sets
     for (ext, op_name, op_prefix, url, with_result, grammar) in &extended_instruction_sets {
@@ -177,7 +215,12 @@ fn main() {
 
     // Special case for debug extension
     {
-        let (ext, op_name, op_prefix, url) = ("NonSemantic.Shader.DebugInfo.100", "DebugInfoOp", "shader_", "https://github.khronos.org/SPIRV-Registry/nonsemantic/NonSemantic.Shader.DebugInfo.100.html");
+        let (ext, op_name, op_prefix, url) = (
+            "NonSemantic.Shader.DebugInfo.100",
+            "DebugInfoOp",
+            "shader_",
+            "https://github.khronos.org/SPIRV-Registry/nonsemantic/NonSemantic.Shader.DebugInfo.100.html",
+        );
 
         let grammar: structs::ExtInstSetGrammar = serde_json::from_str(
             &std::fs::read_to_string(autogen_src_dir.join(format!(
@@ -196,13 +239,8 @@ fn main() {
             header,
         );
 
-        let builder = dr::gen_dr_builder_debug_ext(
-            ext,
-            op_name,
-            op_prefix,
-            &grammar.operand_kinds,
-            &grammar.instructions,
-        );
+        let builder =
+            dr::gen_dr_builder_debug_ext(ext, op_name, op_prefix, &grammar.operand_kinds, &grammar.instructions);
         write_formatted(
             &autogen_src_dir.join(format!(
                 "../rspirv/dr/autogen_{}.rs",
@@ -309,10 +347,7 @@ fn main() {
         &autogen_src_dir.join("../rspirv/sr/autogen_instructions.rs"),
         instructions.instructions,
     );
-    write_formatted(
-        &autogen_src_dir.join("../rspirv/sr/autogen_ops.rs"),
-        instructions.ops,
-    );
+    write_formatted(&autogen_src_dir.join("../rspirv/sr/autogen_ops.rs"), instructions.ops);
     write_formatted(
         &autogen_src_dir.join("../rspirv/lift/autogen_context.rs"),
         instructions.lift_context,

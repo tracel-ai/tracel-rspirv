@@ -8,11 +8,7 @@ use crate::{
 };
 impl Builder {
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_acos(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_acos(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_acos_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -34,11 +30,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_acosh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_acosh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_acosh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -60,11 +52,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_acospi(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_acospi(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_acospi_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -86,11 +74,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_asin(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_asin(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_asin_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -112,11 +96,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_asinh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_asinh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_asinh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -138,11 +118,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_asinpi(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_asinpi(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_asinpi_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -164,11 +140,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_atan(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_atan(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_atan_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -218,11 +190,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_atanh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_atanh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_atanh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -244,11 +212,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_atanpi(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_atanpi(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_atanpi_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -298,11 +262,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_cbrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_cbrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_cbrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -324,11 +284,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_ceil(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_ceil(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_ceil_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -378,11 +334,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_cos(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_cos(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_cos_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -404,11 +356,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_cosh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_cosh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_cosh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -430,11 +378,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_cospi(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_cospi(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_cospi_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -456,11 +400,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_erfc(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_erfc(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_erfc_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -482,11 +422,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_erf(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_erf(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_erf_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -508,11 +444,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_exp(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_exp(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_exp_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -534,11 +466,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_exp2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_exp2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_exp2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -560,11 +488,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_exp10(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_exp10(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_exp10_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -586,11 +510,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_expm1(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_expm1(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_expm1_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -612,11 +532,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_fabs(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_fabs(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_fabs_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -666,11 +582,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_floor(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_floor(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_floor_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -712,11 +624,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(a),
-            dr::Operand::IdRef(b),
-            dr::Operand::IdRef(c),
-        ];
+        let mut args = vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)];
         self.ext_inst(
             result_type,
             result_id,
@@ -894,11 +802,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_ilogb(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_ilogb(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_ilogb_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -948,11 +852,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_lgamma(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_lgamma(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_lgamma_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1002,11 +902,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_log(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_log(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_log_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1028,11 +924,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_log2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_log2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_log2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1054,11 +946,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_log10(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_log10(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_log10_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1080,11 +968,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_log1p(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_log1p(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_log1p_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1106,11 +990,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_logb(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_logb(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_logb_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1152,11 +1032,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(a),
-            dr::Operand::IdRef(b),
-            dr::Operand::IdRef(c),
-        ];
+        let mut args = vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)];
         self.ext_inst(
             result_type,
             result_id,
@@ -1250,11 +1126,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_nan(
-        &mut self,
-        result_type: spirv::Word,
-        nancode: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_nan(&mut self, result_type: spirv::Word, nancode: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_nan_id(result_type, None, nancode)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1436,11 +1308,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(quo),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(quo)];
         self.ext_inst(
             result_type,
             result_id,
@@ -1450,11 +1318,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_rint(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_rint(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_rint_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1504,11 +1368,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_round(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_round(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_round_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1530,11 +1390,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_rsqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_rsqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_rsqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1556,11 +1412,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_sin(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_sin(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_sin_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1610,11 +1462,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_sinh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_sinh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_sinh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1636,11 +1484,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_sinpi(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_sinpi(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_sinpi_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1662,11 +1506,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_sqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_sqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_sqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1688,11 +1528,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_tan(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_tan(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_tan_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1714,11 +1550,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_tanh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_tanh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_tanh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1740,11 +1572,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_tanpi(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_tanpi(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_tanpi_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1766,11 +1594,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_tgamma(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_tgamma(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_tgamma_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1792,11 +1616,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_trunc(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_trunc(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_trunc_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1818,11 +1638,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_cos(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_cos(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_cos_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1872,11 +1688,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_exp(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_exp(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_exp_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1898,11 +1710,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_exp2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_exp2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_exp2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1924,11 +1732,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_exp10(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_exp10(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_exp10_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1950,11 +1754,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_log(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_log(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_log_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1976,11 +1776,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_log2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_log2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_log2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2002,11 +1798,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_log10(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_log10(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_log10_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2056,11 +1848,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_recip(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_recip(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_recip_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2082,11 +1870,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_rsqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_rsqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_rsqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2108,11 +1892,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_sin(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_sin(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_sin_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2134,11 +1914,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_sqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_sqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_sqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2160,11 +1936,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_half_tan(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_half_tan(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_half_tan_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2186,11 +1958,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_cos(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_cos(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_cos_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2240,11 +2008,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_exp(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_exp(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_exp_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2266,11 +2030,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_exp2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_exp2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_exp2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2292,11 +2052,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_exp10(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_exp10(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_exp10_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2318,11 +2074,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_log(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_log(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_log_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2344,11 +2096,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_log2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_log2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_log2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2370,11 +2118,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_log10(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_log10(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_log10_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2424,11 +2168,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_recip(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_recip(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_recip_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2450,11 +2190,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_rsqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_rsqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_rsqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2476,11 +2212,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_sin(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_sin(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_sin_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2502,11 +2234,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_sqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_sqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_sqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2528,11 +2256,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_native_tan(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_native_tan(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_native_tan_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2588,11 +2312,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_degrees(
-        &mut self,
-        result_type: spirv::Word,
-        radians: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_degrees(&mut self, result_type: spirv::Word, radians: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_degrees_id(result_type, None, radians)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2690,11 +2410,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(a),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(a)];
         self.ext_inst(
             result_type,
             result_id,
@@ -2704,11 +2420,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_radians(
-        &mut self,
-        result_type: spirv::Word,
-        degrees: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_radians(&mut self, result_type: spirv::Word, degrees: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_radians_id(result_type, None, degrees)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2792,11 +2504,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_sign(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_sign(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_sign_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2874,11 +2582,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_length(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_length(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_length_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2900,11 +2604,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_normalize(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_normalize(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_normalize_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2954,11 +2654,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_fast_length(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_fast_length(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_fast_length_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2980,11 +2676,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_fast_normalize(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_fast_normalize(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_fast_normalize_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -3006,11 +2698,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_s_abs(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_s_abs(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_s_abs_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -3296,11 +2984,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_clz(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_clz(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_clz_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -3322,11 +3006,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_ctz(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_ctz(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_ctz_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -3368,11 +3048,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(a),
-            dr::Operand::IdRef(b),
-            dr::Operand::IdRef(c),
-        ];
+        let mut args = vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)];
         self.ext_inst(
             result_type,
             result_id,
@@ -3402,11 +3078,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(z),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(z)];
         self.ext_inst(
             result_type,
             result_id,
@@ -3436,11 +3108,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(z),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(z)];
         self.ext_inst(
             result_type,
             result_id,
@@ -3730,11 +3398,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_popcount(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_popcount(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_popcount_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -3776,11 +3440,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(z),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(z)];
         self.ext_inst(
             result_type,
             result_id,
@@ -3810,11 +3470,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(z),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(z)];
         self.ext_inst(
             result_type,
             result_id,
@@ -4396,11 +4052,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(a),
-            dr::Operand::IdRef(b),
-            dr::Operand::IdRef(c),
-        ];
+        let mut args = vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)];
         self.ext_inst(
             result_type,
             result_id,
@@ -4430,11 +4082,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(a),
-            dr::Operand::IdRef(b),
-            dr::Operand::IdRef(c),
-        ];
+        let mut args = vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)];
         self.ext_inst(
             result_type,
             result_id,
@@ -4444,11 +4092,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn cl_u_abs(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn cl_u_abs(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.cl_u_abs_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -4546,11 +4190,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "OpenCL.std.100");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(a),
-            dr::Operand::IdRef(b),
-            dr::Operand::IdRef(c),
-        ];
+        let mut args = vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)];
         self.ext_inst(
             result_type,
             result_id,

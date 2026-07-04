@@ -7,8 +7,7 @@ impl Builder {
     pub fn constant_true(&mut self, result_type: spirv::Word) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::ConstantTrue, Some(result_type), Some(id), vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::ConstantTrue, Some(result_type), Some(id), vec![]);
         self.module.types_global_values.push(inst);
         id
     }
@@ -16,12 +15,7 @@ impl Builder {
     pub fn constant_false(&mut self, result_type: spirv::Word) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::ConstantFalse,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::ConstantFalse, Some(result_type), Some(id), vec![]);
         self.module.types_global_values.push(inst);
         id
     }
@@ -33,14 +27,8 @@ impl Builder {
     ) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::ConstantComposite,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
-        inst.operands
-            .extend(constituents.into_iter().map(dr::Operand::IdRef));
+        let mut inst = dr::Instruction::new(spirv::Op::ConstantComposite, Some(result_type), Some(id), vec![]);
+        inst.operands.extend(constituents.into_iter().map(dr::Operand::IdRef));
         self.module.types_global_values.push(inst);
         id
     }
@@ -71,8 +59,7 @@ impl Builder {
     pub fn constant_null(&mut self, result_type: spirv::Word) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::ConstantNull, Some(result_type), Some(id), vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::ConstantNull, Some(result_type), Some(id), vec![]);
         self.module.types_global_values.push(inst);
         id
     }
@@ -80,12 +67,7 @@ impl Builder {
     pub fn spec_constant_true(&mut self, result_type: spirv::Word) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::SpecConstantTrue,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::SpecConstantTrue, Some(result_type), Some(id), vec![]);
         self.module.types_global_values.push(inst);
         id
     }
@@ -93,12 +75,7 @@ impl Builder {
     pub fn spec_constant_false(&mut self, result_type: spirv::Word) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::SpecConstantFalse,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::SpecConstantFalse, Some(result_type), Some(id), vec![]);
         self.module.types_global_values.push(inst);
         id
     }
@@ -110,14 +87,8 @@ impl Builder {
     ) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::SpecConstantComposite,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
-        inst.operands
-            .extend(constituents.into_iter().map(dr::Operand::IdRef));
+        let mut inst = dr::Instruction::new(spirv::Op::SpecConstantComposite, Some(result_type), Some(id), vec![]);
+        inst.operands.extend(constituents.into_iter().map(dr::Operand::IdRef));
         self.module.types_global_values.push(inst);
         id
     }
@@ -135,11 +106,7 @@ impl Builder {
         id
     }
     #[doc = "Appends an OpConstantCompositeReplicateEXT instruction."]
-    pub fn constant_composite_replicate_ext(
-        &mut self,
-        result_type: spirv::Word,
-        value: spirv::Word,
-    ) -> spirv::Word {
+    pub fn constant_composite_replicate_ext(&mut self, result_type: spirv::Word, value: spirv::Word) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -169,11 +136,7 @@ impl Builder {
         id
     }
     #[doc = "Appends an OpConstantSizeOfEXT instruction."]
-    pub fn constant_size_of_ext(
-        &mut self,
-        result_type: spirv::Word,
-        ty: spirv::Word,
-    ) -> spirv::Word {
+    pub fn constant_size_of_ext(&mut self, result_type: spirv::Word, ty: spirv::Word) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
@@ -186,21 +149,11 @@ impl Builder {
         id
     }
     #[doc = "Appends an OpConstantDataKHR instruction."]
-    pub fn constant_data_khr(
-        &mut self,
-        result_type: spirv::Word,
-        data: impl IntoIterator<Item = u32>,
-    ) -> spirv::Word {
+    pub fn constant_data_khr(&mut self, result_type: spirv::Word, data: impl IntoIterator<Item = u32>) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::ConstantDataKHR,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
-        inst.operands
-            .extend(data.into_iter().map(dr::Operand::LiteralBit32));
+        let mut inst = dr::Instruction::new(spirv::Op::ConstantDataKHR, Some(result_type), Some(id), vec![]);
+        inst.operands.extend(data.into_iter().map(dr::Operand::LiteralBit32));
         self.module.types_global_values.push(inst);
         id
     }
@@ -212,14 +165,8 @@ impl Builder {
     ) -> spirv::Word {
         let id = self.id();
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::SpecConstantDataKHR,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
-        inst.operands
-            .extend(data.into_iter().map(dr::Operand::LiteralBit32));
+        let mut inst = dr::Instruction::new(spirv::Op::SpecConstantDataKHR, Some(result_type), Some(id), vec![]);
+        inst.operands.extend(data.into_iter().map(dr::Operand::LiteralBit32));
         self.module.types_global_values.push(inst);
         id
     }

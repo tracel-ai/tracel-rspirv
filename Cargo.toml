@@ -1,14 +1,18 @@
 [workspace]
-members = ["autogen", "rspirv", "xtask"]
+members = ["autogen", "rspirv", "xtask", "pliron-spirv"]
 resolver = "2"
 
 [workspace.package]
 edition = "2024"
-rust-version = "1.88"
+rust-version = "1.91"
 version = "0.13.1+sdk-1.4.350.0"
 
 [workspace.dependencies]
 log = { default-features = false, version = "0.4.22" }
+pliron = { path = "../pliron", default-features = false }
 rstest = "0.26.1"
 strum = { version = "0.28", features = ["derive"] }
 tracel-xtask = { version = "=4.17.2" }
+
+[profile.dev]
+debug = 0

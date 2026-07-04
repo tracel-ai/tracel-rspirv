@@ -61,14 +61,10 @@ where
 {
     format!(
         "{rid}Op{opcode}{rtype}{space}{operands}",
-        rid = inst
-            .result_id
-            .map_or(String::new(), |w| format!("%{} = ", w)),
+        rid = inst.result_id.map_or(String::new(), |w| format!("%{} = ", w)),
         opcode = inst.class.opname,
         // extra space both before and after the result type
-        rtype = inst
-            .result_type
-            .map_or(String::new(), |w| format!("  %{}{}", w, space)),
+        rtype = inst.result_type.map_or(String::new(), |w| format!("  %{}{}", w, space)),
         space = space,
         operands = disas_operands(&inst.operands)
     )
@@ -83,10 +79,7 @@ impl Disassemble for dr::Instruction {
 
 impl Disassemble for dr::Block {
     fn disassemble(&self) -> String {
-        let label = self
-            .label
-            .as_ref()
-            .map_or(String::new(), |i| i.disassemble());
+        let label = self.label.as_ref().map_or(String::new(), |i| i.disassemble());
         format!(
             "{label}\n{insts}",
             label = label,
@@ -163,16 +156,10 @@ impl Disassemble for dr::Module {
         // to call dr::Function and dr::BasicBlock's disassemble() method here
         // but because of the ExtInstSetTracker, we are not able to directly.
         for f in &self.functions {
-            push!(
-                &mut text,
-                f.def.as_ref().map_or(String::new(), |i| i.disassemble())
-            );
+            push!(&mut text, f.def.as_ref().map_or(String::new(), |i| i.disassemble()));
             push!(&mut text, disas_join(&f.parameters, "\n"));
             for bb in &f.blocks {
-                push!(
-                    &mut text,
-                    bb.label.as_ref().map_or(String::new(), |i| i.disassemble())
-                );
+                push!(&mut text, bb.label.as_ref().map_or(String::new(), |i| i.disassemble()));
                 for inst in &bb.instructions {
                     match inst.class.opcode {
                         spirv::Op::ExtInst => {
@@ -182,10 +169,7 @@ impl Disassemble for dr::Module {
                     }
                 }
             }
-            push!(
-                &mut text,
-                f.end.as_ref().map_or(String::new(), |i| i.disassemble())
-            );
+            push!(&mut text, f.end.as_ref().map_or(String::new(), |i| i.disassemble()));
         }
 
         text.join("\n")
@@ -199,12 +183,12 @@ fn disas_constant(inst: &dr::Instruction, type_tracker: &tracker::TypeTracker) -
     debug_assert_eq!(inst.operands.len(), 1);
     let literal_type = type_tracker.resolve(inst.result_type.unwrap());
     match inst.operands[0] {
-        LiteralBit32(value) => disas_instruction(inst, " ", |_| {
-            disas_literal_bit_operand(value, &literal_type.unwrap())
-        }),
-        LiteralBit64(value) => disas_instruction(inst, " ", |_| {
-            disas_literal_bit_operand(value, &literal_type.unwrap())
-        }),
+        LiteralBit32(value) => {
+            disas_instruction(inst, " ", |_| disas_literal_bit_operand(value, &literal_type.unwrap()))
+        }
+        LiteralBit64(value) => {
+            disas_instruction(inst, " ", |_| disas_literal_bit_operand(value, &literal_type.unwrap()))
+        }
         _ => inst.disassemble(),
     }
 }
@@ -238,10 +222,7 @@ impl DisassembleLiteralBit for u64 {
     }
 }
 
-fn disas_ext_inst(
-    inst: &dr::Instruction,
-    ext_inst_set_tracker: &tracker::ExtInstSetTracker,
-) -> String {
+fn disas_ext_inst(inst: &dr::Instruction, ext_inst_set_tracker: &tracker::ExtInstSetTracker) -> String {
     if inst.operands.len() < 2 {
         return inst.disassemble();
     }
@@ -277,9 +258,7 @@ mod tests {
         assert_eq!("None", o.disassemble());
         let o = dr::Operand::FunctionControl(spirv::FunctionControl::INLINE);
         assert_eq!("Inline", o.disassemble());
-        let o = dr::Operand::FunctionControl(
-            spirv::FunctionControl::INLINE | spirv::FunctionControl::PURE,
-        );
+        let o = dr::Operand::FunctionControl(spirv::FunctionControl::INLINE | spirv::FunctionControl::PURE);
         assert_eq!("Inline|Pure", o.disassemble());
         let o = dr::Operand::FunctionControl(spirv::FunctionControl::all());
         assert_eq!("Inline|DontInline|Pure|Const|OptNoneEXT", o.disassemble());
@@ -291,9 +270,8 @@ mod tests {
         assert_eq!("None", o.disassemble());
         let o = dr::Operand::MemorySemantics(spirv::MemorySemantics::RELEASE);
         assert_eq!("Release", o.disassemble());
-        let o = dr::Operand::MemorySemantics(
-            spirv::MemorySemantics::RELEASE | spirv::MemorySemantics::WORKGROUP_MEMORY,
-        );
+        let o =
+            dr::Operand::MemorySemantics(spirv::MemorySemantics::RELEASE | spirv::MemorySemantics::WORKGROUP_MEMORY);
         assert_eq!("Release|WorkgroupMemory", o.disassemble());
     }
 

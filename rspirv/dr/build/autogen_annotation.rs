@@ -11,12 +11,7 @@ impl Builder {
         decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::Decorate,
-            None,
-            None,
-            vec![dr::Operand::IdRef(target)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::Decorate, None, None, vec![dr::Operand::IdRef(target)]);
         inst.operands.push(dr::Operand::Decoration(decoration));
         inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
@@ -34,21 +29,14 @@ impl Builder {
             spirv::Op::MemberDecorate,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(structure_type),
-                dr::Operand::LiteralBit32(member),
-            ],
+            vec![dr::Operand::IdRef(structure_type), dr::Operand::LiteralBit32(member)],
         );
         inst.operands.push(dr::Operand::Decoration(decoration));
         inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
     }
     #[doc = "Appends an OpGroupDecorate instruction."]
-    pub fn group_decorate(
-        &mut self,
-        decoration_group: spirv::Word,
-        targets: impl IntoIterator<Item = spirv::Word>,
-    ) {
+    pub fn group_decorate(&mut self, decoration_group: spirv::Word, targets: impl IntoIterator<Item = spirv::Word>) {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::GroupDecorate,
@@ -56,8 +44,7 @@ impl Builder {
             None,
             vec![dr::Operand::IdRef(decoration_group)],
         );
-        inst.operands
-            .extend(targets.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(targets.into_iter().map(dr::Operand::IdRef));
         self.module.annotations.push(inst);
     }
     #[doc = "Appends an OpGroupMemberDecorate instruction."]
@@ -87,12 +74,7 @@ impl Builder {
         decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::DecorateId,
-            None,
-            None,
-            vec![dr::Operand::IdRef(target)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::DecorateId, None, None, vec![dr::Operand::IdRef(target)]);
         inst.operands.push(dr::Operand::Decoration(decoration));
         inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
@@ -110,10 +92,7 @@ impl Builder {
             spirv::Op::MemberDecorateIdEXT,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(structure_type),
-                dr::Operand::LiteralBit32(member),
-            ],
+            vec![dr::Operand::IdRef(structure_type), dr::Operand::LiteralBit32(member)],
         );
         inst.operands.push(dr::Operand::Decoration(decoration));
         inst.operands.extend(decoration_extra);
@@ -127,12 +106,7 @@ impl Builder {
         decoration_extra: impl IntoIterator<Item = dr::Operand>,
     ) {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::DecorateString,
-            None,
-            None,
-            vec![dr::Operand::IdRef(target)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::DecorateString, None, None, vec![dr::Operand::IdRef(target)]);
         inst.operands.push(dr::Operand::Decoration(decoration));
         inst.operands.extend(decoration_extra);
         self.module.annotations.push(inst);
@@ -150,10 +124,7 @@ impl Builder {
             spirv::Op::MemberDecorateString,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(struct_type),
-                dr::Operand::LiteralBit32(member),
-            ],
+            vec![dr::Operand::IdRef(struct_type), dr::Operand::LiteralBit32(member)],
         );
         inst.operands.push(dr::Operand::Decoration(decoration));
         inst.operands.extend(decoration_extra);

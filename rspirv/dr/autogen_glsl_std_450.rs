@@ -8,11 +8,7 @@ use crate::{
 };
 impl Builder {
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_round(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_round(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_round_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -34,11 +30,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_round_even(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_round_even(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_round_even_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -60,11 +52,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_trunc(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_trunc(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_trunc_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -86,11 +74,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_f_abs(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_f_abs(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_f_abs_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -112,11 +96,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_s_abs(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_s_abs(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_s_abs_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -138,11 +118,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_f_sign(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_f_sign(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_f_sign_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -164,11 +140,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_s_sign(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_s_sign(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_s_sign_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -190,11 +162,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_floor(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_floor(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_floor_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -216,11 +184,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_ceil(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_ceil(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_ceil_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -242,11 +206,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_fract(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_fract(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_fract_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -268,11 +228,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_radians(
-        &mut self,
-        result_type: spirv::Word,
-        degrees: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_radians(&mut self, result_type: spirv::Word, degrees: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_radians_id(result_type, None, degrees)
     }
     #[allow(clippy::too_many_arguments)]
@@ -294,11 +250,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_degrees(
-        &mut self,
-        result_type: spirv::Word,
-        radians: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_degrees(&mut self, result_type: spirv::Word, radians: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_degrees_id(result_type, None, radians)
     }
     #[allow(clippy::too_many_arguments)]
@@ -320,11 +272,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_sin(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_sin(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_sin_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -346,11 +294,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_cos(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_cos(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_cos_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -372,11 +316,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_tan(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_tan(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_tan_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -398,11 +338,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_asin(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_asin(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_asin_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -424,11 +360,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_acos(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_acos(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_acos_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -450,11 +382,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_atan(
-        &mut self,
-        result_type: spirv::Word,
-        y_over_x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_atan(&mut self, result_type: spirv::Word, y_over_x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_atan_id(result_type, None, y_over_x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -476,11 +404,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_sinh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_sinh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_sinh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -502,11 +426,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_cosh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_cosh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_cosh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -528,11 +448,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_tanh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_tanh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_tanh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -554,11 +470,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_asinh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_asinh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_asinh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -580,11 +492,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_acosh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_acosh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_acosh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -606,11 +514,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_atanh(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_atanh(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_atanh_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -688,11 +592,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_exp(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_exp(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_exp_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -714,11 +614,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_log(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_log(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_log_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -740,11 +636,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_exp2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_exp2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_exp2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -766,11 +658,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_log2(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_log2(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_log2_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -792,11 +680,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_sqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_sqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_sqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -818,11 +702,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_inverse_sqrt(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_inverse_sqrt(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_inverse_sqrt_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -844,11 +724,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_determinant(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_determinant(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_determinant_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -870,11 +746,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_matrix_inverse(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_matrix_inverse(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_matrix_inverse_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -924,11 +796,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_modf_struct(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_modf_struct(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_modf_struct_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1240,11 +1108,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "GLSL.std.450");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(a),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(a)];
         self.ext_inst(
             result_type,
             result_id,
@@ -1274,11 +1138,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "GLSL.std.450");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(x),
-            dr::Operand::IdRef(y),
-            dr::Operand::IdRef(a),
-        ];
+        let mut args = vec![dr::Operand::IdRef(x), dr::Operand::IdRef(y), dr::Operand::IdRef(a)];
         self.ext_inst(
             result_type,
             result_id,
@@ -1370,11 +1230,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "GLSL.std.450");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(a),
-            dr::Operand::IdRef(b),
-            dr::Operand::IdRef(c),
-        ];
+        let mut args = vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)];
         self.ext_inst(
             result_type,
             result_id,
@@ -1412,11 +1268,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_frexp_struct(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_frexp_struct(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_frexp_struct_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1466,11 +1318,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_pack_snorm4x8(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_pack_snorm4x8(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_pack_snorm4x8_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1492,11 +1340,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_pack_unorm4x8(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_pack_unorm4x8(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_pack_unorm4x8_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1518,11 +1362,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_pack_snorm2x16(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_pack_snorm2x16(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_pack_snorm2x16_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1544,11 +1384,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_pack_unorm2x16(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_pack_unorm2x16(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_pack_unorm2x16_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1570,11 +1406,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_pack_half2x16(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_pack_half2x16(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_pack_half2x16_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1596,11 +1428,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_pack_double2x32(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_pack_double2x32(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_pack_double2x32_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1622,11 +1450,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_unpack_snorm2x16(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_unpack_snorm2x16(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_unpack_snorm2x16_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1648,11 +1472,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_unpack_unorm2x16(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_unpack_unorm2x16(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_unpack_unorm2x16_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1674,11 +1494,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_unpack_half2x16(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_unpack_half2x16(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_unpack_half2x16_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1700,11 +1516,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_unpack_snorm4x8(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_unpack_snorm4x8(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_unpack_snorm4x8_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1726,11 +1538,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_unpack_unorm4x8(
-        &mut self,
-        result_type: spirv::Word,
-        p: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_unpack_unorm4x8(&mut self, result_type: spirv::Word, p: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_unpack_unorm4x8_id(result_type, None, p)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1752,11 +1560,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_unpack_double2x32(
-        &mut self,
-        result_type: spirv::Word,
-        v: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_unpack_double2x32(&mut self, result_type: spirv::Word, v: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_unpack_double2x32_id(result_type, None, v)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1778,11 +1582,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_length(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_length(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_length_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1860,11 +1660,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_normalize(
-        &mut self,
-        result_type: spirv::Word,
-        x: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_normalize(&mut self, result_type: spirv::Word, x: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_normalize_id(result_type, None, x)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1906,11 +1702,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "GLSL.std.450");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(n),
-            dr::Operand::IdRef(i),
-            dr::Operand::IdRef(nref),
-        ];
+        let mut args = vec![dr::Operand::IdRef(n), dr::Operand::IdRef(i), dr::Operand::IdRef(nref)];
         self.ext_inst(
             result_type,
             result_id,
@@ -1968,11 +1760,7 @@ impl Builder {
     ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "GLSL.std.450");
         #[allow(unused_mut)]
-        let mut args = vec![
-            dr::Operand::IdRef(i),
-            dr::Operand::IdRef(n),
-            dr::Operand::IdRef(eta),
-        ];
+        let mut args = vec![dr::Operand::IdRef(i), dr::Operand::IdRef(n), dr::Operand::IdRef(eta)];
         self.ext_inst(
             result_type,
             result_id,
@@ -1982,11 +1770,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_find_i_lsb(
-        &mut self,
-        result_type: spirv::Word,
-        value: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_find_i_lsb(&mut self, result_type: spirv::Word, value: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_find_i_lsb_id(result_type, None, value)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2008,11 +1792,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_find_s_msb(
-        &mut self,
-        result_type: spirv::Word,
-        value: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_find_s_msb(&mut self, result_type: spirv::Word, value: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_find_s_msb_id(result_type, None, value)
     }
     #[allow(clippy::too_many_arguments)]
@@ -2034,11 +1814,7 @@ impl Builder {
         )
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn gl_find_u_msb(
-        &mut self,
-        result_type: spirv::Word,
-        value: spirv::Word,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn gl_find_u_msb(&mut self, result_type: spirv::Word, value: spirv::Word) -> Result<spirv::Word, dr::Error> {
         self.gl_find_u_msb_id(result_type, None, value)
     }
     #[allow(clippy::too_many_arguments)]

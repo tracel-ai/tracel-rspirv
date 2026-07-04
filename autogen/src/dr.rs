@@ -17,10 +17,7 @@ pub fn has_additional_params(grammar: &structs::OperandKind) -> bool {
 
 /// Returns true if the given operand can potentially have additional
 /// parameters.
-pub fn operand_has_additional_params(
-    operand: &structs::Operand,
-    kinds: &[structs::OperandKind],
-) -> bool {
+pub fn operand_has_additional_params(operand: &structs::Operand, kinds: &[structs::OperandKind]) -> bool {
     kinds
         .iter()
         .find(|kind| kind.kind == operand.kind)
@@ -83,11 +80,7 @@ fn get_param_list(
     get_param_or_arg_list(params, keep_result_id, kinds, true)
 }
 
-fn get_arg_list(
-    params: &[structs::Operand],
-    keep_result_id: bool,
-    kinds: &[structs::OperandKind],
-) -> Vec<TokenStream> {
+fn get_arg_list(params: &[structs::Operand], keep_result_id: bool, kinds: &[structs::OperandKind]) -> Vec<TokenStream> {
     get_param_or_arg_list(params, keep_result_id, kinds, false)
 }
 
@@ -110,7 +103,7 @@ fn get_function_name_with_prepend(prepend: &str, opname: &str) -> TokenStream {
     } else if opname == "OpReturnValue" {
         as_ident(&format!("{}ret_value", prepend))
     } else {
-        as_ident(&format!("{}{}", prepend, &opname[2..].to_snake_case()))
+        as_ident(&format!("{}{}", prepend, opname[2..].to_snake_case()))
     };
 
     quote! { #name }
@@ -123,8 +116,7 @@ fn get_init_list(params: &[structs::Operand], kinds: &[OperandKind]) -> Vec<Toke
         .iter()
         .enumerate()
         .take_while(|(_, param)| {
-            param.quantifier == structs::Quantifier::One
-                && !operand_has_additional_params(param, kinds)
+            param.quantifier == structs::Quantifier::One && !operand_has_additional_params(param, kinds)
         })
         .filter_map(|(param_index, param)| {
             if param.kind == "IdResult" || param.kind == "IdResultType" {
@@ -149,10 +141,7 @@ fn push_extras_skip(params: &[structs::Operand], kinds: &[OperandKind]) -> usize
     params
         .iter()
         .enumerate()
-        .find(|(_, param)| {
-            param.quantifier != structs::Quantifier::One
-                || operand_has_additional_params(param, kinds)
-        })
+        .find(|(_, param)| param.quantifier != structs::Quantifier::One || operand_has_additional_params(param, kinds))
         .map(|(i, _)| i)
         .unwrap_or(params.len())
 }
@@ -243,11 +232,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
             !(element.starts_with("Pair")
                 || matches!(
                     *element,
-                    "LiteralContextDependentNumber"
-                        | "LiteralInteger"
-                        | "IdResult"
-                        | "IdResultType"
-                        | "LiteralFloat"
+                    "LiteralContextDependentNumber" | "LiteralInteger" | "IdResult" | "IdResultType" | "LiteralFloat"
                 ))
         })
         .map(as_ident)
@@ -255,13 +240,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
 
     let kind_to_enum: Vec<_> = grammar
         .iter()
-        .map(|element| {
-            (
-                element.kind.as_str(),
-                element.category,
-                element.enumerants.clone(),
-            )
-        })
+        .map(|element| (element.kind.as_str(), element.category, element.enumerants.clone()))
         .collect();
 
     let kind_and_ty = {
@@ -274,10 +253,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
             (format_ident!("LiteralBit32"), quote! {u32}),
             (format_ident!("LiteralBit64"), quote! {u64}),
             (format_ident!("LiteralExtInstInteger"), quote! {u32}),
-            (
-                format_ident!("LiteralSpecConstantOpInteger"),
-                quote! {spirv::Op},
-            ),
+            (format_ident!("LiteralSpecConstantOpInteger"), quote! {spirv::Op}),
         ];
 
         let str_kinds = kinds
@@ -350,12 +326,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
     let impl_code = {
         // impl fmt::Display for dr::Operand.
         let mut kinds = kinds;
-        kinds.extend(
-            ["LiteralBit32", "LiteralBit64"]
-                .iter()
-                .cloned()
-                .map(as_ident),
-        );
+        kinds.extend(["LiteralBit32", "LiteralBit64"].iter().cloned().map(as_ident));
         let cases = kinds.iter().map(|element| {
             if element == "Dim" {
                 // Skip the "Dim" prefix, which is only used in the API to
@@ -406,70 +377,70 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                 let kind = as_ident(kind);
 
                 for e in enumerators {
-                        let name = match category {
-                            structs::Category::BitEnum => {
-                                use heck::ToShoutySnakeCase;
+                    let name = match category {
+                        structs::Category::BitEnum => {
+                            use heck::ToShoutySnakeCase;
 
-                                as_ident(&e.symbol.to_shouty_snake_case().replace("NA_N", "NAN"))
-                            }
-                            structs::Category::ValueEnum => {
-                                let name_str = if kind == "Dim" {
-                                    let mut name = "Dim".to_string();
-                                    name.push_str(&e.symbol);
-                                    name
-                                } else {
-                                    e.symbol.to_string()
-                                };
-
-                                as_ident(&name_str)
-                            }
-                            _ => panic!("Unexpected operand type"),
-                        };
-
-
-                        capability_clauses
-                            .entry(&e.capabilities)
-                            .or_insert_with(Vec::new)
-                            .push(name.clone());
-
-                        extension_clauses
-                            .entry(&e.extensions)
-                            .or_insert_with(Vec::new)
-                            .push(name.clone());
-
-                        if !e.parameters.is_empty() {
-                            operand_clauses
-                                .entry(&e.parameters)
-                                .or_insert_with(Vec::new)
-                                .push(name.clone())
+                            as_ident(&e.symbol.to_shouty_snake_case().replace("NA_N", "NAN"))
                         }
+                        structs::Category::ValueEnum => {
+                            let name_str = if kind == "Dim" {
+                                let mut name = "Dim".to_string();
+                                name.push_str(&e.symbol);
+                                name
+                            } else {
+                                e.symbol.to_string()
+                            };
+
+                            as_ident(&name_str)
+                        }
+                        _ => panic!("Unexpected operand type"),
+                    };
+
+                    capability_clauses
+                        .entry(&e.capabilities)
+                        .or_insert_with(Vec::new)
+                        .push(name.clone());
+
+                    extension_clauses
+                        .entry(&e.extensions)
+                        .or_insert_with(Vec::new)
+                        .push(name.clone());
+
+                    if !e.parameters.is_empty() {
+                        operand_clauses
+                            .entry(&e.parameters)
+                            .or_insert_with(Vec::new)
+                            .push(name.clone())
+                    }
                 }
 
                 let extensions = if category == &structs::Category::BitEnum {
                     let extensions = extension_clauses
-                            .into_iter()
-                            .filter(|(k, _)| !k.is_empty())
-                            .map(|(k, v)| {
-                                let kinds = std::iter::repeat(quote! { s::#kind });
+                        .into_iter()
+                        .filter(|(k, _)| !k.is_empty())
+                        .map(|(k, v)| {
+                            let kinds = std::iter::repeat(quote! { s::#kind });
 
-                                quote! {
-                                    if v.intersects(#(#kinds::#v)|*) {
-                                        result.extend_from_slice(&[#( #k ),*])
-                                    }
-                                }
-                            }).collect::<Vec<_>>();
-
-                        if extensions.is_empty() {
-                            quote! {}
-                        } else {
                             quote! {
-                                Self::#kind(v) => {
-                                    let mut result = vec![];
-                                    #( #extensions );*;
-                                    result
+                                if v.intersects(#(#kinds::#v)|*) {
+                                    result.extend_from_slice(&[#( #k ),*])
                                 }
                             }
+                        })
+                        .collect::<Vec<_>>();
+
+                    if extensions.is_empty() {
+                        quote! {}
+                    } else {
+                        quote! {
+                            Self::#kind(v) => {
+                                let mut result = vec![];
+                                #( #extensions );*;
+                                result
+                            }
                         }
+                    }
                 } else {
                     let extensions = extension_clauses.into_iter().map(|(k, v)| {
                         let kinds = std::iter::repeat(quote! { s::#kind });
@@ -487,30 +458,31 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
 
                 let capabilities = if category == &structs::Category::BitEnum {
                     let capabilities = capability_clauses
-                            .into_iter()
-                            .filter(|(k, _)| !k.is_empty())
-                            .map(|(k, v)| {
-                                let kinds = std::iter::repeat(quote! { s::#kind });
-                                let capabilities = k.iter().map(|cap| as_ident(cap));
+                        .into_iter()
+                        .filter(|(k, _)| !k.is_empty())
+                        .map(|(k, v)| {
+                            let kinds = std::iter::repeat(quote! { s::#kind });
+                            let capabilities = k.iter().map(|cap| as_ident(cap));
 
-                                quote! {
-                                    if v.intersects(#(#kinds::#v)|*) {
-                                        result.extend_from_slice(&[#( spirv::Capability::#capabilities ),*])
-                                    }
-                                }
-                            }).collect::<Vec<_>>();
-
-                        if capabilities.is_empty() {
-                            quote! {}
-                        } else {
                             quote! {
-                                Self::#kind(v) => {
-                                    let mut result = vec![];
-                                    #( #capabilities );*;
-                                    result
+                                if v.intersects(#(#kinds::#v)|*) {
+                                    result.extend_from_slice(&[#( spirv::Capability::#capabilities ),*])
                                 }
                             }
+                        })
+                        .collect::<Vec<_>>();
+
+                    if capabilities.is_empty() {
+                        quote! {}
+                    } else {
+                        quote! {
+                            Self::#kind(v) => {
+                                let mut result = vec![];
+                                #( #capabilities );*;
+                                result
+                            }
                         }
+                    }
                 } else {
                     let capabilities = capability_clauses.into_iter().map(|(k, v)| {
                         let kinds = std::iter::repeat(quote! { s::#kind });
@@ -530,29 +502,27 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                 let operands = if operand_clauses.is_empty() {
                     quote! {}
                 } else if category == &structs::Category::BitEnum {
-                    let operands = operand_clauses
-                        .into_iter()
-                        .map(|(k, v)| {
-                            let operands = k.iter().map(|op| {
-                                let kind = as_ident(&op.kind);
-                                let quant = translate_quant(op.quantifier);
-
-                                quote! {
-                                    crate::grammar::LogicalOperand {
-                                        kind: crate::grammar::OperandKind::#kind,
-                                        quantifier: #quant
-                                    }
-                                }
-                            });
-
-                            let kinds = std::iter::repeat(quote! { s::#kind });
+                    let operands = operand_clauses.into_iter().map(|(k, v)| {
+                        let operands = k.iter().map(|op| {
+                            let kind = as_ident(&op.kind);
+                            let quant = translate_quant(op.quantifier);
 
                             quote! {
-                                result.extend([#(#kinds::#v,)*].iter().filter(|arg| {
-                                    v.contains(**arg)
-                                }).flat_map(|_| { [#( #operands ),*].iter().cloned() }))
+                                crate::grammar::LogicalOperand {
+                                    kind: crate::grammar::OperandKind::#kind,
+                                    quantifier: #quant
+                                }
                             }
                         });
+
+                        let kinds = std::iter::repeat(quote! { s::#kind });
+
+                        quote! {
+                            result.extend([#(#kinds::#v,)*].iter().filter(|arg| {
+                                v.contains(**arg)
+                            }).flat_map(|_| { [#( #operands ),*].iter().cloned() }))
+                        }
+                    });
 
                     quote! {
                         Self::#kind(v) => {
@@ -562,27 +532,25 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                         }
                     }
                 } else {
-                    let operands = operand_clauses
-                        .into_iter()
-                        .map(|(k, v)| {
-                            let operands = k.iter().map(|op| {
-                                let kind = as_ident(&op.kind);
-                                let quant = translate_quant(op.quantifier);
-
-                                quote! {
-                                    crate::grammar::LogicalOperand {
-                                        kind: crate::grammar::OperandKind::#kind,
-                                        quantifier: #quant
-                                    }
-                                }
-                            });
-
-                            let kinds = std::iter::repeat(quote! { s::#kind });
+                    let operands = operand_clauses.into_iter().map(|(k, v)| {
+                        let operands = k.iter().map(|op| {
+                            let kind = as_ident(&op.kind);
+                            let quant = translate_quant(op.quantifier);
 
                             quote! {
-                                #( #kinds::#v )|* => vec![#( #operands ),*]
+                                crate::grammar::LogicalOperand {
+                                    kind: crate::grammar::OperandKind::#kind,
+                                    quantifier: #quant
+                                }
                             }
                         });
+
+                        let kinds = std::iter::repeat(quote! { s::#kind });
+
+                        quote! {
+                            #( #kinds::#v )|* => vec![#( #operands ),*]
+                        }
+                    });
 
                     quote! {
                         Self::#kind(v) => match v {
@@ -662,22 +630,14 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
 pub fn gen_dr_builder_types(grammar: &structs::Grammar) -> TokenStream {
     let kinds = &grammar.operand_kinds;
     // Generate build methods for all types.
-    let elements = grammar.instructions.iter().filter(|inst| {
-        inst.class == Some(structs::Class::Type)
-            && !matches!(
-                inst.opname.as_str(),
-                "OpTypeForwardPointer" | "OpTypePointer" | "OpTypeOpaque"
-            )
-    }).map(|inst| {
+    let elements = grammar.instructions.iter().filter(|inst| inst.class == Some(structs::Class::Type) && !matches!(inst.opname.as_str(), "OpTypeForwardPointer" | "OpTypePointer" | "OpTypeOpaque")).map(|inst| {
         // Parameter list for this build method.
         let param_list = get_param_list(&inst.operands, false, kinds);
         let arg_list = get_arg_list(&inst.operands, false, kinds);
         // Initializer list for constructing the operands parameter
         // for Instruction.
         let init_list = get_init_list(&inst.operands, kinds);
-        let extras = get_push_extras(&inst.operands,
-                                     kinds,
-                                     quote! { inst.operands });
+        let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
         let opcode = as_ident(&inst.opname[2..]);
         let name = as_ident(&inst.opname[2..].to_snake_case());
 
@@ -733,9 +693,7 @@ pub fn gen_dr_builder_ext(
         // Initializer list for constructing the operands parameter
         // for Instruction.
         let init_list = get_init_list(&inst.operands, kinds);
-        let extras = get_push_extras(&inst.operands,
-                                     kinds,
-                                     quote![args]);
+        let extras = get_push_extras(&inst.operands, kinds, quote![args]);
         let opcode = as_ident(&inst.opname);
         let name = format_ident!("{}{}", op_prefix, &inst.opname.to_snake_case());
 
@@ -813,18 +771,50 @@ pub fn gen_dr_builder_debug_ext(
 ) -> TokenStream {
     let op_name = as_ident(op_name);
 
-    let local_elements = instructions
+    let local_elements = instructions.iter().filter(|inst| LOCAL_DEBUG_OPS.contains(&inst.opname.as_str())).map(|inst| {
+        let param_list = get_param_list(&inst.operands, false, kinds);
+        let arg_list = get_arg_list(&inst.operands, false, kinds);
+        // Initializer list for constructing the operands parameter
+        // for Instruction.
+        let init_list = get_init_list(&inst.operands, kinds);
+        let extras = get_push_extras(&inst.operands, kinds, quote![args]);
+        let opcode = as_ident(&inst.opname);
+        let name = format_ident!("{}{}", op_prefix, &inst.opname.to_snake_case());
+
+        let name_id = format_ident!("{}_id", name);
+
+        quote! {
+            #[allow(clippy::too_many_arguments)]
+            pub fn #name(&mut self, #(#param_list),*) -> Result<spirv::Word, dr::Error> {
+                self.#name_id(None, #(#arg_list),*)
+            }
+
+            #[allow(clippy::too_many_arguments)]
+            pub fn #name_id(&mut self, result_id: Option<spirv::Word>, #(#param_list),*) -> Result<spirv::Word, dr::Error> {
+                let extension_set = super::ext_inst_import(self, #ext_name);
+
+                let result_type = self.type_void();
+
+                #[allow(unused_mut)]
+                let mut args = vec![#(#init_list),*];
+                #(#extras)*
+
+                self.ext_inst(result_type, result_id, extension_set, crate::spirv::#op_name::#opcode as spirv::Word, args)
+            }
+        }
+    });
+
+    // Generate build methods for all types.
+    let elements = instructions
         .iter()
-        .filter(|inst| LOCAL_DEBUG_OPS.contains(&inst.opname.as_str()))
+        .filter(|inst| !LOCAL_DEBUG_OPS.contains(&inst.opname.as_str()))
         .map(|inst| {
             let param_list = get_param_list(&inst.operands, false, kinds);
             let arg_list = get_arg_list(&inst.operands, false, kinds);
             // Initializer list for constructing the operands parameter
             // for Instruction.
             let init_list = get_init_list(&inst.operands, kinds);
-            let extras = get_push_extras(&inst.operands,
-                                         kinds,
-                                         quote![args]);
+            let extras = get_push_extras(&inst.operands, kinds, quote![inst.operands]);
             let opcode = as_ident(&inst.opname);
             let name = format_ident!("{}{}", op_prefix, &inst.opname.to_snake_case());
 
@@ -832,75 +822,37 @@ pub fn gen_dr_builder_debug_ext(
 
             quote! {
                 #[allow(clippy::too_many_arguments)]
-                pub fn #name(&mut self, #(#param_list),*) -> Result<spirv::Word, dr::Error> {
+                pub fn #name(&mut self, #(#param_list),*) -> spirv::Word {
                     self.#name_id(None, #(#arg_list),*)
                 }
 
                 #[allow(clippy::too_many_arguments)]
-                pub fn #name_id(&mut self, result_id: Option<spirv::Word>, #(#param_list),*) -> Result<spirv::Word, dr::Error> {
+                pub fn #name_id(&mut self, result_id: Option<spirv::Word>, #(#param_list),*) -> spirv::Word {
                     let extension_set = super::ext_inst_import(self, #ext_name);
-
                     let result_type = self.type_void();
 
-                    #[allow(unused_mut)]
-                    let mut args = vec![#(#init_list),*];
+                    let mut inst = dr::Instruction::new(spirv::Op::ExtInst, Some(result_type), result_id, vec![
+                        dr::Operand::IdRef(extension_set),
+                        dr::Operand::LiteralExtInstInteger(crate::spirv::#op_name::#opcode as spirv::Word),
+                        #(#init_list),*
+                    ]);
+
                     #(#extras)*
 
-                    self.ext_inst(result_type, result_id, extension_set, crate::spirv::#op_name::#opcode as spirv::Word, args)
+                    if let Some(id) = inst.result_id {
+                        self.module_mut().types_global_values.push(inst);
+                        id
+                    } else if let Some(id) = self.dedup_insert_type(&inst) {
+                        id
+                    } else {
+                        let id = self.id();
+                        inst.result_id = Some(id);
+                        self.module_mut().types_global_values.push(inst);
+                        id
+                    }
                 }
             }
         });
-
-    // Generate build methods for all types.
-    let elements = instructions.iter().filter(|inst| {
-        !LOCAL_DEBUG_OPS.contains(&inst.opname.as_str())
-    }).map(|inst| {
-        let param_list = get_param_list(&inst.operands, false, kinds);
-        let arg_list = get_arg_list(&inst.operands, false, kinds);
-        // Initializer list for constructing the operands parameter
-        // for Instruction.
-        let init_list = get_init_list(&inst.operands, kinds);
-        let extras = get_push_extras(&inst.operands,
-                                     kinds,
-                                     quote![inst.operands]);
-        let opcode = as_ident(&inst.opname);
- let name = format_ident!("{}{}", op_prefix, &inst.opname.to_snake_case());
-
-        let name_id = format_ident!("{}_id", name);
-
-        quote! {
-            #[allow(clippy::too_many_arguments)]
-            pub fn #name(&mut self, #(#param_list),*) -> spirv::Word {
-                self.#name_id(None, #(#arg_list),*)
-            }
-
-            #[allow(clippy::too_many_arguments)]
-            pub fn #name_id(&mut self, result_id: Option<spirv::Word>, #(#param_list),*) -> spirv::Word {
-                let extension_set = super::ext_inst_import(self, #ext_name);
-                let result_type = self.type_void();
-
-                let mut inst = dr::Instruction::new(spirv::Op::ExtInst, Some(result_type), result_id, vec![
-                    dr::Operand::IdRef(extension_set),
-                    dr::Operand::LiteralExtInstInteger(crate::spirv::#op_name::#opcode as spirv::Word),
-                    #(#init_list),*
-                ]);
-
-                #(#extras)*
-
-                if let Some(id) = inst.result_id {
-                    self.module_mut().types_global_values.push(inst);
-                    id
-                } else if let Some(id) = self.dedup_insert_type(&inst) {
-                    id
-                } else {
-                    let id = self.id();
-                    inst.result_id = Some(id);
-                    self.module_mut().types_global_values.push(inst);
-                    id
-                }
-            }
-        }
-    });
 
     quote! {
         use crate::{spirv, dr::{Builder, self}};
@@ -936,17 +888,11 @@ pub fn gen_dr_builder_terminator(grammar: &structs::Grammar) -> TokenStream {
         .map(|inst| {
             let params = get_param_list(&inst.operands, false, kinds);
             let opcode = as_ident(&inst.opname[2..]);
-            let comment = format!(
-                "Appends an Op{} instruction and ends the current block.",
-                opcode
-            );
-            let insert_comment = format!(
-                "Insert an Op{} instruction and ends the current block.",
-                opcode
-            );
+            let comment = format!("Appends an Op{} instruction and ends the current block.", opcode);
+            let insert_comment = format!("Insert an Op{} instruction and ends the current block.", opcode);
             let name = get_function_name(&inst.opname);
             let init = get_init_list(&inst.operands, kinds);
-            let extras = get_push_extras(&inst.operands, kinds,  quote! { inst.operands });
+            let extras = get_push_extras(&inst.operands, kinds, quote! { inst.operands });
             let insert_name = get_function_name_with_prepend("insert_", &inst.opname);
 
             quote! {
@@ -1022,11 +968,7 @@ pub fn gen_dr_builder_normal_insts(grammar: &structs::Grammar) -> TokenStream {
             let mut id_ret = quote!(());
             let mut has_result = false;
 
-            if inst
-                .operands
-                .first()
-                .is_some_and(|o| o.kind == "IdResultType")
-            {
+            if inst.operands.first().is_some_and(|o| o.kind == "IdResultType") {
                 // For normal instructions, they either have both result type and
                 // result id or have none.
                 result_get = quote!(Some(result_type));
@@ -1168,9 +1110,7 @@ pub fn gen_dr_builder_annotation(grammar: &structs::Grammar) -> TokenStream {
     let elements = grammar
         .instructions
         .iter()
-        .filter(|inst| {
-            inst.class == Some(structs::Class::Annotation) && inst.opname != "OpDecorationGroup"
-        })
+        .filter(|inst| inst.class == Some(structs::Class::Annotation) && inst.opname != "OpDecorationGroup")
         .map(|inst| {
             let params = get_param_list(&inst.operands, false, kinds);
             let opcode = as_ident(&inst.opname[2..]);

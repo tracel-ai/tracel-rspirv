@@ -119,8 +119,7 @@ impl LiftContext {
         }
 
         for fun in module.functions.iter() {
-            let def =
-                context.lift_function(fun.def.as_ref().ok_or(ConversionError::MissingFunction)?)?;
+            let def = context.lift_function(fun.def.as_ref().ok_or(ConversionError::MissingFunction)?)?;
             //TODO: lift function type instruction
 
             for block in fun.blocks.iter() {
@@ -129,9 +128,9 @@ impl LiftContext {
                     match inst.class.opcode {
                         spirv::Op::Line => {} // skip line decorations
                         spirv::Op::Phi => {
-                            let ty = context.types.lookup_token(
-                                inst.result_type.ok_or(InstructionError::MissingResult)?,
-                            );
+                            let ty = context
+                                .types
+                                .lookup_token(inst.result_type.ok_or(InstructionError::MissingResult)?);
                             arguments.push(ty);
 
                             // Sanity-check if all source variables are of the same type
@@ -148,9 +147,9 @@ impl LiftContext {
                                         }
                                     }
                                     _ => {
-                                        return Err(ConversionError::Instruction(
-                                            InstructionError::Operand(OperandError::Missing),
-                                        ))
+                                        return Err(ConversionError::Instruction(InstructionError::Operand(
+                                            OperandError::Missing,
+                                        )))
                                     }
                                 };
                             }
@@ -169,12 +168,8 @@ impl LiftContext {
                     }
                 }
 
-                let terminator = context.lift_terminator(
-                    block
-                        .instructions
-                        .last()
-                        .ok_or(ConversionError::MissingTerminator)?,
-                )?;
+                let terminator =
+                    context.lift_terminator(block.instructions.last().ok_or(ConversionError::MissingTerminator)?)?;
 
                 context.blocks.append_id(
                     block.label.as_ref().unwrap().result_id.unwrap(),
@@ -248,20 +243,13 @@ impl LiftContext {
                             .first()
                             .ok_or(InstructionError::Operand(OperandError::Missing))?;
                         let (value, width) = match *self.types.lookup(id).0 {
-                            Type::Int {
-                                signedness: 0,
-                                width,
-                            } => match *oper {
+                            Type::Int { signedness: 0, width } => match *oper {
                                 dr::Operand::LiteralBit32(v) => (Constant::UInt(v), width),
-                                _ => {
-                                    return Err(InstructionError::Operand(OperandError::WrongType))
-                                }
+                                _ => return Err(InstructionError::Operand(OperandError::WrongType)),
                             },
                             Type::Int { width, .. } => match *oper {
                                 dr::Operand::LiteralBit32(v) => (Constant::Int(v as i32), width),
-                                _ => {
-                                    return Err(InstructionError::Operand(OperandError::WrongType))
-                                }
+                                _ => return Err(InstructionError::Operand(OperandError::WrongType)),
                             },
                             Type::Float {
                                 width,
@@ -269,9 +257,7 @@ impl LiftContext {
                             } => {
                                 if floating_point_encoding.is_some() {
                                     // log::warn!("Constant float {id} has a custom FP encoding: {floating_point_encoding:?}");
-                                    return Err(InstructionError::Operand(
-                                        OperandError::WrongEnumValue,
-                                    ));
+                                    return Err(InstructionError::Operand(OperandError::WrongEnumValue));
                                 }
                                 if let dr::Operand::LiteralBit32(v) = *oper {
                                     (Constant::Float(f32::from_bits(v)), width)
@@ -320,8 +306,7 @@ impl LiftContext {
                 })
             }
             spirv::Op::ConstantNull => Ok(Constant::Null),
-            spirv::Op::ConstantCompositeContinuedINTEL
-            | spirv::Op::SpecConstantCompositeContinuedINTEL => todo!(),
+            spirv::Op::ConstantCompositeContinuedINTEL | spirv::Op::SpecConstantCompositeContinuedINTEL => todo!(),
             _ => Err(InstructionError::WrongOpcode),
         }
     }

@@ -21,9 +21,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugInfoNone as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugInfoNone as spirv::Word),
             ],
         );
         if let Some(id) = inst.result_id {
@@ -65,9 +63,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugCompilationUnit as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugCompilationUnit as spirv::Word),
                 dr::Operand::IdRef(version),
                 dr::Operand::IdRef(dwarf_version),
                 dr::Operand::IdRef(source),
@@ -113,9 +109,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeBasic as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeBasic as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(size),
                 dr::Operand::IdRef(encoding),
@@ -159,9 +153,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypePointer as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypePointer as spirv::Word),
                 dr::Operand::IdRef(base_type),
                 dr::Operand::IdRef(storage_class),
                 dr::Operand::IdRef(flags),
@@ -180,11 +172,7 @@ impl Builder {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_type_qualifier(
-        &mut self,
-        base_type: spirv::Word,
-        type_qualifier: spirv::Word,
-    ) -> spirv::Word {
+    pub fn shader_debug_type_qualifier(&mut self, base_type: spirv::Word, type_qualifier: spirv::Word) -> spirv::Word {
         self.shader_debug_type_qualifier_id(None, base_type, type_qualifier)
     }
     #[allow(clippy::too_many_arguments)]
@@ -202,9 +190,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeQualifier as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeQualifier as spirv::Word),
                 dr::Operand::IdRef(base_type),
                 dr::Operand::IdRef(type_qualifier),
             ],
@@ -244,9 +230,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeArray as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeArray as spirv::Word),
                 dr::Operand::IdRef(base_type),
             ],
         );
@@ -265,11 +249,7 @@ impl Builder {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_type_vector(
-        &mut self,
-        base_type: spirv::Word,
-        component_count: spirv::Word,
-    ) -> spirv::Word {
+    pub fn shader_debug_type_vector(&mut self, base_type: spirv::Word, component_count: spirv::Word) -> spirv::Word {
         self.shader_debug_type_vector_id(None, base_type, component_count)
     }
     #[allow(clippy::too_many_arguments)]
@@ -287,9 +267,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeVector as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeVector as spirv::Word),
                 dr::Operand::IdRef(base_type),
                 dr::Operand::IdRef(component_count),
             ],
@@ -337,9 +315,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypedef as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypedef as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(base_type),
                 dr::Operand::IdRef(source),
@@ -385,9 +361,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeFunction as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeFunction as spirv::Word),
                 dr::Operand::IdRef(flags),
                 dr::Operand::IdRef(return_type),
             ],
@@ -454,9 +428,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeEnum as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeEnum as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(underlying_type),
                 dr::Operand::IdRef(source),
@@ -534,9 +506,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeComposite as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeComposite as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(tag),
                 dr::Operand::IdRef(source),
@@ -548,8 +518,7 @@ impl Builder {
                 dr::Operand::IdRef(flags),
             ],
         );
-        inst.operands
-            .extend(members.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(members.into_iter().map(dr::Operand::IdRef));
         if let Some(id) = inst.result_id {
             self.module_mut().types_global_values.push(inst);
             id
@@ -575,9 +544,7 @@ impl Builder {
         flags: spirv::Word,
         value: Option<spirv::Word>,
     ) -> spirv::Word {
-        self.shader_debug_type_member_id(
-            None, name, ty, source, line, column, offset, size, flags, value,
-        )
+        self.shader_debug_type_member_id(None, name, ty, source, line, column, offset, size, flags, value)
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_type_member_id(
@@ -601,9 +568,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeMember as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeMember as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(ty),
                 dr::Operand::IdRef(source),
@@ -656,9 +621,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeInheritance as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeInheritance as spirv::Word),
                 dr::Operand::IdRef(parent),
                 dr::Operand::IdRef(offset),
                 dr::Operand::IdRef(size),
@@ -678,11 +641,7 @@ impl Builder {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_type_ptr_to_member(
-        &mut self,
-        member_type: spirv::Word,
-        parent: spirv::Word,
-    ) -> spirv::Word {
+    pub fn shader_debug_type_ptr_to_member(&mut self, member_type: spirv::Word, parent: spirv::Word) -> spirv::Word {
         self.shader_debug_type_ptr_to_member_id(None, member_type, parent)
     }
     #[allow(clippy::too_many_arguments)]
@@ -700,9 +659,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypePtrToMember as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypePtrToMember as spirv::Word),
                 dr::Operand::IdRef(member_type),
                 dr::Operand::IdRef(parent),
             ],
@@ -742,14 +699,11 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeTemplate as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeTemplate as spirv::Word),
                 dr::Operand::IdRef(target),
             ],
         );
-        inst.operands
-            .extend(parameters.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(parameters.into_iter().map(dr::Operand::IdRef));
         if let Some(id) = inst.result_id {
             self.module_mut().types_global_values.push(inst);
             id
@@ -772,15 +726,7 @@ impl Builder {
         line: spirv::Word,
         column: spirv::Word,
     ) -> spirv::Word {
-        self.shader_debug_type_template_parameter_id(
-            None,
-            name,
-            actual_type,
-            value,
-            source,
-            line,
-            column,
-        )
+        self.shader_debug_type_template_parameter_id(None, name, actual_type, value, source, line, column)
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_type_template_parameter_id(
@@ -833,14 +779,7 @@ impl Builder {
         line: spirv::Word,
         column: spirv::Word,
     ) -> spirv::Word {
-        self.shader_debug_type_template_template_parameter_id(
-            None,
-            name,
-            template_name,
-            source,
-            line,
-            column,
-        )
+        self.shader_debug_type_template_template_parameter_id(None, name, template_name, source, line, column)
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_type_template_template_parameter_id(
@@ -891,14 +830,7 @@ impl Builder {
         column: spirv::Word,
         template_parameters: impl IntoIterator<Item = spirv::Word>,
     ) -> spirv::Word {
-        self.shader_debug_type_template_parameter_pack_id(
-            None,
-            name,
-            source,
-            line,
-            column,
-            template_parameters,
-        )
+        self.shader_debug_type_template_parameter_pack_id(None, name, source, line, column, template_parameters)
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_type_template_parameter_pack_id(
@@ -992,9 +924,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugGlobalVariable as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugGlobalVariable as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(ty),
                 dr::Operand::IdRef(source),
@@ -1033,17 +963,7 @@ impl Builder {
         linkage_name: spirv::Word,
         flags: spirv::Word,
     ) -> spirv::Word {
-        self.shader_debug_function_declaration_id(
-            None,
-            name,
-            ty,
-            source,
-            line,
-            column,
-            parent,
-            linkage_name,
-            flags,
-        )
+        self.shader_debug_function_declaration_id(None, name, ty, source, line, column, parent, linkage_name, flags)
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_function_declaration_id(
@@ -1066,9 +986,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugFunctionDeclaration as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugFunctionDeclaration as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(ty),
                 dr::Operand::IdRef(source),
@@ -1142,9 +1060,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugFunction as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugFunction as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(ty),
                 dr::Operand::IdRef(source),
@@ -1200,9 +1116,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugLexicalBlock as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugLexicalBlock as spirv::Word),
                 dr::Operand::IdRef(source),
                 dr::Operand::IdRef(line),
                 dr::Operand::IdRef(column),
@@ -1294,9 +1208,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugInlinedAt as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugInlinedAt as spirv::Word),
                 dr::Operand::IdRef(line),
                 dr::Operand::IdRef(scope),
             ],
@@ -1328,9 +1240,7 @@ impl Builder {
         flags: spirv::Word,
         arg_number: Option<spirv::Word>,
     ) -> spirv::Word {
-        self.shader_debug_local_variable_id(
-            None, name, ty, source, line, column, parent, flags, arg_number,
-        )
+        self.shader_debug_local_variable_id(None, name, ty, source, line, column, parent, flags, arg_number)
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_local_variable_id(
@@ -1353,9 +1263,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugLocalVariable as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugLocalVariable as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(ty),
                 dr::Operand::IdRef(source),
@@ -1381,11 +1289,7 @@ impl Builder {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_inlined_variable(
-        &mut self,
-        variable: spirv::Word,
-        inlined: spirv::Word,
-    ) -> spirv::Word {
+    pub fn shader_debug_inlined_variable(&mut self, variable: spirv::Word, inlined: spirv::Word) -> spirv::Word {
         self.shader_debug_inlined_variable_id(None, variable, inlined)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1403,9 +1307,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugInlinedVariable as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugInlinedVariable as spirv::Word),
                 dr::Operand::IdRef(variable),
                 dr::Operand::IdRef(inlined),
             ],
@@ -1445,14 +1347,11 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugOperation as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugOperation as spirv::Word),
                 dr::Operand::IdRef(op_code),
             ],
         );
-        inst.operands
-            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(operands.into_iter().map(dr::Operand::IdRef));
         if let Some(id) = inst.result_id {
             self.module_mut().types_global_values.push(inst);
             id
@@ -1466,10 +1365,7 @@ impl Builder {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_expression(
-        &mut self,
-        operands: impl IntoIterator<Item = spirv::Word>,
-    ) -> spirv::Word {
+    pub fn shader_debug_expression(&mut self, operands: impl IntoIterator<Item = spirv::Word>) -> spirv::Word {
         self.shader_debug_expression_id(None, operands)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1486,13 +1382,10 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugExpression as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugExpression as spirv::Word),
             ],
         );
-        inst.operands
-            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(operands.into_iter().map(dr::Operand::IdRef));
         if let Some(id) = inst.result_id {
             self.module_mut().types_global_values.push(inst);
             id
@@ -1532,9 +1425,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugMacroDef as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugMacroDef as spirv::Word),
                 dr::Operand::IdRef(source),
                 dr::Operand::IdRef(line),
                 dr::Operand::IdRef(name),
@@ -1560,9 +1451,9 @@ impl Builder {
         &mut self,
         source: spirv::Word,
         line: spirv::Word,
-        macro_: spirv::Word,
+        r#macro: spirv::Word,
     ) -> spirv::Word {
-        self.shader_debug_macro_undef_id(None, source, line, macro_)
+        self.shader_debug_macro_undef_id(None, source, line, r#macro)
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_macro_undef_id(
@@ -1570,7 +1461,7 @@ impl Builder {
         result_id: Option<spirv::Word>,
         source: spirv::Word,
         line: spirv::Word,
-        macro_: spirv::Word,
+        r#macro: spirv::Word,
     ) -> spirv::Word {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
@@ -1580,12 +1471,10 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugMacroUndef as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugMacroUndef as spirv::Word),
                 dr::Operand::IdRef(source),
                 dr::Operand::IdRef(line),
-                dr::Operand::IdRef(macro_),
+                dr::Operand::IdRef(r#macro),
             ],
         );
         if let Some(id) = inst.result_id {
@@ -1633,9 +1522,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugImportedEntity as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugImportedEntity as spirv::Word),
                 dr::Operand::IdRef(name),
                 dr::Operand::IdRef(tag),
                 dr::Operand::IdRef(source),
@@ -1658,11 +1545,7 @@ impl Builder {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_source(
-        &mut self,
-        file: spirv::Word,
-        text: Option<spirv::Word>,
-    ) -> spirv::Word {
+    pub fn shader_debug_source(&mut self, file: spirv::Word, text: Option<spirv::Word>) -> spirv::Word {
         self.shader_debug_source_id(None, file, text)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1680,9 +1563,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugSource as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugSource as spirv::Word),
                 dr::Operand::IdRef(file),
             ],
         );
@@ -1719,9 +1600,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugSourceContinued as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugSourceContinued as spirv::Word),
                 dr::Operand::IdRef(text),
             ],
         );
@@ -1738,11 +1617,7 @@ impl Builder {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_build_identifier(
-        &mut self,
-        identifier: spirv::Word,
-        flags: spirv::Word,
-    ) -> spirv::Word {
+    pub fn shader_debug_build_identifier(&mut self, identifier: spirv::Word, flags: spirv::Word) -> spirv::Word {
         self.shader_debug_build_identifier_id(None, identifier, flags)
     }
     #[allow(clippy::too_many_arguments)]
@@ -1760,9 +1635,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugBuildIdentifier as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugBuildIdentifier as spirv::Word),
                 dr::Operand::IdRef(identifier),
                 dr::Operand::IdRef(flags),
             ],
@@ -1784,11 +1657,7 @@ impl Builder {
         self.shader_debug_storage_path_id(None, path)
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_storage_path_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-        path: spirv::Word,
-    ) -> spirv::Word {
+    pub fn shader_debug_storage_path_id(&mut self, result_id: Option<spirv::Word>, path: spirv::Word) -> spirv::Word {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         let mut inst = dr::Instruction::new(
@@ -1797,9 +1666,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugStoragePath as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugStoragePath as spirv::Word),
                 dr::Operand::IdRef(path),
             ],
         );
@@ -1848,9 +1715,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugEntryPoint as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugEntryPoint as spirv::Word),
                 dr::Operand::IdRef(entry_point),
                 dr::Operand::IdRef(compilation_unit),
                 dr::Operand::IdRef(compiler_signature),
@@ -1894,9 +1759,7 @@ impl Builder {
             result_id,
             vec![
                 dr::Operand::IdRef(extension_set),
-                dr::Operand::LiteralExtInstInteger(
-                    crate::spirv::DebugInfoOp::DebugTypeMatrix as spirv::Word,
-                ),
+                dr::Operand::LiteralExtInstInteger(crate::spirv::DebugInfoOp::DebugTypeMatrix as spirv::Word),
                 dr::Operand::IdRef(vector_type),
                 dr::Operand::IdRef(vector_count),
                 dr::Operand::IdRef(column_major),
@@ -1949,10 +1812,7 @@ impl Builder {
         self.shader_debug_no_scope_id(None)
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_no_scope_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn shader_debug_no_scope_id(&mut self, result_id: Option<spirv::Word>) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
@@ -2108,10 +1968,7 @@ impl Builder {
         self.shader_debug_no_line_id(None)
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn shader_debug_no_line_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-    ) -> Result<spirv::Word, dr::Error> {
+    pub fn shader_debug_no_line_id(&mut self, result_id: Option<spirv::Word>) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]

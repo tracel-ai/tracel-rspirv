@@ -124,16 +124,11 @@ impl Builder {
         }
     }
 
-    pub fn insert_into_block(
-        &mut self,
-        insert_point: InsertPoint,
-        inst: dr::Instruction,
-    ) -> BuildResult<()> {
-        let (selected_function, selected_block) =
-            match (self.selected_function, self.selected_block) {
-                (Some(f), Some(b)) => (f, b),
-                _ => return Err(Error::DetachedInstruction(Some(inst))),
-            };
+    pub fn insert_into_block(&mut self, insert_point: InsertPoint, inst: dr::Instruction) -> BuildResult<()> {
+        let (selected_function, selected_block) = match (self.selected_function, self.selected_block) {
+            (Some(f), Some(b)) => (f, b),
+            _ => return Err(Error::DetachedInstruction(Some(inst))),
+        };
 
         let block = &mut self.module.functions[selected_function].blocks[selected_block];
 
@@ -163,11 +158,10 @@ impl Builder {
     }
 
     pub fn pop_instruction(&mut self) -> BuildResult<dr::Instruction> {
-        let (selected_function, selected_block) =
-            match (self.selected_function, self.selected_block) {
-                (Some(f), Some(b)) => (f, b),
-                _ => return Err(Error::DetachedInstruction(None)),
-            };
+        let (selected_function, selected_block) = match (self.selected_function, self.selected_block) {
+            (Some(f), Some(b)) => (f, b),
+            _ => return Err(Error::DetachedInstruction(None)),
+        };
 
         let block = &mut self.module.functions[selected_function].blocks[selected_block];
 
@@ -183,11 +177,7 @@ impl Builder {
             // The bound will be fixed up when module() is called.
             self.module.header = Some(dr::ModuleHeader::new(0));
         }
-        self.module
-            .header
-            .as_mut()
-            .unwrap()
-            .set_version(major, minor);
+        self.module.header.as_mut().unwrap().set_version(major, minor);
     }
 
     /// Get the SPIR-V version as a (major, minor) tuple
@@ -359,10 +349,7 @@ impl Builder {
             spirv::Op::Function,
             Some(return_type),
             Some(id),
-            vec![
-                dr::Operand::FunctionControl(control),
-                dr::Operand::IdRef(function_type),
-            ],
+            vec![dr::Operand::FunctionControl(control), dr::Operand::IdRef(function_type)],
         ));
         self.module.functions.push(f);
         self.selected_function = Some(self.module.functions.len() - 1);
@@ -376,12 +363,8 @@ impl Builder {
             None => return Err(Error::MismatchedFunctionEnd),
         };
 
-        self.module.functions[selected_function].end = Some(dr::Instruction::new(
-            spirv::Op::FunctionEnd,
-            None,
-            None,
-            vec![],
-        ));
+        self.module.functions[selected_function].end =
+            Some(dr::Instruction::new(spirv::Op::FunctionEnd, None, None, vec![]));
         self.selected_function = None;
         Ok(())
     }
@@ -393,15 +376,8 @@ impl Builder {
             None => return Err(Error::DetachedFunctionParameter),
         };
         let id = self.id();
-        let inst = dr::Instruction::new(
-            spirv::Op::FunctionParameter,
-            Some(result_type),
-            Some(id),
-            vec![],
-        );
-        self.module.functions[selected_function]
-            .parameters
-            .push(inst);
+        let inst = dr::Instruction::new(spirv::Op::FunctionParameter, Some(result_type), Some(id), vec![]);
+        self.module.functions[selected_function].parameters.push(inst);
         Ok(id)
     }
 
@@ -425,12 +401,7 @@ impl Builder {
         };
 
         let mut bb = dr::Block::new();
-        bb.label = Some(dr::Instruction::new(
-            spirv::Op::Label,
-            None,
-            Some(id),
-            vec![],
-        ));
+        bb.label = Some(dr::Instruction::new(spirv::Op::Label, None, Some(id), vec![]));
 
         let blocks = &mut self.module.functions[selected_function].blocks;
         blocks.push(bb);
@@ -442,10 +413,7 @@ impl Builder {
     ///
     /// Counter to `begin_block` that always generates a new OpLabel at the beginning of a block - in some cases
     /// this is undesirable (such as when constructing a branch).
-    pub fn begin_block_no_label(
-        &mut self,
-        label_id: Option<spirv::Word>,
-    ) -> BuildResult<spirv::Word> {
+    pub fn begin_block_no_label(&mut self, label_id: Option<spirv::Word>) -> BuildResult<spirv::Word> {
         let selected_function = match self.selected_function {
             Some(f) => f,
             None => return Err(Error::DetachedBlock),
@@ -470,11 +438,7 @@ impl Builder {
         self.insert_end_block(InsertPoint::End, inst)
     }
 
-    fn insert_end_block(
-        &mut self,
-        insert_point: InsertPoint,
-        inst: dr::Instruction,
-    ) -> BuildResult<()> {
+    fn insert_end_block(&mut self, insert_point: InsertPoint, inst: dr::Instruction) -> BuildResult<()> {
         if self.selected_block.is_some() {
             self.insert_into_block(insert_point, inst)?;
             self.selected_block = None;
@@ -520,11 +484,7 @@ impl Builder {
     }
 
     /// Appends an OpMemoryModel instruction.
-    pub fn memory_model(
-        &mut self,
-        addressing_model: spirv::AddressingModel,
-        memory_model: spirv::MemoryModel,
-    ) {
+    pub fn memory_model(&mut self, addressing_model: spirv::AddressingModel, memory_model: spirv::MemoryModel) {
         let inst = dr::Instruction::new(
             spirv::Op::MemoryModel,
             None,
@@ -667,12 +627,9 @@ impl Builder {
     /// Appends an OpDecorationGroup instruction and returns the result id.
     pub fn decoration_group(&mut self) -> spirv::Word {
         let id = self.id();
-        self.module.annotations.push(dr::Instruction::new(
-            spirv::Op::DecorationGroup,
-            None,
-            Some(id),
-            vec![],
-        ));
+        self.module
+            .annotations
+            .push(dr::Instruction::new(spirv::Op::DecorationGroup, None, Some(id), vec![]));
         id
     }
 
@@ -690,11 +647,7 @@ impl Builder {
 
 impl Builder {
     /// Appends an OpTypeForwardPointer instruction.
-    pub fn type_forward_pointer(
-        &mut self,
-        pointer_type: spirv::Word,
-        storage_class: spirv::StorageClass,
-    ) {
+    pub fn type_forward_pointer(&mut self, pointer_type: spirv::Word, storage_class: spirv::StorageClass) {
         self.module.types_global_values.push(dr::Instruction::new(
             spirv::Op::TypeForwardPointer,
             None,
@@ -824,11 +777,10 @@ impl Builder {
         let inst = dr::Instruction::new(spirv::Op::Variable, Some(result_type), Some(id), operands);
 
         match (self.selected_function, self.selected_block) {
-            (Some(selected_function), Some(selected_block)) => {
-                self.module.functions[selected_function].blocks[selected_block]
-                    .instructions
-                    .push(inst)
-            }
+            (Some(selected_function), Some(selected_block)) => self.module.functions[selected_function].blocks
+                [selected_block]
+                .instructions
+                .push(inst),
             _ => self.module.types_global_values.push(inst),
         }
         id
@@ -836,11 +788,7 @@ impl Builder {
 
     /// Appends an OpUndef instruction to either the current block
     /// or the module if no block is under construction.
-    pub fn undef(
-        &mut self,
-        result_type: spirv::Word,
-        result_id: Option<spirv::Word>,
-    ) -> spirv::Word {
+    pub fn undef(&mut self, result_type: spirv::Word, result_id: Option<spirv::Word>) -> spirv::Word {
         let id = match result_id {
             Some(v) => v,
             None => self.id(),
@@ -848,11 +796,10 @@ impl Builder {
         let inst = dr::Instruction::new(spirv::Op::Undef, Some(result_type), Some(id), vec![]);
 
         match (self.selected_function, self.selected_block) {
-            (Some(selected_function), Some(selected_block)) => {
-                self.module.functions[selected_function].blocks[selected_block]
-                    .instructions
-                    .push(inst)
-            }
+            (Some(selected_function), Some(selected_block)) => self.module.functions[selected_function].blocks
+                [selected_block]
+                .instructions
+                .push(inst),
             _ => self.module.types_global_values.push(inst),
         }
         id
@@ -909,14 +856,8 @@ mod tests {
         assert!(has_only_one_global_inst(&m));
         assert_eq!("MemoryModel", inst.class.opname);
         assert_eq!(2, inst.operands.len());
-        assert_eq!(
-            dr::Operand::from(spirv::AddressingModel::Logical),
-            inst.operands[0]
-        );
-        assert_eq!(
-            dr::Operand::from(spirv::MemoryModel::Simple),
-            inst.operands[1]
-        );
+        assert_eq!(dr::Operand::from(spirv::AddressingModel::Logical), inst.operands[0]);
+        assert_eq!(dr::Operand::from(spirv::MemoryModel::Simple), inst.operands[1]);
     }
 
     #[test]
@@ -930,10 +871,7 @@ mod tests {
         assert_eq!(3, inst.operands.len());
         assert_eq!(dr::Operand::IdRef(1), inst.operands[0]);
         assert_eq!(dr::Operand::from(0u32), inst.operands[1]);
-        assert_eq!(
-            dr::Operand::from(spirv::Decoration::RelaxedPrecision),
-            inst.operands[2]
-        );
+        assert_eq!(dr::Operand::from(spirv::Decoration::RelaxedPrecision), inst.operands[2]);
     }
 
     #[test]
@@ -942,10 +880,7 @@ mod tests {
         b.decorate(
             1,
             spirv::Decoration::LinkageAttributes,
-            vec![
-                dr::Operand::from("name"),
-                dr::Operand::from(spirv::LinkageType::Export),
-            ],
+            vec![dr::Operand::from("name"), dr::Operand::from(spirv::LinkageType::Export)],
         );
         let m = b.module();
         assert!(has_only_one_global_inst(&m));
@@ -958,10 +893,7 @@ mod tests {
             inst.operands[1]
         );
         assert_eq!(dr::Operand::from("name"), inst.operands[2]);
-        assert_eq!(
-            dr::Operand::from(spirv::LinkageType::Export),
-            inst.operands[3]
-        );
+        assert_eq!(dr::Operand::from(spirv::LinkageType::Export), inst.operands[3]);
     }
 
     #[test]
@@ -986,10 +918,7 @@ mod tests {
         assert_eq!(spirv::Op::Constant, inst.class.opcode);
         assert_eq!(Some(1), inst.result_type);
         assert_eq!(Some(2), inst.result_id);
-        assert_eq!(
-            dr::Operand::from(f32::consts::PI.to_bits()),
-            inst.operands[0]
-        );
+        assert_eq!(dr::Operand::from(f32::consts::PI.to_bits()), inst.operands[0]);
 
         let inst = &m.types_global_values[2];
         assert_eq!(spirv::Op::Constant, inst.class.opcode);
@@ -1007,10 +936,7 @@ mod tests {
         assert_eq!(spirv::Op::Constant, inst.class.opcode);
         assert_eq!(Some(1), inst.result_type);
         assert_eq!(Some(5), inst.result_id);
-        assert_eq!(
-            dr::Operand::from(f32::NEG_INFINITY.to_bits()),
-            inst.operands[0]
-        );
+        assert_eq!(dr::Operand::from(f32::NEG_INFINITY.to_bits()), inst.operands[0]);
 
         let inst = &m.types_global_values[5];
         assert_eq!(spirv::Op::Constant, inst.class.opcode);
@@ -1108,10 +1034,7 @@ mod tests {
         assert_eq!(None, inst.result_type);
         assert_eq!(Some(2), inst.result_id);
         assert_eq!(
-            vec![
-                dr::Operand::from(spirv::StorageClass::Input),
-                dr::Operand::IdRef(1),
-            ],
+            vec![dr::Operand::from(spirv::StorageClass::Input), dr::Operand::IdRef(1),],
             inst.operands
         );
 
@@ -1120,10 +1043,7 @@ mod tests {
         assert_eq!(None, inst.result_type);
         assert_eq!(None, inst.result_id);
         assert_eq!(
-            vec![
-                dr::Operand::IdRef(3),
-                dr::Operand::from(spirv::StorageClass::Output),
-            ],
+            vec![dr::Operand::IdRef(3), dr::Operand::from(spirv::StorageClass::Output),],
             inst.operands
         );
 
@@ -1132,10 +1052,7 @@ mod tests {
         assert_eq!(None, inst.result_type);
         assert_eq!(Some(3), inst.result_id);
         assert_eq!(
-            vec![
-                dr::Operand::from(spirv::StorageClass::Output),
-                dr::Operand::IdRef(1),
-            ],
+            vec![dr::Operand::from(spirv::StorageClass::Output), dr::Operand::IdRef(1),],
             inst.operands
         );
     }
