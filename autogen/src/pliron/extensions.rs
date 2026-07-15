@@ -3,7 +3,7 @@ use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 
 use crate::{
-    pliron::{ops::OpdKind, ExtensionGrammar, PlironGenerator},
+    pliron::{ExtensionGrammar, PlironGenerator, ops::OpdKind},
     structs::Instruction,
     utils::as_ident,
 };
@@ -17,6 +17,7 @@ impl PlironGenerator {
 
         quote! {
             #![allow(clippy::let_and_return, unused_imports)]
+
             use crate::prelude::*;
             use crate::attrs::*;
 
@@ -46,6 +47,6 @@ impl PlironGenerator {
             operands.insert(0, OpdKind::ResultType);
         }
 
-        self.generate_op_impl(&op_name, &ty_name, &builder_name, &namespace, &operands, has_result)
+        self.generate_op_impl(op, &op_name, &ty_name, &builder_name, &namespace, &operands, has_result)
     }
 }

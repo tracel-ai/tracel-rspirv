@@ -1,9 +1,12 @@
+use std::collections::HashMap;
+
 use heck::ToSnekCase;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
+use syn::Ident;
 
 use crate::{
-    pliron::{attrs::attr_const_name, PlironGenerator},
+    pliron::{PlironGenerator, attrs::attr_const_name},
     structs::Quantifier,
 };
 
@@ -151,23 +154,38 @@ impl PlironGenerator {
             }
         });
 
-        let decoration_list = decorations.iter().map(|(variant, _, as_args)| {
-            let name = format_ident!("{}", variant.symbol);
-            let getter = format_ident!("get_decoration_{}", variant.symbol.to_snek_case());
+        let mut arg_kinds: HashMap<(Ident, String), (TokenStream, Vec<Ident>)> = HashMap::new();
 
-            quote![#[allow(unused)]
-            if let Some(attr) = #getter(op, ctx) {
-                out.push((Decoration::#name, #as_args));
-            }]
+        for (variant, ty, as_args) in decorations.iter() {
+            arg_kinds
+                .entry((ty.clone(), as_args.to_string()))
+                .or_insert_with(|| (as_args.clone(), Default::default()))
+                .1
+                .push(format_ident!("{}", variant.symbol));
+        }
+
+        let as_args = arg_kinds.into_iter().map(|((ty, _), (as_args, variants))| {
+            let first = &variants[0];
+            let rest = variants.iter().skip(1).map(|variant| quote![| Decoration::#variant]);
+            quote! {
+                Decoration::#first #(#rest)* => {
+                    #[allow(unused)]
+                    let attr = self.value.downcast_ref::<#ty>().unwrap();
+                    #as_args
+                }
+            }
         });
 
-        let as_args = decorations.iter().map(|(variant, ty, as_args)| {
+        let decorations_to_keys = decorations.iter().map(|(variant, _, _)| {
             let name = format_ident!("{}", variant.symbol);
-            quote![Decoration::#name => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<#ty>().unwrap();
-                #as_args
-            }]
+            let const_ident = attr_const_name(&variant.symbol);
+            quote![Decoration::#name => &#const_ident]
+        });
+
+        let keys_to_decorations = decorations.iter().map(|(variant, _, _)| {
+            let key = variant.symbol.to_snek_case();
+            let name = format_ident!("{}", variant.symbol);
+            quote![#key => Some(Decoration::#name)]
         });
 
         let interface = quote! {
@@ -184,13 +202,16 @@ impl PlironGenerator {
                 #(#trait_setters)*
 
                 fn all_decorations(&self, ctx: &Context) -> Vec<(Decoration, Vec<Operand>)> where Self: Sized {
-                    all_decorations(self, ctx)
+                    all_decorations_for_op(self, ctx)
                 }
             }
         };
 
         quote! {
-            use crate::{prelude::*, autogen_attrs::*, decorations::DecorationInfo};
+            use crate::{
+                prelude::*,
+                decorations::{DecorationInfo, DecorationExt, all_decorations_for_op}
+            };
             use core::cell::Ref;
 
             #(#attr_keys)*
@@ -199,10 +220,20 @@ impl PlironGenerator {
             #(#getters)*
             #(#setters)*
 
-            pub fn all_decorations(op: &dyn DecoratableOp, ctx: &Context) -> Vec<(Decoration, Vec<Operand>)> {
-                let mut out = Vec::new();
-                #(#decoration_list)*
-                out
+            impl DecorationExt for Decoration {
+                fn decoration_key(&self) -> &'static Identifier {
+                    match self {
+                        #(#decorations_to_keys,)*
+                        _ => unimplemented!("Unsupported decoration"),
+                    }
+                }
+            }
+
+            pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
+                match identifier.as_str() {
+                    #(#keys_to_decorations,)*
+                    _ => None,
+                }
             }
 
             impl DecorationInfo {

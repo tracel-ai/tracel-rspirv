@@ -82,12 +82,22 @@ type BuildResult<T> = result::Result<T, Error>;
 ///             OpReturn\n\
 ///             OpFunctionEnd");
 /// ```
-#[derive(Default)]
 pub struct Builder {
     module: dr::Module,
     next_id: u32,
     selected_function: Option<usize>,
     selected_block: Option<usize>,
+}
+
+impl Default for Builder {
+    fn default() -> Self {
+        Builder {
+            module: dr::Module::new(),
+            next_id: 1,
+            selected_function: None,
+            selected_block: None,
+        }
+    }
 }
 
 pub enum InsertPoint {
@@ -100,12 +110,7 @@ pub enum InsertPoint {
 impl Builder {
     /// Creates a new empty builder.
     pub fn new() -> Builder {
-        Builder {
-            module: dr::Module::new(),
-            next_id: 1,
-            selected_function: None,
-            selected_block: None,
-        }
+        Default::default()
     }
 
     /// Create a new builder from an existing module

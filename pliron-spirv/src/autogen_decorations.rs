@@ -2,7 +2,9 @@
 //   external/spirv.core.grammar.json.
 // DO NOT MODIFY!
 
-use crate::{prelude::*, autogen_attrs::*, decorations::DecorationInfo};
+use crate::{
+    prelude::*, decorations::{DecorationInfo, DecorationExt, all_decorations_for_op},
+};
 use core::cell::Ref;
 pub static ATTR_RELAXED_PRECISION: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
@@ -2619,7 +2621,7 @@ pub trait DecoratableOp {
     where
         Self: Sized,
     {
-        all_decorations(self, ctx)
+        all_decorations_for_op(self, ctx)
     }
 }
 #[allow(non_snake_case)]
@@ -5270,1170 +5272,467 @@ pub fn set_decoration_implement_in_register_map_altera(
         .attributes
         .set(ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA.clone(), value);
 }
-pub fn all_decorations(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> Vec<(Decoration, Vec<Operand>)> {
-    let mut out = Vec::new();
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_relaxed_precision(op, ctx) {
-        out.push((Decoration::RelaxedPrecision, vec![]));
+impl DecorationExt for Decoration {
+    fn decoration_key(&self) -> &'static Identifier {
+        match self {
+            Decoration::RelaxedPrecision => &ATTR_RELAXED_PRECISION,
+            Decoration::Block => &ATTR_BLOCK,
+            Decoration::BufferBlock => &ATTR_BUFFER_BLOCK,
+            Decoration::RowMajor => &ATTR_ROW_MAJOR,
+            Decoration::ColMajor => &ATTR_COL_MAJOR,
+            Decoration::ArrayStride => &ATTR_ARRAY_STRIDE,
+            Decoration::MatrixStride => &ATTR_MATRIX_STRIDE,
+            Decoration::GLSLShared => &ATTR_GLSL_SHARED,
+            Decoration::GLSLPacked => &ATTR_GLSL_PACKED,
+            Decoration::CPacked => &ATTR_C_PACKED,
+            Decoration::BuiltIn => &ATTR_BUILT_IN,
+            Decoration::NoPerspective => &ATTR_NO_PERSPECTIVE,
+            Decoration::Flat => &ATTR_FLAT,
+            Decoration::Patch => &ATTR_PATCH,
+            Decoration::Centroid => &ATTR_CENTROID,
+            Decoration::Sample => &ATTR_SAMPLE,
+            Decoration::Invariant => &ATTR_INVARIANT,
+            Decoration::Restrict => &ATTR_RESTRICT,
+            Decoration::Aliased => &ATTR_ALIASED,
+            Decoration::Volatile => &ATTR_VOLATILE,
+            Decoration::Constant => &ATTR_CONSTANT,
+            Decoration::Coherent => &ATTR_COHERENT,
+            Decoration::NonWritable => &ATTR_NON_WRITABLE,
+            Decoration::NonReadable => &ATTR_NON_READABLE,
+            Decoration::Uniform => &ATTR_UNIFORM,
+            Decoration::SaturatedConversion => &ATTR_SATURATED_CONVERSION,
+            Decoration::Stream => &ATTR_STREAM,
+            Decoration::Location => &ATTR_LOCATION,
+            Decoration::Component => &ATTR_COMPONENT,
+            Decoration::Index => &ATTR_INDEX,
+            Decoration::Binding => &ATTR_BINDING,
+            Decoration::DescriptorSet => &ATTR_DESCRIPTOR_SET,
+            Decoration::Offset => &ATTR_OFFSET,
+            Decoration::XfbBuffer => &ATTR_XFB_BUFFER,
+            Decoration::XfbStride => &ATTR_XFB_STRIDE,
+            Decoration::FuncParamAttr => &ATTR_FUNC_PARAM_ATTR,
+            Decoration::FPRoundingMode => &ATTR_FP_ROUNDING_MODE,
+            Decoration::FPFastMathMode => &ATTR_FP_FAST_MATH_MODE,
+            Decoration::NoContraction => &ATTR_NO_CONTRACTION,
+            Decoration::InputAttachmentIndex => &ATTR_INPUT_ATTACHMENT_INDEX,
+            Decoration::Alignment => &ATTR_ALIGNMENT,
+            Decoration::MaxByteOffset => &ATTR_MAX_BYTE_OFFSET,
+            Decoration::SaturatedToLargestFloat8NormalConversionEXT => {
+                &ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT
+            }
+            Decoration::NoSignedWrap => &ATTR_NO_SIGNED_WRAP,
+            Decoration::NoUnsignedWrap => &ATTR_NO_UNSIGNED_WRAP,
+            Decoration::WeightTextureQCOM => &ATTR_WEIGHT_TEXTURE_QCOM,
+            Decoration::BlockMatchTextureQCOM => &ATTR_BLOCK_MATCH_TEXTURE_QCOM,
+            Decoration::BlockMatchSamplerQCOM => &ATTR_BLOCK_MATCH_SAMPLER_QCOM,
+            Decoration::ExplicitInterpAMD => &ATTR_EXPLICIT_INTERP_AMD,
+            Decoration::TrackFinishWritingAMDX => &ATTR_TRACK_FINISH_WRITING_AMDX,
+            Decoration::PayloadNodeSparseArrayAMDX => {
+                &ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX
+            }
+            Decoration::PayloadDispatchIndirectAMDX => {
+                &ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX
+            }
+            Decoration::UTFEncodedKHR => &ATTR_UTF_ENCODED_KHR,
+            Decoration::OverrideCoverageNV => &ATTR_OVERRIDE_COVERAGE_NV,
+            Decoration::PassthroughNV => &ATTR_PASSTHROUGH_NV,
+            Decoration::ViewportRelativeNV => &ATTR_VIEWPORT_RELATIVE_NV,
+            Decoration::SecondaryViewportRelativeNV => {
+                &ATTR_SECONDARY_VIEWPORT_RELATIVE_NV
+            }
+            Decoration::PerPrimitiveEXT => &ATTR_PER_PRIMITIVE_EXT,
+            Decoration::PerViewNV => &ATTR_PER_VIEW_NV,
+            Decoration::PerTaskNV => &ATTR_PER_TASK_NV,
+            Decoration::PerVertexKHR => &ATTR_PER_VERTEX_KHR,
+            Decoration::NonUniform => &ATTR_NON_UNIFORM,
+            Decoration::RestrictPointer => &ATTR_RESTRICT_POINTER,
+            Decoration::AliasedPointer => &ATTR_ALIASED_POINTER,
+            Decoration::MemberOffsetNV => &ATTR_MEMBER_OFFSET_NV,
+            Decoration::HitObjectShaderRecordBufferNV => {
+                &ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV
+            }
+            Decoration::HitObjectShaderRecordBufferEXT => {
+                &ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT
+            }
+            Decoration::BankNV => &ATTR_BANK_NV,
+            Decoration::BindlessSamplerNV => &ATTR_BINDLESS_SAMPLER_NV,
+            Decoration::BindlessImageNV => &ATTR_BINDLESS_IMAGE_NV,
+            Decoration::BoundSamplerNV => &ATTR_BOUND_SAMPLER_NV,
+            Decoration::BoundImageNV => &ATTR_BOUND_IMAGE_NV,
+            Decoration::SIMTCallINTEL => &ATTR_SIMT_CALL_INTEL,
+            Decoration::ReferencedIndirectlyINTEL => &ATTR_REFERENCED_INDIRECTLY_INTEL,
+            Decoration::ClobberINTEL => &ATTR_CLOBBER_INTEL,
+            Decoration::SideEffectsINTEL => &ATTR_SIDE_EFFECTS_INTEL,
+            Decoration::VectorComputeVariableINTEL => &ATTR_VECTOR_COMPUTE_VARIABLE_INTEL,
+            Decoration::FuncParamIOKindINTEL => &ATTR_FUNC_PARAM_IO_KIND_INTEL,
+            Decoration::VectorComputeFunctionINTEL => &ATTR_VECTOR_COMPUTE_FUNCTION_INTEL,
+            Decoration::StackCallINTEL => &ATTR_STACK_CALL_INTEL,
+            Decoration::GlobalVariableOffsetINTEL => &ATTR_GLOBAL_VARIABLE_OFFSET_INTEL,
+            Decoration::UserSemantic => &ATTR_USER_SEMANTIC,
+            Decoration::UserTypeGOOGLE => &ATTR_USER_TYPE_GOOGLE,
+            Decoration::RegisterALTERA => &ATTR_REGISTER_ALTERA,
+            Decoration::MemoryALTERA => &ATTR_MEMORY_ALTERA,
+            Decoration::NumbanksALTERA => &ATTR_NUMBANKS_ALTERA,
+            Decoration::BankwidthALTERA => &ATTR_BANKWIDTH_ALTERA,
+            Decoration::MaxPrivateCopiesALTERA => &ATTR_MAX_PRIVATE_COPIES_ALTERA,
+            Decoration::SinglepumpALTERA => &ATTR_SINGLEPUMP_ALTERA,
+            Decoration::DoublepumpALTERA => &ATTR_DOUBLEPUMP_ALTERA,
+            Decoration::MaxReplicatesALTERA => &ATTR_MAX_REPLICATES_ALTERA,
+            Decoration::SimpleDualPortALTERA => &ATTR_SIMPLE_DUAL_PORT_ALTERA,
+            Decoration::ForcePow2DepthALTERA => &ATTR_FORCE_POW2_DEPTH_ALTERA,
+            Decoration::StridesizeALTERA => &ATTR_STRIDESIZE_ALTERA,
+            Decoration::WordsizeALTERA => &ATTR_WORDSIZE_ALTERA,
+            Decoration::TrueDualPortALTERA => &ATTR_TRUE_DUAL_PORT_ALTERA,
+            Decoration::BurstCoalesceALTERA => &ATTR_BURST_COALESCE_ALTERA,
+            Decoration::CacheSizeALTERA => &ATTR_CACHE_SIZE_ALTERA,
+            Decoration::DontStaticallyCoalesceALTERA => {
+                &ATTR_DONT_STATICALLY_COALESCE_ALTERA
+            }
+            Decoration::PrefetchALTERA => &ATTR_PREFETCH_ALTERA,
+            Decoration::StallEnableALTERA => &ATTR_STALL_ENABLE_ALTERA,
+            Decoration::FuseLoopsInFunctionALTERA => &ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA,
+            Decoration::InitiationIntervalALTERA => &ATTR_INITIATION_INTERVAL_ALTERA,
+            Decoration::MaxConcurrencyALTERA => &ATTR_MAX_CONCURRENCY_ALTERA,
+            Decoration::PipelineEnableALTERA => &ATTR_PIPELINE_ENABLE_ALTERA,
+            Decoration::BufferLocationALTERA => &ATTR_BUFFER_LOCATION_ALTERA,
+            Decoration::IOPipeStorageALTERA => &ATTR_IO_PIPE_STORAGE_ALTERA,
+            Decoration::SingleElementVectorINTEL => &ATTR_SINGLE_ELEMENT_VECTOR_INTEL,
+            Decoration::VectorComputeCallableFunctionINTEL => {
+                &ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL
+            }
+            Decoration::MediaBlockIOINTEL => &ATTR_MEDIA_BLOCK_IOINTEL,
+            Decoration::StallFreeALTERA => &ATTR_STALL_FREE_ALTERA,
+            Decoration::LatencyControlLabelALTERA => &ATTR_LATENCY_CONTROL_LABEL_ALTERA,
+            Decoration::ConduitKernelArgumentALTERA => {
+                &ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA
+            }
+            Decoration::RegisterMapKernelArgumentALTERA => {
+                &ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA
+            }
+            Decoration::MMHostInterfaceAddressWidthALTERA => {
+                &ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA
+            }
+            Decoration::MMHostInterfaceDataWidthALTERA => {
+                &ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA
+            }
+            Decoration::MMHostInterfaceLatencyALTERA => {
+                &ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA
+            }
+            Decoration::MMHostInterfaceMaxBurstALTERA => {
+                &ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA
+            }
+            Decoration::MMHostInterfaceWaitRequestALTERA => {
+                &ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA
+            }
+            Decoration::StableKernelArgumentALTERA => &ATTR_STABLE_KERNEL_ARGUMENT_ALTERA,
+            Decoration::ImplementInRegisterMapALTERA => {
+                &ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA
+            }
+            _ => unimplemented!("Unsupported decoration"),
+        }
+    }
+}
+pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
+    match identifier.as_str() {
+        "relaxed_precision" => Some(Decoration::RelaxedPrecision),
+        "block" => Some(Decoration::Block),
+        "buffer_block" => Some(Decoration::BufferBlock),
+        "row_major" => Some(Decoration::RowMajor),
+        "col_major" => Some(Decoration::ColMajor),
+        "array_stride" => Some(Decoration::ArrayStride),
+        "matrix_stride" => Some(Decoration::MatrixStride),
+        "glsl_shared" => Some(Decoration::GLSLShared),
+        "glsl_packed" => Some(Decoration::GLSLPacked),
+        "c_packed" => Some(Decoration::CPacked),
+        "built_in" => Some(Decoration::BuiltIn),
+        "no_perspective" => Some(Decoration::NoPerspective),
+        "flat" => Some(Decoration::Flat),
+        "patch" => Some(Decoration::Patch),
+        "centroid" => Some(Decoration::Centroid),
+        "sample" => Some(Decoration::Sample),
+        "invariant" => Some(Decoration::Invariant),
+        "restrict" => Some(Decoration::Restrict),
+        "aliased" => Some(Decoration::Aliased),
+        "volatile" => Some(Decoration::Volatile),
+        "constant" => Some(Decoration::Constant),
+        "coherent" => Some(Decoration::Coherent),
+        "non_writable" => Some(Decoration::NonWritable),
+        "non_readable" => Some(Decoration::NonReadable),
+        "uniform" => Some(Decoration::Uniform),
+        "saturated_conversion" => Some(Decoration::SaturatedConversion),
+        "stream" => Some(Decoration::Stream),
+        "location" => Some(Decoration::Location),
+        "component" => Some(Decoration::Component),
+        "index" => Some(Decoration::Index),
+        "binding" => Some(Decoration::Binding),
+        "descriptor_set" => Some(Decoration::DescriptorSet),
+        "offset" => Some(Decoration::Offset),
+        "xfb_buffer" => Some(Decoration::XfbBuffer),
+        "xfb_stride" => Some(Decoration::XfbStride),
+        "func_param_attr" => Some(Decoration::FuncParamAttr),
+        "fp_rounding_mode" => Some(Decoration::FPRoundingMode),
+        "fp_fast_math_mode" => Some(Decoration::FPFastMathMode),
+        "no_contraction" => Some(Decoration::NoContraction),
+        "input_attachment_index" => Some(Decoration::InputAttachmentIndex),
+        "alignment" => Some(Decoration::Alignment),
+        "max_byte_offset" => Some(Decoration::MaxByteOffset),
+        "saturated_to_largest_float8_normal_conversion_ext" => {
+            Some(Decoration::SaturatedToLargestFloat8NormalConversionEXT)
+        }
+        "no_signed_wrap" => Some(Decoration::NoSignedWrap),
+        "no_unsigned_wrap" => Some(Decoration::NoUnsignedWrap),
+        "weight_texture_qcom" => Some(Decoration::WeightTextureQCOM),
+        "block_match_texture_qcom" => Some(Decoration::BlockMatchTextureQCOM),
+        "block_match_sampler_qcom" => Some(Decoration::BlockMatchSamplerQCOM),
+        "explicit_interp_amd" => Some(Decoration::ExplicitInterpAMD),
+        "track_finish_writing_amdx" => Some(Decoration::TrackFinishWritingAMDX),
+        "payload_node_sparse_array_amdx" => Some(Decoration::PayloadNodeSparseArrayAMDX),
+        "payload_dispatch_indirect_amdx" => Some(Decoration::PayloadDispatchIndirectAMDX),
+        "utf_encoded_khr" => Some(Decoration::UTFEncodedKHR),
+        "override_coverage_nv" => Some(Decoration::OverrideCoverageNV),
+        "passthrough_nv" => Some(Decoration::PassthroughNV),
+        "viewport_relative_nv" => Some(Decoration::ViewportRelativeNV),
+        "secondary_viewport_relative_nv" => Some(Decoration::SecondaryViewportRelativeNV),
+        "per_primitive_ext" => Some(Decoration::PerPrimitiveEXT),
+        "per_view_nv" => Some(Decoration::PerViewNV),
+        "per_task_nv" => Some(Decoration::PerTaskNV),
+        "per_vertex_khr" => Some(Decoration::PerVertexKHR),
+        "non_uniform" => Some(Decoration::NonUniform),
+        "restrict_pointer" => Some(Decoration::RestrictPointer),
+        "aliased_pointer" => Some(Decoration::AliasedPointer),
+        "member_offset_nv" => Some(Decoration::MemberOffsetNV),
+        "hit_object_shader_record_buffer_nv" => {
+            Some(Decoration::HitObjectShaderRecordBufferNV)
+        }
+        "hit_object_shader_record_buffer_ext" => {
+            Some(Decoration::HitObjectShaderRecordBufferEXT)
+        }
+        "bank_nv" => Some(Decoration::BankNV),
+        "bindless_sampler_nv" => Some(Decoration::BindlessSamplerNV),
+        "bindless_image_nv" => Some(Decoration::BindlessImageNV),
+        "bound_sampler_nv" => Some(Decoration::BoundSamplerNV),
+        "bound_image_nv" => Some(Decoration::BoundImageNV),
+        "simt_call_intel" => Some(Decoration::SIMTCallINTEL),
+        "referenced_indirectly_intel" => Some(Decoration::ReferencedIndirectlyINTEL),
+        "clobber_intel" => Some(Decoration::ClobberINTEL),
+        "side_effects_intel" => Some(Decoration::SideEffectsINTEL),
+        "vector_compute_variable_intel" => Some(Decoration::VectorComputeVariableINTEL),
+        "func_param_io_kind_intel" => Some(Decoration::FuncParamIOKindINTEL),
+        "vector_compute_function_intel" => Some(Decoration::VectorComputeFunctionINTEL),
+        "stack_call_intel" => Some(Decoration::StackCallINTEL),
+        "global_variable_offset_intel" => Some(Decoration::GlobalVariableOffsetINTEL),
+        "user_semantic" => Some(Decoration::UserSemantic),
+        "user_type_google" => Some(Decoration::UserTypeGOOGLE),
+        "register_altera" => Some(Decoration::RegisterALTERA),
+        "memory_altera" => Some(Decoration::MemoryALTERA),
+        "numbanks_altera" => Some(Decoration::NumbanksALTERA),
+        "bankwidth_altera" => Some(Decoration::BankwidthALTERA),
+        "max_private_copies_altera" => Some(Decoration::MaxPrivateCopiesALTERA),
+        "singlepump_altera" => Some(Decoration::SinglepumpALTERA),
+        "doublepump_altera" => Some(Decoration::DoublepumpALTERA),
+        "max_replicates_altera" => Some(Decoration::MaxReplicatesALTERA),
+        "simple_dual_port_altera" => Some(Decoration::SimpleDualPortALTERA),
+        "force_pow2_depth_altera" => Some(Decoration::ForcePow2DepthALTERA),
+        "stridesize_altera" => Some(Decoration::StridesizeALTERA),
+        "wordsize_altera" => Some(Decoration::WordsizeALTERA),
+        "true_dual_port_altera" => Some(Decoration::TrueDualPortALTERA),
+        "burst_coalesce_altera" => Some(Decoration::BurstCoalesceALTERA),
+        "cache_size_altera" => Some(Decoration::CacheSizeALTERA),
+        "dont_statically_coalesce_altera" => {
+            Some(Decoration::DontStaticallyCoalesceALTERA)
+        }
+        "prefetch_altera" => Some(Decoration::PrefetchALTERA),
+        "stall_enable_altera" => Some(Decoration::StallEnableALTERA),
+        "fuse_loops_in_function_altera" => Some(Decoration::FuseLoopsInFunctionALTERA),
+        "initiation_interval_altera" => Some(Decoration::InitiationIntervalALTERA),
+        "max_concurrency_altera" => Some(Decoration::MaxConcurrencyALTERA),
+        "pipeline_enable_altera" => Some(Decoration::PipelineEnableALTERA),
+        "buffer_location_altera" => Some(Decoration::BufferLocationALTERA),
+        "io_pipe_storage_altera" => Some(Decoration::IOPipeStorageALTERA),
+        "single_element_vector_intel" => Some(Decoration::SingleElementVectorINTEL),
+        "vector_compute_callable_function_intel" => {
+            Some(Decoration::VectorComputeCallableFunctionINTEL)
+        }
+        "media_block_iointel" => Some(Decoration::MediaBlockIOINTEL),
+        "stall_free_altera" => Some(Decoration::StallFreeALTERA),
+        "latency_control_label_altera" => Some(Decoration::LatencyControlLabelALTERA),
+        "conduit_kernel_argument_altera" => Some(Decoration::ConduitKernelArgumentALTERA),
+        "register_map_kernel_argument_altera" => {
+            Some(Decoration::RegisterMapKernelArgumentALTERA)
+        }
+        "mm_host_interface_address_width_altera" => {
+            Some(Decoration::MMHostInterfaceAddressWidthALTERA)
+        }
+        "mm_host_interface_data_width_altera" => {
+            Some(Decoration::MMHostInterfaceDataWidthALTERA)
+        }
+        "mm_host_interface_latency_altera" => {
+            Some(Decoration::MMHostInterfaceLatencyALTERA)
+        }
+        "mm_host_interface_max_burst_altera" => {
+            Some(Decoration::MMHostInterfaceMaxBurstALTERA)
+        }
+        "mm_host_interface_wait_request_altera" => {
+            Some(Decoration::MMHostInterfaceWaitRequestALTERA)
+        }
+        "stable_kernel_argument_altera" => Some(Decoration::StableKernelArgumentALTERA),
+        "implement_in_register_map_altera" => {
+            Some(Decoration::ImplementInRegisterMapALTERA)
+        }
+        _ => None,
     }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_block(op, ctx) {
-        out.push((Decoration::Block, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_buffer_block(op, ctx) {
-        out.push((Decoration::BufferBlock, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_row_major(op, ctx) {
-        out.push((Decoration::RowMajor, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_col_major(op, ctx) {
-        out.push((Decoration::ColMajor, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_array_stride(op, ctx) {
-        out.push((Decoration::ArrayStride, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_matrix_stride(op, ctx) {
-        out.push((Decoration::MatrixStride, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_glsl_shared(op, ctx) {
-        out.push((Decoration::GLSLShared, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_glsl_packed(op, ctx) {
-        out.push((Decoration::GLSLPacked, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_c_packed(op, ctx) {
-        out.push((Decoration::CPacked, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_built_in(op, ctx) {
-        out.push((Decoration::BuiltIn, vec![Operand::BuiltIn(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_no_perspective(op, ctx) {
-        out.push((Decoration::NoPerspective, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_flat(op, ctx) {
-        out.push((Decoration::Flat, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_patch(op, ctx) {
-        out.push((Decoration::Patch, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_centroid(op, ctx) {
-        out.push((Decoration::Centroid, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_sample(op, ctx) {
-        out.push((Decoration::Sample, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_invariant(op, ctx) {
-        out.push((Decoration::Invariant, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_restrict(op, ctx) {
-        out.push((Decoration::Restrict, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_aliased(op, ctx) {
-        out.push((Decoration::Aliased, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_volatile(op, ctx) {
-        out.push((Decoration::Volatile, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_constant(op, ctx) {
-        out.push((Decoration::Constant, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_coherent(op, ctx) {
-        out.push((Decoration::Coherent, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_non_writable(op, ctx) {
-        out.push((Decoration::NonWritable, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_non_readable(op, ctx) {
-        out.push((Decoration::NonReadable, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_uniform(op, ctx) {
-        out.push((Decoration::Uniform, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_saturated_conversion(op, ctx) {
-        out.push((Decoration::SaturatedConversion, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_stream(op, ctx) {
-        out.push((Decoration::Stream, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_location(op, ctx) {
-        out.push((Decoration::Location, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_component(op, ctx) {
-        out.push((Decoration::Component, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_index(op, ctx) {
-        out.push((Decoration::Index, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_binding(op, ctx) {
-        out.push((Decoration::Binding, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_descriptor_set(op, ctx) {
-        out.push((Decoration::DescriptorSet, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_offset(op, ctx) {
-        out.push((Decoration::Offset, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_xfb_buffer(op, ctx) {
-        out.push((Decoration::XfbBuffer, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_xfb_stride(op, ctx) {
-        out.push((Decoration::XfbStride, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_func_param_attr(op, ctx) {
-        out.push((Decoration::FuncParamAttr, todo!()));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_fp_rounding_mode(op, ctx) {
-        out.push((Decoration::FPRoundingMode, vec![Operand::FPRoundingMode(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_fp_fast_math_mode(op, ctx) {
-        out.push((Decoration::FPFastMathMode, vec![Operand::FPFastMathMode(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_no_contraction(op, ctx) {
-        out.push((Decoration::NoContraction, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_input_attachment_index(op, ctx) {
-        out.push((
-            Decoration::InputAttachmentIndex,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_alignment(op, ctx) {
-        out.push((Decoration::Alignment, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_max_byte_offset(op, ctx) {
-        out.push((Decoration::MaxByteOffset, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_saturated_to_largest_float8_normal_conversion_ext(
-        op,
-        ctx,
-    ) {
-        out.push((Decoration::SaturatedToLargestFloat8NormalConversionEXT, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_no_signed_wrap(op, ctx) {
-        out.push((Decoration::NoSignedWrap, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_no_unsigned_wrap(op, ctx) {
-        out.push((Decoration::NoUnsignedWrap, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_weight_texture_qcom(op, ctx) {
-        out.push((Decoration::WeightTextureQCOM, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_block_match_texture_qcom(op, ctx) {
-        out.push((Decoration::BlockMatchTextureQCOM, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_block_match_sampler_qcom(op, ctx) {
-        out.push((Decoration::BlockMatchSamplerQCOM, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_explicit_interp_amd(op, ctx) {
-        out.push((Decoration::ExplicitInterpAMD, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_track_finish_writing_amdx(op, ctx) {
-        out.push((Decoration::TrackFinishWritingAMDX, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_payload_node_sparse_array_amdx(op, ctx) {
-        out.push((Decoration::PayloadNodeSparseArrayAMDX, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_payload_dispatch_indirect_amdx(op, ctx) {
-        out.push((Decoration::PayloadDispatchIndirectAMDX, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_utf_encoded_khr(op, ctx) {
-        out.push((Decoration::UTFEncodedKHR, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_override_coverage_nv(op, ctx) {
-        out.push((Decoration::OverrideCoverageNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_passthrough_nv(op, ctx) {
-        out.push((Decoration::PassthroughNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_viewport_relative_nv(op, ctx) {
-        out.push((Decoration::ViewportRelativeNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_secondary_viewport_relative_nv(op, ctx) {
-        out.push((
-            Decoration::SecondaryViewportRelativeNV,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_per_primitive_ext(op, ctx) {
-        out.push((Decoration::PerPrimitiveEXT, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_per_view_nv(op, ctx) {
-        out.push((Decoration::PerViewNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_per_task_nv(op, ctx) {
-        out.push((Decoration::PerTaskNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_per_vertex_khr(op, ctx) {
-        out.push((Decoration::PerVertexKHR, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_non_uniform(op, ctx) {
-        out.push((Decoration::NonUniform, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_restrict_pointer(op, ctx) {
-        out.push((Decoration::RestrictPointer, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_aliased_pointer(op, ctx) {
-        out.push((Decoration::AliasedPointer, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_member_offset_nv(op, ctx) {
-        out.push((Decoration::MemberOffsetNV, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_hit_object_shader_record_buffer_nv(op, ctx) {
-        out.push((Decoration::HitObjectShaderRecordBufferNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_hit_object_shader_record_buffer_ext(op, ctx) {
-        out.push((Decoration::HitObjectShaderRecordBufferEXT, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_bank_nv(op, ctx) {
-        out.push((Decoration::BankNV, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_bindless_sampler_nv(op, ctx) {
-        out.push((Decoration::BindlessSamplerNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_bindless_image_nv(op, ctx) {
-        out.push((Decoration::BindlessImageNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_bound_sampler_nv(op, ctx) {
-        out.push((Decoration::BoundSamplerNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_bound_image_nv(op, ctx) {
-        out.push((Decoration::BoundImageNV, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_simt_call_intel(op, ctx) {
-        out.push((Decoration::SIMTCallINTEL, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_referenced_indirectly_intel(op, ctx) {
-        out.push((Decoration::ReferencedIndirectlyINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_clobber_intel(op, ctx) {
-        out.push((
-            Decoration::ClobberINTEL,
-            vec![Operand::LiteralString(attr.as_str().to_string())],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_side_effects_intel(op, ctx) {
-        out.push((Decoration::SideEffectsINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_vector_compute_variable_intel(op, ctx) {
-        out.push((Decoration::VectorComputeVariableINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_func_param_io_kind_intel(op, ctx) {
-        out.push((
-            Decoration::FuncParamIOKindINTEL,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_vector_compute_function_intel(op, ctx) {
-        out.push((Decoration::VectorComputeFunctionINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_stack_call_intel(op, ctx) {
-        out.push((Decoration::StackCallINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_global_variable_offset_intel(op, ctx) {
-        out.push((
-            Decoration::GlobalVariableOffsetINTEL,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_user_semantic(op, ctx) {
-        out.push((
-            Decoration::UserSemantic,
-            vec![Operand::LiteralString(attr.as_str().to_string())],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_user_type_google(op, ctx) {
-        out.push((
-            Decoration::UserTypeGOOGLE,
-            vec![Operand::LiteralString(attr.as_str().to_string())],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_register_altera(op, ctx) {
-        out.push((Decoration::RegisterALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_memory_altera(op, ctx) {
-        out.push((
-            Decoration::MemoryALTERA,
-            vec![Operand::LiteralString(attr.as_str().to_string())],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_numbanks_altera(op, ctx) {
-        out.push((Decoration::NumbanksALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_bankwidth_altera(op, ctx) {
-        out.push((Decoration::BankwidthALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_max_private_copies_altera(op, ctx) {
-        out.push((
-            Decoration::MaxPrivateCopiesALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_singlepump_altera(op, ctx) {
-        out.push((Decoration::SinglepumpALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_doublepump_altera(op, ctx) {
-        out.push((Decoration::DoublepumpALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_max_replicates_altera(op, ctx) {
-        out.push((Decoration::MaxReplicatesALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_simple_dual_port_altera(op, ctx) {
-        out.push((Decoration::SimpleDualPortALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_force_pow2_depth_altera(op, ctx) {
-        out.push((
-            Decoration::ForcePow2DepthALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_stridesize_altera(op, ctx) {
-        out.push((Decoration::StridesizeALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_wordsize_altera(op, ctx) {
-        out.push((Decoration::WordsizeALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_true_dual_port_altera(op, ctx) {
-        out.push((Decoration::TrueDualPortALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_burst_coalesce_altera(op, ctx) {
-        out.push((Decoration::BurstCoalesceALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_cache_size_altera(op, ctx) {
-        out.push((Decoration::CacheSizeALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_dont_statically_coalesce_altera(op, ctx) {
-        out.push((Decoration::DontStaticallyCoalesceALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_prefetch_altera(op, ctx) {
-        out.push((Decoration::PrefetchALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_stall_enable_altera(op, ctx) {
-        out.push((Decoration::StallEnableALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_fuse_loops_in_function_altera(op, ctx) {
-        out.push((Decoration::FuseLoopsInFunctionALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_initiation_interval_altera(op, ctx) {
-        out.push((
-            Decoration::InitiationIntervalALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_max_concurrency_altera(op, ctx) {
-        out.push((
-            Decoration::MaxConcurrencyALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_pipeline_enable_altera(op, ctx) {
-        out.push((
-            Decoration::PipelineEnableALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_buffer_location_altera(op, ctx) {
-        out.push((
-            Decoration::BufferLocationALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_io_pipe_storage_altera(op, ctx) {
-        out.push((Decoration::IOPipeStorageALTERA, vec![Operand::LiteralBit32(attr.0)]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_single_element_vector_intel(op, ctx) {
-        out.push((Decoration::SingleElementVectorINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_vector_compute_callable_function_intel(op, ctx) {
-        out.push((Decoration::VectorComputeCallableFunctionINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_media_block_iointel(op, ctx) {
-        out.push((Decoration::MediaBlockIOINTEL, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_stall_free_altera(op, ctx) {
-        out.push((Decoration::StallFreeALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_latency_control_label_altera(op, ctx) {
-        out.push((
-            Decoration::LatencyControlLabelALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_conduit_kernel_argument_altera(op, ctx) {
-        out.push((Decoration::ConduitKernelArgumentALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_register_map_kernel_argument_altera(op, ctx) {
-        out.push((Decoration::RegisterMapKernelArgumentALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_mm_host_interface_address_width_altera(op, ctx) {
-        out.push((
-            Decoration::MMHostInterfaceAddressWidthALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_mm_host_interface_data_width_altera(op, ctx) {
-        out.push((
-            Decoration::MMHostInterfaceDataWidthALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_mm_host_interface_latency_altera(op, ctx) {
-        out.push((
-            Decoration::MMHostInterfaceLatencyALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_mm_host_interface_max_burst_altera(op, ctx) {
-        out.push((
-            Decoration::MMHostInterfaceMaxBurstALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_mm_host_interface_wait_request_altera(op, ctx) {
-        out.push((
-            Decoration::MMHostInterfaceWaitRequestALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_stable_kernel_argument_altera(op, ctx) {
-        out.push((Decoration::StableKernelArgumentALTERA, vec![]));
-    }
-    #[allow(unused)]
-    if let Some(attr) = get_decoration_implement_in_register_map_altera(op, ctx) {
-        out.push((
-            Decoration::ImplementInRegisterMapALTERA,
-            vec![Operand::LiteralBit32(attr.0)],
-        ));
-    }
-    out
 }
 impl DecorationInfo {
     pub fn as_operands(&self) -> Vec<Operand> {
         match self.decoration {
-            Decoration::RelaxedPrecision => {
+            Decoration::RelaxedPrecision
+            | Decoration::Block
+            | Decoration::BufferBlock
+            | Decoration::RowMajor
+            | Decoration::ColMajor
+            | Decoration::GLSLShared
+            | Decoration::GLSLPacked
+            | Decoration::CPacked
+            | Decoration::NoPerspective
+            | Decoration::Flat
+            | Decoration::Patch
+            | Decoration::Centroid
+            | Decoration::Sample
+            | Decoration::Invariant
+            | Decoration::Restrict
+            | Decoration::Aliased
+            | Decoration::Volatile
+            | Decoration::Constant
+            | Decoration::Coherent
+            | Decoration::NonWritable
+            | Decoration::NonReadable
+            | Decoration::Uniform
+            | Decoration::SaturatedConversion
+            | Decoration::NoContraction
+            | Decoration::SaturatedToLargestFloat8NormalConversionEXT
+            | Decoration::NoSignedWrap
+            | Decoration::NoUnsignedWrap
+            | Decoration::WeightTextureQCOM
+            | Decoration::BlockMatchTextureQCOM
+            | Decoration::BlockMatchSamplerQCOM
+            | Decoration::ExplicitInterpAMD
+            | Decoration::TrackFinishWritingAMDX
+            | Decoration::PayloadNodeSparseArrayAMDX
+            | Decoration::PayloadDispatchIndirectAMDX
+            | Decoration::UTFEncodedKHR
+            | Decoration::OverrideCoverageNV
+            | Decoration::PassthroughNV
+            | Decoration::ViewportRelativeNV
+            | Decoration::PerPrimitiveEXT
+            | Decoration::PerViewNV
+            | Decoration::PerTaskNV
+            | Decoration::PerVertexKHR
+            | Decoration::NonUniform
+            | Decoration::RestrictPointer
+            | Decoration::AliasedPointer
+            | Decoration::HitObjectShaderRecordBufferNV
+            | Decoration::HitObjectShaderRecordBufferEXT
+            | Decoration::BindlessSamplerNV
+            | Decoration::BindlessImageNV
+            | Decoration::BoundSamplerNV
+            | Decoration::BoundImageNV
+            | Decoration::ReferencedIndirectlyINTEL
+            | Decoration::SideEffectsINTEL
+            | Decoration::VectorComputeVariableINTEL
+            | Decoration::VectorComputeFunctionINTEL
+            | Decoration::StackCallINTEL
+            | Decoration::RegisterALTERA
+            | Decoration::SinglepumpALTERA
+            | Decoration::DoublepumpALTERA
+            | Decoration::SimpleDualPortALTERA
+            | Decoration::TrueDualPortALTERA
+            | Decoration::BurstCoalesceALTERA
+            | Decoration::DontStaticallyCoalesceALTERA
+            | Decoration::StallEnableALTERA
+            | Decoration::FuseLoopsInFunctionALTERA
+            | Decoration::SingleElementVectorINTEL
+            | Decoration::VectorComputeCallableFunctionINTEL
+            | Decoration::MediaBlockIOINTEL
+            | Decoration::StallFreeALTERA
+            | Decoration::ConduitKernelArgumentALTERA
+            | Decoration::RegisterMapKernelArgumentALTERA
+            | Decoration::StableKernelArgumentALTERA => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
                 vec![]
-            }
-            Decoration::Block => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BufferBlock => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::RowMajor => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::ColMajor => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::ArrayStride => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MatrixStride => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::GLSLShared => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::GLSLPacked => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::CPacked => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BuiltIn => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<BuiltInAttr>().unwrap();
-                vec![Operand::BuiltIn(attr.0)]
-            }
-            Decoration::NoPerspective => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Flat => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Patch => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Centroid => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Sample => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Invariant => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Restrict => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Aliased => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Volatile => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Constant => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Coherent => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::NonWritable => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::NonReadable => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Uniform => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::SaturatedConversion => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::Stream => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::Location => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::Component => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::Index => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::Binding => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::DescriptorSet => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::Offset => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::XfbBuffer => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::XfbStride => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::FuncParamAttr => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<VecAttr>().unwrap();
-                todo!()
             }
             Decoration::FPRoundingMode => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<FPRoundingModeAttr>().unwrap();
                 vec![Operand::FPRoundingMode(attr.0)]
             }
+            Decoration::BuiltIn => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<BuiltInAttr>().unwrap();
+                vec![Operand::BuiltIn(attr.0)]
+            }
+            Decoration::FuncParamAttr => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<VecAttr>().unwrap();
+                todo!()
+            }
+            Decoration::ArrayStride
+            | Decoration::MatrixStride
+            | Decoration::Stream
+            | Decoration::Location
+            | Decoration::Component
+            | Decoration::Index
+            | Decoration::Binding
+            | Decoration::DescriptorSet
+            | Decoration::Offset
+            | Decoration::XfbBuffer
+            | Decoration::XfbStride
+            | Decoration::InputAttachmentIndex
+            | Decoration::Alignment
+            | Decoration::MaxByteOffset
+            | Decoration::SecondaryViewportRelativeNV
+            | Decoration::MemberOffsetNV
+            | Decoration::BankNV
+            | Decoration::SIMTCallINTEL
+            | Decoration::FuncParamIOKindINTEL
+            | Decoration::GlobalVariableOffsetINTEL
+            | Decoration::NumbanksALTERA
+            | Decoration::BankwidthALTERA
+            | Decoration::MaxPrivateCopiesALTERA
+            | Decoration::MaxReplicatesALTERA
+            | Decoration::ForcePow2DepthALTERA
+            | Decoration::StridesizeALTERA
+            | Decoration::WordsizeALTERA
+            | Decoration::CacheSizeALTERA
+            | Decoration::PrefetchALTERA
+            | Decoration::InitiationIntervalALTERA
+            | Decoration::MaxConcurrencyALTERA
+            | Decoration::PipelineEnableALTERA
+            | Decoration::BufferLocationALTERA
+            | Decoration::IOPipeStorageALTERA
+            | Decoration::LatencyControlLabelALTERA
+            | Decoration::MMHostInterfaceAddressWidthALTERA
+            | Decoration::MMHostInterfaceDataWidthALTERA
+            | Decoration::MMHostInterfaceLatencyALTERA
+            | Decoration::MMHostInterfaceMaxBurstALTERA
+            | Decoration::MMHostInterfaceWaitRequestALTERA
+            | Decoration::ImplementInRegisterMapALTERA => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
+                vec![Operand::LiteralBit32(attr.0)]
+            }
             Decoration::FPFastMathMode => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<FPFastMathModeAttr>().unwrap();
                 vec![Operand::FPFastMathMode(attr.0)]
             }
-            Decoration::NoContraction => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::InputAttachmentIndex => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::Alignment => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MaxByteOffset => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::SaturatedToLargestFloat8NormalConversionEXT => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::NoSignedWrap => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::NoUnsignedWrap => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::WeightTextureQCOM => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BlockMatchTextureQCOM => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BlockMatchSamplerQCOM => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::ExplicitInterpAMD => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::TrackFinishWritingAMDX => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::PayloadNodeSparseArrayAMDX => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::PayloadDispatchIndirectAMDX => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::UTFEncodedKHR => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::OverrideCoverageNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::PassthroughNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::ViewportRelativeNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::SecondaryViewportRelativeNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::PerPrimitiveEXT => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::PerViewNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::PerTaskNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::PerVertexKHR => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::NonUniform => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::RestrictPointer => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::AliasedPointer => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::MemberOffsetNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::HitObjectShaderRecordBufferNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::HitObjectShaderRecordBufferEXT => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BankNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::BindlessSamplerNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BindlessImageNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BoundSamplerNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BoundImageNV => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::SIMTCallINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::ReferencedIndirectlyINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::ClobberINTEL => {
+            Decoration::ClobberINTEL
+            | Decoration::UserSemantic
+            | Decoration::UserTypeGOOGLE
+            | Decoration::MemoryALTERA => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<StringAttr>().unwrap();
                 vec![Operand::LiteralString(attr.as_str().to_string())]
-            }
-            Decoration::SideEffectsINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::VectorComputeVariableINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::FuncParamIOKindINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::VectorComputeFunctionINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::StackCallINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::GlobalVariableOffsetINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::UserSemantic => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<StringAttr>().unwrap();
-                vec![Operand::LiteralString(attr.as_str().to_string())]
-            }
-            Decoration::UserTypeGOOGLE => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<StringAttr>().unwrap();
-                vec![Operand::LiteralString(attr.as_str().to_string())]
-            }
-            Decoration::RegisterALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::MemoryALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<StringAttr>().unwrap();
-                vec![Operand::LiteralString(attr.as_str().to_string())]
-            }
-            Decoration::NumbanksALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::BankwidthALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MaxPrivateCopiesALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::SinglepumpALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::DoublepumpALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::MaxReplicatesALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::SimpleDualPortALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::ForcePow2DepthALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::StridesizeALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::WordsizeALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::TrueDualPortALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::BurstCoalesceALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::CacheSizeALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::DontStaticallyCoalesceALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::PrefetchALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::StallEnableALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::FuseLoopsInFunctionALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::InitiationIntervalALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MaxConcurrencyALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::PipelineEnableALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::BufferLocationALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::IOPipeStorageALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::SingleElementVectorINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::VectorComputeCallableFunctionINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::MediaBlockIOINTEL => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::StallFreeALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::LatencyControlLabelALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::ConduitKernelArgumentALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::RegisterMapKernelArgumentALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::MMHostInterfaceAddressWidthALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MMHostInterfaceDataWidthALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MMHostInterfaceLatencyALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MMHostInterfaceMaxBurstALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::MMHostInterfaceWaitRequestALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::StableKernelArgumentALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
-            }
-            Decoration::ImplementInRegisterMapALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
             }
             _ => unimplemented!("Unsupported decoration"),
         }

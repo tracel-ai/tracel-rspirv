@@ -24,6 +24,8 @@ pub struct Instruction {
     #[serde(default)]
     pub operands: Vec<Operand>,
     #[serde(default)]
+    pub version: String,
+    #[serde(default)]
     pub capabilities: Vec<String>,
     #[serde(default)]
     pub extensions: Vec<String>,
@@ -42,6 +44,8 @@ pub struct Enumerant {
     pub value: u32,
     #[serde(default)]
     pub parameters: Vec<Operand>,
+    #[serde(default)]
+    pub version: String,
     #[serde(default)]
     pub capabilities: Vec<String>,
     #[serde(default)]

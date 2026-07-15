@@ -15,6 +15,7 @@ mod attrs;
 mod decorations;
 mod extensions;
 mod ops;
+mod vce;
 
 pub struct PlironGenerator {
     base_path: PathBuf,

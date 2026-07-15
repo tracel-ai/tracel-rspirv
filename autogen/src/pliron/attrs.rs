@@ -6,7 +6,7 @@ use quote::{format_ident, quote};
 use syn::Ident;
 
 use crate::{
-    pliron::{ops::OpdKind, PlironGenerator},
+    pliron::{PlironGenerator, ops::OpdKind},
     structs::{Category, OperandKind, Quantifier},
 };
 
@@ -40,18 +40,15 @@ impl PlironGenerator {
         let attr_ty = format_ident!("{}Attr", operand.kind);
         self.operand_kinds.insert(operand.kind.clone(), attr_ty.clone());
 
-        let format = self.attr_format(&attr_ty, &inner_ty);
-
         let attr_name = format!("spirv.{}", operand.kind.to_snek_case());
         let attr = quote! {
-            #[pliron_attr(name = #attr_name, verifier = "succ")]
+            #[pliron_attr(name = #attr_name, format = "$0", verifier = "succ")]
             #[derive(PartialEq, Clone, Debug)]
             pub struct #attr_ty(pub #inner_ty);
         };
 
         quote! {
             #attr
-            #format
 
             impl #attr_ty {
                 pub fn new(value: #inner_ty) -> Self {
@@ -73,49 +70,6 @@ impl PlironGenerator {
         }
     }
 
-    pub fn attr_format(&self, ty_name: &Ident, inner_ty: &Ident) -> TokenStream {
-        quote! {
-            impl ::pliron::printable::Printable for #ty_name {
-                fn fmt(
-                    &self,
-                    ctx: &::pliron::context::Context,
-                    state: &::pliron::printable::State,
-                    fmt: &mut ::core::fmt::Formatter<'_>,
-                ) -> ::core::fmt::Result {
-                    ::pliron::printable::Printable::fmt(&"(", ctx, state, fmt)?;
-                    ::pliron::printable::Printable::fmt(&self.0, ctx, state, fmt)?;
-                    ::pliron::printable::Printable::fmt(&")", ctx, state, fmt)?;
-                    Ok(())
-                }
-            }
-            impl ::pliron::parsable::Parsable for #ty_name {
-                type Arg = ();
-                type Parsed = Self;
-                fn parse<'__pliron_parse>(
-                    state_stream: &mut ::pliron::parsable::StateStream<'__pliron_parse>,
-                    arg: Self::Arg,
-                ) -> ::pliron::parsable::ParseResult<'__pliron_parse, Self::Parsed> {
-                    use ::pliron::parsable::IntoParseResult;
-                    use ::pliron::combine::Parser;
-                    use ::pliron::input_err;
-                    ::pliron::irfmt::parsers::spaced(::pliron::combine::parser::char::string("("))
-                        .parse_stream(state_stream)
-                        .into_result()?;
-                    let field_at_0 = #inner_ty::parse(state_stream, ())?.0;
-                    ::pliron::irfmt::parsers::spaced(::pliron::combine::parser::char::string(")"))
-                        .parse_stream(state_stream)
-                        .into_result()?;
-                    let final_ret_value = #ty_name(field_at_0);
-                    Ok(final_ret_value).into_parse_result()
-                }
-
-                fn parser<'a>(_arg: Self::Arg) -> alloc::boxed::Box<dyn ::pliron::combine::Parser<::pliron::parsable::StateStream<'a>, Output = Self::Parsed, PartialState = ()> + 'a> {
-                    todo!()
-                }
-            }
-        }
-    }
-
     fn register_builtin_attrs(&mut self) {
         self.operand_kinds
             .insert("LiteralInteger".into(), format_ident!("LiteralIntegerAttr"));
@@ -126,7 +80,10 @@ impl PlironGenerator {
     pub fn attr_idents(&self, namespace: &str, opds: &[OpdKind]) -> TokenStream {
         let module_name = format_ident!("{}", namespace);
         let idents = opds.iter().filter_map(|opd| match opd {
-            OpdKind::Attribute(name, ..) | OpdKind::ValueAttr(name, ..) | OpdKind::SymbolRef(name, ..) => {
+            OpdKind::Attribute(name, ..)
+            | OpdKind::ValueAttr(name, ..)
+            | OpdKind::SymbolRef(name, ..)
+            | OpdKind::StringRef(name, ..) => {
                 let const_name = attr_const_name(name);
                 let qualified_name = attr_qualified_name(namespace, name).to_string();
                 Some(quote! {
@@ -169,6 +126,15 @@ impl PlironGenerator {
             OpdKind::ValueAttr(name, ty) => {
                 vec![(name, ty.clone(), true)]
             }
+            OpdKind::StringRef(name, Quantifier::One) => {
+                vec![(name, format_ident!("LiteralStringAttr"), true)]
+            }
+            OpdKind::StringRef(name, Quantifier::ZeroOrOne) => {
+                vec![(name, format_ident!("LiteralStringAttr"), false)]
+            }
+            OpdKind::StringRef(name, Quantifier::ZeroOrMore) => {
+                vec![(name, format_ident!("VecAttr"), true)]
+            }
             OpdKind::MemoryAccess(name, name_align) => {
                 vec![
                     (name, format_ident!("MemoryAccessAttr"), true),
@@ -187,8 +153,7 @@ impl PlironGenerator {
             OpdKind::ResultType | OpdKind::ResultValue | OpdKind::Value(..) => vec![],
         });
         let get_set = specs.map(|(name, ty, required)| {
-            let module_name = format_ident!("{}", namespace);
-            let const_name = attr_const_name(name);
+            let const_name = qualified_attr_const_name(namespace, name);
             let fn_name_get = format_ident!("get_attr_{}", name);
             let fn_name_set = format_ident!("set_attr_{}", name);
             let fn_comment_get = format!("Get a [Ref](core::cell::Ref) to the value of the attribute named `{name}`.");
@@ -200,7 +165,7 @@ impl PlironGenerator {
                         -> ::core::cell::Ref<'a, #ty>
                     {
                         ::core::cell::Ref::map(self.op.deref(ctx), |op|
-                            op.attributes.get::<#ty>(&*#module_name::#const_name).unwrap())
+                            op.attributes.get::<#ty>(&#const_name).unwrap())
                     }
                 },
                 false => quote! {
@@ -209,7 +174,7 @@ impl PlironGenerator {
                         -> Option<::core::cell::Ref<'a, #ty>>
                     {
                         ::core::cell::Ref::filter_map(self.op.deref(ctx), |op|
-                            op.attributes.get::<#ty>(&*#module_name::#const_name)).ok()
+                            op.attributes.get::<#ty>(&#const_name)).ok()
                     }
                 },
             };
@@ -222,7 +187,7 @@ impl PlironGenerator {
                         #[doc = #fn_comment_remove]
                         pub fn #fn_name_remove(&self, ctx: &::pliron::context::Context)
                         {
-                            self.op.deref_mut(ctx).attributes.0.remove(&*#module_name::#const_name);
+                            self.op.deref_mut(ctx).attributes.0.remove(&*#const_name);
                         }
                     }
                 }
@@ -233,7 +198,7 @@ impl PlironGenerator {
 
                 #[doc = #fn_comment_set]
                 pub fn #fn_name_set(&self, ctx: &::pliron::context::Context, value: #ty) {
-                    self.op.deref_mut(ctx).attributes.set(#module_name::#const_name.clone(), value);
+                    self.op.deref_mut(ctx).attributes.set(#const_name.clone(), value);
                 }
 
                 #remove
@@ -245,6 +210,12 @@ impl PlironGenerator {
 
 pub fn attr_const_name(ident: &impl Display) -> Ident {
     format_ident!("ATTR_{}", ident.to_string().TO_SHOUTY_SNEK_CASE())
+}
+
+pub fn qualified_attr_const_name(namespace: &str, ident: &impl Display) -> TokenStream {
+    let module_name = format_ident!("{}", namespace);
+    let const_name = attr_const_name(ident);
+    quote![#module_name::#const_name]
 }
 
 fn attr_qualified_name(namespace: &str, ident: &Ident) -> Ident {

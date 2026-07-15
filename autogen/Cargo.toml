@@ -1,6 +1,6 @@
 [package]
 authors = ["gfx-rs developers", "Lei Zhang <antiagainst@gmail.com>"]
-edition = "2018"
+edition = "2024"
 name = "rspirv-autogen"
 version = "0.1.0"
 

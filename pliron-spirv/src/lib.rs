@@ -1,17 +1,24 @@
 #![no_std]
 
 extern crate alloc;
+extern crate std;
 
 use core::{
     cell::Ref,
     ops::{Deref, DerefMut},
 };
 
-use alloc::{boxed::Box, vec::Vec};
+use alloc::{
+    boxed::Box,
+    string::{String, ToString},
+    vec::Vec,
+};
+use indexmap::IndexMap;
 use pliron::{
     attribute::{AttrObj, Attribute},
-    builtin::{attributes::VecAttr, op_interfaces::SymbolTableInterface},
-    context::Context,
+    basic_block::BasicBlock,
+    builtin::attributes::VecAttr,
+    context::{Context, Ptr},
     derive::{attr_interface, op_interface, type_interface},
     identifier::Identifier,
     input_err_noloc,
@@ -22,32 +29,32 @@ use pliron::{
     std_deps::hash::FxHashMap,
     r#type::{Type, TypeHandle, type_cast},
     value::Value,
+    verify_err,
     verify_error_noloc,
 };
 use thiserror::Error;
 use tracel_rspirv::{
-    dr::{Builder, Instruction},
-    spirv::Word,
+    dr::{Builder, Module},
+    spirv::{MemoryAccess, Word},
 };
 
-use crate::ops::SpirvModuleOp;
+pub use tracel_rspirv::spirv;
 
-#[allow(unused_parens, unused_imports, unused_variables, clippy::all)]
+use crate::types::normalize_int_type;
+
 mod autogen_attrs;
-#[allow(unused_parens, unused_imports, unused_variables, clippy::all)]
 mod autogen_decorations;
-#[allow(unused_parens, unused_imports, unused_variables, clippy::all)]
 mod autogen_ops;
 
 pub mod attrs;
 pub mod decorations;
 pub mod ext;
+mod format;
+pub mod interfaces;
 pub mod ops;
 pub mod tensor_addressing_nv;
 pub mod types;
 pub mod util;
-
-pub(crate) mod parse;
 
 #[derive(Error, Debug)]
 pub enum PlironSpirvError {
@@ -57,13 +64,15 @@ pub enum PlironSpirvError {
     SymbolNotRegistered(Identifier),
 }
 
+#[derive(Default)]
 pub struct PlironBuilder {
     builder: Builder,
-    module: SpirvModuleOp,
-    types: FxHashMap<TypeHandle, Instruction>,
+    types: IndexMap<TypeHandle, Word>,
     constants: FxHashMap<(TypeHandle, u64), Word>,
     values: FxHashMap<Value, Word>,
     symbols: FxHashMap<Identifier, Word>,
+    blocks: FxHashMap<Ptr<BasicBlock>, Word>,
+    strings: FxHashMap<String, Word>,
 }
 
 impl Deref for PlironBuilder {
@@ -81,6 +90,10 @@ impl DerefMut for PlironBuilder {
 }
 
 impl PlironBuilder {
+    pub fn new() -> Self {
+        Default::default()
+    }
+
     pub(crate) fn value_id(&mut self, value: Value) -> Word {
         if let Some(existing) = self.values.get(&value) {
             *existing
@@ -91,8 +104,41 @@ impl PlironBuilder {
         }
     }
 
+    pub(crate) fn symbol_id(&mut self, symbol: impl Into<Identifier>) -> Word {
+        let sym = symbol.into();
+        if let Some(existing) = self.symbols.get(&sym) {
+            *existing
+        } else {
+            let id = self.id();
+            self.symbols.insert(sym, id);
+            id
+        }
+    }
+
+    pub(crate) fn label_id(&mut self, block: Ptr<BasicBlock>) -> Word {
+        if let Some(existing) = self.blocks.get(&block) {
+            *existing
+        } else {
+            let id = self.id();
+            self.blocks.insert(block, id);
+            id
+        }
+    }
+
+    pub(crate) fn string_ref(&mut self, string: impl Into<String>) -> Word {
+        let string = string.into();
+        if let Some(existing) = self.strings.get(&string) {
+            *existing
+        } else {
+            let id = self.string(string.clone());
+            self.strings.insert(string, id);
+            id
+        }
+    }
+
     /// Appends an OpConstant instruction with the given 32-bit bit pattern `value`.
     pub fn constant_bit32(&mut self, ctx: &Context, result_type: TypeHandle, value: u32) -> Result<Word> {
+        let result_type = normalize_int_type(ctx, result_type);
         if let Some(existing) = self.constants.get(&(result_type, value as u64)) {
             Ok(*existing)
         } else {
@@ -105,6 +151,7 @@ impl PlironBuilder {
 
     /// Appends an OpConstant instruction with the given 64-bit bit pattern `value`.
     pub fn constant_bit64(&mut self, ctx: &Context, result_type: TypeHandle, value: u64) -> Result<Word> {
+        let result_type = normalize_int_type(ctx, result_type);
         if let Some(existing) = self.constants.get(&(result_type, value)) {
             Ok(*existing)
         } else {
@@ -115,12 +162,8 @@ impl PlironBuilder {
         }
     }
 
-    pub fn finalize(mut self) -> Builder {
-        for (_, ty) in self.types {
-            self.builder.module_mut().types_global_values.push(ty);
-        }
-
-        self.builder
+    pub fn module(self) -> Module {
+        self.builder.module()
     }
 }
 
@@ -146,6 +189,16 @@ impl IntoPlironResult<u32> for u32 {
     }
 }
 
+#[derive(Error, Debug)]
+pub enum ToSpirvError {
+    #[error("{_0} doesn't support conversion to SPIR-V")]
+    UnsupportedOp(String),
+    #[error("Found unsupported op {_0} after resolving symbol")]
+    UnsupportedSymbolOp(String),
+    #[error("{_0} doesn't support conversion to SPIR-V")]
+    UnsupportedType(String),
+}
+
 #[op_interface]
 pub trait ToSpirvOp {
     fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()>;
@@ -160,18 +213,7 @@ pub trait ToSpirvOp {
 
 #[type_interface]
 pub trait ToSpirvType {
-    fn get(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Word> {
-        let handle = self.get_self_handle(ctx);
-        if let Some(existing) = builder.types.get(&handle) {
-            Ok(existing.result_id.expect("Should have result"))
-        } else {
-            let inst = self.to_spirv(ctx, builder)?;
-            let id = inst.result_id.expect("Should have result");
-            builder.types.insert(handle, inst);
-            Ok(id)
-        }
-    }
-    fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Instruction>;
+    fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Word>;
 
     fn verify(_ty: &dyn Type, _ctx: &Context) -> Result<()>
     where
@@ -194,32 +236,35 @@ pub trait ToSpirvAttr {
 }
 
 pub(crate) fn spirv_type_id(ctx: &Context, builder: &mut PlironBuilder, handle: TypeHandle) -> Result<Word> {
-    let ty = handle.deref(ctx);
-    let Some(ty) = type_cast::<dyn ToSpirvType>(&*ty) else {
-        return input_err_noloc!("Found unsupported type {} in SPIR-V op", handle.disp(ctx));
-    };
-    ty.get(ctx, builder)
-}
-
-pub(crate) fn spirv_symbol_id(ctx: &Context, builder: &mut PlironBuilder, sym: impl Into<Identifier>) -> Result<Word> {
-    let sym = sym.into();
-    if let Some(existing) = builder.symbols.get(&sym) {
+    let handle = normalize_int_type(ctx, handle);
+    if let Some(existing) = builder.types.get(&handle) {
         Ok(*existing)
     } else {
-        let op = builder
-            .module
-            .lookup(ctx, &sym)
-            .ok_or_else(|| verify_error_noloc!(PlironSpirvError::UnresolvedSymbol(sym.clone())))?;
-        let dyn_op = Operation::get_op_dyn(op, ctx);
-        let Some(ty) = op_cast::<dyn ToSpirvOp>(&*dyn_op) else {
-            return input_err_noloc!("Found unsupported op {} after resolving symbol", op.disp(ctx));
+        let ty = handle.deref(ctx);
+        let Some(ty) = type_cast::<dyn ToSpirvType>(&*ty) else {
+            let err = ToSpirvError::UnsupportedType(handle.disp(ctx).to_string());
+            return input_err_noloc!(err);
         };
-        ty.to_spirv(ctx, builder)?; // Global identifiers should register themselves in the transform
-        let id = *builder
-            .symbols
-            .get(&sym)
-            .ok_or_else(|| verify_error_noloc!(PlironSpirvError::SymbolNotRegistered(sym)))?;
+        let id = ty.to_spirv(ctx, builder)?;
+        builder.types.insert(handle, id);
         Ok(id)
+    }
+}
+
+pub(crate) fn op_to_spirv(ctx: &Context, builder: &mut PlironBuilder, op: Ptr<Operation>) -> Result<()> {
+    let dyn_op = Operation::get_op_dyn(op, ctx);
+    let Some(to_spirv) = op_cast::<dyn ToSpirvOp>(&*dyn_op) else {
+        let error = ToSpirvError::UnsupportedOp(op.disp(ctx).to_string());
+        return verify_err!(dyn_op.loc(ctx), error);
+    };
+    to_spirv.to_spirv(ctx, builder)
+}
+
+pub(crate) fn opt_memory_access(mem_access: MemoryAccess) -> Option<MemoryAccess> {
+    if mem_access == MemoryAccess::NONE {
+        None
+    } else {
+        Some(mem_access)
     }
 }
 
@@ -244,11 +289,16 @@ pub(crate) mod prelude {
         attrs::*,
         decorations::DecoratableOp,
         from_vec_attr,
-        spirv_symbol_id,
+        interfaces::VerCapExtOpInterface,
+        opt_memory_access,
         spirv_type_id,
         util::flat_vec,
     };
-    pub(crate) use alloc::{string::ToString, vec, vec::Vec};
+    pub(crate) use alloc::{
+        string::{String, ToString},
+        vec,
+        vec::Vec,
+    };
     pub(crate) use pliron::{
         builtin::{
             attributes::{IdentifierAttr, StringAttr, UnitAttr, VecAttr},
@@ -263,5 +313,8 @@ pub(crate) mod prelude {
         r#type::{TypeHandle, Typed},
         value::Value,
     };
-    pub(crate) use tracel_rspirv::{dr::Operand, spirv::Decoration};
+    pub(crate) use tracel_rspirv::{
+        dr::Operand,
+        spirv::{Capability, Decoration},
+    };
 }

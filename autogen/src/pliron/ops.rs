@@ -6,7 +6,7 @@ use quote::{format_ident, quote};
 use syn::Ident;
 
 use crate::{
-    pliron::PlironGenerator,
+    pliron::{PlironGenerator, attrs::qualified_attr_const_name},
     split_vendor_tag,
     structs::{Class, Instruction, Quantifier},
     utils::as_ident,
@@ -16,7 +16,6 @@ const SKIP_OP_CLASSES: &[Class] = &[
     Class::Type,
     Class::Branch, // Missing Abort
     Class::Constant,
-    Class::Debug,
     Class::ExtensionDecl, // All handled
     Class::ModeSetting,
     Class::Annotation,
@@ -26,6 +25,7 @@ const SKIP_OP_CLASSES: &[Class] = &[
 ];
 
 const SKIP_OP_NAMES: &[&str] = &[
+    "OpString",
     // Function
     "OpFunction",
     "OpFunctionParameter",
@@ -55,6 +55,8 @@ const UNSKIP_OP_NAMES: &[&str] = &["OpEntryPoint"];
 
 const SYMBOL_ARG_NAMES: &[&str] = &["Function", "Func", "Entry Point", "Interface"];
 
+const STRING_REF_OVERRIDES: &[(&str, &str)] = &[("OpSource", "File"), ("OpLine", "File"), ("DebugPrintf", "Format")];
+
 fn should_skip(op: &Instruction) -> bool {
     let skip_class = op.class.as_ref().is_some_and(|class| SKIP_OP_CLASSES.contains(class));
     let unskip_op = UNSKIP_OP_NAMES.contains(&op.opname.as_str());
@@ -73,6 +75,8 @@ pub enum OpdKind {
     ValueAttr(Ident, Ident),
     /// Symbol reference
     SymbolRef(Ident, Quantifier),
+    /// Literal string passed by ID
+    StringRef(Ident, Quantifier),
 }
 
 impl PlironGenerator {
@@ -100,8 +104,8 @@ impl PlironGenerator {
 
         quote! {
             #![allow(clippy::let_and_return)]
+
             use crate::prelude::*;
-            use crate::attrs::*;
 
             #(#root_ops)*
             #(#vendor_modules)*
@@ -123,7 +127,7 @@ impl PlironGenerator {
 
         let has_result = match op.operands.first() {
             Some(opd) if opd.kind == "IdResultType" => true,
-            Some(opd) if opd.kind == "IdResult" => panic!(),
+            Some(opd) if opd.kind == "IdResult" => panic!("result but no type in op {:?}", op),
             _ => false,
         };
 
@@ -134,11 +138,13 @@ impl PlironGenerator {
         let operands = self.operands(op);
         self.validate_operands(&operands);
 
-        self.generate_op_impl(&op_name, &ty_name, &builder_name, &namespace, &operands, has_result)
+        self.generate_op_impl(op, &op_name, &ty_name, &builder_name, &namespace, &operands, has_result)
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub fn generate_op_impl(
         &self,
+        inst: &Instruction,
         op_name: &str,
         ty_name: &Ident,
         builder_name: &Ident,
@@ -158,7 +164,6 @@ impl PlironGenerator {
         let pliron_op = quote! {
             #[pliron_op(
                 name = #op_name,
-                format,
                 operands = (#(#values),*),
                 interfaces = #interfaces,
                 verifier = "succ"
@@ -167,22 +172,37 @@ impl PlironGenerator {
         };
 
         let constructor = self.constructor(ty_name, namespace, operands, has_result);
-        let _format = self.op_format(ty_name);
+        let format = self.op_format(ty_name, namespace, operands);
+        let vce = self.generate_vce_impl(inst, ty_name, operands);
 
         quote! {
             #pliron_op
+            #format
 
             #attr_idents
             #constructor
             #to_spirv
+            #vce
         }
     }
 
     pub fn operands(&self, op: &Instruction) -> Vec<OpdKind> {
-        op.operands
+        let mut opd_id = 0;
+        let mut names_count = HashMap::<Ident, usize>::new();
+        let attr_name = |names_count: &mut HashMap<Ident, usize>, name: &str, kind: &str| -> Ident {
+            if name.is_empty() {
+                let ident = as_ident(&kind.to_snek_case());
+                *names_count.entry(ident.clone()).or_default() += 1;
+                ident
+            } else {
+                as_ident(&name.to_snek_case())
+            }
+        };
+
+        let mut opds = op
+            .operands
             .iter()
-            .enumerate()
-            .map(|(i, opd)| match opd.kind.as_str() {
+            .map(|opd| match opd.kind.as_str() {
                 "IdResultType" => {
                     assert_eq!(opd.quantifier, Quantifier::One);
                     OpdKind::ResultType
@@ -195,9 +215,14 @@ impl PlironGenerator {
                     let name = as_ident(&opd.name.to_snek_case());
                     OpdKind::SymbolRef(name, opd.quantifier)
                 }
+                "IdRef" if STRING_REF_OVERRIDES.contains(&(op.opname.as_str(), opd.name.as_str())) => {
+                    let name = as_ident(&opd.name.to_snek_case());
+                    OpdKind::StringRef(name, opd.quantifier)
+                }
                 "IdRef" => {
+                    opd_id += 1;
                     let name = if opd.name.is_empty() {
-                        as_ident(&format!("opd_{i}"))
+                        as_ident(&format!("opd_{opd_id}"))
                     } else {
                         as_ident(&opd.name.to_snek_case())
                     };
@@ -205,43 +230,63 @@ impl PlironGenerator {
                 }
                 "MemoryAccess" => {
                     assert_ne!(opd.quantifier, Quantifier::ZeroOrMore);
-                    let name = if opd.name.is_empty() {
-                        as_ident(&format!("{}_{i}", opd.kind.to_snek_case()))
+                    let (name, name_align) = if opd.name.is_empty() {
+                        let name = as_ident(&opd.kind.to_snek_case());
+                        *names_count.entry(name.clone()).or_default() += 1;
+                        (name, as_ident("align"))
                     } else {
-                        as_ident(&opd.name.to_snek_case())
+                        let name = as_ident(&opd.name.to_snek_case());
+                        let name_align = format_ident!("{}_align", name);
+                        (name, name_align)
                     };
-                    let align = format_ident!("{}_align", name);
-                    OpdKind::MemoryAccess(name, align)
+                    OpdKind::MemoryAccess(name, name_align)
                 }
                 "IdScope" => {
                     assert_eq!(opd.quantifier, Quantifier::One);
-                    let name = if opd.name.is_empty() {
-                        as_ident(&format!("{}_{i}", opd.kind.to_snek_case()))
-                    } else {
-                        as_ident(&opd.name.to_snek_case())
-                    };
+                    let name = attr_name(&mut names_count, &opd.name, &opd.kind);
                     OpdKind::ValueAttr(name, format_ident!("ScopeAttr"))
                 }
                 "IdMemorySemantics" => {
                     assert_eq!(opd.quantifier, Quantifier::One);
-                    let name = if opd.name.is_empty() {
-                        as_ident(&format!("{}_{i}", opd.kind.to_snek_case()))
-                    } else {
-                        as_ident(&opd.name.to_snek_case())
-                    };
+                    let name = attr_name(&mut names_count, &opd.name, &opd.kind);
                     OpdKind::ValueAttr(name, format_ident!("MemorySemanticsAttr"))
                 }
                 other if let Some(attr) = self.operand_kinds.get(other) => {
-                    let name = if opd.name.is_empty() {
-                        as_ident(&format!("{}_{i}", opd.kind.to_snek_case()))
-                    } else {
-                        as_ident(&opd.name.to_snek_case())
-                    };
+                    let name = attr_name(&mut names_count, &opd.name, &opd.kind);
                     OpdKind::Attribute(name, attr.clone(), opd.quantifier)
                 }
                 other => panic!("Unsupported operand kind {} in op {}", other, op.opname),
             })
-            .collect()
+            .collect::<Vec<_>>();
+        let mut name_suffix_id = HashMap::<Ident, usize>::new();
+        for opd in opds.iter_mut() {
+            match opd {
+                OpdKind::ResultType | OpdKind::ResultValue | OpdKind::Value(..) => {}
+                OpdKind::Attribute(ident, ..)
+                | OpdKind::ValueAttr(ident, ..)
+                | OpdKind::SymbolRef(ident, ..)
+                | OpdKind::StringRef(ident, ..) => {
+                    if let Some(names_count) = names_count.get(ident)
+                        && *names_count > 1
+                    {
+                        let suffix = name_suffix_id.entry(ident.clone()).or_default();
+                        *suffix += 1;
+                        *ident = format_ident!("{}_{}", ident, suffix);
+                    }
+                }
+                OpdKind::MemoryAccess(ident, ident_align) => {
+                    if let Some(names_count) = names_count.get(ident)
+                        && *names_count > 1
+                    {
+                        let suffix = name_suffix_id.entry(ident.clone()).or_default();
+                        *suffix += 1;
+                        *ident = format_ident!("{}_{}", ident, suffix);
+                        *ident_align = format_ident!("{}_{}", ident_align, suffix);
+                    }
+                }
+            }
+        }
+        opds
     }
 
     pub fn validate_operands(&self, opds: &[OpdKind]) {
@@ -268,6 +313,12 @@ impl PlironGenerator {
                 let setter = format_ident!("set_attr_{}", name);
                 Some(quote![op.#setter(ctx, #name.into());])
             }
+            OpdKind::Attribute(name, _, Quantifier::ZeroOrOne) => {
+                let setter = format_ident!("set_attr_{}", name);
+                Some(quote![if let Some(attr) = #name {
+                    op.#setter(ctx, attr);
+                }])
+            }
             OpdKind::Attribute(name, _, Quantifier::ZeroOrMore) => {
                 let setter = format_ident!("set_attr_{}", name);
                 Some(quote![op.#setter(ctx, as_vec_attr(#name));])
@@ -292,12 +343,35 @@ impl PlironGenerator {
                     op.#setter(ctx, IdentifierAttr::new(#name));
                 })
             }
+            OpdKind::SymbolRef(name, Quantifier::ZeroOrOne) => {
+                let setter = format_ident!("set_attr_{}", name);
+                Some(quote![if let Some(ident) = #name {
+                    op.#setter(ctx, IdentifierAttr::new(ident));
+                }])
+            }
             OpdKind::SymbolRef(name, Quantifier::ZeroOrMore) => {
                 let setter = format_ident!("set_attr_{}", name);
                 Some(quote![op.#setter(ctx,
-                    as_vec_attr(#name.into_iter().map(|ident| IdentifierAttr::new(ident))));])
+                    as_vec_attr(#name.into_iter().map(IdentifierAttr::new)));])
             }
-            _ => None,
+            OpdKind::StringRef(name, Quantifier::One) => {
+                let setter = format_ident!("set_attr_{}", name);
+                Some(quote! {
+                    op.#setter(ctx, LiteralStringAttr::new(#name.into()));
+                })
+            }
+            OpdKind::StringRef(name, Quantifier::ZeroOrOne) => {
+                let setter = format_ident!("set_attr_{}", name);
+                Some(quote![if let Some(string) = #name {
+                    op.#setter(ctx, LiteralStringAttr::new(string));
+                }])
+            }
+            OpdKind::StringRef(name, Quantifier::ZeroOrMore) => {
+                let setter = format_ident!("set_attr_{}", name);
+                Some(quote![op.#setter(ctx,
+                    as_vec_attr(#name.into_iter().map(LiteralStringAttr::new)));])
+            }
+            OpdKind::ResultType | OpdKind::ResultValue | OpdKind::Value(..) => None,
         });
         res.collect()
     }
@@ -347,7 +421,7 @@ impl PlironGenerator {
                     let getter = format_ident!("get_attr_{}", name);
                     let getter_align = format_ident!("get_attr_{}", name_align);
                     quote! {
-                        let #name = Some(self.#getter(ctx).0);
+                        let #name = opt_memory_access(self.#getter(ctx).0);
                         let #name_align = self.#getter_align(ctx).map(|it| it.0.into());
                     }
                 }
@@ -355,16 +429,29 @@ impl PlironGenerator {
                     let getter = format_ident!("get_attr_{}", name);
                     match quant {
                         Quantifier::One => {
-                            quote![let #name = spirv_symbol_id(ctx, builder, self.#getter(ctx).clone())?;]
+                            quote![let #name = builder.symbol_id(self.#getter(ctx).clone());]
                         }
                         Quantifier::ZeroOrOne => quote! {
-                            let #name = self.#getter(ctx)
-                                .map(|it| spirv_symbol_id(ctx, builder, it.clone())).transpose()?;
+                            let #name = self.#getter(ctx).map(|it| builder.symbol_id(it.clone()));
                         },
                         Quantifier::ZeroOrMore => quote! {
                             let #name = from_vec_attr::<IdentifierAttr>(self.#getter(ctx)).into_iter()
-                                .map(|it| spirv_symbol_id(ctx, builder, it.clone()))
-                                .collect::<Result<Vec<_>>>()?;
+                                .map(|it| builder.symbol_id(it.clone())).collect::<Vec<_>>();
+                        },
+                    }
+                }
+                OpdKind::StringRef(name, quant) => {
+                    let getter = format_ident!("get_attr_{}", name);
+                    match quant {
+                        Quantifier::One => {
+                            quote![let #name = builder.string_ref(self.#getter(ctx).clone());]
+                        }
+                        Quantifier::ZeroOrOne => quote! {
+                            let #name = self.#getter(ctx).map(|it| builder.string_ref(it.clone()));
+                        },
+                        Quantifier::ZeroOrMore => quote! {
+                            let #name = from_vec_attr::<IdentifierAttr>(self.#getter(ctx)).into_iter()
+                                .map(|it| builder.string_ref(it.clone())).collect::<Vec<_>>();
                         },
                     }
                 }
@@ -383,7 +470,7 @@ impl PlironGenerator {
             OpdKind::MemoryAccess(name, name_align) => {
                 quote![#name, #name_align]
             }
-            OpdKind::SymbolRef(name, _) => {
+            OpdKind::SymbolRef(name, _) | OpdKind::StringRef(name, _) => {
                 quote![#name]
             }
         });
@@ -400,7 +487,7 @@ impl PlironGenerator {
                 Quantifier::ZeroOrMore => quote![#name: Vec<Value>],
             }],
             OpdKind::Attribute(name, ty, Quantifier::One) => vec![quote![#name: impl Into<#ty>]],
-            OpdKind::Attribute(_, _, Quantifier::ZeroOrOne) => vec![],
+            OpdKind::Attribute(name, ty, Quantifier::ZeroOrOne) => vec![quote![#name: Option<#ty>]],
             OpdKind::Attribute(name, ty, Quantifier::ZeroOrMore) => vec![quote![#name: Vec<#ty>]],
             OpdKind::ValueAttr(name, ty) => vec![quote![#name: impl Into<#ty>]],
             OpdKind::MemoryAccess(name, name_align) => vec![
@@ -408,10 +495,15 @@ impl PlironGenerator {
                 quote![#name_align: Option<u32>],
             ],
             OpdKind::SymbolRef(name, Quantifier::One) => vec![quote![#name: Identifier]],
-            OpdKind::SymbolRef(_, Quantifier::ZeroOrOne) => vec![],
+            OpdKind::SymbolRef(name, Quantifier::ZeroOrOne) => vec![quote![#name: Option<Identifier>]],
             OpdKind::SymbolRef(name, Quantifier::ZeroOrMore) => {
                 vec![quote![#name: Vec<Identifier>]]
             }
+            OpdKind::StringRef(name, quant) => vec![match quant {
+                Quantifier::One => quote![#name: impl Into<String>],
+                Quantifier::ZeroOrOne => quote![#name: Option<String>],
+                Quantifier::ZeroOrMore => quote![#name: Vec<String>],
+            }],
         });
         constructor_args.collect()
     }
@@ -482,51 +574,62 @@ impl PlironGenerator {
         }
     }
 
-    pub fn op_format(&self, op_ty: &Ident) -> TokenStream {
-        quote! {
-            impl ::pliron::printable::Printable for #op_ty {
-                fn fmt(
-                    &self,
-                    ctx: &::pliron::context::Context,
-                    state: &::pliron::printable::State,
-                    fmt: &mut ::core::fmt::Formatter<'_>,
-                ) -> ::core::fmt::Result {
-                    ::pliron::op::canonical_syntax_print(
-                        ::pliron::op::OpObj::new(*self),
-                        ctx,
-                        state,
-                        fmt,
-                    )?;
-                    Ok(())
-                }
-            }
+    pub fn op_format(&self, op_ty: &Ident, namespace: &str, opds: &[OpdKind]) -> TokenStream {
+        let fmt_var = quote![crate::format::FormatVar];
+        let attr = quote![crate::format::attr];
 
-            impl ::pliron::parsable::Parsable for #op_ty {
-                type Arg = ::pliron::alloc::vec::Vec<
-                    (::pliron::identifier::Identifier, ::pliron::location::Location),
-                >;
-                type Parsed = ::pliron::op::OpObj;
-                fn parse<'__pliron_parse>(
-                    state_stream: &mut ::pliron::parsable::StateStream<'__pliron_parse>,
-                    arg: Self::Arg,
-                ) -> ::pliron::parsable::ParseResult<'__pliron_parse, Self::Parsed> {
-                    use ::pliron::parsable::IntoParseResult;
-                    use ::pliron::combine::Parser;
-                    use ::pliron::input_err;
-                    use ::pliron::location::Located;
-                    let cur_loc = state_stream.loc();
-                    use ::pliron::op::Op;
-                    use ::pliron::operation::Operation;
-                    use ::pliron::irfmt::parsers::{
-                        process_parsed_ssa_defs, ssa_opd_parser, block_opd_parser, attr_parser,
-                    };
-                    ::pliron::op::canonical_syntax_parse::<Self>(state_stream, arg)
-                }
+        let quantifier = |quant: &Quantifier| match quant {
+            Quantifier::One => quote![crate::format::Quantifier::One],
+            Quantifier::ZeroOrOne => quote![crate::format::Quantifier::ZeroOrOne],
+            Quantifier::ZeroOrMore => quote![crate::format::Quantifier::ZeroOrMore],
+        };
 
-                fn parser<'a>(_arg: Self::Arg) -> alloc::boxed::Box<dyn ::pliron::combine::Parser<::pliron::parsable::StateStream<'a>, Output = Self::Parsed, PartialState = ()> + 'a> {
-                    todo!()
-                }
-            }
-        }
+        let opds = opds.iter().flat_map(|opd| match opd {
+            OpdKind::ResultType | OpdKind::ResultValue => vec![],
+            OpdKind::Value(ident, quant) => vec![{
+                let quant = quantifier(quant);
+                let name = ident.to_string();
+                quote![#fmt_var::Value(#name, #quant)]
+            }],
+            OpdKind::Attribute(ident, ty, quant) => vec![{
+                let key = qualified_attr_const_name(namespace, ident);
+                let quant = quantifier(quant);
+                let name = ident.to_string();
+                quote![#attr!(&#key, #ty, #name, #quant)]
+            }],
+            OpdKind::StringRef(ident, quant) => vec![{
+                let key = qualified_attr_const_name(namespace, ident);
+                let quant = quantifier(quant);
+                let name = ident.to_string();
+                quote![#attr!(&#key, LiteralStringAttr, #name, #quant)]
+            }],
+            OpdKind::MemoryAccess(ident, align_ident) => vec![
+                {
+                    let key = qualified_attr_const_name(namespace, ident);
+                    let name = ident.to_string();
+                    quote![#fmt_var::MemoryAccess(&#key, #name)]
+                },
+                {
+                    let key = qualified_attr_const_name(namespace, align_ident);
+                    let quant = quantifier(&Quantifier::ZeroOrOne);
+                    let name = align_ident.to_string();
+                    quote![#attr!(&#key, LiteralIntegerAttr, #name, #quant)]
+                },
+            ],
+            OpdKind::ValueAttr(ident, ty) => vec![{
+                let key = qualified_attr_const_name(namespace, ident);
+                let quant = quantifier(&Quantifier::One);
+                let name = ident.to_string();
+                quote![#attr!(&#key, #ty, #name, #quant)]
+            }],
+            OpdKind::SymbolRef(ident, quant) => vec![{
+                let key = qualified_attr_const_name(namespace, ident);
+                let quant = quantifier(quant);
+                let name = ident.to_string();
+                quote![#fmt_var::Symbol(&#key, #name, #quant)]
+            }],
+        });
+
+        quote![crate::format::canonical_format!(#op_ty; #(#opds),*);]
     }
 }

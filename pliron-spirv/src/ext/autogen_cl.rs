@@ -7,7 +7,6 @@ use crate::prelude::*;
 use crate::attrs::*;
 #[pliron_op(
     name = "spirv.CL.acos",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -15,6 +14,9 @@ use crate::attrs::*;
     verifier = "succ"
 )]
 pub struct AcosOp;
+crate::format::canonical_format!(
+    AcosOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_acos {}
 impl AcosOp {
     #[allow(clippy::too_many_arguments)]
@@ -46,9 +48,29 @@ impl ToSpirvOp for AcosOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AcosOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.acosh",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -56,6 +78,9 @@ impl ToSpirvOp for AcosOp {
     verifier = "succ"
 )]
 pub struct AcoshOp;
+crate::format::canonical_format!(
+    AcoshOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_acosh {}
 impl AcoshOp {
     #[allow(clippy::too_many_arguments)]
@@ -87,9 +112,29 @@ impl ToSpirvOp for AcoshOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AcoshOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.acospi",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -97,6 +142,9 @@ impl ToSpirvOp for AcoshOp {
     verifier = "succ"
 )]
 pub struct AcospiOp;
+crate::format::canonical_format!(
+    AcospiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_acospi {}
 impl AcospiOp {
     #[allow(clippy::too_many_arguments)]
@@ -128,9 +176,29 @@ impl ToSpirvOp for AcospiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AcospiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.asin",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -138,6 +206,9 @@ impl ToSpirvOp for AcospiOp {
     verifier = "succ"
 )]
 pub struct AsinOp;
+crate::format::canonical_format!(
+    AsinOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_asin {}
 impl AsinOp {
     #[allow(clippy::too_many_arguments)]
@@ -169,9 +240,29 @@ impl ToSpirvOp for AsinOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AsinOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.asinh",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -179,6 +270,9 @@ impl ToSpirvOp for AsinOp {
     verifier = "succ"
 )]
 pub struct AsinhOp;
+crate::format::canonical_format!(
+    AsinhOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_asinh {}
 impl AsinhOp {
     #[allow(clippy::too_many_arguments)]
@@ -210,9 +304,29 @@ impl ToSpirvOp for AsinhOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AsinhOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.asinpi",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -220,6 +334,9 @@ impl ToSpirvOp for AsinhOp {
     verifier = "succ"
 )]
 pub struct AsinpiOp;
+crate::format::canonical_format!(
+    AsinpiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_asinpi {}
 impl AsinpiOp {
     #[allow(clippy::too_many_arguments)]
@@ -251,9 +368,29 @@ impl ToSpirvOp for AsinpiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AsinpiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.atan",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -261,6 +398,9 @@ impl ToSpirvOp for AsinpiOp {
     verifier = "succ"
 )]
 pub struct AtanOp;
+crate::format::canonical_format!(
+    AtanOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_atan {}
 impl AtanOp {
     #[allow(clippy::too_many_arguments)]
@@ -292,9 +432,29 @@ impl ToSpirvOp for AtanOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AtanOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.atan2",
-    format,
     operands = (y, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -302,6 +462,10 @@ impl ToSpirvOp for AtanOp {
     verifier = "succ"
 )]
 pub struct Atan2Op;
+crate::format::canonical_format!(
+    Atan2Op; crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_atan2 {}
 impl Atan2Op {
     #[allow(clippy::too_many_arguments)]
@@ -334,9 +498,29 @@ impl ToSpirvOp for Atan2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Atan2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.atanh",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -344,6 +528,9 @@ impl ToSpirvOp for Atan2Op {
     verifier = "succ"
 )]
 pub struct AtanhOp;
+crate::format::canonical_format!(
+    AtanhOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_atanh {}
 impl AtanhOp {
     #[allow(clippy::too_many_arguments)]
@@ -375,9 +562,29 @@ impl ToSpirvOp for AtanhOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AtanhOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.atanpi",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -385,6 +592,9 @@ impl ToSpirvOp for AtanhOp {
     verifier = "succ"
 )]
 pub struct AtanpiOp;
+crate::format::canonical_format!(
+    AtanpiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_atanpi {}
 impl AtanpiOp {
     #[allow(clippy::too_many_arguments)]
@@ -416,9 +626,29 @@ impl ToSpirvOp for AtanpiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for AtanpiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.atan2pi",
-    format,
     operands = (y, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -426,6 +656,10 @@ impl ToSpirvOp for AtanpiOp {
     verifier = "succ"
 )]
 pub struct Atan2piOp;
+crate::format::canonical_format!(
+    Atan2piOp; crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_atan2pi {}
 impl Atan2piOp {
     #[allow(clippy::too_many_arguments)]
@@ -458,9 +692,29 @@ impl ToSpirvOp for Atan2piOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Atan2piOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.cbrt",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -468,6 +722,9 @@ impl ToSpirvOp for Atan2piOp {
     verifier = "succ"
 )]
 pub struct CbrtOp;
+crate::format::canonical_format!(
+    CbrtOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_cbrt {}
 impl CbrtOp {
     #[allow(clippy::too_many_arguments)]
@@ -499,9 +756,29 @@ impl ToSpirvOp for CbrtOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CbrtOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.ceil",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -509,6 +786,9 @@ impl ToSpirvOp for CbrtOp {
     verifier = "succ"
 )]
 pub struct CeilOp;
+crate::format::canonical_format!(
+    CeilOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_ceil {}
 impl CeilOp {
     #[allow(clippy::too_many_arguments)]
@@ -540,9 +820,29 @@ impl ToSpirvOp for CeilOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CeilOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.copysign",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -550,6 +850,10 @@ impl ToSpirvOp for CeilOp {
     verifier = "succ"
 )]
 pub struct CopysignOp;
+crate::format::canonical_format!(
+    CopysignOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_copysign {}
 impl CopysignOp {
     #[allow(clippy::too_many_arguments)]
@@ -582,9 +886,29 @@ impl ToSpirvOp for CopysignOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CopysignOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.cos",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -592,6 +916,9 @@ impl ToSpirvOp for CopysignOp {
     verifier = "succ"
 )]
 pub struct CosOp;
+crate::format::canonical_format!(
+    CosOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_cos {}
 impl CosOp {
     #[allow(clippy::too_many_arguments)]
@@ -623,9 +950,29 @@ impl ToSpirvOp for CosOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CosOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.cosh",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -633,6 +980,9 @@ impl ToSpirvOp for CosOp {
     verifier = "succ"
 )]
 pub struct CoshOp;
+crate::format::canonical_format!(
+    CoshOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_cosh {}
 impl CoshOp {
     #[allow(clippy::too_many_arguments)]
@@ -664,9 +1014,29 @@ impl ToSpirvOp for CoshOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CoshOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.cospi",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -674,6 +1044,9 @@ impl ToSpirvOp for CoshOp {
     verifier = "succ"
 )]
 pub struct CospiOp;
+crate::format::canonical_format!(
+    CospiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_cospi {}
 impl CospiOp {
     #[allow(clippy::too_many_arguments)]
@@ -705,9 +1078,29 @@ impl ToSpirvOp for CospiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CospiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.erfc",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -715,6 +1108,9 @@ impl ToSpirvOp for CospiOp {
     verifier = "succ"
 )]
 pub struct ErfcOp;
+crate::format::canonical_format!(
+    ErfcOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_erfc {}
 impl ErfcOp {
     #[allow(clippy::too_many_arguments)]
@@ -746,9 +1142,29 @@ impl ToSpirvOp for ErfcOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for ErfcOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.erf",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -756,6 +1172,9 @@ impl ToSpirvOp for ErfcOp {
     verifier = "succ"
 )]
 pub struct ErfOp;
+crate::format::canonical_format!(
+    ErfOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_erf {}
 impl ErfOp {
     #[allow(clippy::too_many_arguments)]
@@ -787,9 +1206,29 @@ impl ToSpirvOp for ErfOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for ErfOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.exp",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -797,6 +1236,9 @@ impl ToSpirvOp for ErfOp {
     verifier = "succ"
 )]
 pub struct ExpOp;
+crate::format::canonical_format!(
+    ExpOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_exp {}
 impl ExpOp {
     #[allow(clippy::too_many_arguments)]
@@ -828,9 +1270,29 @@ impl ToSpirvOp for ExpOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for ExpOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.exp2",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -838,6 +1300,9 @@ impl ToSpirvOp for ExpOp {
     verifier = "succ"
 )]
 pub struct Exp2Op;
+crate::format::canonical_format!(
+    Exp2Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_exp2 {}
 impl Exp2Op {
     #[allow(clippy::too_many_arguments)]
@@ -869,9 +1334,29 @@ impl ToSpirvOp for Exp2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Exp2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.exp10",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -879,6 +1364,9 @@ impl ToSpirvOp for Exp2Op {
     verifier = "succ"
 )]
 pub struct Exp10Op;
+crate::format::canonical_format!(
+    Exp10Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_exp10 {}
 impl Exp10Op {
     #[allow(clippy::too_many_arguments)]
@@ -910,9 +1398,29 @@ impl ToSpirvOp for Exp10Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Exp10Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.expm1",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -920,6 +1428,9 @@ impl ToSpirvOp for Exp10Op {
     verifier = "succ"
 )]
 pub struct Expm1Op;
+crate::format::canonical_format!(
+    Expm1Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_expm1 {}
 impl Expm1Op {
     #[allow(clippy::too_many_arguments)]
@@ -951,9 +1462,29 @@ impl ToSpirvOp for Expm1Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Expm1Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fabs",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -961,6 +1492,9 @@ impl ToSpirvOp for Expm1Op {
     verifier = "succ"
 )]
 pub struct FabsOp;
+crate::format::canonical_format!(
+    FabsOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fabs {}
 impl FabsOp {
     #[allow(clippy::too_many_arguments)]
@@ -992,9 +1526,29 @@ impl ToSpirvOp for FabsOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FabsOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fdim",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1002,6 +1556,10 @@ impl ToSpirvOp for FabsOp {
     verifier = "succ"
 )]
 pub struct FdimOp;
+crate::format::canonical_format!(
+    FdimOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fdim {}
 impl FdimOp {
     #[allow(clippy::too_many_arguments)]
@@ -1034,9 +1592,29 @@ impl ToSpirvOp for FdimOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FdimOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.floor",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1044,6 +1622,9 @@ impl ToSpirvOp for FdimOp {
     verifier = "succ"
 )]
 pub struct FloorOp;
+crate::format::canonical_format!(
+    FloorOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_floor {}
 impl FloorOp {
     #[allow(clippy::too_many_arguments)]
@@ -1075,9 +1656,29 @@ impl ToSpirvOp for FloorOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FloorOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fma",
-    format,
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1085,6 +1686,11 @@ impl ToSpirvOp for FloorOp {
     verifier = "succ"
 )]
 pub struct FmaOp;
+crate::format::canonical_format!(
+    FmaOp; crate ::format::FormatVar::Value("a", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("b", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("c", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fma {}
 impl FmaOp {
     #[allow(clippy::too_many_arguments)]
@@ -1124,9 +1730,29 @@ impl ToSpirvOp for FmaOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FmaOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fmax",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1134,6 +1760,10 @@ impl ToSpirvOp for FmaOp {
     verifier = "succ"
 )]
 pub struct FmaxOp;
+crate::format::canonical_format!(
+    FmaxOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fmax {}
 impl FmaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -1166,9 +1796,29 @@ impl ToSpirvOp for FmaxOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FmaxOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fmin",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1176,6 +1826,10 @@ impl ToSpirvOp for FmaxOp {
     verifier = "succ"
 )]
 pub struct FminOp;
+crate::format::canonical_format!(
+    FminOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fmin {}
 impl FminOp {
     #[allow(clippy::too_many_arguments)]
@@ -1208,9 +1862,29 @@ impl ToSpirvOp for FminOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FminOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fmod",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1218,6 +1892,10 @@ impl ToSpirvOp for FminOp {
     verifier = "succ"
 )]
 pub struct FmodOp;
+crate::format::canonical_format!(
+    FmodOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fmod {}
 impl FmodOp {
     #[allow(clippy::too_many_arguments)]
@@ -1250,9 +1928,29 @@ impl ToSpirvOp for FmodOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FmodOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fract",
-    format,
     operands = (x, ptr),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1260,6 +1958,10 @@ impl ToSpirvOp for FmodOp {
     verifier = "succ"
 )]
 pub struct FractOp;
+crate::format::canonical_format!(
+    FractOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("ptr", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fract {}
 impl FractOp {
     #[allow(clippy::too_many_arguments)]
@@ -1292,9 +1994,29 @@ impl ToSpirvOp for FractOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FractOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.frexp",
-    format,
     operands = (x, exp),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1302,6 +2024,10 @@ impl ToSpirvOp for FractOp {
     verifier = "succ"
 )]
 pub struct FrexpOp;
+crate::format::canonical_format!(
+    FrexpOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("exp", crate ::format::Quantifier::One)
+);
 mod spirv_cl_frexp {}
 impl FrexpOp {
     #[allow(clippy::too_many_arguments)]
@@ -1334,9 +2060,29 @@ impl ToSpirvOp for FrexpOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FrexpOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.hypot",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1344,6 +2090,10 @@ impl ToSpirvOp for FrexpOp {
     verifier = "succ"
 )]
 pub struct HypotOp;
+crate::format::canonical_format!(
+    HypotOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_hypot {}
 impl HypotOp {
     #[allow(clippy::too_many_arguments)]
@@ -1376,9 +2126,29 @@ impl ToSpirvOp for HypotOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HypotOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.ilogb",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1386,6 +2156,9 @@ impl ToSpirvOp for HypotOp {
     verifier = "succ"
 )]
 pub struct IlogbOp;
+crate::format::canonical_format!(
+    IlogbOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_ilogb {}
 impl IlogbOp {
     #[allow(clippy::too_many_arguments)]
@@ -1417,9 +2190,29 @@ impl ToSpirvOp for IlogbOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for IlogbOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.ldexp",
-    format,
     operands = (x, k),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1427,6 +2220,10 @@ impl ToSpirvOp for IlogbOp {
     verifier = "succ"
 )]
 pub struct LdexpOp;
+crate::format::canonical_format!(
+    LdexpOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("k", crate ::format::Quantifier::One)
+);
 mod spirv_cl_ldexp {}
 impl LdexpOp {
     #[allow(clippy::too_many_arguments)]
@@ -1459,9 +2256,29 @@ impl ToSpirvOp for LdexpOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for LdexpOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.lgamma",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1469,6 +2286,9 @@ impl ToSpirvOp for LdexpOp {
     verifier = "succ"
 )]
 pub struct LgammaOp;
+crate::format::canonical_format!(
+    LgammaOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_lgamma {}
 impl LgammaOp {
     #[allow(clippy::too_many_arguments)]
@@ -1500,9 +2320,29 @@ impl ToSpirvOp for LgammaOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for LgammaOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.lgamma_r",
-    format,
     operands = (x, signp),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1510,6 +2350,10 @@ impl ToSpirvOp for LgammaOp {
     verifier = "succ"
 )]
 pub struct LgammaROp;
+crate::format::canonical_format!(
+    LgammaROp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("signp", crate ::format::Quantifier::One)
+);
 mod spirv_cl_lgamma_r {}
 impl LgammaROp {
     #[allow(clippy::too_many_arguments)]
@@ -1547,9 +2391,29 @@ impl ToSpirvOp for LgammaROp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for LgammaROp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.log",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1557,6 +2421,9 @@ impl ToSpirvOp for LgammaROp {
     verifier = "succ"
 )]
 pub struct LogOp;
+crate::format::canonical_format!(
+    LogOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_log {}
 impl LogOp {
     #[allow(clippy::too_many_arguments)]
@@ -1588,9 +2455,29 @@ impl ToSpirvOp for LogOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for LogOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.log2",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1598,6 +2485,9 @@ impl ToSpirvOp for LogOp {
     verifier = "succ"
 )]
 pub struct Log2Op;
+crate::format::canonical_format!(
+    Log2Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_log2 {}
 impl Log2Op {
     #[allow(clippy::too_many_arguments)]
@@ -1629,9 +2519,29 @@ impl ToSpirvOp for Log2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Log2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.log10",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1639,6 +2549,9 @@ impl ToSpirvOp for Log2Op {
     verifier = "succ"
 )]
 pub struct Log10Op;
+crate::format::canonical_format!(
+    Log10Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_log10 {}
 impl Log10Op {
     #[allow(clippy::too_many_arguments)]
@@ -1670,9 +2583,29 @@ impl ToSpirvOp for Log10Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Log10Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.log1p",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1680,6 +2613,9 @@ impl ToSpirvOp for Log10Op {
     verifier = "succ"
 )]
 pub struct Log1pOp;
+crate::format::canonical_format!(
+    Log1pOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_log1p {}
 impl Log1pOp {
     #[allow(clippy::too_many_arguments)]
@@ -1711,9 +2647,29 @@ impl ToSpirvOp for Log1pOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Log1pOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.logb",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1721,6 +2677,9 @@ impl ToSpirvOp for Log1pOp {
     verifier = "succ"
 )]
 pub struct LogbOp;
+crate::format::canonical_format!(
+    LogbOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_logb {}
 impl LogbOp {
     #[allow(clippy::too_many_arguments)]
@@ -1752,9 +2711,29 @@ impl ToSpirvOp for LogbOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for LogbOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.mad",
-    format,
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1762,6 +2741,11 @@ impl ToSpirvOp for LogbOp {
     verifier = "succ"
 )]
 pub struct MadOp;
+crate::format::canonical_format!(
+    MadOp; crate ::format::FormatVar::Value("a", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("b", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("c", crate ::format::Quantifier::One)
+);
 mod spirv_cl_mad {}
 impl MadOp {
     #[allow(clippy::too_many_arguments)]
@@ -1801,9 +2785,29 @@ impl ToSpirvOp for MadOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for MadOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.maxmag",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1811,6 +2815,10 @@ impl ToSpirvOp for MadOp {
     verifier = "succ"
 )]
 pub struct MaxmagOp;
+crate::format::canonical_format!(
+    MaxmagOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_maxmag {}
 impl MaxmagOp {
     #[allow(clippy::too_many_arguments)]
@@ -1843,9 +2851,29 @@ impl ToSpirvOp for MaxmagOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for MaxmagOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.minmag",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1853,6 +2881,10 @@ impl ToSpirvOp for MaxmagOp {
     verifier = "succ"
 )]
 pub struct MinmagOp;
+crate::format::canonical_format!(
+    MinmagOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_minmag {}
 impl MinmagOp {
     #[allow(clippy::too_many_arguments)]
@@ -1885,9 +2917,29 @@ impl ToSpirvOp for MinmagOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for MinmagOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.modf",
-    format,
     operands = (x, iptr),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1895,6 +2947,10 @@ impl ToSpirvOp for MinmagOp {
     verifier = "succ"
 )]
 pub struct ModfOp;
+crate::format::canonical_format!(
+    ModfOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("iptr", crate ::format::Quantifier::One)
+);
 mod spirv_cl_modf {}
 impl ModfOp {
     #[allow(clippy::too_many_arguments)]
@@ -1927,9 +2983,29 @@ impl ToSpirvOp for ModfOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for ModfOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.nan",
-    format,
     operands = (nancode),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1937,6 +3013,9 @@ impl ToSpirvOp for ModfOp {
     verifier = "succ"
 )]
 pub struct NanOp;
+crate::format::canonical_format!(
+    NanOp; crate ::format::FormatVar::Value("nancode", crate ::format::Quantifier::One)
+);
 mod spirv_cl_nan {}
 impl NanOp {
     #[allow(clippy::too_many_arguments)]
@@ -1968,9 +3047,29 @@ impl ToSpirvOp for NanOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NanOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.nextafter",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1978,6 +3077,10 @@ impl ToSpirvOp for NanOp {
     verifier = "succ"
 )]
 pub struct NextafterOp;
+crate::format::canonical_format!(
+    NextafterOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_nextafter {}
 impl NextafterOp {
     #[allow(clippy::too_many_arguments)]
@@ -2010,9 +3113,29 @@ impl ToSpirvOp for NextafterOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NextafterOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.pow",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2020,6 +3143,10 @@ impl ToSpirvOp for NextafterOp {
     verifier = "succ"
 )]
 pub struct PowOp;
+crate::format::canonical_format!(
+    PowOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_pow {}
 impl PowOp {
     #[allow(clippy::too_many_arguments)]
@@ -2052,9 +3179,29 @@ impl ToSpirvOp for PowOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for PowOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.pown",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2062,6 +3209,10 @@ impl ToSpirvOp for PowOp {
     verifier = "succ"
 )]
 pub struct PownOp;
+crate::format::canonical_format!(
+    PownOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_pown {}
 impl PownOp {
     #[allow(clippy::too_many_arguments)]
@@ -2094,9 +3245,29 @@ impl ToSpirvOp for PownOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for PownOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.powr",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2104,6 +3275,10 @@ impl ToSpirvOp for PownOp {
     verifier = "succ"
 )]
 pub struct PowrOp;
+crate::format::canonical_format!(
+    PowrOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_powr {}
 impl PowrOp {
     #[allow(clippy::too_many_arguments)]
@@ -2136,9 +3311,29 @@ impl ToSpirvOp for PowrOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for PowrOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.remainder",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2146,6 +3341,10 @@ impl ToSpirvOp for PowrOp {
     verifier = "succ"
 )]
 pub struct RemainderOp;
+crate::format::canonical_format!(
+    RemainderOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_remainder {}
 impl RemainderOp {
     #[allow(clippy::too_many_arguments)]
@@ -2178,9 +3377,29 @@ impl ToSpirvOp for RemainderOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RemainderOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.remquo",
-    format,
     operands = (x, y, quo),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2188,6 +3407,11 @@ impl ToSpirvOp for RemainderOp {
     verifier = "succ"
 )]
 pub struct RemquoOp;
+crate::format::canonical_format!(
+    RemquoOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("quo", crate ::format::Quantifier::One)
+);
 mod spirv_cl_remquo {}
 impl RemquoOp {
     #[allow(clippy::too_many_arguments)]
@@ -2227,9 +3451,29 @@ impl ToSpirvOp for RemquoOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RemquoOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.rint",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2237,6 +3481,9 @@ impl ToSpirvOp for RemquoOp {
     verifier = "succ"
 )]
 pub struct RintOp;
+crate::format::canonical_format!(
+    RintOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_rint {}
 impl RintOp {
     #[allow(clippy::too_many_arguments)]
@@ -2268,9 +3515,29 @@ impl ToSpirvOp for RintOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RintOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.rootn",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2278,6 +3545,10 @@ impl ToSpirvOp for RintOp {
     verifier = "succ"
 )]
 pub struct RootnOp;
+crate::format::canonical_format!(
+    RootnOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_rootn {}
 impl RootnOp {
     #[allow(clippy::too_many_arguments)]
@@ -2310,9 +3581,29 @@ impl ToSpirvOp for RootnOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RootnOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.round",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2320,6 +3611,9 @@ impl ToSpirvOp for RootnOp {
     verifier = "succ"
 )]
 pub struct RoundOp;
+crate::format::canonical_format!(
+    RoundOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_round {}
 impl RoundOp {
     #[allow(clippy::too_many_arguments)]
@@ -2351,9 +3645,29 @@ impl ToSpirvOp for RoundOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RoundOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.rsqrt",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2361,6 +3675,9 @@ impl ToSpirvOp for RoundOp {
     verifier = "succ"
 )]
 pub struct RsqrtOp;
+crate::format::canonical_format!(
+    RsqrtOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_rsqrt {}
 impl RsqrtOp {
     #[allow(clippy::too_many_arguments)]
@@ -2392,9 +3709,29 @@ impl ToSpirvOp for RsqrtOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RsqrtOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.sin",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2402,6 +3739,9 @@ impl ToSpirvOp for RsqrtOp {
     verifier = "succ"
 )]
 pub struct SinOp;
+crate::format::canonical_format!(
+    SinOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_sin {}
 impl SinOp {
     #[allow(clippy::too_many_arguments)]
@@ -2433,9 +3773,29 @@ impl ToSpirvOp for SinOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SinOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.sincos",
-    format,
     operands = (x, cosval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2443,6 +3803,10 @@ impl ToSpirvOp for SinOp {
     verifier = "succ"
 )]
 pub struct SincosOp;
+crate::format::canonical_format!(
+    SincosOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("cosval", crate ::format::Quantifier::One)
+);
 mod spirv_cl_sincos {}
 impl SincosOp {
     #[allow(clippy::too_many_arguments)]
@@ -2480,9 +3844,29 @@ impl ToSpirvOp for SincosOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SincosOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.sinh",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2490,6 +3874,9 @@ impl ToSpirvOp for SincosOp {
     verifier = "succ"
 )]
 pub struct SinhOp;
+crate::format::canonical_format!(
+    SinhOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_sinh {}
 impl SinhOp {
     #[allow(clippy::too_many_arguments)]
@@ -2521,9 +3908,29 @@ impl ToSpirvOp for SinhOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SinhOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.sinpi",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2531,6 +3938,9 @@ impl ToSpirvOp for SinhOp {
     verifier = "succ"
 )]
 pub struct SinpiOp;
+crate::format::canonical_format!(
+    SinpiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_sinpi {}
 impl SinpiOp {
     #[allow(clippy::too_many_arguments)]
@@ -2562,9 +3972,29 @@ impl ToSpirvOp for SinpiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SinpiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.sqrt",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2572,6 +4002,9 @@ impl ToSpirvOp for SinpiOp {
     verifier = "succ"
 )]
 pub struct SqrtOp;
+crate::format::canonical_format!(
+    SqrtOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_sqrt {}
 impl SqrtOp {
     #[allow(clippy::too_many_arguments)]
@@ -2603,9 +4036,29 @@ impl ToSpirvOp for SqrtOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SqrtOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.tan",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2613,6 +4066,9 @@ impl ToSpirvOp for SqrtOp {
     verifier = "succ"
 )]
 pub struct TanOp;
+crate::format::canonical_format!(
+    TanOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_tan {}
 impl TanOp {
     #[allow(clippy::too_many_arguments)]
@@ -2644,9 +4100,29 @@ impl ToSpirvOp for TanOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for TanOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.tanh",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2654,6 +4130,9 @@ impl ToSpirvOp for TanOp {
     verifier = "succ"
 )]
 pub struct TanhOp;
+crate::format::canonical_format!(
+    TanhOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_tanh {}
 impl TanhOp {
     #[allow(clippy::too_many_arguments)]
@@ -2685,9 +4164,29 @@ impl ToSpirvOp for TanhOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for TanhOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.tanpi",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2695,6 +4194,9 @@ impl ToSpirvOp for TanhOp {
     verifier = "succ"
 )]
 pub struct TanpiOp;
+crate::format::canonical_format!(
+    TanpiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_tanpi {}
 impl TanpiOp {
     #[allow(clippy::too_many_arguments)]
@@ -2726,9 +4228,29 @@ impl ToSpirvOp for TanpiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for TanpiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.tgamma",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2736,6 +4258,9 @@ impl ToSpirvOp for TanpiOp {
     verifier = "succ"
 )]
 pub struct TgammaOp;
+crate::format::canonical_format!(
+    TgammaOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_tgamma {}
 impl TgammaOp {
     #[allow(clippy::too_many_arguments)]
@@ -2767,9 +4292,29 @@ impl ToSpirvOp for TgammaOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for TgammaOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.trunc",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2777,6 +4322,9 @@ impl ToSpirvOp for TgammaOp {
     verifier = "succ"
 )]
 pub struct TruncOp;
+crate::format::canonical_format!(
+    TruncOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_trunc {}
 impl TruncOp {
     #[allow(clippy::too_many_arguments)]
@@ -2808,9 +4356,29 @@ impl ToSpirvOp for TruncOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for TruncOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_cos",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2818,6 +4386,9 @@ impl ToSpirvOp for TruncOp {
     verifier = "succ"
 )]
 pub struct HalfCosOp;
+crate::format::canonical_format!(
+    HalfCosOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_cos {}
 impl HalfCosOp {
     #[allow(clippy::too_many_arguments)]
@@ -2849,9 +4420,29 @@ impl ToSpirvOp for HalfCosOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfCosOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_divide",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2859,6 +4450,10 @@ impl ToSpirvOp for HalfCosOp {
     verifier = "succ"
 )]
 pub struct HalfDivideOp;
+crate::format::canonical_format!(
+    HalfDivideOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_divide {}
 impl HalfDivideOp {
     #[allow(clippy::too_many_arguments)]
@@ -2891,9 +4486,29 @@ impl ToSpirvOp for HalfDivideOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfDivideOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_exp",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2901,6 +4516,9 @@ impl ToSpirvOp for HalfDivideOp {
     verifier = "succ"
 )]
 pub struct HalfExpOp;
+crate::format::canonical_format!(
+    HalfExpOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_exp {}
 impl HalfExpOp {
     #[allow(clippy::too_many_arguments)]
@@ -2932,9 +4550,29 @@ impl ToSpirvOp for HalfExpOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfExpOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_exp2",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2942,6 +4580,9 @@ impl ToSpirvOp for HalfExpOp {
     verifier = "succ"
 )]
 pub struct HalfExp2Op;
+crate::format::canonical_format!(
+    HalfExp2Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_exp2 {}
 impl HalfExp2Op {
     #[allow(clippy::too_many_arguments)]
@@ -2973,9 +4614,29 @@ impl ToSpirvOp for HalfExp2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfExp2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_exp10",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2983,6 +4644,9 @@ impl ToSpirvOp for HalfExp2Op {
     verifier = "succ"
 )]
 pub struct HalfExp10Op;
+crate::format::canonical_format!(
+    HalfExp10Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_exp10 {}
 impl HalfExp10Op {
     #[allow(clippy::too_many_arguments)]
@@ -3014,9 +4678,29 @@ impl ToSpirvOp for HalfExp10Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfExp10Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_log",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3024,6 +4708,9 @@ impl ToSpirvOp for HalfExp10Op {
     verifier = "succ"
 )]
 pub struct HalfLogOp;
+crate::format::canonical_format!(
+    HalfLogOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_log {}
 impl HalfLogOp {
     #[allow(clippy::too_many_arguments)]
@@ -3055,9 +4742,29 @@ impl ToSpirvOp for HalfLogOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfLogOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_log2",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3065,6 +4772,9 @@ impl ToSpirvOp for HalfLogOp {
     verifier = "succ"
 )]
 pub struct HalfLog2Op;
+crate::format::canonical_format!(
+    HalfLog2Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_log2 {}
 impl HalfLog2Op {
     #[allow(clippy::too_many_arguments)]
@@ -3096,9 +4806,29 @@ impl ToSpirvOp for HalfLog2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfLog2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_log10",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3106,6 +4836,9 @@ impl ToSpirvOp for HalfLog2Op {
     verifier = "succ"
 )]
 pub struct HalfLog10Op;
+crate::format::canonical_format!(
+    HalfLog10Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_log10 {}
 impl HalfLog10Op {
     #[allow(clippy::too_many_arguments)]
@@ -3137,9 +4870,29 @@ impl ToSpirvOp for HalfLog10Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfLog10Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_powr",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3147,6 +4900,10 @@ impl ToSpirvOp for HalfLog10Op {
     verifier = "succ"
 )]
 pub struct HalfPowrOp;
+crate::format::canonical_format!(
+    HalfPowrOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_powr {}
 impl HalfPowrOp {
     #[allow(clippy::too_many_arguments)]
@@ -3179,9 +4936,29 @@ impl ToSpirvOp for HalfPowrOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfPowrOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_recip",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3189,6 +4966,9 @@ impl ToSpirvOp for HalfPowrOp {
     verifier = "succ"
 )]
 pub struct HalfRecipOp;
+crate::format::canonical_format!(
+    HalfRecipOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_recip {}
 impl HalfRecipOp {
     #[allow(clippy::too_many_arguments)]
@@ -3220,9 +5000,29 @@ impl ToSpirvOp for HalfRecipOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfRecipOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_rsqrt",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3230,6 +5030,9 @@ impl ToSpirvOp for HalfRecipOp {
     verifier = "succ"
 )]
 pub struct HalfRsqrtOp;
+crate::format::canonical_format!(
+    HalfRsqrtOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_rsqrt {}
 impl HalfRsqrtOp {
     #[allow(clippy::too_many_arguments)]
@@ -3261,9 +5064,29 @@ impl ToSpirvOp for HalfRsqrtOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfRsqrtOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_sin",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3271,6 +5094,9 @@ impl ToSpirvOp for HalfRsqrtOp {
     verifier = "succ"
 )]
 pub struct HalfSinOp;
+crate::format::canonical_format!(
+    HalfSinOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_sin {}
 impl HalfSinOp {
     #[allow(clippy::too_many_arguments)]
@@ -3302,9 +5128,29 @@ impl ToSpirvOp for HalfSinOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfSinOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_sqrt",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3312,6 +5158,9 @@ impl ToSpirvOp for HalfSinOp {
     verifier = "succ"
 )]
 pub struct HalfSqrtOp;
+crate::format::canonical_format!(
+    HalfSqrtOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_sqrt {}
 impl HalfSqrtOp {
     #[allow(clippy::too_many_arguments)]
@@ -3343,9 +5192,29 @@ impl ToSpirvOp for HalfSqrtOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfSqrtOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.half_tan",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3353,6 +5222,9 @@ impl ToSpirvOp for HalfSqrtOp {
     verifier = "succ"
 )]
 pub struct HalfTanOp;
+crate::format::canonical_format!(
+    HalfTanOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_half_tan {}
 impl HalfTanOp {
     #[allow(clippy::too_many_arguments)]
@@ -3384,9 +5256,29 @@ impl ToSpirvOp for HalfTanOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for HalfTanOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_cos",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3394,6 +5286,9 @@ impl ToSpirvOp for HalfTanOp {
     verifier = "succ"
 )]
 pub struct NativeCosOp;
+crate::format::canonical_format!(
+    NativeCosOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_cos {}
 impl NativeCosOp {
     #[allow(clippy::too_many_arguments)]
@@ -3425,9 +5320,29 @@ impl ToSpirvOp for NativeCosOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeCosOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_divide",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3435,6 +5350,11 @@ impl ToSpirvOp for NativeCosOp {
     verifier = "succ"
 )]
 pub struct NativeDivideOp;
+crate::format::canonical_format!(
+    NativeDivideOp; crate ::format::FormatVar::Value("x", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("y", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_native_divide {}
 impl NativeDivideOp {
     #[allow(clippy::too_many_arguments)]
@@ -3467,9 +5387,29 @@ impl ToSpirvOp for NativeDivideOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeDivideOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_exp",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3477,6 +5417,9 @@ impl ToSpirvOp for NativeDivideOp {
     verifier = "succ"
 )]
 pub struct NativeExpOp;
+crate::format::canonical_format!(
+    NativeExpOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_exp {}
 impl NativeExpOp {
     #[allow(clippy::too_many_arguments)]
@@ -3508,9 +5451,29 @@ impl ToSpirvOp for NativeExpOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeExpOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_exp2",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3518,6 +5481,9 @@ impl ToSpirvOp for NativeExpOp {
     verifier = "succ"
 )]
 pub struct NativeExp2Op;
+crate::format::canonical_format!(
+    NativeExp2Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_exp2 {}
 impl NativeExp2Op {
     #[allow(clippy::too_many_arguments)]
@@ -3549,9 +5515,29 @@ impl ToSpirvOp for NativeExp2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeExp2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_exp10",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3559,6 +5545,9 @@ impl ToSpirvOp for NativeExp2Op {
     verifier = "succ"
 )]
 pub struct NativeExp10Op;
+crate::format::canonical_format!(
+    NativeExp10Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_exp10 {}
 impl NativeExp10Op {
     #[allow(clippy::too_many_arguments)]
@@ -3590,9 +5579,29 @@ impl ToSpirvOp for NativeExp10Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeExp10Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_log",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3600,6 +5609,9 @@ impl ToSpirvOp for NativeExp10Op {
     verifier = "succ"
 )]
 pub struct NativeLogOp;
+crate::format::canonical_format!(
+    NativeLogOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_log {}
 impl NativeLogOp {
     #[allow(clippy::too_many_arguments)]
@@ -3631,9 +5643,29 @@ impl ToSpirvOp for NativeLogOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeLogOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_log2",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3641,6 +5673,9 @@ impl ToSpirvOp for NativeLogOp {
     verifier = "succ"
 )]
 pub struct NativeLog2Op;
+crate::format::canonical_format!(
+    NativeLog2Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_log2 {}
 impl NativeLog2Op {
     #[allow(clippy::too_many_arguments)]
@@ -3672,9 +5707,29 @@ impl ToSpirvOp for NativeLog2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeLog2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_log10",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3682,6 +5737,9 @@ impl ToSpirvOp for NativeLog2Op {
     verifier = "succ"
 )]
 pub struct NativeLog10Op;
+crate::format::canonical_format!(
+    NativeLog10Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_log10 {}
 impl NativeLog10Op {
     #[allow(clippy::too_many_arguments)]
@@ -3713,9 +5771,29 @@ impl ToSpirvOp for NativeLog10Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeLog10Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_powr",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3723,6 +5801,10 @@ impl ToSpirvOp for NativeLog10Op {
     verifier = "succ"
 )]
 pub struct NativePowrOp;
+crate::format::canonical_format!(
+    NativePowrOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_powr {}
 impl NativePowrOp {
     #[allow(clippy::too_many_arguments)]
@@ -3755,9 +5837,29 @@ impl ToSpirvOp for NativePowrOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativePowrOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_recip",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3765,6 +5867,9 @@ impl ToSpirvOp for NativePowrOp {
     verifier = "succ"
 )]
 pub struct NativeRecipOp;
+crate::format::canonical_format!(
+    NativeRecipOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_recip {}
 impl NativeRecipOp {
     #[allow(clippy::too_many_arguments)]
@@ -3796,9 +5901,29 @@ impl ToSpirvOp for NativeRecipOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeRecipOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_rsqrt",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3806,6 +5931,9 @@ impl ToSpirvOp for NativeRecipOp {
     verifier = "succ"
 )]
 pub struct NativeRsqrtOp;
+crate::format::canonical_format!(
+    NativeRsqrtOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_rsqrt {}
 impl NativeRsqrtOp {
     #[allow(clippy::too_many_arguments)]
@@ -3837,9 +5965,29 @@ impl ToSpirvOp for NativeRsqrtOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeRsqrtOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_sin",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3847,6 +5995,9 @@ impl ToSpirvOp for NativeRsqrtOp {
     verifier = "succ"
 )]
 pub struct NativeSinOp;
+crate::format::canonical_format!(
+    NativeSinOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_sin {}
 impl NativeSinOp {
     #[allow(clippy::too_many_arguments)]
@@ -3878,9 +6029,29 @@ impl ToSpirvOp for NativeSinOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeSinOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_sqrt",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3888,6 +6059,9 @@ impl ToSpirvOp for NativeSinOp {
     verifier = "succ"
 )]
 pub struct NativeSqrtOp;
+crate::format::canonical_format!(
+    NativeSqrtOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_sqrt {}
 impl NativeSqrtOp {
     #[allow(clippy::too_many_arguments)]
@@ -3919,9 +6093,29 @@ impl ToSpirvOp for NativeSqrtOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeSqrtOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.native_tan",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3929,6 +6123,9 @@ impl ToSpirvOp for NativeSqrtOp {
     verifier = "succ"
 )]
 pub struct NativeTanOp;
+crate::format::canonical_format!(
+    NativeTanOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_native_tan {}
 impl NativeTanOp {
     #[allow(clippy::too_many_arguments)]
@@ -3960,9 +6157,29 @@ impl ToSpirvOp for NativeTanOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NativeTanOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fclamp",
-    format,
     operands = (x, minval, maxval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3970,6 +6187,11 @@ impl ToSpirvOp for NativeTanOp {
     verifier = "succ"
 )]
 pub struct FclampOp;
+crate::format::canonical_format!(
+    FclampOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("minval", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("maxval", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fclamp {}
 impl FclampOp {
     #[allow(clippy::too_many_arguments)]
@@ -4011,9 +6233,29 @@ impl ToSpirvOp for FclampOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FclampOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.degrees",
-    format,
     operands = (radians),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4021,6 +6263,10 @@ impl ToSpirvOp for FclampOp {
     verifier = "succ"
 )]
 pub struct DegreesOp;
+crate::format::canonical_format!(
+    DegreesOp; crate ::format::FormatVar::Value("radians", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_degrees {}
 impl DegreesOp {
     #[allow(clippy::too_many_arguments)]
@@ -4052,9 +6298,29 @@ impl ToSpirvOp for DegreesOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for DegreesOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fmax_common",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4062,6 +6328,10 @@ impl ToSpirvOp for DegreesOp {
     verifier = "succ"
 )]
 pub struct FmaxCommonOp;
+crate::format::canonical_format!(
+    FmaxCommonOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fmax_common {}
 impl FmaxCommonOp {
     #[allow(clippy::too_many_arguments)]
@@ -4094,9 +6364,29 @@ impl ToSpirvOp for FmaxCommonOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FmaxCommonOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fmin_common",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4104,6 +6394,10 @@ impl ToSpirvOp for FmaxCommonOp {
     verifier = "succ"
 )]
 pub struct FminCommonOp;
+crate::format::canonical_format!(
+    FminCommonOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fmin_common {}
 impl FminCommonOp {
     #[allow(clippy::too_many_arguments)]
@@ -4136,9 +6430,29 @@ impl ToSpirvOp for FminCommonOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FminCommonOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.mix",
-    format,
     operands = (x, y, a),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4146,6 +6460,11 @@ impl ToSpirvOp for FminCommonOp {
     verifier = "succ"
 )]
 pub struct MixOp;
+crate::format::canonical_format!(
+    MixOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("a", crate ::format::Quantifier::One)
+);
 mod spirv_cl_mix {}
 impl MixOp {
     #[allow(clippy::too_many_arguments)]
@@ -4185,9 +6504,29 @@ impl ToSpirvOp for MixOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for MixOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.radians",
-    format,
     operands = (degrees),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4195,6 +6534,10 @@ impl ToSpirvOp for MixOp {
     verifier = "succ"
 )]
 pub struct RadiansOp;
+crate::format::canonical_format!(
+    RadiansOp; crate ::format::FormatVar::Value("degrees", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_radians {}
 impl RadiansOp {
     #[allow(clippy::too_many_arguments)]
@@ -4226,9 +6569,29 @@ impl ToSpirvOp for RadiansOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RadiansOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.step",
-    format,
     operands = (edge, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4236,6 +6599,10 @@ impl ToSpirvOp for RadiansOp {
     verifier = "succ"
 )]
 pub struct StepOp;
+crate::format::canonical_format!(
+    StepOp; crate ::format::FormatVar::Value("edge", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_step {}
 impl StepOp {
     #[allow(clippy::too_many_arguments)]
@@ -4268,9 +6635,29 @@ impl ToSpirvOp for StepOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for StepOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.smoothstep",
-    format,
     operands = (edge0, edge1, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4278,6 +6665,12 @@ impl ToSpirvOp for StepOp {
     verifier = "succ"
 )]
 pub struct SmoothstepOp;
+crate::format::canonical_format!(
+    SmoothstepOp; crate ::format::FormatVar::Value("edge0", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("edge1", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("x", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_smoothstep {}
 impl SmoothstepOp {
     #[allow(clippy::too_many_arguments)]
@@ -4319,9 +6712,29 @@ impl ToSpirvOp for SmoothstepOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SmoothstepOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.sign",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4329,6 +6742,9 @@ impl ToSpirvOp for SmoothstepOp {
     verifier = "succ"
 )]
 pub struct SignOp;
+crate::format::canonical_format!(
+    SignOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_sign {}
 impl SignOp {
     #[allow(clippy::too_many_arguments)]
@@ -4360,9 +6776,29 @@ impl ToSpirvOp for SignOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SignOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.cross",
-    format,
     operands = (p0, p1),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4370,6 +6806,10 @@ impl ToSpirvOp for SignOp {
     verifier = "succ"
 )]
 pub struct CrossOp;
+crate::format::canonical_format!(
+    CrossOp; crate ::format::FormatVar::Value("p0", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("p1", crate ::format::Quantifier::One)
+);
 mod spirv_cl_cross {}
 impl CrossOp {
     #[allow(clippy::too_many_arguments)]
@@ -4402,9 +6842,29 @@ impl ToSpirvOp for CrossOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CrossOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.distance",
-    format,
     operands = (p0, p1),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4412,6 +6872,10 @@ impl ToSpirvOp for CrossOp {
     verifier = "succ"
 )]
 pub struct DistanceOp;
+crate::format::canonical_format!(
+    DistanceOp; crate ::format::FormatVar::Value("p0", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("p1", crate ::format::Quantifier::One)
+);
 mod spirv_cl_distance {}
 impl DistanceOp {
     #[allow(clippy::too_many_arguments)]
@@ -4444,9 +6908,29 @@ impl ToSpirvOp for DistanceOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for DistanceOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.length",
-    format,
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4454,6 +6938,9 @@ impl ToSpirvOp for DistanceOp {
     verifier = "succ"
 )]
 pub struct LengthOp;
+crate::format::canonical_format!(
+    LengthOp; crate ::format::FormatVar::Value("p", crate ::format::Quantifier::One)
+);
 mod spirv_cl_length {}
 impl LengthOp {
     #[allow(clippy::too_many_arguments)]
@@ -4485,9 +6972,29 @@ impl ToSpirvOp for LengthOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for LengthOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.normalize",
-    format,
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4495,6 +7002,9 @@ impl ToSpirvOp for LengthOp {
     verifier = "succ"
 )]
 pub struct NormalizeOp;
+crate::format::canonical_format!(
+    NormalizeOp; crate ::format::FormatVar::Value("p", crate ::format::Quantifier::One)
+);
 mod spirv_cl_normalize {}
 impl NormalizeOp {
     #[allow(clippy::too_many_arguments)]
@@ -4526,9 +7036,29 @@ impl ToSpirvOp for NormalizeOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for NormalizeOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fast_distance",
-    format,
     operands = (p0, p1),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4536,6 +7066,11 @@ impl ToSpirvOp for NormalizeOp {
     verifier = "succ"
 )]
 pub struct FastDistanceOp;
+crate::format::canonical_format!(
+    FastDistanceOp; crate ::format::FormatVar::Value("p0", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p1", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_fast_distance {}
 impl FastDistanceOp {
     #[allow(clippy::too_many_arguments)]
@@ -4570,9 +7105,29 @@ impl ToSpirvOp for FastDistanceOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FastDistanceOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fast_length",
-    format,
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4580,6 +7135,9 @@ impl ToSpirvOp for FastDistanceOp {
     verifier = "succ"
 )]
 pub struct FastLengthOp;
+crate::format::canonical_format!(
+    FastLengthOp; crate ::format::FormatVar::Value("p", crate ::format::Quantifier::One)
+);
 mod spirv_cl_fast_length {}
 impl FastLengthOp {
     #[allow(clippy::too_many_arguments)]
@@ -4611,9 +7169,29 @@ impl ToSpirvOp for FastLengthOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FastLengthOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.fast_normalize",
-    format,
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4621,6 +7199,10 @@ impl ToSpirvOp for FastLengthOp {
     verifier = "succ"
 )]
 pub struct FastNormalizeOp;
+crate::format::canonical_format!(
+    FastNormalizeOp; crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_fast_normalize {}
 impl FastNormalizeOp {
     #[allow(clippy::too_many_arguments)]
@@ -4652,9 +7234,29 @@ impl ToSpirvOp for FastNormalizeOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for FastNormalizeOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_abs",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4662,6 +7264,9 @@ impl ToSpirvOp for FastNormalizeOp {
     verifier = "succ"
 )]
 pub struct SAbsOp;
+crate::format::canonical_format!(
+    SAbsOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_abs {}
 impl SAbsOp {
     #[allow(clippy::too_many_arguments)]
@@ -4693,9 +7298,29 @@ impl ToSpirvOp for SAbsOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SAbsOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_abs_diff",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4703,6 +7328,10 @@ impl ToSpirvOp for SAbsOp {
     verifier = "succ"
 )]
 pub struct SAbsDiffOp;
+crate::format::canonical_format!(
+    SAbsDiffOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_abs_diff {}
 impl SAbsDiffOp {
     #[allow(clippy::too_many_arguments)]
@@ -4735,9 +7364,29 @@ impl ToSpirvOp for SAbsDiffOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SAbsDiffOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_add_sat",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4745,6 +7394,10 @@ impl ToSpirvOp for SAbsDiffOp {
     verifier = "succ"
 )]
 pub struct SAddSatOp;
+crate::format::canonical_format!(
+    SAddSatOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_add_sat {}
 impl SAddSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -4777,9 +7430,29 @@ impl ToSpirvOp for SAddSatOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SAddSatOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_add_sat",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4787,6 +7460,10 @@ impl ToSpirvOp for SAddSatOp {
     verifier = "succ"
 )]
 pub struct UAddSatOp;
+crate::format::canonical_format!(
+    UAddSatOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_add_sat {}
 impl UAddSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -4819,9 +7496,29 @@ impl ToSpirvOp for UAddSatOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UAddSatOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_hadd",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4829,6 +7526,10 @@ impl ToSpirvOp for UAddSatOp {
     verifier = "succ"
 )]
 pub struct SHaddOp;
+crate::format::canonical_format!(
+    SHaddOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_hadd {}
 impl SHaddOp {
     #[allow(clippy::too_many_arguments)]
@@ -4861,9 +7562,29 @@ impl ToSpirvOp for SHaddOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SHaddOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_hadd",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4871,6 +7592,10 @@ impl ToSpirvOp for SHaddOp {
     verifier = "succ"
 )]
 pub struct UHaddOp;
+crate::format::canonical_format!(
+    UHaddOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_hadd {}
 impl UHaddOp {
     #[allow(clippy::too_many_arguments)]
@@ -4903,9 +7628,29 @@ impl ToSpirvOp for UHaddOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UHaddOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_rhadd",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4913,6 +7658,10 @@ impl ToSpirvOp for UHaddOp {
     verifier = "succ"
 )]
 pub struct SRhaddOp;
+crate::format::canonical_format!(
+    SRhaddOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_rhadd {}
 impl SRhaddOp {
     #[allow(clippy::too_many_arguments)]
@@ -4945,9 +7694,29 @@ impl ToSpirvOp for SRhaddOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SRhaddOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_rhadd",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4955,6 +7724,10 @@ impl ToSpirvOp for SRhaddOp {
     verifier = "succ"
 )]
 pub struct URhaddOp;
+crate::format::canonical_format!(
+    URhaddOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_rhadd {}
 impl URhaddOp {
     #[allow(clippy::too_many_arguments)]
@@ -4987,9 +7760,29 @@ impl ToSpirvOp for URhaddOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for URhaddOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_clamp",
-    format,
     operands = (x, minval, maxval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4997,6 +7790,11 @@ impl ToSpirvOp for URhaddOp {
     verifier = "succ"
 )]
 pub struct SClampOp;
+crate::format::canonical_format!(
+    SClampOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("minval", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("maxval", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_clamp {}
 impl SClampOp {
     #[allow(clippy::too_many_arguments)]
@@ -5038,9 +7836,29 @@ impl ToSpirvOp for SClampOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SClampOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_clamp",
-    format,
     operands = (x, minval, maxval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5048,6 +7866,11 @@ impl ToSpirvOp for SClampOp {
     verifier = "succ"
 )]
 pub struct UClampOp;
+crate::format::canonical_format!(
+    UClampOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("minval", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("maxval", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_clamp {}
 impl UClampOp {
     #[allow(clippy::too_many_arguments)]
@@ -5089,9 +7912,29 @@ impl ToSpirvOp for UClampOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UClampOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.clz",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5099,6 +7942,9 @@ impl ToSpirvOp for UClampOp {
     verifier = "succ"
 )]
 pub struct ClzOp;
+crate::format::canonical_format!(
+    ClzOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_clz {}
 impl ClzOp {
     #[allow(clippy::too_many_arguments)]
@@ -5130,9 +7976,29 @@ impl ToSpirvOp for ClzOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for ClzOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.ctz",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5140,6 +8006,9 @@ impl ToSpirvOp for ClzOp {
     verifier = "succ"
 )]
 pub struct CtzOp;
+crate::format::canonical_format!(
+    CtzOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_ctz {}
 impl CtzOp {
     #[allow(clippy::too_many_arguments)]
@@ -5171,9 +8040,29 @@ impl ToSpirvOp for CtzOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for CtzOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_mad_hi",
-    format,
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5181,6 +8070,11 @@ impl ToSpirvOp for CtzOp {
     verifier = "succ"
 )]
 pub struct SMadHiOp;
+crate::format::canonical_format!(
+    SMadHiOp; crate ::format::FormatVar::Value("a", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("b", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("c", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_mad_hi {}
 impl SMadHiOp {
     #[allow(clippy::too_many_arguments)]
@@ -5220,9 +8114,29 @@ impl ToSpirvOp for SMadHiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SMadHiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_mad_sat",
-    format,
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5230,6 +8144,11 @@ impl ToSpirvOp for SMadHiOp {
     verifier = "succ"
 )]
 pub struct UMadSatOp;
+crate::format::canonical_format!(
+    UMadSatOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("z", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_mad_sat {}
 impl UMadSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -5269,9 +8188,29 @@ impl ToSpirvOp for UMadSatOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UMadSatOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_mad_sat",
-    format,
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5279,6 +8218,11 @@ impl ToSpirvOp for UMadSatOp {
     verifier = "succ"
 )]
 pub struct SMadSatOp;
+crate::format::canonical_format!(
+    SMadSatOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("z", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_mad_sat {}
 impl SMadSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -5318,9 +8262,29 @@ impl ToSpirvOp for SMadSatOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SMadSatOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_max",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5328,6 +8292,10 @@ impl ToSpirvOp for SMadSatOp {
     verifier = "succ"
 )]
 pub struct SMaxOp;
+crate::format::canonical_format!(
+    SMaxOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_max {}
 impl SMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -5360,9 +8328,29 @@ impl ToSpirvOp for SMaxOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SMaxOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_max",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5370,6 +8358,10 @@ impl ToSpirvOp for SMaxOp {
     verifier = "succ"
 )]
 pub struct UMaxOp;
+crate::format::canonical_format!(
+    UMaxOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_max {}
 impl UMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -5402,9 +8394,29 @@ impl ToSpirvOp for UMaxOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UMaxOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_min",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5412,6 +8424,10 @@ impl ToSpirvOp for UMaxOp {
     verifier = "succ"
 )]
 pub struct SMinOp;
+crate::format::canonical_format!(
+    SMinOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_min {}
 impl SMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -5444,9 +8460,29 @@ impl ToSpirvOp for SMinOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SMinOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_min",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5454,6 +8490,10 @@ impl ToSpirvOp for SMinOp {
     verifier = "succ"
 )]
 pub struct UMinOp;
+crate::format::canonical_format!(
+    UMinOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_min {}
 impl UMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -5486,9 +8526,29 @@ impl ToSpirvOp for UMinOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UMinOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_mul_hi",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5496,6 +8556,10 @@ impl ToSpirvOp for UMinOp {
     verifier = "succ"
 )]
 pub struct SMulHiOp;
+crate::format::canonical_format!(
+    SMulHiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_mul_hi {}
 impl SMulHiOp {
     #[allow(clippy::too_many_arguments)]
@@ -5528,9 +8592,29 @@ impl ToSpirvOp for SMulHiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SMulHiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.rotate",
-    format,
     operands = (v, i),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5538,6 +8622,10 @@ impl ToSpirvOp for SMulHiOp {
     verifier = "succ"
 )]
 pub struct RotateOp;
+crate::format::canonical_format!(
+    RotateOp; crate ::format::FormatVar::Value("v", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("i", crate ::format::Quantifier::One)
+);
 mod spirv_cl_rotate {}
 impl RotateOp {
     #[allow(clippy::too_many_arguments)]
@@ -5570,9 +8658,29 @@ impl ToSpirvOp for RotateOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for RotateOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_sub_sat",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5580,6 +8688,10 @@ impl ToSpirvOp for RotateOp {
     verifier = "succ"
 )]
 pub struct SSubSatOp;
+crate::format::canonical_format!(
+    SSubSatOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_sub_sat {}
 impl SSubSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -5612,9 +8724,29 @@ impl ToSpirvOp for SSubSatOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SSubSatOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_sub_sat",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5622,6 +8754,10 @@ impl ToSpirvOp for SSubSatOp {
     verifier = "succ"
 )]
 pub struct USubSatOp;
+crate::format::canonical_format!(
+    USubSatOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_sub_sat {}
 impl USubSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -5654,9 +8790,29 @@ impl ToSpirvOp for USubSatOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for USubSatOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_upsample",
-    format,
     operands = (hi, lo),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5664,6 +8820,10 @@ impl ToSpirvOp for USubSatOp {
     verifier = "succ"
 )]
 pub struct UUpsampleOp;
+crate::format::canonical_format!(
+    UUpsampleOp; crate ::format::FormatVar::Value("hi", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("lo", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_upsample {}
 impl UUpsampleOp {
     #[allow(clippy::too_many_arguments)]
@@ -5696,9 +8856,29 @@ impl ToSpirvOp for UUpsampleOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UUpsampleOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_upsample",
-    format,
     operands = (hi, lo),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5706,6 +8886,10 @@ impl ToSpirvOp for UUpsampleOp {
     verifier = "succ"
 )]
 pub struct SUpsampleOp;
+crate::format::canonical_format!(
+    SUpsampleOp; crate ::format::FormatVar::Value("hi", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("lo", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_upsample {}
 impl SUpsampleOp {
     #[allow(clippy::too_many_arguments)]
@@ -5738,9 +8922,29 @@ impl ToSpirvOp for SUpsampleOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SUpsampleOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.popcount",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5748,6 +8952,9 @@ impl ToSpirvOp for SUpsampleOp {
     verifier = "succ"
 )]
 pub struct PopcountOp;
+crate::format::canonical_format!(
+    PopcountOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_popcount {}
 impl PopcountOp {
     #[allow(clippy::too_many_arguments)]
@@ -5779,9 +8986,29 @@ impl ToSpirvOp for PopcountOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for PopcountOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_mad24",
-    format,
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5789,6 +9016,11 @@ impl ToSpirvOp for PopcountOp {
     verifier = "succ"
 )]
 pub struct SMad24Op;
+crate::format::canonical_format!(
+    SMad24Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("z", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_mad24 {}
 impl SMad24Op {
     #[allow(clippy::too_many_arguments)]
@@ -5828,9 +9060,29 @@ impl ToSpirvOp for SMad24Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SMad24Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_mad24",
-    format,
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5838,6 +9090,11 @@ impl ToSpirvOp for SMad24Op {
     verifier = "succ"
 )]
 pub struct UMad24Op;
+crate::format::canonical_format!(
+    UMad24Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("z", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_mad24 {}
 impl UMad24Op {
     #[allow(clippy::too_many_arguments)]
@@ -5877,9 +9134,29 @@ impl ToSpirvOp for UMad24Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UMad24Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.s_mul24",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5887,6 +9164,10 @@ impl ToSpirvOp for UMad24Op {
     verifier = "succ"
 )]
 pub struct SMul24Op;
+crate::format::canonical_format!(
+    SMul24Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_s_mul24 {}
 impl SMul24Op {
     #[allow(clippy::too_many_arguments)]
@@ -5919,9 +9200,29 @@ impl ToSpirvOp for SMul24Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SMul24Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_mul24",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5929,6 +9230,10 @@ impl ToSpirvOp for SMul24Op {
     verifier = "succ"
 )]
 pub struct UMul24Op;
+crate::format::canonical_format!(
+    UMul24Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_mul24 {}
 impl UMul24Op {
     #[allow(clippy::too_many_arguments)]
@@ -5961,9 +9266,29 @@ impl ToSpirvOp for UMul24Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UMul24Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vloadn",
-    format,
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5971,6 +9296,12 @@ impl ToSpirvOp for UMul24Op {
     verifier = "succ"
 )]
 pub struct VloadnOp;
+crate::format::canonical_format!(
+    VloadnOp; crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One), crate ::format::attr!(& spirv_cl_vloadn::ATTR_N,
+    LiteralIntegerAttr, "n", crate ::format::Quantifier::One)
+);
 mod spirv_cl_vloadn {
     pub static ATTR_N: ::pliron::std_deps::sync::LazyLock<
         ::pliron::identifier::Identifier,
@@ -6010,7 +9341,7 @@ impl VloadnOp {
             |op| {
                 op
                     .attributes
-                    .get::<LiteralIntegerAttr>(&*spirv_cl_vloadn::ATTR_N)
+                    .get::<LiteralIntegerAttr>(&spirv_cl_vloadn::ATTR_N)
                     .unwrap()
             },
         )
@@ -6042,9 +9373,37 @@ impl ToSpirvOp for VloadnOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VloadnOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        result = result
+            .max(Operand::from(self.get_attr_n(ctx).clone().0).minimum_version()?);
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(Operand::from(self.get_attr_n(ctx).clone().0).required_extensions());
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_n(ctx).clone().0).required_capabilities(),
+            );
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vstoren",
-    format,
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6052,6 +9411,11 @@ impl ToSpirvOp for VloadnOp {
     verifier = "succ"
 )]
 pub struct VstorenOp;
+crate::format::canonical_format!(
+    VstorenOp; crate ::format::FormatVar::Value("data", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("offset", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("p", crate ::format::Quantifier::One)
+);
 mod spirv_cl_vstoren {}
 impl VstorenOp {
     #[allow(clippy::too_many_arguments)]
@@ -6093,9 +9457,29 @@ impl ToSpirvOp for VstorenOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VstorenOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vload_half",
-    format,
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6103,6 +9487,11 @@ impl ToSpirvOp for VstorenOp {
     verifier = "succ"
 )]
 pub struct VloadHalfOp;
+crate::format::canonical_format!(
+    VloadHalfOp; crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_vload_half {}
 impl VloadHalfOp {
     #[allow(clippy::too_many_arguments)]
@@ -6142,9 +9531,29 @@ impl ToSpirvOp for VloadHalfOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VloadHalfOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vload_halfn",
-    format,
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6152,6 +9561,12 @@ impl ToSpirvOp for VloadHalfOp {
     verifier = "succ"
 )]
 pub struct VloadHalfnOp;
+crate::format::canonical_format!(
+    VloadHalfnOp; crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One), crate ::format::attr!(& spirv_cl_vload_halfn::ATTR_N,
+    LiteralIntegerAttr, "n", crate ::format::Quantifier::One)
+);
 mod spirv_cl_vload_halfn {
     pub static ATTR_N: ::pliron::std_deps::sync::LazyLock<
         ::pliron::identifier::Identifier,
@@ -6191,7 +9606,7 @@ impl VloadHalfnOp {
             |op| {
                 op
                     .attributes
-                    .get::<LiteralIntegerAttr>(&*spirv_cl_vload_halfn::ATTR_N)
+                    .get::<LiteralIntegerAttr>(&spirv_cl_vload_halfn::ATTR_N)
                     .unwrap()
             },
         )
@@ -6226,9 +9641,37 @@ impl ToSpirvOp for VloadHalfnOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VloadHalfnOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        result = result
+            .max(Operand::from(self.get_attr_n(ctx).clone().0).minimum_version()?);
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(Operand::from(self.get_attr_n(ctx).clone().0).required_extensions());
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_n(ctx).clone().0).required_capabilities(),
+            );
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vstore_half",
-    format,
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6236,6 +9679,12 @@ impl ToSpirvOp for VloadHalfnOp {
     verifier = "succ"
 )]
 pub struct VstoreHalfOp;
+crate::format::canonical_format!(
+    VstoreHalfOp; crate ::format::FormatVar::Value("data", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_vstore_half {}
 impl VstoreHalfOp {
     #[allow(clippy::too_many_arguments)]
@@ -6277,9 +9726,29 @@ impl ToSpirvOp for VstoreHalfOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VstoreHalfOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vstore_half_r",
-    format,
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6287,6 +9756,14 @@ impl ToSpirvOp for VstoreHalfOp {
     verifier = "succ"
 )]
 pub struct VstoreHalfROp;
+crate::format::canonical_format!(
+    VstoreHalfROp; crate ::format::FormatVar::Value("data", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One), crate ::format::attr!(&
+    spirv_cl_vstore_half_r::ATTR_MODE, FPRoundingModeAttr, "mode", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_vstore_half_r {
     pub static ATTR_MODE: ::pliron::std_deps::sync::LazyLock<
         ::pliron::identifier::Identifier,
@@ -6327,7 +9804,7 @@ impl VstoreHalfROp {
             |op| {
                 op
                     .attributes
-                    .get::<FPRoundingModeAttr>(&*spirv_cl_vstore_half_r::ATTR_MODE)
+                    .get::<FPRoundingModeAttr>(&spirv_cl_vstore_half_r::ATTR_MODE)
                     .unwrap()
             },
         )
@@ -6363,9 +9840,39 @@ impl ToSpirvOp for VstoreHalfROp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VstoreHalfROp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        result = result
+            .max(Operand::from(self.get_attr_mode(ctx).clone().0).minimum_version()?);
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_mode(ctx).clone().0).required_extensions(),
+            );
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_mode(ctx).clone().0).required_capabilities(),
+            );
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vstore_halfn",
-    format,
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6373,6 +9880,12 @@ impl ToSpirvOp for VstoreHalfROp {
     verifier = "succ"
 )]
 pub struct VstoreHalfnOp;
+crate::format::canonical_format!(
+    VstoreHalfnOp; crate ::format::FormatVar::Value("data", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_vstore_halfn {}
 impl VstoreHalfnOp {
     #[allow(clippy::too_many_arguments)]
@@ -6414,9 +9927,29 @@ impl ToSpirvOp for VstoreHalfnOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VstoreHalfnOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vstore_halfn_r",
-    format,
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6424,6 +9957,14 @@ impl ToSpirvOp for VstoreHalfnOp {
     verifier = "succ"
 )]
 pub struct VstoreHalfnROp;
+crate::format::canonical_format!(
+    VstoreHalfnROp; crate ::format::FormatVar::Value("data", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One), crate ::format::attr!(&
+    spirv_cl_vstore_halfn_r::ATTR_MODE, FPRoundingModeAttr, "mode", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_vstore_halfn_r {
     pub static ATTR_MODE: ::pliron::std_deps::sync::LazyLock<
         ::pliron::identifier::Identifier,
@@ -6464,7 +10005,7 @@ impl VstoreHalfnROp {
             |op| {
                 op
                     .attributes
-                    .get::<FPRoundingModeAttr>(&*spirv_cl_vstore_halfn_r::ATTR_MODE)
+                    .get::<FPRoundingModeAttr>(&spirv_cl_vstore_halfn_r::ATTR_MODE)
                     .unwrap()
             },
         )
@@ -6500,9 +10041,39 @@ impl ToSpirvOp for VstoreHalfnROp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VstoreHalfnROp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        result = result
+            .max(Operand::from(self.get_attr_mode(ctx).clone().0).minimum_version()?);
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_mode(ctx).clone().0).required_extensions(),
+            );
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_mode(ctx).clone().0).required_capabilities(),
+            );
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vloada_halfn",
-    format,
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6510,6 +10081,12 @@ impl ToSpirvOp for VstoreHalfnROp {
     verifier = "succ"
 )]
 pub struct VloadaHalfnOp;
+crate::format::canonical_format!(
+    VloadaHalfnOp; crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One), crate ::format::attr!(& spirv_cl_vloada_halfn::ATTR_N,
+    LiteralIntegerAttr, "n", crate ::format::Quantifier::One)
+);
 mod spirv_cl_vloada_halfn {
     pub static ATTR_N: ::pliron::std_deps::sync::LazyLock<
         ::pliron::identifier::Identifier,
@@ -6549,7 +10126,7 @@ impl VloadaHalfnOp {
             |op| {
                 op
                     .attributes
-                    .get::<LiteralIntegerAttr>(&*spirv_cl_vloada_halfn::ATTR_N)
+                    .get::<LiteralIntegerAttr>(&spirv_cl_vloada_halfn::ATTR_N)
                     .unwrap()
             },
         )
@@ -6584,9 +10161,37 @@ impl ToSpirvOp for VloadaHalfnOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VloadaHalfnOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        result = result
+            .max(Operand::from(self.get_attr_n(ctx).clone().0).minimum_version()?);
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(Operand::from(self.get_attr_n(ctx).clone().0).required_extensions());
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_n(ctx).clone().0).required_capabilities(),
+            );
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vstorea_halfn",
-    format,
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6594,6 +10199,12 @@ impl ToSpirvOp for VloadaHalfnOp {
     verifier = "succ"
 )]
 pub struct VstoreaHalfnOp;
+crate::format::canonical_format!(
+    VstoreaHalfnOp; crate ::format::FormatVar::Value("data", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_vstorea_halfn {}
 impl VstoreaHalfnOp {
     #[allow(clippy::too_many_arguments)]
@@ -6635,9 +10246,29 @@ impl ToSpirvOp for VstoreaHalfnOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VstoreaHalfnOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.vstorea_halfn_r",
-    format,
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6645,6 +10276,14 @@ impl ToSpirvOp for VstoreaHalfnOp {
     verifier = "succ"
 )]
 pub struct VstoreaHalfnROp;
+crate::format::canonical_format!(
+    VstoreaHalfnROp; crate ::format::FormatVar::Value("data", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("offset", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("p", crate
+    ::format::Quantifier::One), crate ::format::attr!(&
+    spirv_cl_vstorea_halfn_r::ATTR_MODE, FPRoundingModeAttr, "mode", crate
+    ::format::Quantifier::One)
+);
 mod spirv_cl_vstorea_halfn_r {
     pub static ATTR_MODE: ::pliron::std_deps::sync::LazyLock<
         ::pliron::identifier::Identifier,
@@ -6685,7 +10324,7 @@ impl VstoreaHalfnROp {
             |op| {
                 op
                     .attributes
-                    .get::<FPRoundingModeAttr>(&*spirv_cl_vstorea_halfn_r::ATTR_MODE)
+                    .get::<FPRoundingModeAttr>(&spirv_cl_vstorea_halfn_r::ATTR_MODE)
                     .unwrap()
             },
         )
@@ -6721,9 +10360,39 @@ impl ToSpirvOp for VstoreaHalfnROp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for VstoreaHalfnROp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        result = result
+            .max(Operand::from(self.get_attr_mode(ctx).clone().0).minimum_version()?);
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_mode(ctx).clone().0).required_extensions(),
+            );
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+            .extend(
+                Operand::from(self.get_attr_mode(ctx).clone().0).required_capabilities(),
+            );
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.shuffle",
-    format,
     operands = (x, shuffle_mask),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6731,6 +10400,10 @@ impl ToSpirvOp for VstoreaHalfnROp {
     verifier = "succ"
 )]
 pub struct ShuffleOp;
+crate::format::canonical_format!(
+    ShuffleOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("shuffle_mask", crate ::format::Quantifier::One)
+);
 mod spirv_cl_shuffle {}
 impl ShuffleOp {
     #[allow(clippy::too_many_arguments)]
@@ -6770,9 +10443,29 @@ impl ToSpirvOp for ShuffleOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for ShuffleOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.shuffle2",
-    format,
     operands = (x, y, shuffle_mask),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6780,6 +10473,11 @@ impl ToSpirvOp for ShuffleOp {
     verifier = "succ"
 )]
 pub struct Shuffle2Op;
+crate::format::canonical_format!(
+    Shuffle2Op; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("shuffle_mask", crate ::format::Quantifier::One)
+);
 mod spirv_cl_shuffle2 {}
 impl Shuffle2Op {
     #[allow(clippy::too_many_arguments)]
@@ -6821,9 +10519,29 @@ impl ToSpirvOp for Shuffle2Op {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for Shuffle2Op {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.printf",
-    format,
     operands = (format, additional_arguments),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6831,6 +10549,11 @@ impl ToSpirvOp for Shuffle2Op {
     verifier = "succ"
 )]
 pub struct PrintfOp;
+crate::format::canonical_format!(
+    PrintfOp; crate ::format::FormatVar::Value("format", crate
+    ::format::Quantifier::One), crate ::format::FormatVar::Value("additional_arguments",
+    crate ::format::Quantifier::ZeroOrMore)
+);
 mod spirv_cl_printf {}
 impl PrintfOp {
     #[allow(clippy::too_many_arguments)]
@@ -6874,9 +10597,29 @@ impl ToSpirvOp for PrintfOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for PrintfOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.prefetch",
-    format,
     operands = (ptr, num_elements),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6884,6 +10627,10 @@ impl ToSpirvOp for PrintfOp {
     verifier = "succ"
 )]
 pub struct PrefetchOp;
+crate::format::canonical_format!(
+    PrefetchOp; crate ::format::FormatVar::Value("ptr", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("num_elements", crate ::format::Quantifier::One)
+);
 mod spirv_cl_prefetch {}
 impl PrefetchOp {
     #[allow(clippy::too_many_arguments)]
@@ -6923,9 +10670,29 @@ impl ToSpirvOp for PrefetchOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for PrefetchOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.bitselect",
-    format,
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6933,6 +10700,11 @@ impl ToSpirvOp for PrefetchOp {
     verifier = "succ"
 )]
 pub struct BitselectOp;
+crate::format::canonical_format!(
+    BitselectOp; crate ::format::FormatVar::Value("a", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("b", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("c", crate ::format::Quantifier::One)
+);
 mod spirv_cl_bitselect {}
 impl BitselectOp {
     #[allow(clippy::too_many_arguments)]
@@ -6972,9 +10744,29 @@ impl ToSpirvOp for BitselectOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for BitselectOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.select",
-    format,
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6982,6 +10774,11 @@ impl ToSpirvOp for BitselectOp {
     verifier = "succ"
 )]
 pub struct SelectOp;
+crate::format::canonical_format!(
+    SelectOp; crate ::format::FormatVar::Value("a", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("b", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("c", crate ::format::Quantifier::One)
+);
 mod spirv_cl_select {}
 impl SelectOp {
     #[allow(clippy::too_many_arguments)]
@@ -7021,9 +10818,29 @@ impl ToSpirvOp for SelectOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for SelectOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_abs",
-    format,
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7031,6 +10848,9 @@ impl ToSpirvOp for SelectOp {
     verifier = "succ"
 )]
 pub struct UAbsOp;
+crate::format::canonical_format!(
+    UAbsOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_abs {}
 impl UAbsOp {
     #[allow(clippy::too_many_arguments)]
@@ -7062,9 +10882,29 @@ impl ToSpirvOp for UAbsOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UAbsOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_abs_diff",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7072,6 +10912,10 @@ impl ToSpirvOp for UAbsOp {
     verifier = "succ"
 )]
 pub struct UAbsDiffOp;
+crate::format::canonical_format!(
+    UAbsDiffOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_abs_diff {}
 impl UAbsDiffOp {
     #[allow(clippy::too_many_arguments)]
@@ -7104,9 +10948,29 @@ impl ToSpirvOp for UAbsDiffOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UAbsDiffOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_mul_hi",
-    format,
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7114,6 +10978,10 @@ impl ToSpirvOp for UAbsDiffOp {
     verifier = "succ"
 )]
 pub struct UMulHiOp;
+crate::format::canonical_format!(
+    UMulHiOp; crate ::format::FormatVar::Value("x", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("y", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_mul_hi {}
 impl UMulHiOp {
     #[allow(clippy::too_many_arguments)]
@@ -7146,9 +11014,29 @@ impl ToSpirvOp for UMulHiOp {
         Ok(())
     }
 }
+#[op_interface_impl]
+impl VerCapExtOpInterface for UMulHiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+}
 #[pliron_op(
     name = "spirv.CL.u_mad_hi",
-    format,
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7156,6 +11044,11 @@ impl ToSpirvOp for UMulHiOp {
     verifier = "succ"
 )]
 pub struct UMadHiOp;
+crate::format::canonical_format!(
+    UMadHiOp; crate ::format::FormatVar::Value("a", crate ::format::Quantifier::One),
+    crate ::format::FormatVar::Value("b", crate ::format::Quantifier::One), crate
+    ::format::FormatVar::Value("c", crate ::format::Quantifier::One)
+);
 mod spirv_cl_u_mad_hi {}
 impl UMadHiOp {
     #[allow(clippy::too_many_arguments)]
@@ -7193,5 +11086,26 @@ impl ToSpirvOp for UMadHiOp {
         builder.cl_u_mad_hi_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
+    }
+}
+#[op_interface_impl]
+impl VerCapExtOpInterface for UMadHiOp {
+    #[allow(unused_variables)]
+    fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+        #[allow(unused_mut)]
+        let mut result: (u8, u8) = None?;
+        Some(result)
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
+    }
+    #[allow(unused_variables, clippy::vec_init_then_push)]
+    fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+        #[allow(unused_mut)]
+        let mut result = vec![];
+        result
     }
 }

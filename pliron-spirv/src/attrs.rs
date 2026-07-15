@@ -1,3 +1,5 @@
+use core::fmt;
+
 use alloc::string::String;
 use derive_more::{From, Into};
 use derive_new::new;
@@ -12,9 +14,12 @@ use pliron::{
     combine::{Parser, parser::char::char},
     derive::pliron_attr,
     identifier::Identifier,
-    irfmt::parsers::{delimited_list_parser, spaced},
-    parsable::Parsable,
-    printable::Printable,
+    irfmt::{
+        parsers::{delimited_list_parser, quoted_string_parse, spaced},
+        printers::quoted,
+    },
+    parsable::{IntoParseResult, Parsable, ParseResult, StateStream},
+    printable::{self, Printable},
     r#type::TypedHandle,
     verify_err_noloc,
 };
@@ -24,17 +29,32 @@ use crate::{PlironBuilder, ToSpirvAttr, prelude::*, types::FloatType};
 
 pub use crate::autogen_attrs::*;
 
-#[pliron_attr(name = "spirv.literal", format, verifier = "succ")]
+#[pliron_attr(name = "spirv.literal", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug, new, From, Into)]
 pub struct LiteralIntegerAttr(pub u32);
 
-#[pliron_attr(name = "spirv.string", format, verifier = "succ")]
+#[pliron_attr(name = "spirv.string", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug, new, From, Into)]
 pub struct LiteralStringAttr(pub String);
 
 impl From<StringAttr> for LiteralStringAttr {
     fn from(value: StringAttr) -> Self {
         LiteralStringAttr::new(value.into())
+    }
+}
+
+impl Printable for LiteralStringAttr {
+    fn fmt(&self, ctx: &Context, state: &printable::State, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        quoted(&self.0).fmt(ctx, state, f)
+    }
+}
+
+impl Parsable for LiteralStringAttr {
+    type Arg = ();
+    type Parsed = Self;
+
+    fn parse<'a>(state_stream: &mut StateStream<'a>, _arg: Self::Arg) -> ParseResult<'a, Self::Parsed> {
+        Ok(LiteralStringAttr::new(quoted_string_parse(state_stream, ())?.0)).into_parse_result()
     }
 }
 
@@ -131,12 +151,7 @@ impl Default for VerCapExtAttr {
 }
 
 impl Printable for VerCapExtAttr {
-    fn fmt(
-        &self,
-        ctx: &Context,
-        _state: &pliron::printable::State,
-        f: &mut core::fmt::Formatter<'_>,
-    ) -> core::fmt::Result {
+    fn fmt(&self, ctx: &Context, _state: &pliron::printable::State, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let capabilities = self.capabilities.iter().map(|it| it.disp(ctx)).join(", ");
         let extensions = self.extensions.iter().map(|it| it.disp(ctx)).join(", ");
         write!(

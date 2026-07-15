@@ -4,7 +4,6 @@ use tracel_rspirv::dr::Operand;
 use crate::{
     autogen_attrs::{MemoryAccessAttr, TensorAddressingOperandsAttr},
     prelude::*,
-    spirv_symbol_id,
 };
 
 #[pliron_op(
@@ -89,9 +88,7 @@ impl ToSpirvOp for CooperativeMatrixLoadTensorNVOp {
             .map(|opd| Operand::IdRef(builder.value_id(opd)));
         let decode_func = self
             .get_attr_spirv_cooperative_matrix_load_tensor_nv_decode_func(ctx)
-            .map(|func| spirv_symbol_id(ctx, builder, func.clone()))
-            .transpose()?
-            .map(|func| Operand::IdRef(func));
+            .map(|func| Operand::IdRef(builder.symbol_id(func.clone())));
 
         builder
             .cooperative_matrix_load_tensor_nv(
@@ -245,13 +242,11 @@ impl ToSpirvOp for CooperativeMatrixPerElementOpNVOp {
             .skip(3)
             .next()
             .map(|opd| Operand::IdRef(builder.value_id(opd)));
-        let func = spirv_symbol_id(
-            ctx,
-            builder,
+        let func = builder.symbol_id(
             self.get_attr_spirv_cooperative_matrix_store_tensor_nv_func(ctx)
                 .unwrap()
                 .clone(),
-        )?;
+        );
         let extra_operands = op
             .operands()
             .skip(1)

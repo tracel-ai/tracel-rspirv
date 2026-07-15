@@ -370,6 +370,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                     return None;
                 }
 
+                let mut version_clauses = BTreeMap::new();
                 let mut capability_clauses = BTreeMap::new();
                 let mut extension_clauses = BTreeMap::new();
                 let mut operand_clauses = BTreeMap::new();
@@ -397,6 +398,11 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                         _ => panic!("Unexpected operand type"),
                     };
 
+                    version_clauses
+                        .entry(&e.version)
+                        .or_insert_with(Vec::new)
+                        .push(name.clone());
+
                     capability_clauses
                         .entry(&e.capabilities)
                         .or_insert_with(Vec::new)
@@ -415,6 +421,49 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                     }
                 }
 
+                let versions = if category == &structs::Category::BitEnum {
+                    let extensions = version_clauses
+                        .into_iter()
+                        .filter(|(k, _)| !k.is_empty())
+                        .map(|(k, v)| {
+                            let version = opt_version_tokens(k);
+                            let kinds = std::iter::repeat(quote! { s::#kind });
+
+                            quote! {
+                                if v.intersects(#(#kinds::#v)|*) {
+                                    result = result.max(#version?);
+                                }
+                            }
+                        })
+                        .collect::<Vec<_>>();
+
+                    if extensions.is_empty() {
+                        quote! {}
+                    } else {
+                        quote! {
+                            Self::#kind(v) => {
+                                let mut result = (1, 0);
+                                #( #extensions );*;
+                                Some(result)
+                            }
+                        }
+                    }
+                } else {
+                    let extensions = version_clauses.into_iter().map(|(k, v)| {
+                        let version = opt_version_tokens(k);
+                        let kinds = std::iter::repeat(quote! { s::#kind });
+                        quote! {
+                            #( #kinds::#v )|* => #version
+                        }
+                    });
+
+                    quote! {
+                        Self::#kind(v) => match v {
+                            #( #extensions ),*
+                        },
+                    }
+                };
+
                 let extensions = if category == &structs::Category::BitEnum {
                     let extensions = extension_clauses
                         .into_iter()
@@ -424,7 +473,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
 
                             quote! {
                                 if v.intersects(#(#kinds::#v)|*) {
-                                    result.extend_from_slice(&[#( #k ),*])
+                                    result.push(vec![#( #k ),*])
                                 }
                             }
                         })
@@ -445,7 +494,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                     let extensions = extension_clauses.into_iter().map(|(k, v)| {
                         let kinds = std::iter::repeat(quote! { s::#kind });
                         quote! {
-                            #( #kinds::#v )|* => vec![#( #k ),*]
+                            #( #kinds::#v )|* => vec![vec![#( #k ),*]]
                         }
                     });
 
@@ -466,7 +515,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
 
                             quote! {
                                 if v.intersects(#(#kinds::#v)|*) {
-                                    result.extend_from_slice(&[#( spirv::Capability::#capabilities ),*])
+                                    result.push(vec![#( spirv::Capability::#capabilities ),*])
                                 }
                             }
                         })
@@ -488,7 +537,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                         let kinds = std::iter::repeat(quote! { s::#kind });
                         let capabilities = k.iter().map(|cap| as_ident(cap));
                         quote! {
-                            #( #kinds::#v )|* => vec![#( spirv::Capability::#capabilities ),*]
+                            #( #kinds::#v )|* => vec![vec![#( spirv::Capability::#capabilities ),*]]
                         }
                     });
 
@@ -560,13 +609,14 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                     }
                 };
 
-                Some((extensions, capabilities, operands))
+                Some((versions, extensions, capabilities, operands))
             })
             .collect::<Vec<_>>();
 
-        let required_extensions = operand_metadata.iter().map(|e| &e.0);
-        let required_capabilities = operand_metadata.iter().map(|e| &e.1);
-        let additional_params = operand_metadata.iter().map(|e| &e.2);
+        let required_versions = operand_metadata.iter().map(|e| &e.0);
+        let required_extensions = operand_metadata.iter().map(|e| &e.1);
+        let required_capabilities = operand_metadata.iter().map(|e| &e.2);
+        let additional_params = operand_metadata.iter().map(|e| &e.3);
 
         quote! {
             impl fmt::Display for Operand {
@@ -592,7 +642,15 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                     }
                 }
 
-                pub fn required_capabilities(&self) -> Vec<spirv::Capability> {
+                pub fn minimum_version(&self) -> Option<(u8, u8)> {
+                    use spirv as s;
+                    match self {
+                        #(#required_versions)*
+                        _ => Some((1, 0))
+                    }
+                }
+
+                pub fn required_capabilities(&self) -> Vec<Vec<spirv::Capability>> {
                     use spirv as s;
                     match self {
                         #(#required_capabilities)*
@@ -600,7 +658,7 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                     }
                 }
 
-                pub fn required_extensions(&self) -> Vec<&'static str> {
+                pub fn required_extensions(&self) -> Vec<Vec<&'static str>> {
                     use spirv as s;
                     match self {
                         #(#required_extensions)*
@@ -622,6 +680,17 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
     quote! {
         #kind_enum
         #impl_code
+    }
+}
+
+pub(crate) fn opt_version_tokens(version: &str) -> TokenStream {
+    match version {
+        "" | "None" => quote![None],
+        ver => {
+            let (maj, min) = ver.split_once(".").expect("Should be version format");
+            let (maj, min) = (maj.parse::<u8>().unwrap(), min.parse::<u8>().unwrap());
+            quote![Some((#maj, #min))]
+        }
     }
 }
 
