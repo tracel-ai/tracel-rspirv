@@ -6,7 +6,7 @@ use pliron::{
     attribute::{AttrObj, AttributeDict},
     combine::{Parser, choice, parser::char::char},
     irfmt::parsers,
-    parsable::{Parsable, ParseResult, StateStream, parser_combinator},
+    parsable::{IntoParseResult, Parsable, ParseResult, StateStream, parser_combinator},
     printable::Printable,
 };
 
@@ -72,14 +72,16 @@ pub fn print_decorations(ctx: &Context, attrs: &AttributeDict, f: &mut dyn core:
     let mut decorations = vec![];
     for (key, value) in attrs.0.iter() {
         if decoration_for_key(key).is_some() {
+            let key = key.disp(ctx).to_string();
+            let key = key.strip_prefix("spirv_decoration_").unwrap();
             if value.is::<UnitAttr>() {
-                decorations.push(key.disp(ctx).to_string())
+                decorations.push(key.to_string())
             } else if let Some(lit) = value.downcast_ref::<LiteralIntegerAttr>() {
-                decorations.push(alloc::format!("{}: {}", key.disp(ctx), lit.0))
+                decorations.push(alloc::format!("{key}: {}", lit.0))
             } else if let Some(lit) = value.downcast_ref::<LiteralStringAttr>() {
-                decorations.push(alloc::format!("{}: {}", key.disp(ctx), lit.0))
+                decorations.push(alloc::format!("{key}: {}", lit.0))
             } else {
-                decorations.push(alloc::format!("{}: {}", key.disp(ctx), value.disp(ctx)))
+                decorations.push(alloc::format!("{key}: {}", value.disp(ctx)))
             }
         }
     }
@@ -114,7 +116,12 @@ pub fn decorations_parse<'a>(state_stream: &mut StateStream<'a>, _: ()) -> Parse
     let decoration_parse = choice!(int_parse, string_parse, fallback_parse, unit_parse);
     let mut decorations_parse = parsers::delimited_list_parser('{', '}', ',', decoration_parse)
         .map(|entries| AttributeDict(entries.into_iter().collect()));
-    decorations_parse.parse_stream(state_stream).into_result()
+    let decorations = decorations_parse.parse_stream(state_stream).into_result()?.0;
+    let decorations = decorations.0.into_iter().map(|(k, v)| {
+        let ident = Identifier::try_new(alloc::format!("spirv_decoration_{k}")).unwrap();
+        (ident, v)
+    });
+    Ok(AttributeDict(decorations.collect())).into_parse_result()
 }
 
 pub fn decorations_parser<'a>() -> Box<dyn Parser<StateStream<'a>, Output = AttributeDict, PartialState = ()> + 'a> {

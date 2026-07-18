@@ -3,8 +3,8 @@
 // DO NOT MODIFY!
 
 #![allow(clippy::let_and_return, unused_imports)]
-use crate::attrs::*;
 use crate::prelude::*;
+use crate::attrs::*;
 #[pliron_op(
     name = "spirv.GL.round",
     operands = (x),
@@ -107,9 +107,7 @@ impl ToSpirvOp for RoundEvenOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_round_even_id(result_ty, Some(result), x)
-            .into_pliron_result()?;
+        builder.gl_round_even_id(result_ty, Some(result), x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -686,9 +684,7 @@ impl ToSpirvOp for RadiansOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let degrees = builder.value_id(self.get_operand_degrees(ctx));
-        builder
-            .gl_radians_id(result_ty, Some(result), degrees)
-            .into_pliron_result()?;
+        builder.gl_radians_id(result_ty, Some(result), degrees).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -753,9 +749,7 @@ impl ToSpirvOp for DegreesOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let radians = builder.value_id(self.get_operand_radians(ctx));
-        builder
-            .gl_degrees_id(result_ty, Some(result), radians)
-            .into_pliron_result()?;
+        builder.gl_degrees_id(result_ty, Some(result), radians).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -1139,9 +1133,7 @@ impl ToSpirvOp for AtanOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let y_over_x = builder.value_id(self.get_operand_y_over_x(ctx));
-        builder
-            .gl_atan_id(result_ty, Some(result), y_over_x)
-            .into_pliron_result()?;
+        builder.gl_atan_id(result_ty, Some(result), y_over_x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -1591,9 +1583,7 @@ impl ToSpirvOp for Atan2Op {
         let result = builder.value_id(self.get_result(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_atan2_id(result_ty, Some(result), y, x)
-            .into_pliron_result()?;
+        builder.gl_atan2_id(result_ty, Some(result), y, x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2043,9 +2033,7 @@ impl ToSpirvOp for InverseSqrtOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_inverse_sqrt_id(result_ty, Some(result), x)
-            .into_pliron_result()?;
+        builder.gl_inverse_sqrt_id(result_ty, Some(result), x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2109,9 +2097,7 @@ impl ToSpirvOp for DeterminantOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_determinant_id(result_ty, Some(result), x)
-            .into_pliron_result()?;
+        builder.gl_determinant_id(result_ty, Some(result), x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2176,9 +2162,7 @@ impl ToSpirvOp for MatrixInverseOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_matrix_inverse_id(result_ty, Some(result), x)
-            .into_pliron_result()?;
+        builder.gl_matrix_inverse_id(result_ty, Some(result), x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2308,9 +2292,7 @@ impl ToSpirvOp for ModfStructOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_modf_struct_id(result_ty, Some(result), x)
-            .into_pliron_result()?;
+        builder.gl_modf_struct_id(result_ty, Some(result), x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2376,9 +2358,7 @@ impl ToSpirvOp for FMinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_f_min_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_f_min_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2444,9 +2424,7 @@ impl ToSpirvOp for UMinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_u_min_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_u_min_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2512,9 +2490,7 @@ impl ToSpirvOp for SMinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_s_min_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_s_min_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2580,9 +2556,7 @@ impl ToSpirvOp for FMaxOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_f_max_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_f_max_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2648,9 +2622,7 @@ impl ToSpirvOp for UMaxOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_u_max_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_u_max_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2716,9 +2688,7 @@ impl ToSpirvOp for SMaxOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_s_max_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_s_max_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -2761,7 +2731,13 @@ crate::format::canonical_format!(
 mod spirv_gl_f_clamp {}
 impl FClampOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, x: Value, min_val: Value, max_val: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        x: Value,
+        min_val: Value,
+        max_val: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -2831,7 +2807,13 @@ crate::format::canonical_format!(
 mod spirv_gl_u_clamp {}
 impl UClampOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, x: Value, min_val: Value, max_val: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        x: Value,
+        min_val: Value,
+        max_val: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -2901,7 +2883,13 @@ crate::format::canonical_format!(
 mod spirv_gl_s_clamp {}
 impl SClampOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, x: Value, min_val: Value, max_val: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        x: Value,
+        min_val: Value,
+        max_val: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -2971,7 +2959,13 @@ crate::format::canonical_format!(
 mod spirv_gl_f_mix {}
 impl FMixOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, x: Value, y: Value, a: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        x: Value,
+        y: Value,
+        a: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -2996,9 +2990,7 @@ impl ToSpirvOp for FMixOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         let a = builder.value_id(self.get_operand_a(ctx));
-        builder
-            .gl_f_mix_id(result_ty, Some(result), x, y, a)
-            .into_pliron_result()?;
+        builder.gl_f_mix_id(result_ty, Some(result), x, y, a).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3041,7 +3033,13 @@ crate::format::canonical_format!(
 mod spirv_gl_i_mix {}
 impl IMixOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, x: Value, y: Value, a: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        x: Value,
+        y: Value,
+        a: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -3066,9 +3064,7 @@ impl ToSpirvOp for IMixOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         let a = builder.value_id(self.get_operand_a(ctx));
-        builder
-            .gl_i_mix_id(result_ty, Some(result), x, y, a)
-            .into_pliron_result()?;
+        builder.gl_i_mix_id(result_ty, Some(result), x, y, a).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3134,9 +3130,7 @@ impl ToSpirvOp for StepOp {
         let result = builder.value_id(self.get_result(ctx));
         let edge = builder.value_id(self.get_operand_edge(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_step_id(result_ty, Some(result), edge, x)
-            .into_pliron_result()?;
+        builder.gl_step_id(result_ty, Some(result), edge, x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3180,7 +3174,13 @@ crate::format::canonical_format!(
 mod spirv_gl_smooth_step {}
 impl SmoothStepOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, edge0: Value, edge1: Value, x: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        edge0: Value,
+        edge1: Value,
+        x: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -3250,7 +3250,13 @@ crate::format::canonical_format!(
 mod spirv_gl_fma {}
 impl FmaOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, a: Value, b: Value, c: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        a: Value,
+        b: Value,
+        c: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -3275,9 +3281,7 @@ impl ToSpirvOp for FmaOp {
         let a = builder.value_id(self.get_operand_a(ctx));
         let b = builder.value_id(self.get_operand_b(ctx));
         let c = builder.value_id(self.get_operand_c(ctx));
-        builder
-            .gl_fma_id(result_ty, Some(result), a, b, c)
-            .into_pliron_result()?;
+        builder.gl_fma_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3343,9 +3347,7 @@ impl ToSpirvOp for FrexpOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let exp = builder.value_id(self.get_operand_exp(ctx));
-        builder
-            .gl_frexp_id(result_ty, Some(result), x, exp)
-            .into_pliron_result()?;
+        builder.gl_frexp_id(result_ty, Some(result), x, exp).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3409,9 +3411,7 @@ impl ToSpirvOp for FrexpStructOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_frexp_struct_id(result_ty, Some(result), x)
-            .into_pliron_result()?;
+        builder.gl_frexp_struct_id(result_ty, Some(result), x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3477,9 +3477,7 @@ impl ToSpirvOp for LdexpOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let exp = builder.value_id(self.get_operand_exp(ctx));
-        builder
-            .gl_ldexp_id(result_ty, Some(result), x, exp)
-            .into_pliron_result()?;
+        builder.gl_ldexp_id(result_ty, Some(result), x, exp).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3544,9 +3542,7 @@ impl ToSpirvOp for PackSnorm4x8Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let v = builder.value_id(self.get_operand_v(ctx));
-        builder
-            .gl_pack_snorm4x8_id(result_ty, Some(result), v)
-            .into_pliron_result()?;
+        builder.gl_pack_snorm4x8_id(result_ty, Some(result), v).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3611,9 +3607,7 @@ impl ToSpirvOp for PackUnorm4x8Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let v = builder.value_id(self.get_operand_v(ctx));
-        builder
-            .gl_pack_unorm4x8_id(result_ty, Some(result), v)
-            .into_pliron_result()?;
+        builder.gl_pack_unorm4x8_id(result_ty, Some(result), v).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3678,9 +3672,7 @@ impl ToSpirvOp for PackSnorm2x16Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let v = builder.value_id(self.get_operand_v(ctx));
-        builder
-            .gl_pack_snorm2x16_id(result_ty, Some(result), v)
-            .into_pliron_result()?;
+        builder.gl_pack_snorm2x16_id(result_ty, Some(result), v).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3745,9 +3737,7 @@ impl ToSpirvOp for PackUnorm2x16Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let v = builder.value_id(self.get_operand_v(ctx));
-        builder
-            .gl_pack_unorm2x16_id(result_ty, Some(result), v)
-            .into_pliron_result()?;
+        builder.gl_pack_unorm2x16_id(result_ty, Some(result), v).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3812,9 +3802,7 @@ impl ToSpirvOp for PackHalf2x16Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let v = builder.value_id(self.get_operand_v(ctx));
-        builder
-            .gl_pack_half2x16_id(result_ty, Some(result), v)
-            .into_pliron_result()?;
+        builder.gl_pack_half2x16_id(result_ty, Some(result), v).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3879,9 +3867,7 @@ impl ToSpirvOp for PackDouble2x32Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let v = builder.value_id(self.get_operand_v(ctx));
-        builder
-            .gl_pack_double2x32_id(result_ty, Some(result), v)
-            .into_pliron_result()?;
+        builder.gl_pack_double2x32_id(result_ty, Some(result), v).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -3947,9 +3933,7 @@ impl ToSpirvOp for UnpackSnorm2x16Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
-        builder
-            .gl_unpack_snorm2x16_id(result_ty, Some(result), p)
-            .into_pliron_result()?;
+        builder.gl_unpack_snorm2x16_id(result_ty, Some(result), p).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4014,9 +3998,7 @@ impl ToSpirvOp for UnpackUnorm2x16Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
-        builder
-            .gl_unpack_unorm2x16_id(result_ty, Some(result), p)
-            .into_pliron_result()?;
+        builder.gl_unpack_unorm2x16_id(result_ty, Some(result), p).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4081,9 +4063,7 @@ impl ToSpirvOp for UnpackHalf2x16Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let v = builder.value_id(self.get_operand_v(ctx));
-        builder
-            .gl_unpack_half2x16_id(result_ty, Some(result), v)
-            .into_pliron_result()?;
+        builder.gl_unpack_half2x16_id(result_ty, Some(result), v).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4148,9 +4128,7 @@ impl ToSpirvOp for UnpackSnorm4x8Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
-        builder
-            .gl_unpack_snorm4x8_id(result_ty, Some(result), p)
-            .into_pliron_result()?;
+        builder.gl_unpack_snorm4x8_id(result_ty, Some(result), p).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4215,9 +4193,7 @@ impl ToSpirvOp for UnpackUnorm4x8Op {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
-        builder
-            .gl_unpack_unorm4x8_id(result_ty, Some(result), p)
-            .into_pliron_result()?;
+        builder.gl_unpack_unorm4x8_id(result_ty, Some(result), p).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4415,9 +4391,7 @@ impl ToSpirvOp for DistanceOp {
         let result = builder.value_id(self.get_result(ctx));
         let p0 = builder.value_id(self.get_operand_p0(ctx));
         let p1 = builder.value_id(self.get_operand_p1(ctx));
-        builder
-            .gl_distance_id(result_ty, Some(result), p0, p1)
-            .into_pliron_result()?;
+        builder.gl_distance_id(result_ty, Some(result), p0, p1).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4483,9 +4457,7 @@ impl ToSpirvOp for CrossOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_cross_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_cross_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4549,9 +4521,7 @@ impl ToSpirvOp for NormalizeOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
-        builder
-            .gl_normalize_id(result_ty, Some(result), x)
-            .into_pliron_result()?;
+        builder.gl_normalize_id(result_ty, Some(result), x).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4595,7 +4565,13 @@ crate::format::canonical_format!(
 mod spirv_gl_face_forward {}
 impl FaceForwardOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, n: Value, i: Value, nref: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        n: Value,
+        i: Value,
+        nref: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -4688,9 +4664,7 @@ impl ToSpirvOp for ReflectOp {
         let result = builder.value_id(self.get_result(ctx));
         let i = builder.value_id(self.get_operand_i(ctx));
         let n = builder.value_id(self.get_operand_n(ctx));
-        builder
-            .gl_reflect_id(result_ty, Some(result), i, n)
-            .into_pliron_result()?;
+        builder.gl_reflect_id(result_ty, Some(result), i, n).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4733,7 +4707,13 @@ crate::format::canonical_format!(
 mod spirv_gl_refract {}
 impl RefractOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, i: Value, n: Value, eta: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        i: Value,
+        n: Value,
+        eta: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -4758,9 +4738,7 @@ impl ToSpirvOp for RefractOp {
         let i = builder.value_id(self.get_operand_i(ctx));
         let n = builder.value_id(self.get_operand_n(ctx));
         let eta = builder.value_id(self.get_operand_eta(ctx));
-        builder
-            .gl_refract_id(result_ty, Some(result), i, n, eta)
-            .into_pliron_result()?;
+        builder.gl_refract_id(result_ty, Some(result), i, n, eta).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4825,9 +4803,7 @@ impl ToSpirvOp for FindILsbOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let value = builder.value_id(self.get_operand_value(ctx));
-        builder
-            .gl_find_i_lsb_id(result_ty, Some(result), value)
-            .into_pliron_result()?;
+        builder.gl_find_i_lsb_id(result_ty, Some(result), value).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4892,9 +4868,7 @@ impl ToSpirvOp for FindSMsbOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let value = builder.value_id(self.get_operand_value(ctx));
-        builder
-            .gl_find_s_msb_id(result_ty, Some(result), value)
-            .into_pliron_result()?;
+        builder.gl_find_s_msb_id(result_ty, Some(result), value).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -4959,9 +4933,7 @@ impl ToSpirvOp for FindUMsbOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         let value = builder.value_id(self.get_operand_value(ctx));
-        builder
-            .gl_find_u_msb_id(result_ty, Some(result), value)
-            .into_pliron_result()?;
+        builder.gl_find_u_msb_id(result_ty, Some(result), value).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -5072,7 +5044,12 @@ crate::format::canonical_format!(
 mod spirv_gl_interpolate_at_sample {}
 impl InterpolateAtSampleOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, interpolant: Value, sample: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        interpolant: Value,
+        sample: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -5142,7 +5119,12 @@ crate::format::canonical_format!(
 mod spirv_gl_interpolate_at_offset {}
 impl InterpolateAtOffsetOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, interpolant: Value, offset: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        interpolant: Value,
+        offset: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,
@@ -5235,9 +5217,7 @@ impl ToSpirvOp for NMinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_n_min_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_n_min_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -5303,9 +5283,7 @@ impl ToSpirvOp for NMaxOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
-        builder
-            .gl_n_max_id(result_ty, Some(result), x, y)
-            .into_pliron_result()?;
+        builder.gl_n_max_id(result_ty, Some(result), x, y).into_pliron_result()?;
         crate::ops::apply_all_decorations(ctx, builder, self, result);
         Ok(())
     }
@@ -5348,7 +5326,13 @@ crate::format::canonical_format!(
 mod spirv_gl_n_clamp {}
 impl NClampOp {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(ctx: &mut Context, result_ty: TypeHandle, x: Value, min_val: Value, max_val: Value) -> Self {
+    pub fn new(
+        ctx: &mut Context,
+        result_ty: TypeHandle,
+        x: Value,
+        min_val: Value,
+        max_val: Value,
+    ) -> Self {
         let op = Self {
             op: Operation::new(
                 ctx,

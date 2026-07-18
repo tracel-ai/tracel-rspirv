@@ -493,8 +493,12 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                 } else {
                     let extensions = extension_clauses.into_iter().map(|(k, v)| {
                         let kinds = std::iter::repeat(quote! { s::#kind });
-                        quote! {
-                            #( #kinds::#v )|* => vec![vec![#( #k ),*]]
+                        if k.is_empty() {
+                            quote! { #( #kinds::#v )|* => vec![] }
+                        } else {
+                            quote! {
+                                #( #kinds::#v )|* => vec![vec![#( #k ),*]]
+                            }
                         }
                     });
 
@@ -535,9 +539,13 @@ pub fn gen_dr_operand_kinds(grammar: &[structs::OperandKind]) -> TokenStream {
                 } else {
                     let capabilities = capability_clauses.into_iter().map(|(k, v)| {
                         let kinds = std::iter::repeat(quote! { s::#kind });
-                        let capabilities = k.iter().map(|cap| as_ident(cap));
-                        quote! {
-                            #( #kinds::#v )|* => vec![vec![#( spirv::Capability::#capabilities ),*]]
+                        if k.is_empty() {
+                            quote! { #( #kinds::#v )|* => vec![] }
+                        } else {
+                            let capabilities = k.iter().map(|cap| as_ident(cap));
+                            quote! {
+                                #( #kinds::#v )|* => vec![vec![#( spirv::Capability::#capabilities ),*]]
+                            }
                         }
                     });
 

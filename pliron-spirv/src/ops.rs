@@ -20,14 +20,18 @@ use pliron::{
     r#type::TypedHandle,
     verify_err,
 };
-use tracel_rspirv::spirv::{
-    AddressingModel,
-    Capability,
-    ExecutionMode,
-    FunctionControl,
-    MemoryModel,
-    SelectionControl,
-    Word,
+use tracel_rspirv::{
+    dr::InsertPoint,
+    spirv::{
+        AddressingModel,
+        Capability,
+        ExecutionMode,
+        FunctionControl,
+        LoopControl,
+        MemoryModel,
+        SelectionControl,
+        Word,
+    },
 };
 
 use crate::{
@@ -63,9 +67,8 @@ impl GlobalVariableOp {
         initializer: Option<Identifier>,
     ) -> Self {
         let storage_class = storage_class.into();
-        let result_ty = PointerType::get(ctx, r#type, storage_class.0).to_handle();
         let op = Self {
-            op: Operation::new(ctx, Self::get_concrete_op_info(), vec![result_ty], vec![], vec![], 0),
+            op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], vec![], vec![], 0),
         };
         op.set_attr_spirv_global_variable_type(ctx, r#type.into());
         op.set_attr_spirv_global_variable_storage_class(ctx, storage_class);
@@ -485,48 +488,14 @@ impl BranchOpInterface for BranchConditionalOp {
     }
 }
 
-impl BranchConditionalOp {
-    fn possible_successor_indices(&self, ctx: &Context, operands: &[Option<AttrObj>]) -> Vec<usize> {
-        let Some(cond_attr) = operands.first().unwrap().as_ref() else {
-            let num_successors = self.get_operation().deref(ctx).successors().count();
-            return (0..num_successors).collect();
-        };
-        let cond = cond_attr
-            .downcast_ref::<IntegerAttr>()
-            .expect("CondBrOp condition operand must be an IntegerAttr");
-        let taken = if cond.value().is_zero() { 1 } else { 0 };
-        vec![taken]
-    }
-}
-
 #[op_interface_impl]
 impl BranchOpFoldInterface for BranchConditionalOp {
-    fn check_fold(&self, ctx: &Context, operands: &[Option<AttrObj>]) -> Vec<Ptr<BasicBlock>> {
-        let successors: Vec<Ptr<BasicBlock>> = self.get_operation().deref(ctx).successors().collect();
-
-        self.possible_successor_indices(ctx, operands)
-            .iter()
-            .map(|ind| successors[*ind])
-            .collect()
+    fn check_fold(&self, ctx: &Context, _operands: &[Option<AttrObj>]) -> Vec<Ptr<BasicBlock>> {
+        self.get_operation().deref(ctx).successors().collect()
     }
 
-    fn fold_in_place(&self, ctx: &mut Context, ops: &[Option<AttrObj>], rewriter: &mut dyn Rewriter) -> IRStatus {
-        let possible_successor_indices = self.possible_successor_indices(ctx, ops);
-        if possible_successor_indices.len() != 1 {
-            return IRStatus::Unchanged;
-        };
-        let successor_ind = possible_successor_indices[0];
-        let successors: Vec<Ptr<BasicBlock>> = self.get_operation().deref(ctx).successors().collect();
-        let new_op = BranchOp::new(
-            ctx,
-            successors[successor_ind],
-            self.successor_operands(ctx, successor_ind),
-        )
-        .get_operation();
-        let old_op = self.get_operation();
-        rewriter.insert_operation(ctx, new_op);
-        rewriter.replace_operation(ctx, old_op, new_op);
-        IRStatus::Changed
+    fn fold_in_place(&self, _ctx: &mut Context, _ops: &[Option<AttrObj>], _rewriter: &mut dyn Rewriter) -> IRStatus {
+        IRStatus::Unchanged
     }
 }
 
@@ -539,6 +508,112 @@ impl ToSpirvOp for BranchConditionalOp {
         builder
             .branch_conditional(condition, true_label_id, false_label_id, [])
             .into_pliron_result()
+    }
+}
+
+#[pliron_op(
+    name = "spirv.Switch",
+    format,
+    attributes = (spirv_switch_cases: VecAttr),
+    operands = (selector),
+    verifier = "succ"
+)]
+#[derive_op_interface_impl(IsTerminatorInterface, NResultsInterface<0>, OperandSegmentInterface)]
+pub struct SwitchOp;
+impl SwitchOp {
+    /// Create a new [CondBrOp].
+    pub fn new(
+        ctx: &mut Context,
+        selector: Value,
+        default_dest: Ptr<BasicBlock>,
+        default_operands: Vec<Value>,
+        cases: VecAttr,
+        cases_dests: Vec<Ptr<BasicBlock>>,
+        cases_operands: Vec<Vec<Value>>,
+    ) -> Self {
+        let mut segments = vec![vec![selector], default_operands];
+        segments.extend(cases_operands);
+        let (operands, segment_sizes) = Self::compute_segment_sizes(segments);
+
+        let mut successors = vec![default_dest];
+        successors.extend(cases_dests);
+
+        let op = SwitchOp {
+            op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], operands, successors, 0),
+        };
+
+        // Set the operand segment sizes attribute.
+        op.set_operand_segment_sizes(ctx, segment_sizes);
+        op.set_attr_spirv_switch_cases(ctx, cases);
+        op
+    }
+
+    pub fn cases(&self, ctx: &Context) -> Vec<IntegerAttr> {
+        self.get_attr_spirv_switch_cases(ctx)
+            .unwrap()
+            .0
+            .iter()
+            .map(|it| it.downcast_ref::<IntegerAttr>().unwrap().clone())
+            .collect()
+    }
+
+    pub fn default_destination(&self, ctx: &Context) -> Ptr<BasicBlock> {
+        self.get_operation().deref(ctx).get_successor(0)
+    }
+
+    pub fn case_destinations(&self, ctx: &Context) -> Vec<Ptr<BasicBlock>> {
+        self.get_operation().deref(ctx).successors().skip(1).collect()
+    }
+}
+
+#[op_interface_impl]
+impl BranchOpInterface for SwitchOp {
+    fn successor_operands(&self, ctx: &Context, succ_idx: usize) -> Vec<Value> {
+        // Skip the first segment, which is the selector.
+        self.get_segment(ctx, succ_idx + 1)
+    }
+
+    fn add_successor_operand(&self, ctx: &mut Context, succ_idx: usize, operand: Value) -> usize {
+        // The successor operands start at segment 1, since segment 0 is the selector operand.
+        self.push_to_segment(ctx, succ_idx + 1, operand)
+    }
+
+    fn remove_successor_operand(&self, ctx: &mut Context, succ_idx: usize, opd_idx: usize) -> Value {
+        // The successor operands start at segment 1, since segment 0 is the selector operand.
+        self.remove_from_segment(ctx, succ_idx + 1, opd_idx)
+    }
+}
+
+#[op_interface_impl]
+impl BranchOpFoldInterface for SwitchOp {
+    fn check_fold(&self, ctx: &Context, _operands: &[Option<AttrObj>]) -> Vec<Ptr<BasicBlock>> {
+        self.get_operation().deref(ctx).successors().collect()
+    }
+
+    fn fold_in_place(&self, _ctx: &mut Context, _ops: &[Option<AttrObj>], _rewriter: &mut dyn Rewriter) -> IRStatus {
+        IRStatus::Unchanged
+    }
+}
+
+#[op_interface_impl]
+impl ToSpirvOp for SwitchOp {
+    fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+        let selector = builder.value_id(self.get_operand_selector(ctx));
+        let default_label = builder.label_id(self.default_destination(ctx));
+        let cases = self.cases(ctx).into_iter().map(|attr| {
+            if attr.get_type().deref(ctx).width() > 32 {
+                Operand::LiteralBit64(attr.value().to_u64())
+            } else {
+                Operand::LiteralBit32(attr.value().to_u32())
+            }
+        });
+        let case_dests = self.case_destinations(ctx);
+        let case_labels = case_dests
+            .into_iter()
+            .map(|dest| builder.label_id(dest))
+            .collect::<Vec<_>>();
+        let case_pairs = cases.zip(case_labels);
+        builder.switch(selector, default_label, case_pairs).into_pliron_result()
     }
 }
 
@@ -608,8 +683,34 @@ impl LoopOp {
 
 #[op_interface_impl]
 impl ToSpirvOp for LoopOp {
-    fn to_spirv(&self, _ctx: &Context, _builder: &mut PlironBuilder) -> Result<()> {
-        todo!();
+    fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+        let region = self.region(ctx);
+        let blocks = region.deref(ctx).iter(ctx).collect::<Vec<_>>();
+        let [entry, header, r#loop, merge] = blocks[..] else {
+            return verify_err!(self.loc(ctx), "Loop region must have exactly 4 blocks");
+        };
+
+        let merge_label = builder.label_id(merge);
+        let continue_label = builder.label_id(r#loop);
+
+        for op in entry.deref(ctx).iter(ctx) {
+            op_to_spirv(ctx, builder, op)?;
+        }
+
+        block_to_spirv(ctx, builder, header, false, true)?;
+        builder
+            .insert_loop_merge(
+                InsertPoint::FromEnd(1),
+                merge_label,
+                continue_label,
+                LoopControl::NONE,
+                [],
+            )
+            .into_pliron_result()?;
+        builder.select_block(None).into_pliron_result()?;
+
+        block_to_spirv(ctx, builder, r#loop, false, false)?;
+        block_to_spirv(ctx, builder, merge, false, true)
     }
 }
 
@@ -768,7 +869,7 @@ impl SpirvModuleOp {
         self.get_attr_spirv_module_memory_model(ctx).unwrap().0
     }
 
-    pub fn get_vce<'a>(&self, ctx: &'a Context) -> VerCapExtAttr {
+    pub fn get_vce(&self, ctx: &Context) -> VerCapExtAttr {
         self.get_attr_spirv_module_vce(ctx)
             .map(|it| it.clone())
             .unwrap_or_default()
@@ -896,7 +997,8 @@ impl ToSpirvOp for FuncOp {
 
         for &arg in args.iter() {
             let ty = spirv_type_id(ctx, builder, arg.get_type(ctx))?;
-            builder.function_parameter(ty).into_pliron_result()?;
+            let id = builder.function_parameter(ty).into_pliron_result()?;
+            builder.values.insert(arg, id);
         }
 
         let blocks = self.get_region(ctx).deref(ctx).iter(ctx).collect::<Vec<_>>();
@@ -922,10 +1024,11 @@ pub(crate) fn block_to_spirv(
     builder: &mut PlironBuilder,
     block: Ptr<BasicBlock>,
     is_entry: bool,
-    skip_end: bool,
+    keep_selected: bool,
 ) -> Result<()> {
     let label_id = builder.label_id(block);
     builder.begin_block(Some(label_id)).into_pliron_result()?;
+    let block_id = builder.selected_block();
 
     let args = block.deref(ctx).arguments().collect::<Vec<_>>();
     if !is_entry && !args.is_empty() {
@@ -956,7 +1059,9 @@ pub(crate) fn block_to_spirv(
         op_to_spirv(ctx, builder, op)?;
     }
 
-    if !skip_end {
+    if keep_selected {
+        builder.select_block(block_id).into_pliron_result()?;
+    } else {
         builder.select_block(None).into_pliron_result()?;
     }
     Ok(())

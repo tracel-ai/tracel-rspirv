@@ -53,7 +53,8 @@ impl PlironGenerator {
             .filter(|it| !SKIP_DECORATIONS.contains(&it.symbol.as_str()))
             .filter(|it| !it.symbol.ends_with("Id"))
             .map(|variant| {
-                let (ty, as_params) = if variant.parameters.is_empty() {
+                let has_params = !variant.parameters.is_empty();
+                let (ty, as_params) = if !has_params {
                     (format_ident!("UnitAttr"), quote![vec![]])
                 } else if variant.parameters.len() == 1 {
                     assert_eq!(
@@ -92,71 +93,118 @@ impl PlironGenerator {
                 } else {
                     panic!("Unhandled multi-parameter decoration {}", variant.symbol);
                 };
-                (variant, ty, as_params)
+                (variant, has_params, ty, as_params)
             })
             .collect::<Vec<_>>();
 
-        let attr_keys = decorations.iter().map(|(variant, _, _)| {
+        fn decoration_key(symbol: &str) -> String {
+            format!("spirv_decoration_{}", symbol.to_snek_case())
+        }
+
+        let attr_keys = decorations.iter().map(|(variant, ..)| {
             let const_ident = attr_const_name(&variant.symbol);
-            let name = variant.symbol.to_snek_case();
+            let name = decoration_key(&variant.symbol);
             quote! {
                 pub static #const_ident: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
                     ::pliron::std_deps::sync::LazyLock::new(|| #name.try_into().unwrap());
             }
         });
 
-        let getters = decorations.iter().map(|(variant, ty, _)| {
+        let getters = decorations.iter().map(|(variant, has_params, ty, _)| {
             let const_ident = attr_const_name(&variant.symbol);
-            let func_name = format_ident!("get_decoration_{}", variant.symbol.to_snek_case());
-            quote! {
-                #[allow(non_snake_case)]
-                #[inline(never)]
-                pub fn #func_name<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, #ty>> {
-                    Ref::filter_map(op.get_operation().deref(ctx), |op| {
-                        op.attributes.get::<#ty>(&#const_ident)
-                    })
-                    .ok()
+            if *has_params {
+                let func_name = format_ident!("get_decoration_{}", variant.symbol.to_snek_case());
+                quote! {
+                    #[allow(non_snake_case)]
+                    #[inline(never)]
+                    pub fn #func_name<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, #ty>> {
+                        Ref::filter_map(op.get_operation().deref(ctx), |op| {
+                            op.attributes.get::<#ty>(&#const_ident)
+                        })
+                        .ok()
+                    }
+                }
+            } else {
+                let func_name = format_ident!("has_decoration_{}", variant.symbol.to_snek_case());
+                quote! {
+                    #[allow(non_snake_case)]
+                    #[inline(never)]
+                    pub fn #func_name(op: &dyn DecoratableOp, ctx: &Context) -> bool {
+                        let op = op.get_operation().deref(ctx);
+                        op.attributes.0.contains_key(&*#const_ident)
+                    }
                 }
             }
         });
 
-        let trait_getters = decorations.iter().map(|(variant, ty, _)| {
-            let func_name = format_ident!("get_decoration_{}", variant.symbol.to_snek_case());
-            quote! {
-                #[allow(non_snake_case)]
-                fn #func_name<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, #ty>> where Self: Sized {
-                    #func_name(self, ctx)
+        let trait_getters = decorations.iter().map(|(variant, has_params, ty, _)| {
+            if *has_params {
+                let func_name = format_ident!("get_decoration_{}", variant.symbol.to_snek_case());
+                quote! {
+                    #[allow(non_snake_case)]
+                    fn #func_name<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, #ty>> where Self: Sized {
+                        #func_name(self, ctx)
+                    }
+                }
+            } else {
+                let func_name = format_ident!("has_decoration_{}", variant.symbol.to_snek_case());
+                quote! {
+                    #[allow(non_snake_case)]
+                    fn #func_name(&self, ctx: &Context) -> bool where Self: Sized {
+                        #func_name(self, ctx)
+                    }
                 }
             }
         });
 
-        let setters = decorations.iter().map(|(variant, ty, _)| {
+        let setters = decorations.iter().map(|(variant, has_params, ty, _)| {
             let const_ident = attr_const_name(&variant.symbol);
             let func_name = format_ident!("set_decoration_{}", variant.symbol.to_snek_case());
-            quote! {
-                #[allow(non_snake_case)]
-                pub fn #func_name(op: &dyn DecoratableOp, ctx: &Context, value: #ty) {
-                    op.get_operation().deref_mut(ctx).attributes.set(
-                        #const_ident.clone(),
-                        value,
-                    );
+            if *has_params {
+                quote! {
+                    #[allow(non_snake_case)]
+                    pub fn #func_name(op: &dyn DecoratableOp, ctx: &Context, value: #ty) {
+                        op.get_operation().deref_mut(ctx).attributes.set(
+                            #const_ident.clone(),
+                            value,
+                        );
+                    }
+                }
+            } else {
+                quote! {
+                    #[allow(non_snake_case)]
+                    pub fn #func_name(op: &dyn DecoratableOp, ctx: &Context) {
+                        op.get_operation().deref_mut(ctx).attributes.set(
+                            #const_ident.clone(),
+                            UnitAttr::new(),
+                        );
+                    }
                 }
             }
         });
 
-        let trait_setters = decorations.iter().map(|(variant, ty, _)| {
+        let trait_setters = decorations.iter().map(|(variant, has_params, ty, _)| {
             let func_name = format_ident!("set_decoration_{}", variant.symbol.to_snek_case());
-            quote! {
-                #[allow(non_snake_case)]
-                fn #func_name(&self, ctx: &Context, value: #ty) where Self: Sized {
-                    #func_name(self, ctx, value);
+            if *has_params {
+                quote! {
+                    #[allow(non_snake_case)]
+                    fn #func_name(&self, ctx: &Context, value: #ty) where Self: Sized {
+                        #func_name(self, ctx, value);
+                    }
+                }
+            } else {
+                quote! {
+                    #[allow(non_snake_case)]
+                    fn #func_name(&self, ctx: &Context) where Self: Sized {
+                        #func_name(self, ctx);
+                    }
                 }
             }
         });
 
         let mut arg_kinds: HashMap<(Ident, String), (TokenStream, Vec<Ident>)> = HashMap::new();
 
-        for (variant, ty, as_args) in decorations.iter() {
+        for (variant, _, ty, as_args) in decorations.iter() {
             arg_kinds
                 .entry((ty.clone(), as_args.to_string()))
                 .or_insert_with(|| (as_args.clone(), Default::default()))
@@ -176,14 +224,14 @@ impl PlironGenerator {
             }
         });
 
-        let decorations_to_keys = decorations.iter().map(|(variant, _, _)| {
+        let decorations_to_keys = decorations.iter().map(|(variant, ..)| {
             let name = format_ident!("{}", variant.symbol);
             let const_ident = attr_const_name(&variant.symbol);
             quote![Decoration::#name => &#const_ident]
         });
 
-        let keys_to_decorations = decorations.iter().map(|(variant, _, _)| {
-            let key = variant.symbol.to_snek_case();
+        let keys_to_decorations = decorations.iter().map(|(variant, ..)| {
+            let key = decoration_key(&variant.symbol);
             let name = format_ident!("{}", variant.symbol);
             quote![#key => Some(Decoration::#name)]
         });

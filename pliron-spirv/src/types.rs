@@ -32,6 +32,13 @@ use crate::{
     prelude::*,
 };
 
+pub mod khr;
+pub mod nv;
+
+fn u32_ty(ctx: &Context) -> TypeHandle {
+    IntegerType::get(ctx, 32, Signedness::Signless).to_handle()
+}
+
 /// Deduplicate int types since SPIR-V uses the same representation for unsigned and signless
 pub(super) fn normalize_int_type(ctx: &Context, ty: TypeHandle) -> TypeHandle {
     if let Ok(int_ty) = TypedHandle::<IntegerType>::from_handle(ty, ctx)
@@ -269,8 +276,7 @@ pub struct VectorIdType {
 impl ToSpirvType for VectorIdType {
     fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Word> {
         let element_ty = spirv_type_id(ctx, builder, self.element_type)?;
-        let u32 = IntegerType::get(ctx, 32, Signedness::Signless).to_handle();
-        let count = builder.constant_bit32(ctx, u32, self.count)?;
+        let count = builder.constant_bit32(ctx, u32_ty(ctx), self.count)?;
         Ok(builder.type_vector_id_ext(element_ty, count))
     }
 }
@@ -315,8 +321,7 @@ impl ToSpirvType for ArrayType {
         }
 
         let element_ty = spirv_type_id(ctx, builder, self.element_type)?;
-        let u32 = IntegerType::get(ctx, 32, Signedness::Signless).to_handle();
-        let count = builder.constant_bit32(ctx, u32, self.count)?;
+        let count = builder.constant_bit32(ctx, u32_ty(ctx), self.count)?;
         Ok(builder.type_array_id(Some(id), element_ty, count))
     }
 }

@@ -54,7 +54,6 @@ const SKIP_OP_NAMES: &[&str] = &[
 const UNSKIP_OP_NAMES: &[&str] = &["OpEntryPoint"];
 
 const SYMBOL_ARG_NAMES: &[&str] = &["Function", "Func", "Entry Point", "Interface"];
-
 const STRING_REF_OVERRIDES: &[(&str, &str)] = &[("OpSource", "File"), ("OpLine", "File"), ("DebugPrintf", "Format")];
 
 fn should_skip(op: &Instruction) -> bool {
@@ -62,6 +61,14 @@ fn should_skip(op: &Instruction) -> bool {
     let unskip_op = UNSKIP_OP_NAMES.contains(&op.opname.as_str());
     let skip_name = SKIP_OP_NAMES.contains(&op.opname.as_str());
     (skip_class && !unskip_op) || skip_name
+}
+
+fn value_attr_overrides(op_name: &str, arg_name: &str) -> Option<Ident> {
+    match (op_name, arg_name) {
+        ("OpCooperativeMatrixLoadKHR", "MemoryLayout") => Some(format_ident!("CooperativeMatrixLayoutAttr")),
+        ("OpCooperativeMatrixStoreKHR", "MemoryLayout") => Some(format_ident!("CooperativeMatrixLayoutAttr")),
+        _ => None,
+    }
 }
 
 pub enum OpdKind {
@@ -218,6 +225,10 @@ impl PlironGenerator {
                 "IdRef" if STRING_REF_OVERRIDES.contains(&(op.opname.as_str(), opd.name.as_str())) => {
                     let name = as_ident(&opd.name.to_snek_case());
                     OpdKind::StringRef(name, opd.quantifier)
+                }
+                "IdRef" if let Some(ty) = value_attr_overrides(&op.opname, &opd.name) => {
+                    let name = as_ident(&opd.name.to_snek_case());
+                    OpdKind::ValueAttr(name, ty)
                 }
                 "IdRef" => {
                     opd_id += 1;

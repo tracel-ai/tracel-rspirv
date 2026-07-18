@@ -207,6 +207,13 @@ impl MemorySemanticsAttr {
     }
 }
 
+impl CooperativeMatrixLayoutAttr {
+    pub fn spirv_id(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<u32> {
+        let out_ty = IntegerType::get(ctx, 32, Signedness::Signless).to_handle();
+        builder.constant_bit32(ctx, out_ty, self.0 as u32)
+    }
+}
+
 #[cfg(test)]
 mod parse_tests {
     use alloc::string::ToString;

@@ -3,8 +3,8 @@
 // DO NOT MODIFY!
 
 #![allow(clippy::let_and_return, unused_imports)]
-use crate::attrs::*;
 use crate::prelude::*;
+use crate::attrs::*;
 #[pliron_op(
     name = "spirv.DebugPrintfOp.debug_printf",
     operands = (opd_1),
@@ -18,28 +18,51 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("opd_1", crate ::format::Quantifier::ZeroOrMore)
 );
 mod spirv_debugprintfop_debug_printf {
-    pub static ATTR_FORMAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_debugprintfop_debug_printf_format".try_into().unwrap());
+    pub static ATTR_FORMAT: ::pliron::std_deps::sync::LazyLock<
+        ::pliron::identifier::Identifier,
+    > = ::pliron::std_deps::sync::LazyLock::new(|| {
+        "spirv_debugprintfop_debug_printf_format".try_into().unwrap()
+    });
 }
 impl DebugPrintfOp {
     #[allow(clippy::too_many_arguments)]
     pub fn new(ctx: &mut Context, format: impl Into<String>, opd_1: Vec<Value>) -> Self {
         let op = Self {
-            op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![opd_1], vec![], 0),
+            op: Operation::new(
+                ctx,
+                Self::get_concrete_op_info(),
+                vec![],
+                flat_vec![opd_1],
+                vec![],
+                0,
+            ),
         };
         op.set_attr_format(ctx, LiteralStringAttr::new(format.into()));
         op
     }
     ///Get a [Ref](core::cell::Ref) to the value of the attribute named `format`.
-    pub fn get_attr_format<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, LiteralStringAttr> {
-        ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-            op.attributes
-                .get::<LiteralStringAttr>(&spirv_debugprintfop_debug_printf::ATTR_FORMAT)
-                .unwrap()
-        })
+    pub fn get_attr_format<'a>(
+        &self,
+        ctx: &'a ::pliron::context::Context,
+    ) -> ::core::cell::Ref<'a, LiteralStringAttr> {
+        ::core::cell::Ref::map(
+            self.op.deref(ctx),
+            |op| {
+                op
+                    .attributes
+                    .get::<
+                        LiteralStringAttr,
+                    >(&spirv_debugprintfop_debug_printf::ATTR_FORMAT)
+                    .unwrap()
+            },
+        )
     }
     ///Set the value of the attribute named `format`.
-    pub fn set_attr_format(&self, ctx: &::pliron::context::Context, value: LiteralStringAttr) {
+    pub fn set_attr_format(
+        &self,
+        ctx: &::pliron::context::Context,
+        value: LiteralStringAttr,
+    ) {
         self.op
             .deref_mut(ctx)
             .attributes
