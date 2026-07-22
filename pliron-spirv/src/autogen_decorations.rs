@@ -5112,10 +5112,50 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
 impl DecorationInfo {
     pub fn as_operands(&self) -> Vec<Operand> {
         match self.decoration {
-            Decoration::FPRoundingMode => {
+            Decoration::ArrayStride
+            | Decoration::MatrixStride
+            | Decoration::Stream
+            | Decoration::Location
+            | Decoration::Component
+            | Decoration::Index
+            | Decoration::Binding
+            | Decoration::DescriptorSet
+            | Decoration::Offset
+            | Decoration::XfbBuffer
+            | Decoration::XfbStride
+            | Decoration::InputAttachmentIndex
+            | Decoration::Alignment
+            | Decoration::MaxByteOffset
+            | Decoration::SecondaryViewportRelativeNV
+            | Decoration::MemberOffsetNV
+            | Decoration::BankNV
+            | Decoration::SIMTCallINTEL
+            | Decoration::FuncParamIOKindINTEL
+            | Decoration::GlobalVariableOffsetINTEL
+            | Decoration::NumbanksALTERA
+            | Decoration::BankwidthALTERA
+            | Decoration::MaxPrivateCopiesALTERA
+            | Decoration::MaxReplicatesALTERA
+            | Decoration::ForcePow2DepthALTERA
+            | Decoration::StridesizeALTERA
+            | Decoration::WordsizeALTERA
+            | Decoration::CacheSizeALTERA
+            | Decoration::PrefetchALTERA
+            | Decoration::InitiationIntervalALTERA
+            | Decoration::MaxConcurrencyALTERA
+            | Decoration::PipelineEnableALTERA
+            | Decoration::BufferLocationALTERA
+            | Decoration::IOPipeStorageALTERA
+            | Decoration::LatencyControlLabelALTERA
+            | Decoration::MMHostInterfaceAddressWidthALTERA
+            | Decoration::MMHostInterfaceDataWidthALTERA
+            | Decoration::MMHostInterfaceLatencyALTERA
+            | Decoration::MMHostInterfaceMaxBurstALTERA
+            | Decoration::MMHostInterfaceWaitRequestALTERA
+            | Decoration::ImplementInRegisterMapALTERA => {
                 #[allow(unused)]
-                let attr = self.value.downcast_ref::<FPRoundingModeAttr>().unwrap();
-                vec![Operand::FPRoundingMode(attr.0)]
+                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
+                vec![Operand::LiteralBit32(attr.0)]
             }
             Decoration::ClobberINTEL
             | Decoration::UserSemantic
@@ -5124,6 +5164,11 @@ impl DecorationInfo {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<StringAttr>().unwrap();
                 vec![Operand::LiteralString(attr.as_str().to_string())]
+            }
+            Decoration::BuiltIn => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<BuiltInAttr>().unwrap();
+                vec![Operand::BuiltIn(attr.0)]
             }
             Decoration::FPFastMathMode => {
                 #[allow(unused)]
@@ -5134,6 +5179,11 @@ impl DecorationInfo {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<VecAttr>().unwrap();
                 todo!()
+            }
+            Decoration::FPRoundingMode => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<FPRoundingModeAttr>().unwrap();
+                vec![Operand::FPRoundingMode(attr.0)]
             }
             Decoration::RelaxedPrecision
             | Decoration::Block
@@ -5210,56 +5260,6 @@ impl DecorationInfo {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
                 vec![]
-            }
-            Decoration::ArrayStride
-            | Decoration::MatrixStride
-            | Decoration::Stream
-            | Decoration::Location
-            | Decoration::Component
-            | Decoration::Index
-            | Decoration::Binding
-            | Decoration::DescriptorSet
-            | Decoration::Offset
-            | Decoration::XfbBuffer
-            | Decoration::XfbStride
-            | Decoration::InputAttachmentIndex
-            | Decoration::Alignment
-            | Decoration::MaxByteOffset
-            | Decoration::SecondaryViewportRelativeNV
-            | Decoration::MemberOffsetNV
-            | Decoration::BankNV
-            | Decoration::SIMTCallINTEL
-            | Decoration::FuncParamIOKindINTEL
-            | Decoration::GlobalVariableOffsetINTEL
-            | Decoration::NumbanksALTERA
-            | Decoration::BankwidthALTERA
-            | Decoration::MaxPrivateCopiesALTERA
-            | Decoration::MaxReplicatesALTERA
-            | Decoration::ForcePow2DepthALTERA
-            | Decoration::StridesizeALTERA
-            | Decoration::WordsizeALTERA
-            | Decoration::CacheSizeALTERA
-            | Decoration::PrefetchALTERA
-            | Decoration::InitiationIntervalALTERA
-            | Decoration::MaxConcurrencyALTERA
-            | Decoration::PipelineEnableALTERA
-            | Decoration::BufferLocationALTERA
-            | Decoration::IOPipeStorageALTERA
-            | Decoration::LatencyControlLabelALTERA
-            | Decoration::MMHostInterfaceAddressWidthALTERA
-            | Decoration::MMHostInterfaceDataWidthALTERA
-            | Decoration::MMHostInterfaceLatencyALTERA
-            | Decoration::MMHostInterfaceMaxBurstALTERA
-            | Decoration::MMHostInterfaceWaitRequestALTERA
-            | Decoration::ImplementInRegisterMapALTERA => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
-            }
-            Decoration::BuiltIn => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<BuiltInAttr>().unwrap();
-                vec![Operand::BuiltIn(attr.0)]
             }
             _ => unimplemented!("Unsupported decoration"),
         }

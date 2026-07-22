@@ -33,7 +33,7 @@ impl PlironGenerator {
             false => as_ident(&format!("{builder_prefix}{}", op_name.to_snek_case())),
         };
         let namespace = format!("spirv_{}_{}", prefix.to_lowercase(), op_name.to_snek_case());
-        let op_name = format!("spirv.{prefix}.{}", op_name.to_snek_case());
+        let op_name = format!("spirv.{prefix}_{}", op_name.to_snek_case());
 
         if matches!(op.operands.first(), Some(opd) if opd.kind == "IdResult") {
             panic!("Result with no type")

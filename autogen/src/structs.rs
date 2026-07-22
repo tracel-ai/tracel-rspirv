@@ -64,7 +64,7 @@ pub struct OperandKind {
     pub bases: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Grammar {
     pub copyright: Vec<String>,
     #[serde(deserialize_with = "num_or_hex")]

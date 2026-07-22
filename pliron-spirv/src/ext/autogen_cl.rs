@@ -6,7 +6,7 @@
 use crate::prelude::*;
 use crate::attrs::*;
 #[pliron_op(
-    name = "spirv.CL.acos",
+    name = "spirv.CL_acos",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -70,7 +70,7 @@ impl VerCapExtOpInterface for AcosOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.acosh",
+    name = "spirv.CL_acosh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -134,7 +134,7 @@ impl VerCapExtOpInterface for AcoshOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.acospi",
+    name = "spirv.CL_acospi",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -198,7 +198,7 @@ impl VerCapExtOpInterface for AcospiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.asin",
+    name = "spirv.CL_asin",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -262,7 +262,7 @@ impl VerCapExtOpInterface for AsinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.asinh",
+    name = "spirv.CL_asinh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -326,7 +326,7 @@ impl VerCapExtOpInterface for AsinhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.asinpi",
+    name = "spirv.CL_asinpi",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -390,7 +390,7 @@ impl VerCapExtOpInterface for AsinpiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.atan",
+    name = "spirv.CL_atan",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -454,7 +454,7 @@ impl VerCapExtOpInterface for AtanOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.atan2",
+    name = "spirv.CL_atan2",
     operands = (y, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -520,7 +520,7 @@ impl VerCapExtOpInterface for Atan2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.atanh",
+    name = "spirv.CL_atanh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -584,7 +584,7 @@ impl VerCapExtOpInterface for AtanhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.atanpi",
+    name = "spirv.CL_atanpi",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -648,7 +648,7 @@ impl VerCapExtOpInterface for AtanpiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.atan2pi",
+    name = "spirv.CL_atan2pi",
     operands = (y, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -714,7 +714,7 @@ impl VerCapExtOpInterface for Atan2piOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.cbrt",
+    name = "spirv.CL_cbrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -778,7 +778,7 @@ impl VerCapExtOpInterface for CbrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.ceil",
+    name = "spirv.CL_ceil",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -842,7 +842,7 @@ impl VerCapExtOpInterface for CeilOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.copysign",
+    name = "spirv.CL_copysign",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -908,7 +908,7 @@ impl VerCapExtOpInterface for CopysignOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.cos",
+    name = "spirv.CL_cos",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -972,7 +972,7 @@ impl VerCapExtOpInterface for CosOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.cosh",
+    name = "spirv.CL_cosh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1036,7 +1036,7 @@ impl VerCapExtOpInterface for CoshOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.cospi",
+    name = "spirv.CL_cospi",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1100,7 +1100,7 @@ impl VerCapExtOpInterface for CospiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.erfc",
+    name = "spirv.CL_erfc",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1164,7 +1164,7 @@ impl VerCapExtOpInterface for ErfcOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.erf",
+    name = "spirv.CL_erf",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1228,7 +1228,7 @@ impl VerCapExtOpInterface for ErfOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.exp",
+    name = "spirv.CL_exp",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1292,7 +1292,7 @@ impl VerCapExtOpInterface for ExpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.exp2",
+    name = "spirv.CL_exp2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1356,7 +1356,7 @@ impl VerCapExtOpInterface for Exp2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.exp10",
+    name = "spirv.CL_exp10",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1420,7 +1420,7 @@ impl VerCapExtOpInterface for Exp10Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.expm1",
+    name = "spirv.CL_expm1",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1484,7 +1484,7 @@ impl VerCapExtOpInterface for Expm1Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fabs",
+    name = "spirv.CL_fabs",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1548,7 +1548,7 @@ impl VerCapExtOpInterface for FabsOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fdim",
+    name = "spirv.CL_fdim",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1614,7 +1614,7 @@ impl VerCapExtOpInterface for FdimOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.floor",
+    name = "spirv.CL_floor",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1678,7 +1678,7 @@ impl VerCapExtOpInterface for FloorOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fma",
+    name = "spirv.CL_fma",
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1752,7 +1752,7 @@ impl VerCapExtOpInterface for FmaOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fmax",
+    name = "spirv.CL_fmax",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1818,7 +1818,7 @@ impl VerCapExtOpInterface for FmaxOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fmin",
+    name = "spirv.CL_fmin",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1884,7 +1884,7 @@ impl VerCapExtOpInterface for FminOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fmod",
+    name = "spirv.CL_fmod",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1950,7 +1950,7 @@ impl VerCapExtOpInterface for FmodOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fract",
+    name = "spirv.CL_fract",
     operands = (x, ptr),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2016,7 +2016,7 @@ impl VerCapExtOpInterface for FractOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.frexp",
+    name = "spirv.CL_frexp",
     operands = (x, exp),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2082,7 +2082,7 @@ impl VerCapExtOpInterface for FrexpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.hypot",
+    name = "spirv.CL_hypot",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2148,7 +2148,7 @@ impl VerCapExtOpInterface for HypotOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.ilogb",
+    name = "spirv.CL_ilogb",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2212,7 +2212,7 @@ impl VerCapExtOpInterface for IlogbOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.ldexp",
+    name = "spirv.CL_ldexp",
     operands = (x, k),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2278,7 +2278,7 @@ impl VerCapExtOpInterface for LdexpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.lgamma",
+    name = "spirv.CL_lgamma",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2342,7 +2342,7 @@ impl VerCapExtOpInterface for LgammaOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.lgamma_r",
+    name = "spirv.CL_lgamma_r",
     operands = (x, signp),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2413,7 +2413,7 @@ impl VerCapExtOpInterface for LgammaROp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.log",
+    name = "spirv.CL_log",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2477,7 +2477,7 @@ impl VerCapExtOpInterface for LogOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.log2",
+    name = "spirv.CL_log2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2541,7 +2541,7 @@ impl VerCapExtOpInterface for Log2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.log10",
+    name = "spirv.CL_log10",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2605,7 +2605,7 @@ impl VerCapExtOpInterface for Log10Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.log1p",
+    name = "spirv.CL_log1p",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2669,7 +2669,7 @@ impl VerCapExtOpInterface for Log1pOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.logb",
+    name = "spirv.CL_logb",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2733,7 +2733,7 @@ impl VerCapExtOpInterface for LogbOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.mad",
+    name = "spirv.CL_mad",
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2807,7 +2807,7 @@ impl VerCapExtOpInterface for MadOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.maxmag",
+    name = "spirv.CL_maxmag",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2873,7 +2873,7 @@ impl VerCapExtOpInterface for MaxmagOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.minmag",
+    name = "spirv.CL_minmag",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2939,7 +2939,7 @@ impl VerCapExtOpInterface for MinmagOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.modf",
+    name = "spirv.CL_modf",
     operands = (x, iptr),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3005,7 +3005,7 @@ impl VerCapExtOpInterface for ModfOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.nan",
+    name = "spirv.CL_nan",
     operands = (nancode),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3069,7 +3069,7 @@ impl VerCapExtOpInterface for NanOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.nextafter",
+    name = "spirv.CL_nextafter",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3135,7 +3135,7 @@ impl VerCapExtOpInterface for NextafterOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.pow",
+    name = "spirv.CL_pow",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3201,7 +3201,7 @@ impl VerCapExtOpInterface for PowOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.pown",
+    name = "spirv.CL_pown",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3267,7 +3267,7 @@ impl VerCapExtOpInterface for PownOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.powr",
+    name = "spirv.CL_powr",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3333,7 +3333,7 @@ impl VerCapExtOpInterface for PowrOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.remainder",
+    name = "spirv.CL_remainder",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3399,7 +3399,7 @@ impl VerCapExtOpInterface for RemainderOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.remquo",
+    name = "spirv.CL_remquo",
     operands = (x, y, quo),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3473,7 +3473,7 @@ impl VerCapExtOpInterface for RemquoOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.rint",
+    name = "spirv.CL_rint",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3537,7 +3537,7 @@ impl VerCapExtOpInterface for RintOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.rootn",
+    name = "spirv.CL_rootn",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3603,7 +3603,7 @@ impl VerCapExtOpInterface for RootnOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.round",
+    name = "spirv.CL_round",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3667,7 +3667,7 @@ impl VerCapExtOpInterface for RoundOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.rsqrt",
+    name = "spirv.CL_rsqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3731,7 +3731,7 @@ impl VerCapExtOpInterface for RsqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.sin",
+    name = "spirv.CL_sin",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3795,7 +3795,7 @@ impl VerCapExtOpInterface for SinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.sincos",
+    name = "spirv.CL_sincos",
     operands = (x, cosval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3866,7 +3866,7 @@ impl VerCapExtOpInterface for SincosOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.sinh",
+    name = "spirv.CL_sinh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3930,7 +3930,7 @@ impl VerCapExtOpInterface for SinhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.sinpi",
+    name = "spirv.CL_sinpi",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3994,7 +3994,7 @@ impl VerCapExtOpInterface for SinpiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.sqrt",
+    name = "spirv.CL_sqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4058,7 +4058,7 @@ impl VerCapExtOpInterface for SqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.tan",
+    name = "spirv.CL_tan",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4122,7 +4122,7 @@ impl VerCapExtOpInterface for TanOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.tanh",
+    name = "spirv.CL_tanh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4186,7 +4186,7 @@ impl VerCapExtOpInterface for TanhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.tanpi",
+    name = "spirv.CL_tanpi",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4250,7 +4250,7 @@ impl VerCapExtOpInterface for TanpiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.tgamma",
+    name = "spirv.CL_tgamma",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4314,7 +4314,7 @@ impl VerCapExtOpInterface for TgammaOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.trunc",
+    name = "spirv.CL_trunc",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4378,7 +4378,7 @@ impl VerCapExtOpInterface for TruncOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_cos",
+    name = "spirv.CL_half_cos",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4442,7 +4442,7 @@ impl VerCapExtOpInterface for HalfCosOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_divide",
+    name = "spirv.CL_half_divide",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4508,7 +4508,7 @@ impl VerCapExtOpInterface for HalfDivideOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_exp",
+    name = "spirv.CL_half_exp",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4572,7 +4572,7 @@ impl VerCapExtOpInterface for HalfExpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_exp2",
+    name = "spirv.CL_half_exp2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4636,7 +4636,7 @@ impl VerCapExtOpInterface for HalfExp2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_exp10",
+    name = "spirv.CL_half_exp10",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4700,7 +4700,7 @@ impl VerCapExtOpInterface for HalfExp10Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_log",
+    name = "spirv.CL_half_log",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4764,7 +4764,7 @@ impl VerCapExtOpInterface for HalfLogOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_log2",
+    name = "spirv.CL_half_log2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4828,7 +4828,7 @@ impl VerCapExtOpInterface for HalfLog2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_log10",
+    name = "spirv.CL_half_log10",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4892,7 +4892,7 @@ impl VerCapExtOpInterface for HalfLog10Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_powr",
+    name = "spirv.CL_half_powr",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4958,7 +4958,7 @@ impl VerCapExtOpInterface for HalfPowrOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_recip",
+    name = "spirv.CL_half_recip",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5022,7 +5022,7 @@ impl VerCapExtOpInterface for HalfRecipOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_rsqrt",
+    name = "spirv.CL_half_rsqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5086,7 +5086,7 @@ impl VerCapExtOpInterface for HalfRsqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_sin",
+    name = "spirv.CL_half_sin",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5150,7 +5150,7 @@ impl VerCapExtOpInterface for HalfSinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_sqrt",
+    name = "spirv.CL_half_sqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5214,7 +5214,7 @@ impl VerCapExtOpInterface for HalfSqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.half_tan",
+    name = "spirv.CL_half_tan",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5278,7 +5278,7 @@ impl VerCapExtOpInterface for HalfTanOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_cos",
+    name = "spirv.CL_native_cos",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5342,7 +5342,7 @@ impl VerCapExtOpInterface for NativeCosOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_divide",
+    name = "spirv.CL_native_divide",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5409,7 +5409,7 @@ impl VerCapExtOpInterface for NativeDivideOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_exp",
+    name = "spirv.CL_native_exp",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5473,7 +5473,7 @@ impl VerCapExtOpInterface for NativeExpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_exp2",
+    name = "spirv.CL_native_exp2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5537,7 +5537,7 @@ impl VerCapExtOpInterface for NativeExp2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_exp10",
+    name = "spirv.CL_native_exp10",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5601,7 +5601,7 @@ impl VerCapExtOpInterface for NativeExp10Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_log",
+    name = "spirv.CL_native_log",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5665,7 +5665,7 @@ impl VerCapExtOpInterface for NativeLogOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_log2",
+    name = "spirv.CL_native_log2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5729,7 +5729,7 @@ impl VerCapExtOpInterface for NativeLog2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_log10",
+    name = "spirv.CL_native_log10",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5793,7 +5793,7 @@ impl VerCapExtOpInterface for NativeLog10Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_powr",
+    name = "spirv.CL_native_powr",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5859,7 +5859,7 @@ impl VerCapExtOpInterface for NativePowrOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_recip",
+    name = "spirv.CL_native_recip",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5923,7 +5923,7 @@ impl VerCapExtOpInterface for NativeRecipOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_rsqrt",
+    name = "spirv.CL_native_rsqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5987,7 +5987,7 @@ impl VerCapExtOpInterface for NativeRsqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_sin",
+    name = "spirv.CL_native_sin",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6051,7 +6051,7 @@ impl VerCapExtOpInterface for NativeSinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_sqrt",
+    name = "spirv.CL_native_sqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6115,7 +6115,7 @@ impl VerCapExtOpInterface for NativeSqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.native_tan",
+    name = "spirv.CL_native_tan",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6179,7 +6179,7 @@ impl VerCapExtOpInterface for NativeTanOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fclamp",
+    name = "spirv.CL_fclamp",
     operands = (x, minval, maxval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6255,7 +6255,7 @@ impl VerCapExtOpInterface for FclampOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.degrees",
+    name = "spirv.CL_degrees",
     operands = (radians),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6320,7 +6320,7 @@ impl VerCapExtOpInterface for DegreesOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fmax_common",
+    name = "spirv.CL_fmax_common",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6386,7 +6386,7 @@ impl VerCapExtOpInterface for FmaxCommonOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fmin_common",
+    name = "spirv.CL_fmin_common",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6452,7 +6452,7 @@ impl VerCapExtOpInterface for FminCommonOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.mix",
+    name = "spirv.CL_mix",
     operands = (x, y, a),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6526,7 +6526,7 @@ impl VerCapExtOpInterface for MixOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.radians",
+    name = "spirv.CL_radians",
     operands = (degrees),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6591,7 +6591,7 @@ impl VerCapExtOpInterface for RadiansOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.step",
+    name = "spirv.CL_step",
     operands = (edge, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6657,7 +6657,7 @@ impl VerCapExtOpInterface for StepOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.smoothstep",
+    name = "spirv.CL_smoothstep",
     operands = (edge0, edge1, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6734,7 +6734,7 @@ impl VerCapExtOpInterface for SmoothstepOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.sign",
+    name = "spirv.CL_sign",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6798,7 +6798,7 @@ impl VerCapExtOpInterface for SignOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.cross",
+    name = "spirv.CL_cross",
     operands = (p0, p1),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6864,7 +6864,7 @@ impl VerCapExtOpInterface for CrossOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.distance",
+    name = "spirv.CL_distance",
     operands = (p0, p1),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6930,7 +6930,7 @@ impl VerCapExtOpInterface for DistanceOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.length",
+    name = "spirv.CL_length",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -6994,7 +6994,7 @@ impl VerCapExtOpInterface for LengthOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.normalize",
+    name = "spirv.CL_normalize",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7058,7 +7058,7 @@ impl VerCapExtOpInterface for NormalizeOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fast_distance",
+    name = "spirv.CL_fast_distance",
     operands = (p0, p1),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7127,7 +7127,7 @@ impl VerCapExtOpInterface for FastDistanceOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fast_length",
+    name = "spirv.CL_fast_length",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7191,7 +7191,7 @@ impl VerCapExtOpInterface for FastLengthOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.fast_normalize",
+    name = "spirv.CL_fast_normalize",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7256,7 +7256,7 @@ impl VerCapExtOpInterface for FastNormalizeOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_abs",
+    name = "spirv.CL_s_abs",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7320,7 +7320,7 @@ impl VerCapExtOpInterface for SAbsOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_abs_diff",
+    name = "spirv.CL_s_abs_diff",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7386,7 +7386,7 @@ impl VerCapExtOpInterface for SAbsDiffOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_add_sat",
+    name = "spirv.CL_s_add_sat",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7452,7 +7452,7 @@ impl VerCapExtOpInterface for SAddSatOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_add_sat",
+    name = "spirv.CL_u_add_sat",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7518,7 +7518,7 @@ impl VerCapExtOpInterface for UAddSatOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_hadd",
+    name = "spirv.CL_s_hadd",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7584,7 +7584,7 @@ impl VerCapExtOpInterface for SHaddOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_hadd",
+    name = "spirv.CL_u_hadd",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7650,7 +7650,7 @@ impl VerCapExtOpInterface for UHaddOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_rhadd",
+    name = "spirv.CL_s_rhadd",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7716,7 +7716,7 @@ impl VerCapExtOpInterface for SRhaddOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_rhadd",
+    name = "spirv.CL_u_rhadd",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7782,7 +7782,7 @@ impl VerCapExtOpInterface for URhaddOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_clamp",
+    name = "spirv.CL_s_clamp",
     operands = (x, minval, maxval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7858,7 +7858,7 @@ impl VerCapExtOpInterface for SClampOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_clamp",
+    name = "spirv.CL_u_clamp",
     operands = (x, minval, maxval),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7934,7 +7934,7 @@ impl VerCapExtOpInterface for UClampOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.clz",
+    name = "spirv.CL_clz",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -7998,7 +7998,7 @@ impl VerCapExtOpInterface for ClzOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.ctz",
+    name = "spirv.CL_ctz",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8062,7 +8062,7 @@ impl VerCapExtOpInterface for CtzOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_mad_hi",
+    name = "spirv.CL_s_mad_hi",
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8136,7 +8136,7 @@ impl VerCapExtOpInterface for SMadHiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_mad_sat",
+    name = "spirv.CL_u_mad_sat",
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8210,7 +8210,7 @@ impl VerCapExtOpInterface for UMadSatOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_mad_sat",
+    name = "spirv.CL_s_mad_sat",
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8284,7 +8284,7 @@ impl VerCapExtOpInterface for SMadSatOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_max",
+    name = "spirv.CL_s_max",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8350,7 +8350,7 @@ impl VerCapExtOpInterface for SMaxOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_max",
+    name = "spirv.CL_u_max",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8416,7 +8416,7 @@ impl VerCapExtOpInterface for UMaxOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_min",
+    name = "spirv.CL_s_min",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8482,7 +8482,7 @@ impl VerCapExtOpInterface for SMinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_min",
+    name = "spirv.CL_u_min",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8548,7 +8548,7 @@ impl VerCapExtOpInterface for UMinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_mul_hi",
+    name = "spirv.CL_s_mul_hi",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8614,7 +8614,7 @@ impl VerCapExtOpInterface for SMulHiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.rotate",
+    name = "spirv.CL_rotate",
     operands = (v, i),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8680,7 +8680,7 @@ impl VerCapExtOpInterface for RotateOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_sub_sat",
+    name = "spirv.CL_s_sub_sat",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8746,7 +8746,7 @@ impl VerCapExtOpInterface for SSubSatOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_sub_sat",
+    name = "spirv.CL_u_sub_sat",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8812,7 +8812,7 @@ impl VerCapExtOpInterface for USubSatOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_upsample",
+    name = "spirv.CL_u_upsample",
     operands = (hi, lo),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8878,7 +8878,7 @@ impl VerCapExtOpInterface for UUpsampleOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_upsample",
+    name = "spirv.CL_s_upsample",
     operands = (hi, lo),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -8944,7 +8944,7 @@ impl VerCapExtOpInterface for SUpsampleOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.popcount",
+    name = "spirv.CL_popcount",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9008,7 +9008,7 @@ impl VerCapExtOpInterface for PopcountOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_mad24",
+    name = "spirv.CL_s_mad24",
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9082,7 +9082,7 @@ impl VerCapExtOpInterface for SMad24Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_mad24",
+    name = "spirv.CL_u_mad24",
     operands = (x, y, z),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9156,7 +9156,7 @@ impl VerCapExtOpInterface for UMad24Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.s_mul24",
+    name = "spirv.CL_s_mul24",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9222,7 +9222,7 @@ impl VerCapExtOpInterface for SMul24Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_mul24",
+    name = "spirv.CL_u_mul24",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9288,7 +9288,7 @@ impl VerCapExtOpInterface for UMul24Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vloadn",
+    name = "spirv.CL_vloadn",
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9403,7 +9403,7 @@ impl VerCapExtOpInterface for VloadnOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vstoren",
+    name = "spirv.CL_vstoren",
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9479,7 +9479,7 @@ impl VerCapExtOpInterface for VstorenOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vload_half",
+    name = "spirv.CL_vload_half",
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9553,7 +9553,7 @@ impl VerCapExtOpInterface for VloadHalfOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vload_halfn",
+    name = "spirv.CL_vload_halfn",
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9671,7 +9671,7 @@ impl VerCapExtOpInterface for VloadHalfnOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vstore_half",
+    name = "spirv.CL_vstore_half",
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9748,7 +9748,7 @@ impl VerCapExtOpInterface for VstoreHalfOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vstore_half_r",
+    name = "spirv.CL_vstore_half_r",
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9872,7 +9872,7 @@ impl VerCapExtOpInterface for VstoreHalfROp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vstore_halfn",
+    name = "spirv.CL_vstore_halfn",
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -9949,7 +9949,7 @@ impl VerCapExtOpInterface for VstoreHalfnOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vstore_halfn_r",
+    name = "spirv.CL_vstore_halfn_r",
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10073,7 +10073,7 @@ impl VerCapExtOpInterface for VstoreHalfnROp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vloada_halfn",
+    name = "spirv.CL_vloada_halfn",
     operands = (offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10191,7 +10191,7 @@ impl VerCapExtOpInterface for VloadaHalfnOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vstorea_halfn",
+    name = "spirv.CL_vstorea_halfn",
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10268,7 +10268,7 @@ impl VerCapExtOpInterface for VstoreaHalfnOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.vstorea_halfn_r",
+    name = "spirv.CL_vstorea_halfn_r",
     operands = (data, offset, p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10392,7 +10392,7 @@ impl VerCapExtOpInterface for VstoreaHalfnROp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.shuffle",
+    name = "spirv.CL_shuffle",
     operands = (x, shuffle_mask),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10465,7 +10465,7 @@ impl VerCapExtOpInterface for ShuffleOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.shuffle2",
+    name = "spirv.CL_shuffle2",
     operands = (x, y, shuffle_mask),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10541,7 +10541,7 @@ impl VerCapExtOpInterface for Shuffle2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.printf",
+    name = "spirv.CL_printf",
     operands = (format, additional_arguments),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10619,7 +10619,7 @@ impl VerCapExtOpInterface for PrintfOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.prefetch",
+    name = "spirv.CL_prefetch",
     operands = (ptr, num_elements),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10692,7 +10692,7 @@ impl VerCapExtOpInterface for PrefetchOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.bitselect",
+    name = "spirv.CL_bitselect",
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10766,7 +10766,7 @@ impl VerCapExtOpInterface for BitselectOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.select",
+    name = "spirv.CL_select",
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10840,7 +10840,7 @@ impl VerCapExtOpInterface for SelectOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_abs",
+    name = "spirv.CL_u_abs",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10904,7 +10904,7 @@ impl VerCapExtOpInterface for UAbsOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_abs_diff",
+    name = "spirv.CL_u_abs_diff",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -10970,7 +10970,7 @@ impl VerCapExtOpInterface for UAbsDiffOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_mul_hi",
+    name = "spirv.CL_u_mul_hi",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -11036,7 +11036,7 @@ impl VerCapExtOpInterface for UMulHiOp {
     }
 }
 #[pliron_op(
-    name = "spirv.CL.u_mad_hi",
+    name = "spirv.CL_u_mad_hi",
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,

@@ -127,7 +127,7 @@ impl PlironGenerator {
         let op_name = op.opname.strip_prefix("Op").unwrap();
         let builder_name = as_ident(&op_name.to_snek_case());
         let (op_name, vendor) = split_vendor_tag(op_name);
-        let op_prefix = vendor.map(|it| format!("{it}.")).unwrap_or_default();
+        let op_prefix = vendor.map(|it| format!("{it}_")).unwrap_or_default();
         let ty_name = format_ident!("{op_name}Op");
         let namespace = format!("spirv_{builder_name}");
         let op_name = format!("spirv.{op_prefix}{op_name}");

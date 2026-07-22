@@ -6,7 +6,7 @@
 use crate::prelude::*;
 use crate::attrs::*;
 #[pliron_op(
-    name = "spirv.GL.round",
+    name = "spirv.GL_round",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -70,7 +70,7 @@ impl VerCapExtOpInterface for RoundOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.round_even",
+    name = "spirv.GL_round_even",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -134,7 +134,7 @@ impl VerCapExtOpInterface for RoundEvenOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.trunc",
+    name = "spirv.GL_trunc",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -198,7 +198,7 @@ impl VerCapExtOpInterface for TruncOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.f_abs",
+    name = "spirv.GL_f_abs",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -262,7 +262,7 @@ impl VerCapExtOpInterface for FAbsOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.s_abs",
+    name = "spirv.GL_s_abs",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -326,7 +326,7 @@ impl VerCapExtOpInterface for SAbsOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.f_sign",
+    name = "spirv.GL_f_sign",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -390,7 +390,7 @@ impl VerCapExtOpInterface for FSignOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.s_sign",
+    name = "spirv.GL_s_sign",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -454,7 +454,7 @@ impl VerCapExtOpInterface for SSignOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.floor",
+    name = "spirv.GL_floor",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -518,7 +518,7 @@ impl VerCapExtOpInterface for FloorOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.ceil",
+    name = "spirv.GL_ceil",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -582,7 +582,7 @@ impl VerCapExtOpInterface for CeilOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.fract",
+    name = "spirv.GL_fract",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -646,7 +646,7 @@ impl VerCapExtOpInterface for FractOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.radians",
+    name = "spirv.GL_radians",
     operands = (degrees),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -711,7 +711,7 @@ impl VerCapExtOpInterface for RadiansOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.degrees",
+    name = "spirv.GL_degrees",
     operands = (radians),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -776,7 +776,7 @@ impl VerCapExtOpInterface for DegreesOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.sin",
+    name = "spirv.GL_sin",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -840,7 +840,7 @@ impl VerCapExtOpInterface for SinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.cos",
+    name = "spirv.GL_cos",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -904,7 +904,7 @@ impl VerCapExtOpInterface for CosOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.tan",
+    name = "spirv.GL_tan",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -968,7 +968,7 @@ impl VerCapExtOpInterface for TanOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.asin",
+    name = "spirv.GL_asin",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1032,7 +1032,7 @@ impl VerCapExtOpInterface for AsinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.acos",
+    name = "spirv.GL_acos",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1096,7 +1096,7 @@ impl VerCapExtOpInterface for AcosOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.atan",
+    name = "spirv.GL_atan",
     operands = (y_over_x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1160,7 +1160,7 @@ impl VerCapExtOpInterface for AtanOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.sinh",
+    name = "spirv.GL_sinh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1224,7 +1224,7 @@ impl VerCapExtOpInterface for SinhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.cosh",
+    name = "spirv.GL_cosh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1288,7 +1288,7 @@ impl VerCapExtOpInterface for CoshOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.tanh",
+    name = "spirv.GL_tanh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1352,7 +1352,7 @@ impl VerCapExtOpInterface for TanhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.asinh",
+    name = "spirv.GL_asinh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1416,7 +1416,7 @@ impl VerCapExtOpInterface for AsinhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.acosh",
+    name = "spirv.GL_acosh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1480,7 +1480,7 @@ impl VerCapExtOpInterface for AcoshOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.atanh",
+    name = "spirv.GL_atanh",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1544,7 +1544,7 @@ impl VerCapExtOpInterface for AtanhOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.atan2",
+    name = "spirv.GL_atan2",
     operands = (y, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1610,7 +1610,7 @@ impl VerCapExtOpInterface for Atan2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.pow",
+    name = "spirv.GL_pow",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1676,7 +1676,7 @@ impl VerCapExtOpInterface for PowOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.exp",
+    name = "spirv.GL_exp",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1740,7 +1740,7 @@ impl VerCapExtOpInterface for ExpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.log",
+    name = "spirv.GL_log",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1804,7 +1804,7 @@ impl VerCapExtOpInterface for LogOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.exp2",
+    name = "spirv.GL_exp2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1868,7 +1868,7 @@ impl VerCapExtOpInterface for Exp2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.log2",
+    name = "spirv.GL_log2",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1932,7 +1932,7 @@ impl VerCapExtOpInterface for Log2Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.sqrt",
+    name = "spirv.GL_sqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -1996,7 +1996,7 @@ impl VerCapExtOpInterface for SqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.inverse_sqrt",
+    name = "spirv.GL_inverse_sqrt",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2060,7 +2060,7 @@ impl VerCapExtOpInterface for InverseSqrtOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.determinant",
+    name = "spirv.GL_determinant",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2124,7 +2124,7 @@ impl VerCapExtOpInterface for DeterminantOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.matrix_inverse",
+    name = "spirv.GL_matrix_inverse",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2189,7 +2189,7 @@ impl VerCapExtOpInterface for MatrixInverseOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.modf",
+    name = "spirv.GL_modf",
     operands = (x, i),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2255,7 +2255,7 @@ impl VerCapExtOpInterface for ModfOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.modf_struct",
+    name = "spirv.GL_modf_struct",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2319,7 +2319,7 @@ impl VerCapExtOpInterface for ModfStructOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.f_min",
+    name = "spirv.GL_f_min",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2385,7 +2385,7 @@ impl VerCapExtOpInterface for FMinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.u_min",
+    name = "spirv.GL_u_min",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2451,7 +2451,7 @@ impl VerCapExtOpInterface for UMinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.s_min",
+    name = "spirv.GL_s_min",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2517,7 +2517,7 @@ impl VerCapExtOpInterface for SMinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.f_max",
+    name = "spirv.GL_f_max",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2583,7 +2583,7 @@ impl VerCapExtOpInterface for FMaxOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.u_max",
+    name = "spirv.GL_u_max",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2649,7 +2649,7 @@ impl VerCapExtOpInterface for UMaxOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.s_max",
+    name = "spirv.GL_s_max",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2715,7 +2715,7 @@ impl VerCapExtOpInterface for SMaxOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.f_clamp",
+    name = "spirv.GL_f_clamp",
     operands = (x, min_val, max_val),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2791,7 +2791,7 @@ impl VerCapExtOpInterface for FClampOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.u_clamp",
+    name = "spirv.GL_u_clamp",
     operands = (x, min_val, max_val),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2867,7 +2867,7 @@ impl VerCapExtOpInterface for UClampOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.s_clamp",
+    name = "spirv.GL_s_clamp",
     operands = (x, min_val, max_val),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -2943,7 +2943,7 @@ impl VerCapExtOpInterface for SClampOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.f_mix",
+    name = "spirv.GL_f_mix",
     operands = (x, y, a),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3017,7 +3017,7 @@ impl VerCapExtOpInterface for FMixOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.i_mix",
+    name = "spirv.GL_i_mix",
     operands = (x, y, a),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3091,7 +3091,7 @@ impl VerCapExtOpInterface for IMixOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.step",
+    name = "spirv.GL_step",
     operands = (edge, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3157,7 +3157,7 @@ impl VerCapExtOpInterface for StepOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.smooth_step",
+    name = "spirv.GL_smooth_step",
     operands = (edge0, edge1, x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3234,7 +3234,7 @@ impl VerCapExtOpInterface for SmoothStepOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.fma",
+    name = "spirv.GL_fma",
     operands = (a, b, c),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3308,7 +3308,7 @@ impl VerCapExtOpInterface for FmaOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.frexp",
+    name = "spirv.GL_frexp",
     operands = (x, exp),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3374,7 +3374,7 @@ impl VerCapExtOpInterface for FrexpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.frexp_struct",
+    name = "spirv.GL_frexp_struct",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3438,7 +3438,7 @@ impl VerCapExtOpInterface for FrexpStructOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.ldexp",
+    name = "spirv.GL_ldexp",
     operands = (x, exp),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3504,7 +3504,7 @@ impl VerCapExtOpInterface for LdexpOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.pack_snorm4x8",
+    name = "spirv.GL_pack_snorm4x8",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3569,7 +3569,7 @@ impl VerCapExtOpInterface for PackSnorm4x8Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.pack_unorm4x8",
+    name = "spirv.GL_pack_unorm4x8",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3634,7 +3634,7 @@ impl VerCapExtOpInterface for PackUnorm4x8Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.pack_snorm2x16",
+    name = "spirv.GL_pack_snorm2x16",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3699,7 +3699,7 @@ impl VerCapExtOpInterface for PackSnorm2x16Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.pack_unorm2x16",
+    name = "spirv.GL_pack_unorm2x16",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3764,7 +3764,7 @@ impl VerCapExtOpInterface for PackUnorm2x16Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.pack_half2x16",
+    name = "spirv.GL_pack_half2x16",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3829,7 +3829,7 @@ impl VerCapExtOpInterface for PackHalf2x16Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.pack_double2x32",
+    name = "spirv.GL_pack_double2x32",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3895,7 +3895,7 @@ impl VerCapExtOpInterface for PackDouble2x32Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.unpack_snorm2x16",
+    name = "spirv.GL_unpack_snorm2x16",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -3960,7 +3960,7 @@ impl VerCapExtOpInterface for UnpackSnorm2x16Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.unpack_unorm2x16",
+    name = "spirv.GL_unpack_unorm2x16",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4025,7 +4025,7 @@ impl VerCapExtOpInterface for UnpackUnorm2x16Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.unpack_half2x16",
+    name = "spirv.GL_unpack_half2x16",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4090,7 +4090,7 @@ impl VerCapExtOpInterface for UnpackHalf2x16Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.unpack_snorm4x8",
+    name = "spirv.GL_unpack_snorm4x8",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4155,7 +4155,7 @@ impl VerCapExtOpInterface for UnpackSnorm4x8Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.unpack_unorm4x8",
+    name = "spirv.GL_unpack_unorm4x8",
     operands = (p),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4220,7 +4220,7 @@ impl VerCapExtOpInterface for UnpackUnorm4x8Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.unpack_double2x32",
+    name = "spirv.GL_unpack_double2x32",
     operands = (v),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4288,7 +4288,7 @@ impl VerCapExtOpInterface for UnpackDouble2x32Op {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.length",
+    name = "spirv.GL_length",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4352,7 +4352,7 @@ impl VerCapExtOpInterface for LengthOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.distance",
+    name = "spirv.GL_distance",
     operands = (p0, p1),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4418,7 +4418,7 @@ impl VerCapExtOpInterface for DistanceOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.cross",
+    name = "spirv.GL_cross",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4484,7 +4484,7 @@ impl VerCapExtOpInterface for CrossOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.normalize",
+    name = "spirv.GL_normalize",
     operands = (x),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4548,7 +4548,7 @@ impl VerCapExtOpInterface for NormalizeOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.face_forward",
+    name = "spirv.GL_face_forward",
     operands = (n, i, nref),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4625,7 +4625,7 @@ impl VerCapExtOpInterface for FaceForwardOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.reflect",
+    name = "spirv.GL_reflect",
     operands = (i, n),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4691,7 +4691,7 @@ impl VerCapExtOpInterface for ReflectOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.refract",
+    name = "spirv.GL_refract",
     operands = (i, n, eta),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4765,7 +4765,7 @@ impl VerCapExtOpInterface for RefractOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.find_i_lsb",
+    name = "spirv.GL_find_i_lsb",
     operands = (value),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4830,7 +4830,7 @@ impl VerCapExtOpInterface for FindILsbOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.find_s_msb",
+    name = "spirv.GL_find_s_msb",
     operands = (value),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4895,7 +4895,7 @@ impl VerCapExtOpInterface for FindSMsbOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.find_u_msb",
+    name = "spirv.GL_find_u_msb",
     operands = (value),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -4960,7 +4960,7 @@ impl VerCapExtOpInterface for FindUMsbOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.interpolate_at_centroid",
+    name = "spirv.GL_interpolate_at_centroid",
     operands = (interpolant),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5028,7 +5028,7 @@ impl VerCapExtOpInterface for InterpolateAtCentroidOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.interpolate_at_sample",
+    name = "spirv.GL_interpolate_at_sample",
     operands = (interpolant, sample),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5103,7 +5103,7 @@ impl VerCapExtOpInterface for InterpolateAtSampleOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.interpolate_at_offset",
+    name = "spirv.GL_interpolate_at_offset",
     operands = (interpolant, offset),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5178,7 +5178,7 @@ impl VerCapExtOpInterface for InterpolateAtOffsetOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.n_min",
+    name = "spirv.GL_n_min",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5244,7 +5244,7 @@ impl VerCapExtOpInterface for NMinOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.n_max",
+    name = "spirv.GL_n_max",
     operands = (x, y),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,
@@ -5310,7 +5310,7 @@ impl VerCapExtOpInterface for NMaxOp {
     }
 }
 #[pliron_op(
-    name = "spirv.GL.n_clamp",
+    name = "spirv.GL_n_clamp",
     operands = (x, min_val, max_val),
     interfaces = [NResultsInterface<1>,
     OneResultInterface,

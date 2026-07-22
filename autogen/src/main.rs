@@ -122,6 +122,7 @@ fn sort_instructions(grammar: &mut structs::Grammar) {
 
 fn main() {
     let gen_pliron = env::args().any(|arg| arg == "--pliron");
+    let gen_both = env::args().any(|arg| arg == "--all");
 
     // Path to the SPIR-V core grammar file.
     let env_var = env::var("CARGO_MANIFEST_DIR").unwrap();
@@ -179,11 +180,16 @@ fn main() {
         (ext, op, prefix, url, with_result, grammar)
     });
 
-    if gen_pliron {
+    if gen_pliron || gen_both {
         println!("Generating Pliron dialect");
-        generate_pliron_dialect(&autogen_src_dir, grammar);
+        generate_pliron_dialect(&autogen_src_dir, grammar.clone());
+    }
+
+    if gen_pliron && !gen_both {
         return;
     }
+
+    println!("Generating rspirv");
 
     // Extended instruction sets
     for (ext, op_name, op_prefix, url, with_result, grammar) in &extended_instruction_sets {

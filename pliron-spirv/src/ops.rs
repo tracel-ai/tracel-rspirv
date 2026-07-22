@@ -312,7 +312,7 @@ impl ToSpirvOp for ConstantOp {
 }
 
 #[pliron_op(
-    name = "spirv.pliron.addressof",
+    name = "spirv_pliron.addressof",
     format = "`@` attr($spirv_addressof_variable, $IdentifierAttr) ` : ` type($0)",
     attributes = (
         spirv_addressof_variable: IdentifierAttr,
@@ -342,7 +342,7 @@ impl ToSpirvOp for AddressOfOp {
     }
 }
 
-#[pliron_op(name = "spirv.pliron.merge", format = "operands(CharSpace(`,`))", verifier = "succ")]
+#[pliron_op(name = "spirv_pliron.merge", format = "operands(CharSpace(`,`))", verifier = "succ")]
 #[derive_op_interface_impl(IsTerminatorInterface)]
 pub struct MergeOp;
 impl MergeOp {
@@ -617,7 +617,7 @@ impl ToSpirvOp for SwitchOp {
     }
 }
 
-#[pliron_op(name = "spirv.pliron.selection", format = "region($0)", verifier = "succ")]
+#[pliron_op(name = "spirv_pliron.selection", format = "region($0)", verifier = "succ")]
 #[derive_op_interface_impl(NRegionsInterface<1>, OneRegionInterface)]
 pub struct SelectionOp;
 impl SelectionOp {
@@ -660,7 +660,7 @@ impl ToSpirvOp for SelectionOp {
     }
 }
 
-#[pliron_op(name = "spirv.pliron.loop", format = "region($0)", verifier = "succ")]
+#[pliron_op(name = "spirv_pliron.loop", format = "region($0)", verifier = "succ")]
 #[derive_op_interface_impl(NRegionsInterface<1>, OneRegionInterface)]
 pub struct LoopOp;
 impl LoopOp {

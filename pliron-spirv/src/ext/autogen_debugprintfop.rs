@@ -6,7 +6,7 @@
 use crate::prelude::*;
 use crate::attrs::*;
 #[pliron_op(
-    name = "spirv.DebugPrintfOp.debug_printf",
+    name = "spirv.DebugPrintfOp_debug_printf",
     operands = (opd_1),
     interfaces = [DecoratableOp],
     verifier = "succ"
