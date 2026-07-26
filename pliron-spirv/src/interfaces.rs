@@ -32,7 +32,7 @@ pub trait VerCapExtOpInterface {
     /// vector's elements (which are vectors) should be interpreted as conjunction
     /// while the inner vector's elements (which are extension names)
     /// should be interpreted as disjunction. For example, given
-    /// ```
+    /// ```ignore
     /// [["Extension_A", "Extension_B"], ["Extension_C"], ["Extension_D", "Extension_E"]]
     /// ```
     /// The operation instance is available when (`"Extension_A"` OR `"Extension_B"`)
@@ -63,7 +63,7 @@ pub trait VerCapExtTypeInterface {
     /// vector's elements (which are vectors) should be interpreted as conjunction
     /// while the inner vector's elements (which are extension names)
     /// should be interpreted as disjunction. For example, given
-    /// ```
+    /// ```ignore
     /// [["Extension_A", "Extension_B"], ["Extension_C"], ["Extension_D", "Extension_E"]]
     /// ```
     /// The operation instance is available when (`"Extension_A"` OR `"Extension_B"`)
