@@ -3,219 +3,94 @@
 // DO NOT MODIFY!
 
 use crate::{
-    prelude::*, decorations::{DecorationInfo, DecorationExt, all_decorations_for_op},
+    decorations::{DecorationExt, DecorationInfo, all_decorations_for_op},
+    prelude::*,
 };
 use core::cell::Ref;
-pub static ATTR_RELAXED_PRECISION: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_relaxed_precision".try_into().unwrap()
-});
-pub static ATTR_BLOCK: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_block".try_into().unwrap()
-});
-pub static ATTR_BUFFER_BLOCK: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_buffer_block".try_into().unwrap()
-});
-pub static ATTR_ROW_MAJOR: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_row_major".try_into().unwrap()
-});
-pub static ATTR_COL_MAJOR: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_col_major".try_into().unwrap()
-});
-pub static ATTR_ARRAY_STRIDE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_array_stride".try_into().unwrap()
-});
-pub static ATTR_MATRIX_STRIDE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_matrix_stride".try_into().unwrap()
-});
-pub static ATTR_GLSL_SHARED: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_glsl_shared".try_into().unwrap()
-});
-pub static ATTR_GLSL_PACKED: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_glsl_packed".try_into().unwrap()
-});
-pub static ATTR_C_PACKED: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_c_packed".try_into().unwrap()
-});
-pub static ATTR_BUILT_IN: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_built_in".try_into().unwrap()
-});
-pub static ATTR_NO_PERSPECTIVE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_no_perspective".try_into().unwrap()
-});
-pub static ATTR_FLAT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_flat".try_into().unwrap()
-});
-pub static ATTR_PATCH: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_patch".try_into().unwrap()
-});
-pub static ATTR_CENTROID: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_centroid".try_into().unwrap()
-});
-pub static ATTR_SAMPLE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_sample".try_into().unwrap()
-});
-pub static ATTR_INVARIANT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_invariant".try_into().unwrap()
-});
-pub static ATTR_RESTRICT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_restrict".try_into().unwrap()
-});
-pub static ATTR_ALIASED: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_aliased".try_into().unwrap()
-});
-pub static ATTR_VOLATILE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_volatile".try_into().unwrap()
-});
-pub static ATTR_CONSTANT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_constant".try_into().unwrap()
-});
-pub static ATTR_COHERENT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_coherent".try_into().unwrap()
-});
-pub static ATTR_NON_WRITABLE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_non_writable".try_into().unwrap()
-});
-pub static ATTR_NON_READABLE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_non_readable".try_into().unwrap()
-});
-pub static ATTR_UNIFORM: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_uniform".try_into().unwrap()
-});
-pub static ATTR_SATURATED_CONVERSION: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_saturated_conversion".try_into().unwrap()
-});
-pub static ATTR_STREAM: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_stream".try_into().unwrap()
-});
-pub static ATTR_LOCATION: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_location".try_into().unwrap()
-});
-pub static ATTR_COMPONENT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_component".try_into().unwrap()
-});
-pub static ATTR_INDEX: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_index".try_into().unwrap()
-});
-pub static ATTR_BINDING: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_binding".try_into().unwrap()
-});
-pub static ATTR_DESCRIPTOR_SET: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_descriptor_set".try_into().unwrap()
-});
-pub static ATTR_OFFSET: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_offset".try_into().unwrap()
-});
-pub static ATTR_XFB_BUFFER: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_xfb_buffer".try_into().unwrap()
-});
-pub static ATTR_XFB_STRIDE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_xfb_stride".try_into().unwrap()
-});
-pub static ATTR_FUNC_PARAM_ATTR: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_func_param_attr".try_into().unwrap()
-});
-pub static ATTR_FP_ROUNDING_MODE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_fp_rounding_mode".try_into().unwrap()
-});
-pub static ATTR_FP_FAST_MATH_MODE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_fp_fast_math_mode".try_into().unwrap()
-});
-pub static ATTR_NO_CONTRACTION: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_no_contraction".try_into().unwrap()
-});
-pub static ATTR_INPUT_ATTACHMENT_INDEX: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_input_attachment_index".try_into().unwrap()
-});
-pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_alignment".try_into().unwrap()
-});
-pub static ATTR_MAX_BYTE_OFFSET: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_max_byte_offset".try_into().unwrap()
-});
+pub static ATTR_RELAXED_PRECISION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_relaxed_precision".try_into().unwrap());
+pub static ATTR_BLOCK: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_block".try_into().unwrap());
+pub static ATTR_BUFFER_BLOCK: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_buffer_block".try_into().unwrap());
+pub static ATTR_ROW_MAJOR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_row_major".try_into().unwrap());
+pub static ATTR_COL_MAJOR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_col_major".try_into().unwrap());
+pub static ATTR_ARRAY_STRIDE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_array_stride".try_into().unwrap());
+pub static ATTR_MATRIX_STRIDE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_matrix_stride".try_into().unwrap());
+pub static ATTR_GLSL_SHARED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_glsl_shared".try_into().unwrap());
+pub static ATTR_GLSL_PACKED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_glsl_packed".try_into().unwrap());
+pub static ATTR_C_PACKED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_c_packed".try_into().unwrap());
+pub static ATTR_BUILT_IN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_built_in".try_into().unwrap());
+pub static ATTR_NO_PERSPECTIVE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_perspective".try_into().unwrap());
+pub static ATTR_FLAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_flat".try_into().unwrap());
+pub static ATTR_PATCH: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_patch".try_into().unwrap());
+pub static ATTR_CENTROID: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_centroid".try_into().unwrap());
+pub static ATTR_SAMPLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_sample".try_into().unwrap());
+pub static ATTR_INVARIANT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_invariant".try_into().unwrap());
+pub static ATTR_RESTRICT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_restrict".try_into().unwrap());
+pub static ATTR_ALIASED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_aliased".try_into().unwrap());
+pub static ATTR_VOLATILE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_volatile".try_into().unwrap());
+pub static ATTR_CONSTANT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_constant".try_into().unwrap());
+pub static ATTR_COHERENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_coherent".try_into().unwrap());
+pub static ATTR_NON_WRITABLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_non_writable".try_into().unwrap());
+pub static ATTR_NON_READABLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_non_readable".try_into().unwrap());
+pub static ATTR_UNIFORM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_uniform".try_into().unwrap());
+pub static ATTR_SATURATED_CONVERSION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_saturated_conversion".try_into().unwrap());
+pub static ATTR_STREAM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stream".try_into().unwrap());
+pub static ATTR_LOCATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_location".try_into().unwrap());
+pub static ATTR_COMPONENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_component".try_into().unwrap());
+pub static ATTR_INDEX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_index".try_into().unwrap());
+pub static ATTR_BINDING: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_binding".try_into().unwrap());
+pub static ATTR_DESCRIPTOR_SET: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_descriptor_set".try_into().unwrap());
+pub static ATTR_OFFSET: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_offset".try_into().unwrap());
+pub static ATTR_XFB_BUFFER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_xfb_buffer".try_into().unwrap());
+pub static ATTR_XFB_STRIDE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_xfb_stride".try_into().unwrap());
+pub static ATTR_FUNC_PARAM_ATTR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_func_param_attr".try_into().unwrap());
+pub static ATTR_FP_ROUNDING_MODE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_fp_rounding_mode".try_into().unwrap());
+pub static ATTR_FP_FAST_MATH_MODE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_fp_fast_math_mode".try_into().unwrap());
+pub static ATTR_NO_CONTRACTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_contraction".try_into().unwrap());
+pub static ATTR_INPUT_ATTACHMENT_INDEX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_input_attachment_index".try_into().unwrap());
+pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_alignment".try_into().unwrap());
+pub static ATTR_MAX_BYTE_OFFSET: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_byte_offset".try_into().unwrap());
 pub static ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
@@ -223,396 +98,202 @@ pub static ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT: ::pliron::std
         .try_into()
         .unwrap()
 });
-pub static ATTR_NO_SIGNED_WRAP: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_no_signed_wrap".try_into().unwrap()
-});
-pub static ATTR_NO_UNSIGNED_WRAP: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_no_unsigned_wrap".try_into().unwrap()
-});
-pub static ATTR_WEIGHT_TEXTURE_QCOM: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_weight_texture_qcom".try_into().unwrap()
-});
-pub static ATTR_BLOCK_MATCH_TEXTURE_QCOM: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_block_match_texture_qcom".try_into().unwrap()
-});
-pub static ATTR_BLOCK_MATCH_SAMPLER_QCOM: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_block_match_sampler_qcom".try_into().unwrap()
-});
-pub static ATTR_EXPLICIT_INTERP_AMD: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_explicit_interp_amd".try_into().unwrap()
-});
-pub static ATTR_TRACK_FINISH_WRITING_AMDX: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_track_finish_writing_amdx".try_into().unwrap()
-});
-pub static ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_payload_node_sparse_array_amdx".try_into().unwrap()
-});
-pub static ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_payload_dispatch_indirect_amdx".try_into().unwrap()
-});
-pub static ATTR_UTF_ENCODED_KHR: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_utf_encoded_khr".try_into().unwrap()
-});
-pub static ATTR_OVERRIDE_COVERAGE_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_override_coverage_nv".try_into().unwrap()
-});
-pub static ATTR_PASSTHROUGH_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_passthrough_nv".try_into().unwrap()
-});
-pub static ATTR_VIEWPORT_RELATIVE_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_viewport_relative_nv".try_into().unwrap()
-});
-pub static ATTR_SECONDARY_VIEWPORT_RELATIVE_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_secondary_viewport_relative_nv".try_into().unwrap()
-});
-pub static ATTR_PER_PRIMITIVE_EXT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_per_primitive_ext".try_into().unwrap()
-});
-pub static ATTR_PER_VIEW_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_per_view_nv".try_into().unwrap()
-});
-pub static ATTR_PER_TASK_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_per_task_nv".try_into().unwrap()
-});
-pub static ATTR_PER_VERTEX_KHR: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_per_vertex_khr".try_into().unwrap()
-});
-pub static ATTR_NON_UNIFORM: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_non_uniform".try_into().unwrap()
-});
-pub static ATTR_RESTRICT_POINTER: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_restrict_pointer".try_into().unwrap()
-});
-pub static ATTR_ALIASED_POINTER: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_aliased_pointer".try_into().unwrap()
-});
-pub static ATTR_MEMBER_OFFSET_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_member_offset_nv".try_into().unwrap()
-});
+pub static ATTR_NO_SIGNED_WRAP: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_signed_wrap".try_into().unwrap());
+pub static ATTR_NO_UNSIGNED_WRAP: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_unsigned_wrap".try_into().unwrap());
+pub static ATTR_WEIGHT_TEXTURE_QCOM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_weight_texture_qcom".try_into().unwrap());
+pub static ATTR_BLOCK_MATCH_TEXTURE_QCOM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_block_match_texture_qcom".try_into().unwrap());
+pub static ATTR_BLOCK_MATCH_SAMPLER_QCOM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_block_match_sampler_qcom".try_into().unwrap());
+pub static ATTR_EXPLICIT_INTERP_AMD: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_explicit_interp_amd".try_into().unwrap());
+pub static ATTR_TRACK_FINISH_WRITING_AMDX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_track_finish_writing_amdx".try_into().unwrap());
+pub static ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_payload_node_sparse_array_amdx".try_into().unwrap());
+pub static ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_payload_dispatch_indirect_amdx".try_into().unwrap());
+pub static ATTR_UTF_ENCODED_KHR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_utf_encoded_khr".try_into().unwrap());
+pub static ATTR_OVERRIDE_COVERAGE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_override_coverage_nv".try_into().unwrap());
+pub static ATTR_PASSTHROUGH_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_passthrough_nv".try_into().unwrap());
+pub static ATTR_VIEWPORT_RELATIVE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_viewport_relative_nv".try_into().unwrap());
+pub static ATTR_SECONDARY_VIEWPORT_RELATIVE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_secondary_viewport_relative_nv".try_into().unwrap());
+pub static ATTR_PER_PRIMITIVE_EXT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_primitive_ext".try_into().unwrap());
+pub static ATTR_PER_VIEW_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_view_nv".try_into().unwrap());
+pub static ATTR_PER_TASK_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_task_nv".try_into().unwrap());
+pub static ATTR_PER_VERTEX_KHR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_vertex_khr".try_into().unwrap());
+pub static ATTR_NON_UNIFORM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_non_uniform".try_into().unwrap());
+pub static ATTR_RESTRICT_POINTER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_restrict_pointer".try_into().unwrap());
+pub static ATTR_ALIASED_POINTER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_aliased_pointer".try_into().unwrap());
+pub static ATTR_MEMBER_OFFSET_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_member_offset_nv".try_into().unwrap());
 pub static ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_hit_object_shader_record_buffer_nv".try_into().unwrap()
+    "spirv_decoration_hit_object_shader_record_buffer_nv"
+        .try_into()
+        .unwrap()
 });
 pub static ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_hit_object_shader_record_buffer_ext".try_into().unwrap()
+    "spirv_decoration_hit_object_shader_record_buffer_ext"
+        .try_into()
+        .unwrap()
 });
-pub static ATTR_BANK_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_bank_nv".try_into().unwrap()
-});
-pub static ATTR_BINDLESS_SAMPLER_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_bindless_sampler_nv".try_into().unwrap()
-});
-pub static ATTR_BINDLESS_IMAGE_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_bindless_image_nv".try_into().unwrap()
-});
-pub static ATTR_BOUND_SAMPLER_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_bound_sampler_nv".try_into().unwrap()
-});
-pub static ATTR_BOUND_IMAGE_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_bound_image_nv".try_into().unwrap()
-});
-pub static ATTR_SIMT_CALL_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_simt_call_intel".try_into().unwrap()
-});
-pub static ATTR_REFERENCED_INDIRECTLY_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_referenced_indirectly_intel".try_into().unwrap()
-});
-pub static ATTR_CLOBBER_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_clobber_intel".try_into().unwrap()
-});
-pub static ATTR_SIDE_EFFECTS_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_side_effects_intel".try_into().unwrap()
-});
-pub static ATTR_VECTOR_COMPUTE_VARIABLE_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_vector_compute_variable_intel".try_into().unwrap()
-});
-pub static ATTR_FUNC_PARAM_IO_KIND_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_func_param_io_kind_intel".try_into().unwrap()
-});
-pub static ATTR_VECTOR_COMPUTE_FUNCTION_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_vector_compute_function_intel".try_into().unwrap()
-});
-pub static ATTR_STACK_CALL_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_stack_call_intel".try_into().unwrap()
-});
-pub static ATTR_GLOBAL_VARIABLE_OFFSET_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_global_variable_offset_intel".try_into().unwrap()
-});
-pub static ATTR_USER_SEMANTIC: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_user_semantic".try_into().unwrap()
-});
-pub static ATTR_USER_TYPE_GOOGLE: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_user_type_google".try_into().unwrap()
-});
-pub static ATTR_REGISTER_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_register_altera".try_into().unwrap()
-});
-pub static ATTR_MEMORY_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_memory_altera".try_into().unwrap()
-});
-pub static ATTR_NUMBANKS_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_numbanks_altera".try_into().unwrap()
-});
-pub static ATTR_BANKWIDTH_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_bankwidth_altera".try_into().unwrap()
-});
-pub static ATTR_MAX_PRIVATE_COPIES_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_max_private_copies_altera".try_into().unwrap()
-});
-pub static ATTR_SINGLEPUMP_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_singlepump_altera".try_into().unwrap()
-});
-pub static ATTR_DOUBLEPUMP_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_doublepump_altera".try_into().unwrap()
-});
-pub static ATTR_MAX_REPLICATES_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_max_replicates_altera".try_into().unwrap()
-});
-pub static ATTR_SIMPLE_DUAL_PORT_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_simple_dual_port_altera".try_into().unwrap()
-});
-pub static ATTR_FORCE_POW2_DEPTH_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_force_pow2_depth_altera".try_into().unwrap()
-});
-pub static ATTR_STRIDESIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_stridesize_altera".try_into().unwrap()
-});
-pub static ATTR_WORDSIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_wordsize_altera".try_into().unwrap()
-});
-pub static ATTR_TRUE_DUAL_PORT_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_true_dual_port_altera".try_into().unwrap()
-});
-pub static ATTR_BURST_COALESCE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_burst_coalesce_altera".try_into().unwrap()
-});
-pub static ATTR_CACHE_SIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_cache_size_altera".try_into().unwrap()
-});
-pub static ATTR_DONT_STATICALLY_COALESCE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_dont_statically_coalesce_altera".try_into().unwrap()
-});
-pub static ATTR_PREFETCH_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_prefetch_altera".try_into().unwrap()
-});
-pub static ATTR_STALL_ENABLE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_stall_enable_altera".try_into().unwrap()
-});
-pub static ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_fuse_loops_in_function_altera".try_into().unwrap()
-});
-pub static ATTR_INITIATION_INTERVAL_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_initiation_interval_altera".try_into().unwrap()
-});
-pub static ATTR_MAX_CONCURRENCY_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_max_concurrency_altera".try_into().unwrap()
-});
-pub static ATTR_PIPELINE_ENABLE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_pipeline_enable_altera".try_into().unwrap()
-});
-pub static ATTR_BUFFER_LOCATION_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_buffer_location_altera".try_into().unwrap()
-});
-pub static ATTR_IO_PIPE_STORAGE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_io_pipe_storage_altera".try_into().unwrap()
-});
-pub static ATTR_SINGLE_ELEMENT_VECTOR_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_single_element_vector_intel".try_into().unwrap()
-});
+pub static ATTR_BANK_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bank_nv".try_into().unwrap());
+pub static ATTR_BINDLESS_SAMPLER_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bindless_sampler_nv".try_into().unwrap());
+pub static ATTR_BINDLESS_IMAGE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bindless_image_nv".try_into().unwrap());
+pub static ATTR_BOUND_SAMPLER_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bound_sampler_nv".try_into().unwrap());
+pub static ATTR_BOUND_IMAGE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bound_image_nv".try_into().unwrap());
+pub static ATTR_SIMT_CALL_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_simt_call_intel".try_into().unwrap());
+pub static ATTR_REFERENCED_INDIRECTLY_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_referenced_indirectly_intel".try_into().unwrap());
+pub static ATTR_CLOBBER_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_clobber_intel".try_into().unwrap());
+pub static ATTR_SIDE_EFFECTS_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_side_effects_intel".try_into().unwrap());
+pub static ATTR_VECTOR_COMPUTE_VARIABLE_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_vector_compute_variable_intel".try_into().unwrap());
+pub static ATTR_FUNC_PARAM_IO_KIND_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_func_param_io_kind_intel".try_into().unwrap());
+pub static ATTR_VECTOR_COMPUTE_FUNCTION_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_vector_compute_function_intel".try_into().unwrap());
+pub static ATTR_STACK_CALL_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stack_call_intel".try_into().unwrap());
+pub static ATTR_GLOBAL_VARIABLE_OFFSET_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_global_variable_offset_intel".try_into().unwrap());
+pub static ATTR_USER_SEMANTIC: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_user_semantic".try_into().unwrap());
+pub static ATTR_USER_TYPE_GOOGLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_user_type_google".try_into().unwrap());
+pub static ATTR_REGISTER_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_register_altera".try_into().unwrap());
+pub static ATTR_MEMORY_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_memory_altera".try_into().unwrap());
+pub static ATTR_NUMBANKS_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_numbanks_altera".try_into().unwrap());
+pub static ATTR_BANKWIDTH_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bankwidth_altera".try_into().unwrap());
+pub static ATTR_MAX_PRIVATE_COPIES_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_private_copies_altera".try_into().unwrap());
+pub static ATTR_SINGLEPUMP_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_singlepump_altera".try_into().unwrap());
+pub static ATTR_DOUBLEPUMP_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_doublepump_altera".try_into().unwrap());
+pub static ATTR_MAX_REPLICATES_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_replicates_altera".try_into().unwrap());
+pub static ATTR_SIMPLE_DUAL_PORT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_simple_dual_port_altera".try_into().unwrap());
+pub static ATTR_FORCE_POW2_DEPTH_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_force_pow2_depth_altera".try_into().unwrap());
+pub static ATTR_STRIDESIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stridesize_altera".try_into().unwrap());
+pub static ATTR_WORDSIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_wordsize_altera".try_into().unwrap());
+pub static ATTR_TRUE_DUAL_PORT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_true_dual_port_altera".try_into().unwrap());
+pub static ATTR_BURST_COALESCE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_burst_coalesce_altera".try_into().unwrap());
+pub static ATTR_CACHE_SIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_cache_size_altera".try_into().unwrap());
+pub static ATTR_DONT_STATICALLY_COALESCE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_dont_statically_coalesce_altera".try_into().unwrap());
+pub static ATTR_PREFETCH_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_prefetch_altera".try_into().unwrap());
+pub static ATTR_STALL_ENABLE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stall_enable_altera".try_into().unwrap());
+pub static ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_fuse_loops_in_function_altera".try_into().unwrap());
+pub static ATTR_INITIATION_INTERVAL_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_initiation_interval_altera".try_into().unwrap());
+pub static ATTR_MAX_CONCURRENCY_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_concurrency_altera".try_into().unwrap());
+pub static ATTR_PIPELINE_ENABLE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_pipeline_enable_altera".try_into().unwrap());
+pub static ATTR_BUFFER_LOCATION_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_buffer_location_altera".try_into().unwrap());
+pub static ATTR_IO_PIPE_STORAGE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_io_pipe_storage_altera".try_into().unwrap());
+pub static ATTR_SINGLE_ELEMENT_VECTOR_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_single_element_vector_intel".try_into().unwrap());
 pub static ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_vector_compute_callable_function_intel".try_into().unwrap()
+    "spirv_decoration_vector_compute_callable_function_intel"
+        .try_into()
+        .unwrap()
 });
-pub static ATTR_MEDIA_BLOCK_IOINTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_media_block_iointel".try_into().unwrap()
-});
-pub static ATTR_STALL_FREE_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_stall_free_altera".try_into().unwrap()
-});
-pub static ATTR_LATENCY_CONTROL_LABEL_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_latency_control_label_altera".try_into().unwrap()
-});
-pub static ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_conduit_kernel_argument_altera".try_into().unwrap()
-});
+pub static ATTR_MEDIA_BLOCK_IOINTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_media_block_iointel".try_into().unwrap());
+pub static ATTR_STALL_FREE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stall_free_altera".try_into().unwrap());
+pub static ATTR_LATENCY_CONTROL_LABEL_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_latency_control_label_altera".try_into().unwrap());
+pub static ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_conduit_kernel_argument_altera".try_into().unwrap());
 pub static ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_register_map_kernel_argument_altera".try_into().unwrap()
+    "spirv_decoration_register_map_kernel_argument_altera"
+        .try_into()
+        .unwrap()
 });
 pub static ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_address_width_altera".try_into().unwrap()
+    "spirv_decoration_mm_host_interface_address_width_altera"
+        .try_into()
+        .unwrap()
 });
 pub static ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_data_width_altera".try_into().unwrap()
+    "spirv_decoration_mm_host_interface_data_width_altera"
+        .try_into()
+        .unwrap()
 });
-pub static ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_latency_altera".try_into().unwrap()
-});
+pub static ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_mm_host_interface_latency_altera".try_into().unwrap());
 pub static ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_max_burst_altera".try_into().unwrap()
+    "spirv_decoration_mm_host_interface_max_burst_altera"
+        .try_into()
+        .unwrap()
 });
 pub static ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA: ::pliron::std_deps::sync::LazyLock<
     ::pliron::identifier::Identifier,
 > = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_wait_request_altera".try_into().unwrap()
+    "spirv_decoration_mm_host_interface_wait_request_altera"
+        .try_into()
+        .unwrap()
 });
-pub static ATTR_STABLE_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_stable_kernel_argument_altera".try_into().unwrap()
-});
-pub static ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_implement_in_register_map_altera".try_into().unwrap()
-});
+pub static ATTR_STABLE_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stable_kernel_argument_altera".try_into().unwrap());
+pub static ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_implement_in_register_map_altera".try_into().unwrap());
 #[op_interface]
 pub trait DecoratableOp {
     fn verify(_op: &dyn Op, _ctx: &Context) -> Result<()>
@@ -657,20 +338,14 @@ pub trait DecoratableOp {
         has_decoration_col_major(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_array_stride<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_array_stride<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_array_stride(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_matrix_stride<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_matrix_stride<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -698,10 +373,7 @@ pub trait DecoratableOp {
         has_decoration_c_packed(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_built_in<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, BuiltInAttr>>
+    fn get_decoration_built_in<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, BuiltInAttr>>
     where
         Self: Sized,
     {
@@ -813,120 +485,84 @@ pub trait DecoratableOp {
         has_decoration_saturated_conversion(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_stream<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_stream<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_stream(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_location<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_location<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_location(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_component<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_component<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_component(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_index<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_index<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_index(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_binding<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_binding<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_binding(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_descriptor_set<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_descriptor_set<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_descriptor_set(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_offset<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_offset<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_offset(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_xfb_buffer<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_xfb_buffer<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_xfb_buffer(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_xfb_stride<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_xfb_stride<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_xfb_stride(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_func_param_attr<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, VecAttr>>
+    fn get_decoration_func_param_attr<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, VecAttr>>
     where
         Self: Sized,
     {
         get_decoration_func_param_attr(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_fp_rounding_mode<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, FPRoundingModeAttr>>
+    fn get_decoration_fp_rounding_mode<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, FPRoundingModeAttr>>
     where
         Self: Sized,
     {
         get_decoration_fp_rounding_mode(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_fp_fast_math_mode<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, FPFastMathModeAttr>>
+    fn get_decoration_fp_fast_math_mode<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, FPFastMathModeAttr>>
     where
         Self: Sized,
     {
@@ -940,40 +576,28 @@ pub trait DecoratableOp {
         has_decoration_no_contraction(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_input_attachment_index<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_input_attachment_index<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_input_attachment_index(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_alignment<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_alignment<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_alignment(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_max_byte_offset<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_max_byte_offset<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_max_byte_offset(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn has_decoration_saturated_to_largest_float8_normal_conversion_ext(
-        &self,
-        ctx: &Context,
-    ) -> bool
+    fn has_decoration_saturated_to_largest_float8_normal_conversion_ext(&self, ctx: &Context) -> bool
     where
         Self: Sized,
     {
@@ -1071,10 +695,7 @@ pub trait DecoratableOp {
         has_decoration_viewport_relative_nv(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_secondary_viewport_relative_nv<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_secondary_viewport_relative_nv<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1130,10 +751,7 @@ pub trait DecoratableOp {
         has_decoration_aliased_pointer(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_member_offset_nv<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_member_offset_nv<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1154,10 +772,7 @@ pub trait DecoratableOp {
         has_decoration_hit_object_shader_record_buffer_ext(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_bank_nv<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_bank_nv<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1192,10 +807,7 @@ pub trait DecoratableOp {
         has_decoration_bound_image_nv(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_simt_call_intel<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_simt_call_intel<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1209,10 +821,7 @@ pub trait DecoratableOp {
         has_decoration_referenced_indirectly_intel(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_clobber_intel<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, StringAttr>>
+    fn get_decoration_clobber_intel<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, StringAttr>>
     where
         Self: Sized,
     {
@@ -1233,10 +842,7 @@ pub trait DecoratableOp {
         has_decoration_vector_compute_variable_intel(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_func_param_io_kind_intel<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_func_param_io_kind_intel<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1257,30 +863,21 @@ pub trait DecoratableOp {
         has_decoration_stack_call_intel(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_global_variable_offset_intel<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_global_variable_offset_intel<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_global_variable_offset_intel(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_user_semantic<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, StringAttr>>
+    fn get_decoration_user_semantic<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, StringAttr>>
     where
         Self: Sized,
     {
         get_decoration_user_semantic(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_user_type_google<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, StringAttr>>
+    fn get_decoration_user_type_google<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, StringAttr>>
     where
         Self: Sized,
     {
@@ -1294,40 +891,28 @@ pub trait DecoratableOp {
         has_decoration_register_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_memory_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, StringAttr>>
+    fn get_decoration_memory_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, StringAttr>>
     where
         Self: Sized,
     {
         get_decoration_memory_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_numbanks_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_numbanks_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_numbanks_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_bankwidth_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_bankwidth_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_bankwidth_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_max_private_copies_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_max_private_copies_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1348,10 +933,7 @@ pub trait DecoratableOp {
         has_decoration_doublepump_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_max_replicates_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_max_replicates_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1365,30 +947,21 @@ pub trait DecoratableOp {
         has_decoration_simple_dual_port_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_force_pow2_depth_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_force_pow2_depth_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_force_pow2_depth_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_stridesize_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_stridesize_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_stridesize_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_wordsize_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_wordsize_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1409,10 +982,7 @@ pub trait DecoratableOp {
         has_decoration_burst_coalesce_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_cache_size_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_cache_size_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1426,10 +996,7 @@ pub trait DecoratableOp {
         has_decoration_dont_statically_coalesce_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_prefetch_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_prefetch_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1450,50 +1017,35 @@ pub trait DecoratableOp {
         has_decoration_fuse_loops_in_function_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_initiation_interval_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_initiation_interval_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_initiation_interval_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_max_concurrency_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_max_concurrency_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_max_concurrency_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_pipeline_enable_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_pipeline_enable_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_pipeline_enable_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_buffer_location_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_buffer_location_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
         get_decoration_buffer_location_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_io_pipe_storage_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_io_pipe_storage_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1507,10 +1059,7 @@ pub trait DecoratableOp {
         has_decoration_single_element_vector_intel(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn has_decoration_vector_compute_callable_function_intel(
-        &self,
-        ctx: &Context,
-    ) -> bool
+    fn has_decoration_vector_compute_callable_function_intel(&self, ctx: &Context) -> bool
     where
         Self: Sized,
     {
@@ -1531,10 +1080,7 @@ pub trait DecoratableOp {
         has_decoration_stall_free_altera(self, ctx)
     }
     #[allow(non_snake_case)]
-    fn get_decoration_latency_control_label_altera<'a>(
-        &self,
-        ctx: &'a Context,
-    ) -> Option<Ref<'a, LiteralIntegerAttr>>
+    fn get_decoration_latency_control_label_altera<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
     where
         Self: Sized,
     {
@@ -1895,11 +1441,7 @@ pub trait DecoratableOp {
         set_decoration_no_contraction(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_input_attachment_index(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_input_attachment_index(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -1920,10 +1462,7 @@ pub trait DecoratableOp {
         set_decoration_max_byte_offset(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_saturated_to_largest_float8_normal_conversion_ext(
-        &self,
-        ctx: &Context,
-    )
+    fn set_decoration_saturated_to_largest_float8_normal_conversion_ext(&self, ctx: &Context)
     where
         Self: Sized,
     {
@@ -2021,11 +1560,7 @@ pub trait DecoratableOp {
         set_decoration_viewport_relative_nv(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_secondary_viewport_relative_nv(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_secondary_viewport_relative_nv(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2172,11 +1707,7 @@ pub trait DecoratableOp {
         set_decoration_vector_compute_variable_intel(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_func_param_io_kind_intel(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_func_param_io_kind_intel(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2197,11 +1728,7 @@ pub trait DecoratableOp {
         set_decoration_stack_call_intel(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_global_variable_offset_intel(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_global_variable_offset_intel(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2250,11 +1777,7 @@ pub trait DecoratableOp {
         set_decoration_bankwidth_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_max_private_copies_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_max_private_copies_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2275,11 +1798,7 @@ pub trait DecoratableOp {
         set_decoration_doublepump_altera(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_max_replicates_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_max_replicates_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2293,11 +1812,7 @@ pub trait DecoratableOp {
         set_decoration_simple_dual_port_altera(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_force_pow2_depth_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_force_pow2_depth_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2367,55 +1882,35 @@ pub trait DecoratableOp {
         set_decoration_fuse_loops_in_function_altera(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_initiation_interval_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_initiation_interval_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_initiation_interval_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_max_concurrency_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_max_concurrency_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_max_concurrency_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_pipeline_enable_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_pipeline_enable_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_pipeline_enable_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_buffer_location_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_buffer_location_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_buffer_location_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_io_pipe_storage_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_io_pipe_storage_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2450,11 +1945,7 @@ pub trait DecoratableOp {
         set_decoration_stall_free_altera(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_latency_control_label_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_latency_control_label_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2475,55 +1966,35 @@ pub trait DecoratableOp {
         set_decoration_register_map_kernel_argument_altera(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_mm_host_interface_address_width_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_mm_host_interface_address_width_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_mm_host_interface_address_width_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_mm_host_interface_data_width_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_mm_host_interface_data_width_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_mm_host_interface_data_width_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_mm_host_interface_latency_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_mm_host_interface_latency_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_mm_host_interface_latency_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_mm_host_interface_max_burst_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_mm_host_interface_max_burst_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
         set_decoration_mm_host_interface_max_burst_altera(self, ctx, value);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_mm_host_interface_wait_request_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_mm_host_interface_wait_request_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2537,11 +2008,7 @@ pub trait DecoratableOp {
         set_decoration_stable_kernel_argument_altera(self, ctx);
     }
     #[allow(non_snake_case)]
-    fn set_decoration_implement_in_register_map_altera(
-        &self,
-        ctx: &Context,
-        value: LiteralIntegerAttr,
-    )
+    fn set_decoration_implement_in_register_map_altera(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
     {
@@ -2590,11 +2057,10 @@ pub fn get_decoration_array_stride<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_ARRAY_STRIDE) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_ARRAY_STRIDE)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2602,11 +2068,10 @@ pub fn get_decoration_matrix_stride<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_MATRIX_STRIDE) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_MATRIX_STRIDE)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2628,15 +2093,11 @@ pub fn has_decoration_c_packed(op: &dyn DecoratableOp, ctx: &Context) -> bool {
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_built_in<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, BuiltInAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<BuiltInAttr>(&ATTR_BUILT_IN) },
-        )
-        .ok()
+pub fn get_decoration_built_in<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, BuiltInAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<BuiltInAttr>(&ATTR_BUILT_IN)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2724,72 +2185,49 @@ pub fn has_decoration_uniform(op: &dyn DecoratableOp, ctx: &Context) -> bool {
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_saturated_conversion(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_saturated_conversion(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_SATURATED_CONVERSION)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_stream<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_STREAM) },
-        )
-        .ok()
+pub fn get_decoration_stream<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_STREAM)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_location<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_LOCATION) },
-        )
-        .ok()
+pub fn get_decoration_location<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_LOCATION)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_component<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_COMPONENT) },
-        )
-        .ok()
+pub fn get_decoration_component<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_COMPONENT)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_index<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_INDEX) },
-        )
-        .ok()
+pub fn get_decoration_index<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_INDEX)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_binding<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_BINDING) },
-        )
-        .ok()
+pub fn get_decoration_binding<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_BINDING)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2797,59 +2235,42 @@ pub fn get_decoration_descriptor_set<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_DESCRIPTOR_SET) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_DESCRIPTOR_SET)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_offset<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_OFFSET) },
-        )
-        .ok()
+pub fn get_decoration_offset<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_OFFSET)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_xfb_buffer<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_XFB_BUFFER) },
-        )
-        .ok()
+pub fn get_decoration_xfb_buffer<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_XFB_BUFFER)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_xfb_stride<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_XFB_STRIDE) },
-        )
-        .ok()
+pub fn get_decoration_xfb_stride<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_XFB_STRIDE)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_func_param_attr<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, VecAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<VecAttr>(&ATTR_FUNC_PARAM_ATTR) },
-        )
-        .ok()
+pub fn get_decoration_func_param_attr<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, VecAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<VecAttr>(&ATTR_FUNC_PARAM_ATTR)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2857,11 +2278,10 @@ pub fn get_decoration_fp_rounding_mode<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, FPRoundingModeAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<FPRoundingModeAttr>(&ATTR_FP_ROUNDING_MODE) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<FPRoundingModeAttr>(&ATTR_FP_ROUNDING_MODE)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2869,11 +2289,10 @@ pub fn get_decoration_fp_fast_math_mode<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, FPFastMathModeAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<FPFastMathModeAttr>(&ATTR_FP_FAST_MATH_MODE) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<FPFastMathModeAttr>(&ATTR_FP_FAST_MATH_MODE)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2887,25 +2306,18 @@ pub fn get_decoration_input_attachment_index<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_INPUT_ATTACHMENT_INDEX)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_INPUT_ATTACHMENT_INDEX)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_alignment<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_ALIGNMENT) },
-        )
-        .ok()
+pub fn get_decoration_alignment<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_ALIGNMENT)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2913,18 +2325,14 @@ pub fn get_decoration_max_byte_offset<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_BYTE_OFFSET) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_BYTE_OFFSET)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_saturated_to_largest_float8_normal_conversion_ext(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_saturated_to_largest_float8_normal_conversion_ext(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes
         .0
@@ -2944,64 +2352,43 @@ pub fn has_decoration_no_unsigned_wrap(op: &dyn DecoratableOp, ctx: &Context) ->
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_weight_texture_qcom(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_weight_texture_qcom(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_WEIGHT_TEXTURE_QCOM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_block_match_texture_qcom(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_block_match_texture_qcom(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_BLOCK_MATCH_TEXTURE_QCOM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_block_match_sampler_qcom(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_block_match_sampler_qcom(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_BLOCK_MATCH_SAMPLER_QCOM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_explicit_interp_amd(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_explicit_interp_amd(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_EXPLICIT_INTERP_AMD)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_track_finish_writing_amdx(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_track_finish_writing_amdx(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_TRACK_FINISH_WRITING_AMDX)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_payload_node_sparse_array_amdx(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_payload_node_sparse_array_amdx(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_payload_dispatch_indirect_amdx(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_payload_dispatch_indirect_amdx(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX)
 }
@@ -3013,10 +2400,7 @@ pub fn has_decoration_utf_encoded_khr(op: &dyn DecoratableOp, ctx: &Context) -> 
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_override_coverage_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_override_coverage_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_OVERRIDE_COVERAGE_NV)
 }
@@ -3028,10 +2412,7 @@ pub fn has_decoration_passthrough_nv(op: &dyn DecoratableOp, ctx: &Context) -> b
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_viewport_relative_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_viewport_relative_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_VIEWPORT_RELATIVE_NV)
 }
@@ -3041,14 +2422,11 @@ pub fn get_decoration_secondary_viewport_relative_nv<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&ATTR_SECONDARY_VIEWPORT_RELATIVE_NV)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_SECONDARY_VIEWPORT_RELATIVE_NV)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3098,48 +2476,34 @@ pub fn get_decoration_member_offset_nv<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_MEMBER_OFFSET_NV) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_MEMBER_OFFSET_NV)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_hit_object_shader_record_buffer_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_hit_object_shader_record_buffer_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_hit_object_shader_record_buffer_ext(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_hit_object_shader_record_buffer_ext(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_bank_nv<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_BANK_NV) },
-        )
-        .ok()
+pub fn get_decoration_bank_nv<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_BANK_NV)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_bindless_sampler_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_bindless_sampler_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_BINDLESS_SAMPLER_NV)
 }
@@ -3167,32 +2531,24 @@ pub fn get_decoration_simt_call_intel<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_SIMT_CALL_INTEL) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_SIMT_CALL_INTEL)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_referenced_indirectly_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_referenced_indirectly_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_REFERENCED_INDIRECTLY_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_clobber_intel<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, StringAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<StringAttr>(&ATTR_CLOBBER_INTEL) },
-        )
-        .ok()
+pub fn get_decoration_clobber_intel<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, StringAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<StringAttr>(&ATTR_CLOBBER_INTEL)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3202,10 +2558,7 @@ pub fn has_decoration_side_effects_intel(op: &dyn DecoratableOp, ctx: &Context) 
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_vector_compute_variable_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_vector_compute_variable_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_VECTOR_COMPUTE_VARIABLE_INTEL)
 }
@@ -3215,20 +2568,14 @@ pub fn get_decoration_func_param_io_kind_intel<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_FUNC_PARAM_IO_KIND_INTEL)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_FUNC_PARAM_IO_KIND_INTEL)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_vector_compute_function_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_vector_compute_function_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_VECTOR_COMPUTE_FUNCTION_INTEL)
 }
@@ -3244,38 +2591,27 @@ pub fn get_decoration_global_variable_offset_intel<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&ATTR_GLOBAL_VARIABLE_OFFSET_INTEL)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_GLOBAL_VARIABLE_OFFSET_INTEL)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_user_semantic<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, StringAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<StringAttr>(&ATTR_USER_SEMANTIC) },
-        )
-        .ok()
+pub fn get_decoration_user_semantic<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, StringAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<StringAttr>(&ATTR_USER_SEMANTIC)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_user_type_google<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, StringAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<StringAttr>(&ATTR_USER_TYPE_GOOGLE) },
-        )
-        .ok()
+pub fn get_decoration_user_type_google<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, StringAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<StringAttr>(&ATTR_USER_TYPE_GOOGLE)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3285,15 +2621,11 @@ pub fn has_decoration_register_altera(op: &dyn DecoratableOp, ctx: &Context) -> 
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn get_decoration_memory_altera<'a>(
-    op: &dyn DecoratableOp,
-    ctx: &'a Context,
-) -> Option<Ref<'a, StringAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<StringAttr>(&ATTR_MEMORY_ALTERA) },
-        )
-        .ok()
+pub fn get_decoration_memory_altera<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, StringAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<StringAttr>(&ATTR_MEMORY_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3301,11 +2633,10 @@ pub fn get_decoration_numbanks_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_NUMBANKS_ALTERA) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_NUMBANKS_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3313,11 +2644,10 @@ pub fn get_decoration_bankwidth_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_BANKWIDTH_ALTERA) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_BANKWIDTH_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3325,13 +2655,10 @@ pub fn get_decoration_max_private_copies_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_PRIVATE_COPIES_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_PRIVATE_COPIES_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3351,18 +2678,14 @@ pub fn get_decoration_max_replicates_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_REPLICATES_ALTERA) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_REPLICATES_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_simple_dual_port_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_simple_dual_port_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_SIMPLE_DUAL_PORT_ALTERA)
 }
@@ -3372,13 +2695,10 @@ pub fn get_decoration_force_pow2_depth_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_FORCE_POW2_DEPTH_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_FORCE_POW2_DEPTH_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3386,11 +2706,10 @@ pub fn get_decoration_stridesize_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_STRIDESIZE_ALTERA) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_STRIDESIZE_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3398,27 +2717,20 @@ pub fn get_decoration_wordsize_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_WORDSIZE_ALTERA) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_WORDSIZE_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_true_dual_port_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_true_dual_port_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_TRUE_DUAL_PORT_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_burst_coalesce_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_burst_coalesce_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_BURST_COALESCE_ALTERA)
 }
@@ -3428,18 +2740,14 @@ pub fn get_decoration_cache_size_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_CACHE_SIZE_ALTERA) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_CACHE_SIZE_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_dont_statically_coalesce_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_dont_statically_coalesce_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_DONT_STATICALLY_COALESCE_ALTERA)
 }
@@ -3449,27 +2757,20 @@ pub fn get_decoration_prefetch_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| { op.attributes.get::<LiteralIntegerAttr>(&ATTR_PREFETCH_ALTERA) },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_PREFETCH_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_stall_enable_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_stall_enable_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_STALL_ENABLE_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_fuse_loops_in_function_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_fuse_loops_in_function_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA)
 }
@@ -3479,13 +2780,11 @@ pub fn get_decoration_initiation_interval_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_INITIATION_INTERVAL_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_INITIATION_INTERVAL_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3493,13 +2792,10 @@ pub fn get_decoration_max_concurrency_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_CONCURRENCY_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_MAX_CONCURRENCY_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3507,13 +2803,10 @@ pub fn get_decoration_pipeline_enable_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_PIPELINE_ENABLE_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_PIPELINE_ENABLE_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3521,13 +2814,10 @@ pub fn get_decoration_buffer_location_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_BUFFER_LOCATION_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_BUFFER_LOCATION_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3535,38 +2825,28 @@ pub fn get_decoration_io_pipe_storage_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes.get::<LiteralIntegerAttr>(&ATTR_IO_PIPE_STORAGE_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_IO_PIPE_STORAGE_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_single_element_vector_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_single_element_vector_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_SINGLE_ELEMENT_VECTOR_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_vector_compute_callable_function_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_vector_compute_callable_function_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL)
+    op.attributes
+        .0
+        .contains_key(&*ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_media_block_iointel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_media_block_iointel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_MEDIA_BLOCK_IOINTEL)
 }
@@ -3582,30 +2862,21 @@ pub fn get_decoration_latency_control_label_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&ATTR_LATENCY_CONTROL_LABEL_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_LATENCY_CONTROL_LABEL_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_conduit_kernel_argument_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_conduit_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_register_map_kernel_argument_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_register_map_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA)
 }
@@ -3615,16 +2886,11 @@ pub fn get_decoration_mm_host_interface_address_width_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<
-                        LiteralIntegerAttr,
-                    >(&ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3632,14 +2898,11 @@ pub fn get_decoration_mm_host_interface_data_width_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3647,14 +2910,11 @@ pub fn get_decoration_mm_host_interface_latency_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3662,14 +2922,11 @@ pub fn get_decoration_mm_host_interface_max_burst_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3677,23 +2934,15 @@ pub fn get_decoration_mm_host_interface_wait_request_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<
-                        LiteralIntegerAttr,
-                    >(&ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
-pub fn has_decoration_stable_kernel_argument_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) -> bool {
+pub fn has_decoration_stable_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_STABLE_KERNEL_ARGUMENT_ALTERA)
 }
@@ -3703,14 +2952,11 @@ pub fn get_decoration_implement_in_register_map_altera<'a>(
     op: &dyn DecoratableOp,
     ctx: &'a Context,
 ) -> Option<Ref<'a, LiteralIntegerAttr>> {
-    Ref::filter_map(
-            op.get_operation().deref(ctx),
-            |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA)
-            },
-        )
-        .ok()
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes
+            .get::<LiteralIntegerAttr>(&ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_relaxed_precision(op: &dyn DecoratableOp, ctx: &Context) {
@@ -3748,20 +2994,18 @@ pub fn set_decoration_col_major(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_COL_MAJOR.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_array_stride(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_ARRAY_STRIDE.clone(), value);
+pub fn set_decoration_array_stride(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_ARRAY_STRIDE.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_matrix_stride(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_MATRIX_STRIDE.clone(), value);
+pub fn set_decoration_matrix_stride(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_MATRIX_STRIDE.clone(), value);
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_glsl_shared(op: &dyn DecoratableOp, ctx: &Context) {
@@ -3785,12 +3029,11 @@ pub fn set_decoration_c_packed(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_C_PACKED.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_built_in(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: BuiltInAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_BUILT_IN.clone(), value);
+pub fn set_decoration_built_in(op: &dyn DecoratableOp, ctx: &Context, value: BuiltInAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_BUILT_IN.clone(), value);
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_no_perspective(op: &dyn DecoratableOp, ctx: &Context) {
@@ -3801,7 +3044,10 @@ pub fn set_decoration_no_perspective(op: &dyn DecoratableOp, ctx: &Context) {
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_flat(op: &dyn DecoratableOp, ctx: &Context) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_FLAT.clone(), UnitAttr::new());
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_FLAT.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_patch(op: &dyn DecoratableOp, ctx: &Context) {
@@ -3895,105 +3141,84 @@ pub fn set_decoration_saturated_conversion(op: &dyn DecoratableOp, ctx: &Context
         .set(ATTR_SATURATED_CONVERSION.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_stream(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_STREAM.clone(), value);
+pub fn set_decoration_stream(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_STREAM.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_location(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_LOCATION.clone(), value);
+pub fn set_decoration_location(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_LOCATION.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_component(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_COMPONENT.clone(), value);
+pub fn set_decoration_component(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_COMPONENT.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_index(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_INDEX.clone(), value);
+pub fn set_decoration_index(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_INDEX.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_binding(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_BINDING.clone(), value);
+pub fn set_decoration_binding(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_BINDING.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_descriptor_set(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_DESCRIPTOR_SET.clone(), value);
+pub fn set_decoration_descriptor_set(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_DESCRIPTOR_SET.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_offset(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_OFFSET.clone(), value);
+pub fn set_decoration_offset(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_OFFSET.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_xfb_buffer(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_XFB_BUFFER.clone(), value);
+pub fn set_decoration_xfb_buffer(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_XFB_BUFFER.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_xfb_stride(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_XFB_STRIDE.clone(), value);
+pub fn set_decoration_xfb_stride(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_XFB_STRIDE.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_func_param_attr(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: VecAttr,
-) {
+pub fn set_decoration_func_param_attr(op: &dyn DecoratableOp, ctx: &Context, value: VecAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_FUNC_PARAM_ATTR.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_fp_rounding_mode(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: FPRoundingModeAttr,
-) {
+pub fn set_decoration_fp_rounding_mode(op: &dyn DecoratableOp, ctx: &Context, value: FPRoundingModeAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_FP_ROUNDING_MODE.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_fp_fast_math_mode(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: FPFastMathModeAttr,
-) {
+pub fn set_decoration_fp_fast_math_mode(op: &dyn DecoratableOp, ctx: &Context, value: FPFastMathModeAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4007,47 +3232,32 @@ pub fn set_decoration_no_contraction(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_NO_CONTRACTION.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_input_attachment_index(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_input_attachment_index(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_INPUT_ATTACHMENT_INDEX.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_alignment(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_ALIGNMENT.clone(), value);
+pub fn set_decoration_alignment(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_ALIGNMENT.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_max_byte_offset(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_max_byte_offset(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_MAX_BYTE_OFFSET.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_saturated_to_largest_float8_normal_conversion_ext(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
-    op.get_operation()
-        .deref_mut(ctx)
-        .attributes
-        .set(
-            ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT.clone(),
-            UnitAttr::new(),
-        );
+pub fn set_decoration_saturated_to_largest_float8_normal_conversion_ext(op: &dyn DecoratableOp, ctx: &Context) {
+    op.get_operation().deref_mut(ctx).attributes.set(
+        ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT.clone(),
+        UnitAttr::new(),
+    );
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_no_signed_wrap(op: &dyn DecoratableOp, ctx: &Context) {
@@ -4099,20 +3309,14 @@ pub fn set_decoration_track_finish_writing_amdx(op: &dyn DecoratableOp, ctx: &Co
         .set(ATTR_TRACK_FINISH_WRITING_AMDX.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_payload_node_sparse_array_amdx(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_payload_node_sparse_array_amdx(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_payload_dispatch_indirect_amdx(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_payload_dispatch_indirect_amdx(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4147,11 +3351,7 @@ pub fn set_decoration_viewport_relative_nv(op: &dyn DecoratableOp, ctx: &Context
         .set(ATTR_VIEWPORT_RELATIVE_NV.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_secondary_viewport_relative_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_secondary_viewport_relative_nv(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4207,43 +3407,32 @@ pub fn set_decoration_aliased_pointer(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_ALIASED_POINTER.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_member_offset_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_member_offset_nv(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_MEMBER_OFFSET_NV.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_hit_object_shader_record_buffer_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_hit_object_shader_record_buffer_nv(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_hit_object_shader_record_buffer_ext(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_hit_object_shader_record_buffer_ext(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_bank_nv(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_BANK_NV.clone(), value);
+pub fn set_decoration_bank_nv(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_BANK_NV.clone(), value);
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_bindless_sampler_nv(op: &dyn DecoratableOp, ctx: &Context) {
@@ -4274,33 +3463,25 @@ pub fn set_decoration_bound_image_nv(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_BOUND_IMAGE_NV.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_simt_call_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_simt_call_intel(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_SIMT_CALL_INTEL.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_referenced_indirectly_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_referenced_indirectly_intel(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_REFERENCED_INDIRECTLY_INTEL.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_clobber_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: StringAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_CLOBBER_INTEL.clone(), value);
+pub fn set_decoration_clobber_intel(op: &dyn DecoratableOp, ctx: &Context, value: StringAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_CLOBBER_INTEL.clone(), value);
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_side_effects_intel(op: &dyn DecoratableOp, ctx: &Context) {
@@ -4310,31 +3491,21 @@ pub fn set_decoration_side_effects_intel(op: &dyn DecoratableOp, ctx: &Context) 
         .set(ATTR_SIDE_EFFECTS_INTEL.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_vector_compute_variable_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_vector_compute_variable_intel(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_VECTOR_COMPUTE_VARIABLE_INTEL.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_func_param_io_kind_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_func_param_io_kind_intel(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_FUNC_PARAM_IO_KIND_INTEL.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_vector_compute_function_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_vector_compute_function_intel(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4348,30 +3519,21 @@ pub fn set_decoration_stack_call_intel(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_STACK_CALL_INTEL.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_global_variable_offset_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_global_variable_offset_intel(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_GLOBAL_VARIABLE_OFFSET_INTEL.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_user_semantic(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: StringAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_USER_SEMANTIC.clone(), value);
+pub fn set_decoration_user_semantic(op: &dyn DecoratableOp, ctx: &Context, value: StringAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_USER_SEMANTIC.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_user_type_google(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: StringAttr,
-) {
+pub fn set_decoration_user_type_google(op: &dyn DecoratableOp, ctx: &Context, value: StringAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4385,41 +3547,28 @@ pub fn set_decoration_register_altera(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_REGISTER_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_memory_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: StringAttr,
-) {
-    op.get_operation().deref_mut(ctx).attributes.set(ATTR_MEMORY_ALTERA.clone(), value);
+pub fn set_decoration_memory_altera(op: &dyn DecoratableOp, ctx: &Context, value: StringAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_MEMORY_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_numbanks_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_numbanks_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_NUMBANKS_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_bankwidth_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_bankwidth_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_BANKWIDTH_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_max_private_copies_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_max_private_copies_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4440,11 +3589,7 @@ pub fn set_decoration_doublepump_altera(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_DOUBLEPUMP_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_max_replicates_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_max_replicates_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4458,33 +3603,21 @@ pub fn set_decoration_simple_dual_port_altera(op: &dyn DecoratableOp, ctx: &Cont
         .set(ATTR_SIMPLE_DUAL_PORT_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_force_pow2_depth_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_force_pow2_depth_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_FORCE_POW2_DEPTH_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_stridesize_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_stridesize_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_STRIDESIZE_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_wordsize_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_wordsize_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4505,32 +3638,21 @@ pub fn set_decoration_burst_coalesce_altera(op: &dyn DecoratableOp, ctx: &Contex
         .set(ATTR_BURST_COALESCE_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_cache_size_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_cache_size_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_CACHE_SIZE_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_dont_statically_coalesce_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_dont_statically_coalesce_altera(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_DONT_STATICALLY_COALESCE_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_prefetch_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_prefetch_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4544,85 +3666,56 @@ pub fn set_decoration_stall_enable_altera(op: &dyn DecoratableOp, ctx: &Context)
         .set(ATTR_STALL_ENABLE_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_fuse_loops_in_function_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_fuse_loops_in_function_altera(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_initiation_interval_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_initiation_interval_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_INITIATION_INTERVAL_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_max_concurrency_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_max_concurrency_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_MAX_CONCURRENCY_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_pipeline_enable_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_pipeline_enable_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_PIPELINE_ENABLE_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_buffer_location_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_buffer_location_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_BUFFER_LOCATION_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_io_pipe_storage_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_io_pipe_storage_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_IO_PIPE_STORAGE_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_single_element_vector_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_single_element_vector_intel(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_SINGLE_ELEMENT_VECTOR_INTEL.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_vector_compute_callable_function_intel(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_vector_compute_callable_function_intel(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4643,31 +3736,21 @@ pub fn set_decoration_stall_free_altera(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_STALL_FREE_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_latency_control_label_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-    value: LiteralIntegerAttr,
-) {
+pub fn set_decoration_latency_control_label_altera(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_LATENCY_CONTROL_LABEL_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_conduit_kernel_argument_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_conduit_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
         .set(ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_register_map_kernel_argument_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_register_map_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4729,10 +3812,7 @@ pub fn set_decoration_mm_host_interface_wait_request_altera(
         .set(ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA.clone(), value);
 }
 #[allow(non_snake_case)]
-pub fn set_decoration_stable_kernel_argument_altera(
-    op: &dyn DecoratableOp,
-    ctx: &Context,
-) {
+pub fn set_decoration_stable_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
         .attributes
@@ -4804,19 +3884,13 @@ impl DecorationExt for Decoration {
             Decoration::BlockMatchSamplerQCOM => &ATTR_BLOCK_MATCH_SAMPLER_QCOM,
             Decoration::ExplicitInterpAMD => &ATTR_EXPLICIT_INTERP_AMD,
             Decoration::TrackFinishWritingAMDX => &ATTR_TRACK_FINISH_WRITING_AMDX,
-            Decoration::PayloadNodeSparseArrayAMDX => {
-                &ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX
-            }
-            Decoration::PayloadDispatchIndirectAMDX => {
-                &ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX
-            }
+            Decoration::PayloadNodeSparseArrayAMDX => &ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX,
+            Decoration::PayloadDispatchIndirectAMDX => &ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX,
             Decoration::UTFEncodedKHR => &ATTR_UTF_ENCODED_KHR,
             Decoration::OverrideCoverageNV => &ATTR_OVERRIDE_COVERAGE_NV,
             Decoration::PassthroughNV => &ATTR_PASSTHROUGH_NV,
             Decoration::ViewportRelativeNV => &ATTR_VIEWPORT_RELATIVE_NV,
-            Decoration::SecondaryViewportRelativeNV => {
-                &ATTR_SECONDARY_VIEWPORT_RELATIVE_NV
-            }
+            Decoration::SecondaryViewportRelativeNV => &ATTR_SECONDARY_VIEWPORT_RELATIVE_NV,
             Decoration::PerPrimitiveEXT => &ATTR_PER_PRIMITIVE_EXT,
             Decoration::PerViewNV => &ATTR_PER_VIEW_NV,
             Decoration::PerTaskNV => &ATTR_PER_TASK_NV,
@@ -4825,12 +3899,8 @@ impl DecorationExt for Decoration {
             Decoration::RestrictPointer => &ATTR_RESTRICT_POINTER,
             Decoration::AliasedPointer => &ATTR_ALIASED_POINTER,
             Decoration::MemberOffsetNV => &ATTR_MEMBER_OFFSET_NV,
-            Decoration::HitObjectShaderRecordBufferNV => {
-                &ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV
-            }
-            Decoration::HitObjectShaderRecordBufferEXT => {
-                &ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT
-            }
+            Decoration::HitObjectShaderRecordBufferNV => &ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV,
+            Decoration::HitObjectShaderRecordBufferEXT => &ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT,
             Decoration::BankNV => &ATTR_BANK_NV,
             Decoration::BindlessSamplerNV => &ATTR_BINDLESS_SAMPLER_NV,
             Decoration::BindlessImageNV => &ATTR_BINDLESS_IMAGE_NV,
@@ -4862,9 +3932,7 @@ impl DecorationExt for Decoration {
             Decoration::TrueDualPortALTERA => &ATTR_TRUE_DUAL_PORT_ALTERA,
             Decoration::BurstCoalesceALTERA => &ATTR_BURST_COALESCE_ALTERA,
             Decoration::CacheSizeALTERA => &ATTR_CACHE_SIZE_ALTERA,
-            Decoration::DontStaticallyCoalesceALTERA => {
-                &ATTR_DONT_STATICALLY_COALESCE_ALTERA
-            }
+            Decoration::DontStaticallyCoalesceALTERA => &ATTR_DONT_STATICALLY_COALESCE_ALTERA,
             Decoration::PrefetchALTERA => &ATTR_PREFETCH_ALTERA,
             Decoration::StallEnableALTERA => &ATTR_STALL_ENABLE_ALTERA,
             Decoration::FuseLoopsInFunctionALTERA => &ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA,
@@ -4874,37 +3942,19 @@ impl DecorationExt for Decoration {
             Decoration::BufferLocationALTERA => &ATTR_BUFFER_LOCATION_ALTERA,
             Decoration::IOPipeStorageALTERA => &ATTR_IO_PIPE_STORAGE_ALTERA,
             Decoration::SingleElementVectorINTEL => &ATTR_SINGLE_ELEMENT_VECTOR_INTEL,
-            Decoration::VectorComputeCallableFunctionINTEL => {
-                &ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL
-            }
+            Decoration::VectorComputeCallableFunctionINTEL => &ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL,
             Decoration::MediaBlockIOINTEL => &ATTR_MEDIA_BLOCK_IOINTEL,
             Decoration::StallFreeALTERA => &ATTR_STALL_FREE_ALTERA,
             Decoration::LatencyControlLabelALTERA => &ATTR_LATENCY_CONTROL_LABEL_ALTERA,
-            Decoration::ConduitKernelArgumentALTERA => {
-                &ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA
-            }
-            Decoration::RegisterMapKernelArgumentALTERA => {
-                &ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA
-            }
-            Decoration::MMHostInterfaceAddressWidthALTERA => {
-                &ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA
-            }
-            Decoration::MMHostInterfaceDataWidthALTERA => {
-                &ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA
-            }
-            Decoration::MMHostInterfaceLatencyALTERA => {
-                &ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA
-            }
-            Decoration::MMHostInterfaceMaxBurstALTERA => {
-                &ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA
-            }
-            Decoration::MMHostInterfaceWaitRequestALTERA => {
-                &ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA
-            }
+            Decoration::ConduitKernelArgumentALTERA => &ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA,
+            Decoration::RegisterMapKernelArgumentALTERA => &ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA,
+            Decoration::MMHostInterfaceAddressWidthALTERA => &ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA,
+            Decoration::MMHostInterfaceDataWidthALTERA => &ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA,
+            Decoration::MMHostInterfaceLatencyALTERA => &ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA,
+            Decoration::MMHostInterfaceMaxBurstALTERA => &ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA,
+            Decoration::MMHostInterfaceWaitRequestALTERA => &ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA,
             Decoration::StableKernelArgumentALTERA => &ATTR_STABLE_KERNEL_ARGUMENT_ALTERA,
-            Decoration::ImplementInRegisterMapALTERA => {
-                &ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA
-            }
+            Decoration::ImplementInRegisterMapALTERA => &ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA,
             _ => unimplemented!("Unsupported decoration"),
         }
     }
@@ -4950,9 +4000,7 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
         "spirv_decoration_fp_rounding_mode" => Some(Decoration::FPRoundingMode),
         "spirv_decoration_fp_fast_math_mode" => Some(Decoration::FPFastMathMode),
         "spirv_decoration_no_contraction" => Some(Decoration::NoContraction),
-        "spirv_decoration_input_attachment_index" => {
-            Some(Decoration::InputAttachmentIndex)
-        }
+        "spirv_decoration_input_attachment_index" => Some(Decoration::InputAttachmentIndex),
         "spirv_decoration_alignment" => Some(Decoration::Alignment),
         "spirv_decoration_max_byte_offset" => Some(Decoration::MaxByteOffset),
         "spirv_decoration_saturated_to_largest_float8_normal_conversion_ext" => {
@@ -4961,29 +4009,17 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
         "spirv_decoration_no_signed_wrap" => Some(Decoration::NoSignedWrap),
         "spirv_decoration_no_unsigned_wrap" => Some(Decoration::NoUnsignedWrap),
         "spirv_decoration_weight_texture_qcom" => Some(Decoration::WeightTextureQCOM),
-        "spirv_decoration_block_match_texture_qcom" => {
-            Some(Decoration::BlockMatchTextureQCOM)
-        }
-        "spirv_decoration_block_match_sampler_qcom" => {
-            Some(Decoration::BlockMatchSamplerQCOM)
-        }
+        "spirv_decoration_block_match_texture_qcom" => Some(Decoration::BlockMatchTextureQCOM),
+        "spirv_decoration_block_match_sampler_qcom" => Some(Decoration::BlockMatchSamplerQCOM),
         "spirv_decoration_explicit_interp_amd" => Some(Decoration::ExplicitInterpAMD),
-        "spirv_decoration_track_finish_writing_amdx" => {
-            Some(Decoration::TrackFinishWritingAMDX)
-        }
-        "spirv_decoration_payload_node_sparse_array_amdx" => {
-            Some(Decoration::PayloadNodeSparseArrayAMDX)
-        }
-        "spirv_decoration_payload_dispatch_indirect_amdx" => {
-            Some(Decoration::PayloadDispatchIndirectAMDX)
-        }
+        "spirv_decoration_track_finish_writing_amdx" => Some(Decoration::TrackFinishWritingAMDX),
+        "spirv_decoration_payload_node_sparse_array_amdx" => Some(Decoration::PayloadNodeSparseArrayAMDX),
+        "spirv_decoration_payload_dispatch_indirect_amdx" => Some(Decoration::PayloadDispatchIndirectAMDX),
         "spirv_decoration_utf_encoded_khr" => Some(Decoration::UTFEncodedKHR),
         "spirv_decoration_override_coverage_nv" => Some(Decoration::OverrideCoverageNV),
         "spirv_decoration_passthrough_nv" => Some(Decoration::PassthroughNV),
         "spirv_decoration_viewport_relative_nv" => Some(Decoration::ViewportRelativeNV),
-        "spirv_decoration_secondary_viewport_relative_nv" => {
-            Some(Decoration::SecondaryViewportRelativeNV)
-        }
+        "spirv_decoration_secondary_viewport_relative_nv" => Some(Decoration::SecondaryViewportRelativeNV),
         "spirv_decoration_per_primitive_ext" => Some(Decoration::PerPrimitiveEXT),
         "spirv_decoration_per_view_nv" => Some(Decoration::PerViewNV),
         "spirv_decoration_per_task_nv" => Some(Decoration::PerTaskNV),
@@ -4992,120 +4028,66 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
         "spirv_decoration_restrict_pointer" => Some(Decoration::RestrictPointer),
         "spirv_decoration_aliased_pointer" => Some(Decoration::AliasedPointer),
         "spirv_decoration_member_offset_nv" => Some(Decoration::MemberOffsetNV),
-        "spirv_decoration_hit_object_shader_record_buffer_nv" => {
-            Some(Decoration::HitObjectShaderRecordBufferNV)
-        }
-        "spirv_decoration_hit_object_shader_record_buffer_ext" => {
-            Some(Decoration::HitObjectShaderRecordBufferEXT)
-        }
+        "spirv_decoration_hit_object_shader_record_buffer_nv" => Some(Decoration::HitObjectShaderRecordBufferNV),
+        "spirv_decoration_hit_object_shader_record_buffer_ext" => Some(Decoration::HitObjectShaderRecordBufferEXT),
         "spirv_decoration_bank_nv" => Some(Decoration::BankNV),
         "spirv_decoration_bindless_sampler_nv" => Some(Decoration::BindlessSamplerNV),
         "spirv_decoration_bindless_image_nv" => Some(Decoration::BindlessImageNV),
         "spirv_decoration_bound_sampler_nv" => Some(Decoration::BoundSamplerNV),
         "spirv_decoration_bound_image_nv" => Some(Decoration::BoundImageNV),
         "spirv_decoration_simt_call_intel" => Some(Decoration::SIMTCallINTEL),
-        "spirv_decoration_referenced_indirectly_intel" => {
-            Some(Decoration::ReferencedIndirectlyINTEL)
-        }
+        "spirv_decoration_referenced_indirectly_intel" => Some(Decoration::ReferencedIndirectlyINTEL),
         "spirv_decoration_clobber_intel" => Some(Decoration::ClobberINTEL),
         "spirv_decoration_side_effects_intel" => Some(Decoration::SideEffectsINTEL),
-        "spirv_decoration_vector_compute_variable_intel" => {
-            Some(Decoration::VectorComputeVariableINTEL)
-        }
-        "spirv_decoration_func_param_io_kind_intel" => {
-            Some(Decoration::FuncParamIOKindINTEL)
-        }
-        "spirv_decoration_vector_compute_function_intel" => {
-            Some(Decoration::VectorComputeFunctionINTEL)
-        }
+        "spirv_decoration_vector_compute_variable_intel" => Some(Decoration::VectorComputeVariableINTEL),
+        "spirv_decoration_func_param_io_kind_intel" => Some(Decoration::FuncParamIOKindINTEL),
+        "spirv_decoration_vector_compute_function_intel" => Some(Decoration::VectorComputeFunctionINTEL),
         "spirv_decoration_stack_call_intel" => Some(Decoration::StackCallINTEL),
-        "spirv_decoration_global_variable_offset_intel" => {
-            Some(Decoration::GlobalVariableOffsetINTEL)
-        }
+        "spirv_decoration_global_variable_offset_intel" => Some(Decoration::GlobalVariableOffsetINTEL),
         "spirv_decoration_user_semantic" => Some(Decoration::UserSemantic),
         "spirv_decoration_user_type_google" => Some(Decoration::UserTypeGOOGLE),
         "spirv_decoration_register_altera" => Some(Decoration::RegisterALTERA),
         "spirv_decoration_memory_altera" => Some(Decoration::MemoryALTERA),
         "spirv_decoration_numbanks_altera" => Some(Decoration::NumbanksALTERA),
         "spirv_decoration_bankwidth_altera" => Some(Decoration::BankwidthALTERA),
-        "spirv_decoration_max_private_copies_altera" => {
-            Some(Decoration::MaxPrivateCopiesALTERA)
-        }
+        "spirv_decoration_max_private_copies_altera" => Some(Decoration::MaxPrivateCopiesALTERA),
         "spirv_decoration_singlepump_altera" => Some(Decoration::SinglepumpALTERA),
         "spirv_decoration_doublepump_altera" => Some(Decoration::DoublepumpALTERA),
         "spirv_decoration_max_replicates_altera" => Some(Decoration::MaxReplicatesALTERA),
-        "spirv_decoration_simple_dual_port_altera" => {
-            Some(Decoration::SimpleDualPortALTERA)
-        }
-        "spirv_decoration_force_pow2_depth_altera" => {
-            Some(Decoration::ForcePow2DepthALTERA)
-        }
+        "spirv_decoration_simple_dual_port_altera" => Some(Decoration::SimpleDualPortALTERA),
+        "spirv_decoration_force_pow2_depth_altera" => Some(Decoration::ForcePow2DepthALTERA),
         "spirv_decoration_stridesize_altera" => Some(Decoration::StridesizeALTERA),
         "spirv_decoration_wordsize_altera" => Some(Decoration::WordsizeALTERA),
         "spirv_decoration_true_dual_port_altera" => Some(Decoration::TrueDualPortALTERA),
         "spirv_decoration_burst_coalesce_altera" => Some(Decoration::BurstCoalesceALTERA),
         "spirv_decoration_cache_size_altera" => Some(Decoration::CacheSizeALTERA),
-        "spirv_decoration_dont_statically_coalesce_altera" => {
-            Some(Decoration::DontStaticallyCoalesceALTERA)
-        }
+        "spirv_decoration_dont_statically_coalesce_altera" => Some(Decoration::DontStaticallyCoalesceALTERA),
         "spirv_decoration_prefetch_altera" => Some(Decoration::PrefetchALTERA),
         "spirv_decoration_stall_enable_altera" => Some(Decoration::StallEnableALTERA),
-        "spirv_decoration_fuse_loops_in_function_altera" => {
-            Some(Decoration::FuseLoopsInFunctionALTERA)
-        }
-        "spirv_decoration_initiation_interval_altera" => {
-            Some(Decoration::InitiationIntervalALTERA)
-        }
-        "spirv_decoration_max_concurrency_altera" => {
-            Some(Decoration::MaxConcurrencyALTERA)
-        }
-        "spirv_decoration_pipeline_enable_altera" => {
-            Some(Decoration::PipelineEnableALTERA)
-        }
-        "spirv_decoration_buffer_location_altera" => {
-            Some(Decoration::BufferLocationALTERA)
-        }
-        "spirv_decoration_io_pipe_storage_altera" => {
-            Some(Decoration::IOPipeStorageALTERA)
-        }
-        "spirv_decoration_single_element_vector_intel" => {
-            Some(Decoration::SingleElementVectorINTEL)
-        }
+        "spirv_decoration_fuse_loops_in_function_altera" => Some(Decoration::FuseLoopsInFunctionALTERA),
+        "spirv_decoration_initiation_interval_altera" => Some(Decoration::InitiationIntervalALTERA),
+        "spirv_decoration_max_concurrency_altera" => Some(Decoration::MaxConcurrencyALTERA),
+        "spirv_decoration_pipeline_enable_altera" => Some(Decoration::PipelineEnableALTERA),
+        "spirv_decoration_buffer_location_altera" => Some(Decoration::BufferLocationALTERA),
+        "spirv_decoration_io_pipe_storage_altera" => Some(Decoration::IOPipeStorageALTERA),
+        "spirv_decoration_single_element_vector_intel" => Some(Decoration::SingleElementVectorINTEL),
         "spirv_decoration_vector_compute_callable_function_intel" => {
             Some(Decoration::VectorComputeCallableFunctionINTEL)
         }
         "spirv_decoration_media_block_iointel" => Some(Decoration::MediaBlockIOINTEL),
         "spirv_decoration_stall_free_altera" => Some(Decoration::StallFreeALTERA),
-        "spirv_decoration_latency_control_label_altera" => {
-            Some(Decoration::LatencyControlLabelALTERA)
-        }
-        "spirv_decoration_conduit_kernel_argument_altera" => {
-            Some(Decoration::ConduitKernelArgumentALTERA)
-        }
-        "spirv_decoration_register_map_kernel_argument_altera" => {
-            Some(Decoration::RegisterMapKernelArgumentALTERA)
-        }
+        "spirv_decoration_latency_control_label_altera" => Some(Decoration::LatencyControlLabelALTERA),
+        "spirv_decoration_conduit_kernel_argument_altera" => Some(Decoration::ConduitKernelArgumentALTERA),
+        "spirv_decoration_register_map_kernel_argument_altera" => Some(Decoration::RegisterMapKernelArgumentALTERA),
         "spirv_decoration_mm_host_interface_address_width_altera" => {
             Some(Decoration::MMHostInterfaceAddressWidthALTERA)
         }
-        "spirv_decoration_mm_host_interface_data_width_altera" => {
-            Some(Decoration::MMHostInterfaceDataWidthALTERA)
-        }
-        "spirv_decoration_mm_host_interface_latency_altera" => {
-            Some(Decoration::MMHostInterfaceLatencyALTERA)
-        }
-        "spirv_decoration_mm_host_interface_max_burst_altera" => {
-            Some(Decoration::MMHostInterfaceMaxBurstALTERA)
-        }
-        "spirv_decoration_mm_host_interface_wait_request_altera" => {
-            Some(Decoration::MMHostInterfaceWaitRequestALTERA)
-        }
-        "spirv_decoration_stable_kernel_argument_altera" => {
-            Some(Decoration::StableKernelArgumentALTERA)
-        }
-        "spirv_decoration_implement_in_register_map_altera" => {
-            Some(Decoration::ImplementInRegisterMapALTERA)
-        }
+        "spirv_decoration_mm_host_interface_data_width_altera" => Some(Decoration::MMHostInterfaceDataWidthALTERA),
+        "spirv_decoration_mm_host_interface_latency_altera" => Some(Decoration::MMHostInterfaceLatencyALTERA),
+        "spirv_decoration_mm_host_interface_max_burst_altera" => Some(Decoration::MMHostInterfaceMaxBurstALTERA),
+        "spirv_decoration_mm_host_interface_wait_request_altera" => Some(Decoration::MMHostInterfaceWaitRequestALTERA),
+        "spirv_decoration_stable_kernel_argument_altera" => Some(Decoration::StableKernelArgumentALTERA),
+        "spirv_decoration_implement_in_register_map_altera" => Some(Decoration::ImplementInRegisterMapALTERA),
         _ => None,
     }
 }

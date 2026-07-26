@@ -2,8 +2,8 @@
 //   external/spirv.core.grammar.json.
 // DO NOT MODIFY!
 
-use tracel_rspirv::spirv::*;
 use crate::prelude::*;
+use tracel_rspirv::spirv::*;
 #[pliron_attr(name = "spirv.image_operands", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct ImageOperandsAttr(pub ImageOperands);
@@ -184,11 +184,7 @@ impl From<FragmentShadingRateAttr> for FragmentShadingRate {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.raw_access_chain_operands",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.raw_access_chain_operands", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct RawAccessChainOperandsAttr(pub RawAccessChainOperands);
 impl RawAccessChainOperandsAttr {
@@ -566,11 +562,7 @@ impl From<HostAccessQualifierAttr> for HostAccessQualifier {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.function_parameter_attribute",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.function_parameter_attribute", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct FunctionParameterAttributeAttr(pub FunctionParameterAttribute);
 impl FunctionParameterAttributeAttr {
@@ -758,11 +750,7 @@ impl From<PackedVectorFormatAttr> for PackedVectorFormat {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.cooperative_matrix_operands",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.cooperative_matrix_operands", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct CooperativeMatrixOperandsAttr(pub CooperativeMatrixOperands);
 impl CooperativeMatrixOperandsAttr {
@@ -780,11 +768,7 @@ impl From<CooperativeMatrixOperandsAttr> for CooperativeMatrixOperands {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.cooperative_matrix_layout",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.cooperative_matrix_layout", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct CooperativeMatrixLayoutAttr(pub CooperativeMatrixLayout);
 impl CooperativeMatrixLayoutAttr {
@@ -820,11 +804,7 @@ impl From<CooperativeMatrixUseAttr> for CooperativeMatrixUse {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.cooperative_matrix_reduce",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.cooperative_matrix_reduce", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct CooperativeMatrixReduceAttr(pub CooperativeMatrixReduce);
 impl CooperativeMatrixReduceAttr {
@@ -860,11 +840,7 @@ impl From<TensorClampModeAttr> for TensorClampMode {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.tensor_addressing_operands",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.tensor_addressing_operands", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct TensorAddressingOperandsAttr(pub TensorAddressingOperands);
 impl TensorAddressingOperandsAttr {
@@ -882,11 +858,7 @@ impl From<TensorAddressingOperandsAttr> for TensorAddressingOperands {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.initialization_mode_qualifier",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.initialization_mode_qualifier", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct InitializationModeQualifierAttr(pub InitializationModeQualifier);
 impl InitializationModeQualifierAttr {
@@ -940,11 +912,7 @@ impl From<StoreCacheControlAttr> for StoreCacheControl {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.named_maximum_number_of_registers",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.named_maximum_number_of_registers", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct NamedMaximumNumberOfRegistersAttr(pub NamedMaximumNumberOfRegisters);
 impl NamedMaximumNumberOfRegistersAttr {
@@ -962,11 +930,7 @@ impl From<NamedMaximumNumberOfRegistersAttr> for NamedMaximumNumberOfRegisters {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.matrix_multiply_accumulate_operands",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.matrix_multiply_accumulate_operands", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct MatrixMultiplyAccumulateOperandsAttr(pub MatrixMultiplyAccumulateOperands);
 impl MatrixMultiplyAccumulateOperandsAttr {
@@ -1002,11 +966,7 @@ impl From<FPEncodingAttr> for FPEncoding {
         value.0
     }
 }
-#[pliron_attr(
-    name = "spirv.cooperative_vector_matrix_layout",
-    format = "$0",
-    verifier = "succ"
-)]
+#[pliron_attr(name = "spirv.cooperative_vector_matrix_layout", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct CooperativeVectorMatrixLayoutAttr(pub CooperativeVectorMatrixLayout);
 impl CooperativeVectorMatrixLayoutAttr {
