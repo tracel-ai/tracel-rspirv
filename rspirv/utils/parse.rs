@@ -98,14 +98,6 @@ macro_rules! parsable_enum {
                     let variant = $crate::utils::parse::enum_parse(parse_variant, state_stream)?;
                     Ok((unsafe { core::mem::transmute::<u32, Self>(variant.0) }, variant.1))
                 }
-
-                fn parser<'a>(_arg: Self::Arg) -> Box<dyn ::pliron::combine::Parser<::pliron::parsable::StateStream<'a>, Output = Self::Parsed, PartialState = ()> + 'a> {
-                    // use ::pliron::combine::Parser;
-                    // $crate::utils::parse::enum_parser(parse_variant).map(|variant| unsafe {
-                    //     core::mem::transmute::<u32, Self>(variant)
-                    // }).boxed()
-                    todo!()
-                }
             }
         };
     };
