@@ -41,10 +41,8 @@ impl TypeTracker {
             if grammar::reflect::is_type(inst.class.opcode) {
                 match inst.class.opcode {
                     spirv::Op::TypeInt => {
-                        if let (
-                            &dr::Operand::LiteralBit32(bits),
-                            &dr::Operand::LiteralBit32(sign),
-                        ) = (&inst.operands[0], &inst.operands[1])
+                        if let (&dr::Operand::LiteralBit32(bits), &dr::Operand::LiteralBit32(sign)) =
+                            (&inst.operands[0], &inst.operands[1])
                         {
                             self.types.insert(rid, Type::Integer(bits, sign == 1));
                         }
@@ -96,19 +94,14 @@ impl ExtInstSetTracker {
     /// If the given extended instruction set is not recognized, it will
     /// be silently ignored.
     pub fn track(&mut self, inst: &dr::Instruction) {
-        if inst.class.opcode != spirv::Op::ExtInstImport
-            || inst.result_id.is_none()
-            || inst.operands.is_empty()
-        {
+        if inst.class.opcode != spirv::Op::ExtInstImport || inst.result_id.is_none() || inst.operands.is_empty() {
             return;
         }
         if let dr::Operand::LiteralString(ref s) = inst.operands[0] {
             if s == "GLSL.std.450" {
-                self.sets
-                    .insert(inst.result_id.unwrap(), ExtInstSet::GlslStd450);
+                self.sets.insert(inst.result_id.unwrap(), ExtInstSet::GlslStd450);
             } else if s == "OpenCL.std" {
-                self.sets
-                    .insert(inst.result_id.unwrap(), ExtInstSet::OpenCLStd100);
+                self.sets.insert(inst.result_id.unwrap(), ExtInstSet::OpenCLStd100);
             }
         }
     }

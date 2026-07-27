@@ -109,12 +109,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [(IdRef, One), (LiteralInteger, One), (LiteralInteger, One)]
     ),
     inst!(Extension, [], [], [(LiteralString, One)]),
-    inst!(
-        ExtInstImport,
-        [],
-        [],
-        [(IdResult, One), (LiteralString, One)]
-    ),
+    inst!(ExtInstImport, [], [], [(IdResult, One), (LiteralString, One)]),
     inst!(
         ExtInst,
         [],
@@ -127,12 +122,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
             (IdRef, ZeroOrMore)
         ]
     ),
-    inst!(
-        MemoryModel,
-        [],
-        [],
-        [(AddressingModel, One), (MemoryModel, One)]
-    ),
+    inst!(MemoryModel, [], [], [(AddressingModel, One), (MemoryModel, One)]),
     inst!(
         EntryPoint,
         [],
@@ -152,21 +142,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         TypeInt,
         [],
         [],
-        [
-            (IdResult, One),
-            (LiteralInteger, One),
-            (LiteralInteger, One)
-        ]
+        [(IdResult, One), (LiteralInteger, One), (LiteralInteger, One)]
     ),
     inst!(
         TypeFloat,
         [],
         [],
-        [
-            (IdResult, One),
-            (LiteralInteger, One),
-            (FPEncoding, ZeroOrOne)
-        ]
+        [(IdResult, One), (LiteralInteger, One), (FPEncoding, ZeroOrOne)]
     ),
     inst!(
         TypeVector,
@@ -198,25 +180,10 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     ),
     inst!(TypeSampler, [], [], [(IdResult, One)]),
     inst!(TypeSampledImage, [], [], [(IdResult, One), (IdRef, One)]),
-    inst!(
-        TypeArray,
-        [],
-        [],
-        [(IdResult, One), (IdRef, One), (IdRef, One)]
-    ),
-    inst!(
-        TypeRuntimeArray,
-        [Shader],
-        [],
-        [(IdResult, One), (IdRef, One)]
-    ),
+    inst!(TypeArray, [], [], [(IdResult, One), (IdRef, One), (IdRef, One)]),
+    inst!(TypeRuntimeArray, [Shader], [], [(IdResult, One), (IdRef, One)]),
     inst!(TypeStruct, [], [], [(IdResult, One), (IdRef, ZeroOrMore)]),
-    inst!(
-        TypeOpaque,
-        [Kernel],
-        [],
-        [(IdResult, One), (LiteralString, One)]
-    ),
+    inst!(TypeOpaque, [Kernel], [], [(IdResult, One), (LiteralString, One)]),
     inst!(
         TypePointer,
         [],
@@ -233,12 +200,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     inst!(TypeDeviceEvent, [DeviceEnqueue], [], [(IdResult, One)]),
     inst!(TypeReserveId, [Pipes], [], [(IdResult, One)]),
     inst!(TypeQueue, [DeviceEnqueue], [], [(IdResult, One)]),
-    inst!(
-        TypePipe,
-        [Pipes],
-        [],
-        [(IdResult, One), (AccessQualifier, One)]
-    ),
+    inst!(TypePipe, [Pipes], [], [(IdResult, One), (AccessQualifier, One)]),
     inst!(
         TypeForwardPointer,
         [Addresses, PhysicalStorageBufferAddresses],
@@ -246,12 +208,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [(IdRef, One), (StorageClass, One)]
     ),
     inst!(ConstantTrue, [], [], [(IdResultType, One), (IdResult, One)]),
-    inst!(
-        ConstantFalse,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One)]
-    ),
+    inst!(ConstantFalse, [], [], [(IdResultType, One), (IdResult, One)]),
     inst!(
         Constant,
         [],
@@ -281,18 +238,8 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ]
     ),
     inst!(ConstantNull, [], [], [(IdResultType, One), (IdResult, One)]),
-    inst!(
-        SpecConstantTrue,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One)]
-    ),
-    inst!(
-        SpecConstantFalse,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One)]
-    ),
+    inst!(SpecConstantTrue, [], [], [(IdResultType, One), (IdResult, One)]),
+    inst!(SpecConstantFalse, [], [], [(IdResultType, One), (IdResult, One)]),
     inst!(
         SpecConstant,
         [],
@@ -330,23 +277,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
             (IdRef, One)
         ]
     ),
-    inst!(
-        FunctionParameter,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One)]
-    ),
+    inst!(FunctionParameter, [], [], [(IdResultType, One), (IdResult, One)]),
     inst!(FunctionEnd, [], [], []),
     inst!(
         FunctionCall,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         Variable,
@@ -382,12 +319,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
             (MemoryAccess, ZeroOrOne)
         ]
     ),
-    inst!(
-        Store,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (MemoryAccess, ZeroOrOne)]
-    ),
+    inst!(Store, [], [], [(IdRef, One), (IdRef, One), (MemoryAccess, ZeroOrOne)]),
     inst!(
         CopyMemory,
         [],
@@ -415,23 +347,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         AccessChain,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         InBoundsAccessChain,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         PtrAccessChain,
@@ -498,12 +420,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         VectorExtractDynamic,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         VectorInsertDynamic,
@@ -558,12 +475,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
             (LiteralInteger, ZeroOrMore)
         ]
     ),
-    inst!(
-        CopyObject,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(CopyObject, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         Transpose,
         [Matrix],
@@ -574,12 +486,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SampledImage,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ImageSampleImplicitLod,
@@ -735,19 +642,9 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ImageWrite,
         [],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (ImageOperands, ZeroOrOne)
-        ]
+        [(IdRef, One), (IdRef, One), (IdRef, One), (ImageOperands, ZeroOrOne)]
     ),
-    inst!(
-        Image,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(Image, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         ImageQueryFormat,
         [Kernel],
@@ -764,12 +661,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ImageQuerySizeLod,
         [Kernel, ImageQuery],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ImageQuerySize,
@@ -781,12 +673,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ImageQueryLod,
         [ImageQuery],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ImageQueryLevels,
@@ -824,24 +711,9 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
-    inst!(
-        UConvert,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        SConvert,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        FConvert,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(UConvert, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(SConvert, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(FConvert, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         QuantizeToF16,
         [Shader],
@@ -888,330 +760,165 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         GenericCastToPtrExplicit,
         [Kernel],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (StorageClass, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (StorageClass, One)]
     ),
-    inst!(
-        Bitcast,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        SNegate,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        FNegate,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(Bitcast, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(SNegate, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(FNegate, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         IAdd,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FAdd,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ISub,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FSub,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         IMul,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FMul,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UDiv,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SDiv,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FDiv,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UMod,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SRem,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SMod,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FRem,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FMod,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         VectorTimesScalar,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         MatrixTimesScalar,
         [Matrix],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         VectorTimesMatrix,
         [Matrix],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         MatrixTimesVector,
         [Matrix],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         MatrixTimesMatrix,
         [Matrix],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         OuterProduct,
         [Matrix],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         Dot,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         IAddCarry,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ISubBorrow,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UMulExtended,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SMulExtended,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
-    inst!(
-        Any,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        All,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        IsNan,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        IsInf,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(Any, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(All, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(IsNan, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(IsInf, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         IsFinite,
         [Kernel],
@@ -1234,85 +941,45 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         LessOrGreater,
         [Kernel],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         Ordered,
         [Kernel],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         Unordered,
         [Kernel],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         LogicalEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         LogicalNotEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         LogicalOr,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         LogicalAnd,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
-    inst!(
-        LogicalNot,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(LogicalNot, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         Select,
         [],
@@ -1329,316 +996,171 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         IEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         INotEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UGreaterThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SGreaterThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UGreaterThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SGreaterThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ULessThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SLessThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ULessThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SLessThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FOrdEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FUnordEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FOrdNotEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FUnordNotEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FOrdLessThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FUnordLessThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FOrdGreaterThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FUnordGreaterThan,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FOrdLessThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FUnordLessThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FOrdGreaterThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FUnordGreaterThanEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ShiftRightLogical,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ShiftRightArithmetic,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ShiftLeftLogical,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         BitwiseOr,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         BitwiseXor,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         BitwiseAnd,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
-    inst!(
-        Not,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(Not, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         BitFieldInsert,
         [Shader, BitInstructions],
@@ -1682,24 +1204,9 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
-    inst!(
-        BitCount,
-        [],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        DPdx,
-        [Shader],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
-    inst!(
-        DPdy,
-        [Shader],
-        [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One)]
-    ),
+    inst!(BitCount, [], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(DPdx, [Shader], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
+    inst!(DPdy, [Shader], [], [(IdResultType, One), (IdResult, One), (IdRef, One)]),
     inst!(
         Fwidth,
         [Shader],
@@ -1752,12 +1259,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdScope, One), (IdScope, One), (IdMemorySemantics, One)]
     ),
-    inst!(
-        MemoryBarrier,
-        [],
-        [],
-        [(IdScope, One), (IdMemorySemantics, One)]
-    ),
+    inst!(MemoryBarrier, [], [], [(IdScope, One), (IdMemorySemantics, One)]),
     inst!(
         AtomicLoad,
         [],
@@ -1774,12 +1276,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         AtomicStore,
         [],
         [],
-        [
-            (IdRef, One),
-            (IdScope, One),
-            (IdMemorySemantics, One),
-            (IdRef, One)
-        ]
+        [(IdRef, One), (IdScope, One), (IdMemorySemantics, One), (IdRef, One)]
     ),
     inst!(
         AtomicExchange,
@@ -1969,63 +1466,30 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         Phi,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (PairIdRefIdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (PairIdRefIdRef, ZeroOrMore)]
     ),
-    inst!(
-        LoopMerge,
-        [],
-        [],
-        [(IdRef, One), (IdRef, One), (LoopControl, One)]
-    ),
-    inst!(
-        SelectionMerge,
-        [],
-        [],
-        [(IdRef, One), (SelectionControl, One)]
-    ),
+    inst!(LoopMerge, [], [], [(IdRef, One), (IdRef, One), (LoopControl, One)]),
+    inst!(SelectionMerge, [], [], [(IdRef, One), (SelectionControl, One)]),
     inst!(Label, [], [], [(IdResult, One)]),
     inst!(Branch, [], [], [(IdRef, One)]),
     inst!(
         BranchConditional,
         [],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (LiteralInteger, ZeroOrMore)
-        ]
+        [(IdRef, One), (IdRef, One), (IdRef, One), (LiteralInteger, ZeroOrMore)]
     ),
     inst!(
         Switch,
         [],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (PairLiteralIntegerIdRef, ZeroOrMore)
-        ]
+        [(IdRef, One), (IdRef, One), (PairLiteralIntegerIdRef, ZeroOrMore)]
     ),
     inst!(Kill, [Shader], [], []),
     inst!(Return, [], [], []),
     inst!(ReturnValue, [], [], [(IdRef, One)]),
     inst!(Unreachable, [], [], []),
-    inst!(
-        LifetimeStart,
-        [Kernel],
-        [],
-        [(IdRef, One), (LiteralInteger, One)]
-    ),
-    inst!(
-        LifetimeStop,
-        [Kernel],
-        [],
-        [(IdRef, One), (LiteralInteger, One)]
-    ),
+    inst!(LifetimeStart, [Kernel], [], [(IdRef, One), (LiteralInteger, One)]),
+    inst!(LifetimeStop, [Kernel], [], [(IdRef, One), (LiteralInteger, One)]),
     inst!(
         GroupAsyncCopy,
         [Kernel],
@@ -2051,23 +1515,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         GroupAll,
         [Groups],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupAny,
         [Groups],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupBroadcast,
@@ -2333,25 +1787,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         GroupCommitReadPipe,
         [Pipes],
         [],
-        [
-            (IdScope, One),
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdScope, One), (IdRef, One), (IdRef, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         GroupCommitWritePipe,
         [Pipes],
         [],
-        [
-            (IdScope, One),
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdScope, One), (IdRef, One), (IdRef, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         EnqueueMarker,
@@ -2454,12 +1896,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
-    inst!(
-        SetUserEventStatus,
-        [DeviceEnqueue],
-        [],
-        [(IdRef, One), (IdRef, One)]
-    ),
+    inst!(SetUserEventStatus, [DeviceEnqueue], [], [(IdRef, One), (IdRef, One)]),
     inst!(
         CaptureEventProfilingInfo,
         [DeviceEnqueue],
@@ -2725,12 +2162,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [(IdRef, One), (IdScope, One), (IdMemorySemantics, One)]
     ),
     inst!(ModuleProcessed, [], [], [(LiteralString, One)]),
-    inst!(
-        ExecutionModeId,
-        [],
-        [],
-        [(IdRef, One), (ExecutionMode, One)]
-    ),
+    inst!(ExecutionModeId, [], [], [(IdRef, One), (ExecutionMode, One)]),
     inst!(
         DecorateId,
         [],
@@ -2747,34 +2179,19 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         GroupNonUniformAll,
         [GroupNonUniformVote],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformAny,
         [GroupNonUniformVote],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformAllEqual,
         [GroupNonUniformVote],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformBroadcast,
@@ -2792,34 +2209,19 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         GroupNonUniformBroadcastFirst,
         [GroupNonUniformBallot],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformBallot,
         [GroupNonUniformBallot],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformInverseBallot,
         [GroupNonUniformBallot],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformBallotBitExtract,
@@ -2849,23 +2251,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         GroupNonUniformBallotFindLSB,
         [GroupNonUniformBallot],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformBallotFindMSB,
         [GroupNonUniformBallot],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdScope, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdScope, One), (IdRef, One)]
     ),
     inst!(
         GroupNonUniformShuffle,
@@ -3221,45 +2613,25 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         PtrEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         PtrNotEqual,
         [],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         PtrDiff,
         [Addresses, VariablePointers, VariablePointersStorageBuffer],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ColorAttachmentReadEXT,
         [TileImageColorReadAccessEXT],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrOne)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrOne)]
     ),
     inst!(
         DepthAttachmentReadEXT,
@@ -3277,12 +2649,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         TypeTensorARM,
         [TensorsARM],
         [],
-        [
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrOne),
-            (IdRef, ZeroOrOne)
-        ]
+        [(IdResult, One), (IdRef, One), (IdRef, ZeroOrOne), (IdRef, ZeroOrOne)]
     ),
     inst!(
         TensorReadARM,
@@ -3300,23 +2667,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         TensorWriteARM,
         [TensorsARM],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (TensorOperands, ZeroOrOne)
-        ]
+        [(IdRef, One), (IdRef, One), (IdRef, One), (TensorOperands, ZeroOrOne)]
     ),
     inst!(
         TensorQuerySizeARM,
         [TensorsARM],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         GraphConstantARM,
@@ -3330,22 +2687,12 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdRef, One), (LiteralString, One), (IdRef, ZeroOrMore)]
     ),
-    inst!(
-        GraphARM,
-        [GraphARM],
-        [],
-        [(IdResultType, One), (IdResult, One)]
-    ),
+    inst!(GraphARM, [GraphARM], [], [(IdResultType, One), (IdResult, One)]),
     inst!(
         GraphInputARM,
         [GraphARM],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         GraphSetOutputARM,
@@ -3360,12 +2707,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResult, One), (LiteralInteger, One), (IdRef, ZeroOrMore)]
     ),
-    inst!(
-        TerminateInvocation,
-        [Shader],
-        ["SPV_KHR_terminate_invocation"],
-        []
-    ),
+    inst!(TerminateInvocation, [Shader], ["SPV_KHR_terminate_invocation"], []),
     inst!(
         TypeUntypedPointerKHR,
         [UntypedPointersKHR],
@@ -3517,12 +2859,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupReadInvocationKHR,
         [SubgroupBallotKHR],
         ["SPV_KHR_shader_ballot"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ExtInstWithForwardRefsKHR,
@@ -3584,18 +2921,8 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ["SPV_KHR_ray_tracing", "SPV_KHR_ray_query"],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
-    inst!(
-        IgnoreIntersectionKHR,
-        [RayTracingKHR],
-        ["SPV_KHR_ray_tracing"],
-        []
-    ),
-    inst!(
-        TerminateRayKHR,
-        [RayTracingKHR],
-        ["SPV_KHR_ray_tracing"],
-        []
-    ),
+    inst!(IgnoreIntersectionKHR, [RayTracingKHR], ["SPV_KHR_ray_tracing"], []),
+    inst!(TerminateRayKHR, [RayTracingKHR], ["SPV_KHR_ray_tracing"], []),
     inst!(
         SDot,
         [DotProduct],
@@ -3746,12 +3073,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
-    inst!(
-        TypeRayQueryKHR,
-        [RayQueryKHR],
-        ["SPV_KHR_ray_query"],
-        [(IdResult, One)]
-    ),
+    inst!(TypeRayQueryKHR, [RayQueryKHR], ["SPV_KHR_ray_query"], [(IdResult, One)]),
     inst!(
         RayQueryInitializeKHR,
         [RayQueryKHR],
@@ -3795,12 +3117,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryGetIntersectionTypeKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ImageSampleWeightedQCOM,
@@ -3932,12 +3249,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ExtractSubArrayQCOM,
         [CooperativeMatrixConversionQCOM],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         GroupIAddNonUniformAMD,
@@ -4039,12 +3351,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         FragmentMaskFetchAMD,
         [FragmentMaskAMD],
         ["SPV_AMD_shader_fragment_mask"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FragmentFetchAMD,
@@ -4076,12 +3383,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
             (IdRef, One)
         ]
     ),
-    inst!(
-        EnqueueNodePayloadsAMDX,
-        [ShaderEnqueueAMDX],
-        [],
-        [(IdRef, One)]
-    ),
+    inst!(EnqueueNodePayloadsAMDX, [ShaderEnqueueAMDX], [], [(IdRef, One)]),
     inst!(
         TypeNodePayloadArrayAMDX,
         [ShaderEnqueueAMDX],
@@ -4104,12 +3406,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         IsNodePayloadValidAMDX,
         [ShaderEnqueueAMDX],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ConstantStringAMDX,
@@ -4177,28 +3474,15 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ConstantDataKHR,
         [ConstantDataKHR],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (LiteralInteger, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (LiteralInteger, ZeroOrMore)]
     ),
     inst!(
         SpecConstantDataKHR,
         [ConstantDataKHR],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (LiteralInteger, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (LiteralInteger, ZeroOrMore)]
     ),
-    inst!(
-        PoisonKHR,
-        [PoisonFreezeKHR],
-        [],
-        [(IdResultType, One), (IdResult, One)]
-    ),
+    inst!(PoisonKHR, [PoisonFreezeKHR], [], [(IdResultType, One), (IdResult, One)]),
     inst!(
         FreezeKHR,
         [PoisonFreezeKHR],
@@ -4316,12 +3600,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
-    inst!(
-        HitObjectRecordEmptyNV,
-        [ShaderInvocationReorderNV],
-        [],
-        [(IdRef, One)]
-    ),
+    inst!(HitObjectRecordEmptyNV, [ShaderInvocationReorderNV], [], [(IdRef, One)]),
     inst!(
         HitObjectTraceRayNV,
         [ShaderInvocationReorderNV],
@@ -4495,12 +3774,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdRef, One), (IdRef, One)]
     ),
-    inst!(
-        TypeHitObjectNV,
-        [ShaderInvocationReorderNV],
-        [],
-        [(IdResult, One)]
-    ),
+    inst!(TypeHitObjectNV, [ShaderInvocationReorderNV], [], [(IdResult, One)]),
     inst!(
         ImageSampleFootprintNV,
         [ImageFootprintNV],
@@ -4596,12 +3870,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdRef, One), (IdRef, One), (IdRef, One), (IdRef, ZeroOrOne)]
     ),
-    inst!(
-        SetMeshOutputsEXT,
-        [MeshShadingEXT],
-        [],
-        [(IdRef, One), (IdRef, One)]
-    ),
+    inst!(SetMeshOutputsEXT, [MeshShadingEXT], [], [(IdRef, One), (IdRef, One)]),
     inst!(
         GroupNonUniformPartitionEXT,
         [GroupNonUniformPartitionedEXT],
@@ -4658,12 +3927,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         CooperativeVectorStoreNV,
         [CooperativeVectorNV],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (MemoryAccess, ZeroOrOne)
-        ]
+        [(IdRef, One), (IdRef, One), (IdRef, One), (MemoryAccess, ZeroOrOne)]
     ),
     inst!(
         HitObjectRecordFromQueryEXT,
@@ -4722,12 +3986,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         HitObjectReorderExecuteShaderEXT,
         [ShaderInvocationReorderEXT],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, ZeroOrOne),
-            (IdRef, ZeroOrOne)
-        ]
+        [(IdRef, One), (IdRef, One), (IdRef, ZeroOrOne), (IdRef, ZeroOrOne)]
     ),
     inst!(
         HitObjectTraceReorderExecuteEXT,
@@ -4772,12 +4031,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
             (IdRef, ZeroOrOne)
         ]
     ),
-    inst!(
-        TypeHitObjectEXT,
-        [ShaderInvocationReorderEXT],
-        [],
-        [(IdResult, One)]
-    ),
+    inst!(TypeHitObjectEXT, [ShaderInvocationReorderEXT], [], [(IdResult, One)]),
     inst!(
         ReorderThreadWithHintEXT,
         [ShaderInvocationReorderEXT],
@@ -4929,19 +4183,9 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ReportIntersectionKHR,
         [RayTracingNV, RayTracingKHR],
         ["SPV_NV_ray_tracing", "SPV_KHR_ray_tracing"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
-    inst!(
-        IgnoreIntersectionNV,
-        [RayTracingNV],
-        ["SPV_NV_ray_tracing"],
-        []
-    ),
+    inst!(IgnoreIntersectionNV, [RayTracingNV], ["SPV_NV_ray_tracing"], []),
     inst!(TerminateRayNV, [RayTracingNV], ["SPV_NV_ray_tracing"], []),
     inst!(
         TraceNV,
@@ -5003,21 +4247,11 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryGetIntersectionTriangleVertexPositionsKHR,
         [RayQueryPositionFetchKHR],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         TypeAccelerationStructureKHR,
-        [
-            RayTracingNV,
-            RayTracingKHR,
-            RayQueryKHR,
-            DisplacementMicromapNV
-        ],
+        [RayTracingNV, RayTracingKHR, RayQueryKHR, DisplacementMicromapNV],
         [
             "SPV_NV_ray_tracing",
             "SPV_KHR_ray_tracing",
@@ -5036,12 +4270,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryGetIntersectionClusterIdNV,
         [RayTracingClusterAccelerationStructureNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         HitObjectGetClusterIdNV,
@@ -5220,12 +4449,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         TypeTensorViewNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResult, One), (IdRef, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         CreateTensorLayoutNV,
@@ -5237,45 +4461,25 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         TensorLayoutSetDimensionNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         TensorLayoutSetStrideNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         TensorLayoutSliceNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         TensorLayoutSetClampValueNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         CreateTensorViewNV,
@@ -5287,23 +4491,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         TensorViewSetDimensionNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         TensorViewSetStrideNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(DemoteToHelperInvocation, [DemoteToHelperInvocation], [], []),
     inst!(
@@ -5330,12 +4524,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         TensorLayoutSetBlockSizeNV,
         [TensorAddressingNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         CooperativeMatrixTransposeNV,
@@ -5403,56 +4592,31 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryGetIntersectionSpherePositionNV,
         [RayTracingSpheresGeometryNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionSphereRadiusNV,
         [RayTracingSpheresGeometryNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionLSSPositionsNV,
         [RayTracingLinearSweptSpheresGeometryNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionLSSRadiiNV,
         [RayTracingLinearSweptSpheresGeometryNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionLSSHitValueNV,
         [RayTracingLinearSweptSpheresGeometryNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         HitObjectGetSpherePositionNV,
@@ -5494,34 +4658,19 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryIsSphereHitNV,
         [RayTracingSpheresGeometryNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryIsLSSHitNV,
         [RayTracingLinearSweptSpheresGeometryNV],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupShuffleINTEL,
         [SubgroupShuffleINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupShuffleDownINTEL,
@@ -5551,12 +4700,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupShuffleXorINTEL,
         [SubgroupShuffleINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupBlockReadINTEL,
@@ -5574,12 +4718,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupImageBlockReadINTEL,
         [SubgroupImageBlockIOINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupImageBlockWriteINTEL,
@@ -5604,13 +4743,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupImageMediaBlockWriteINTEL,
         [SubgroupImageMediaBlockIOINTEL],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdRef, One), (IdRef, One), (IdRef, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UCountLeadingZerosINTEL,
@@ -5628,133 +4761,73 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         AbsISubINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         AbsUSubINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         IAddSatINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UAddSatINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         IAverageINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UAverageINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         IAverageRoundedINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UAverageRoundedINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ISubSatINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         USubSatINTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         IMul32x16INTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         UMul32x16INTEL,
         [IntegerFunctions2INTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ConstantFunctionPointerINTEL,
@@ -5768,12 +4841,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ["SPV_INTEL_function_pointers"],
         [(IdResultType, One), (IdResult, One), (IdRef, ZeroOrMore)]
     ),
-    inst!(
-        AsmTargetINTEL,
-        [AsmINTEL],
-        [],
-        [(IdResult, One), (LiteralString, One)]
-    ),
+    inst!(AsmTargetINTEL, [AsmINTEL], [], [(IdResult, One), (LiteralString, One)]),
     inst!(
         AsmINTEL,
         [AsmINTEL],
@@ -5791,12 +4859,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         AsmCallINTEL,
         [AsmINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, ZeroOrMore)]
     ),
     inst!(
         AtomicFMinEXT,
@@ -5844,41 +4907,25 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ExpectKHR,
         [ExpectAssumeKHR],
         ["SPV_KHR_expect_assume"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         DecorateString,
         [],
-        [
-            "SPV_GOOGLE_decorate_string",
-            "SPV_GOOGLE_hlsl_functionality1"
-        ],
+        ["SPV_GOOGLE_decorate_string", "SPV_GOOGLE_hlsl_functionality1"],
         [(IdRef, One), (Decoration, One)]
     ),
     inst!(
         MemberDecorateString,
         [],
-        [
-            "SPV_GOOGLE_decorate_string",
-            "SPV_GOOGLE_hlsl_functionality1"
-        ],
+        ["SPV_GOOGLE_decorate_string", "SPV_GOOGLE_hlsl_functionality1"],
         [(IdRef, One), (LiteralInteger, One), (Decoration, One)]
     ),
     inst!(
         VmeImageINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         TypeVmeImageINTEL,
@@ -5962,92 +5009,49 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceGetDefaultInterShapePenaltyINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceSetInterShapePenaltyINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceSetInterDirectionPenaltyINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL,
@@ -6082,33 +5086,19 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     ),
     inst!(
         SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [(IdResultType, One), (IdResult, One)]
     ),
     inst!(
         SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationChromaINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationChromaINTEL],
         [],
         [(IdResultType, One), (IdResult, One)]
     ),
@@ -6122,23 +5112,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL,
@@ -6289,12 +5269,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcImeRefWindowSizeINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeAdjustRefOffsetINTEL,
@@ -6319,12 +5294,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcImeSetMaxMotionVectorCountINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeSetUnidirectionalMixDisableINTEL,
@@ -6336,23 +5306,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeSetWeightedSadINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeEvaluateWithSingleReferenceINTEL,
@@ -6492,34 +5452,19 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL,
@@ -6561,12 +5506,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcImeGetBorderReachedINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcImeGetTruncatedSearchIndicationINTEL,
@@ -6722,10 +5662,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     ),
     inst!(
         SubgroupAvcSicConfigureIpeLumaINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [
             (IdResultType, One),
@@ -6742,10 +5679,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     ),
     inst!(
         SubgroupAvcSicConfigureIpeLumaChromaINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationChromaINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationChromaINTEL],
         [],
         [
             (IdResultType, One),
@@ -6767,12 +5701,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcSicGetMotionVectorMaskINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicConvertToMcePayloadINTEL,
@@ -6784,19 +5713,11 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcSicSetIntraLumaShapePenaltyINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [
             (IdResultType, One),
@@ -6809,17 +5730,9 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     ),
     inst!(
         SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationChromaINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationChromaINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicSetBilinearFilterEnableINTEL,
@@ -6831,37 +5744,19 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SubgroupAvcSicSetSkcForwardTransformEnableINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicSetBlockBasedRawSkipSadINTEL,
         [SubgroupAvcMotionEstimationINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicEvaluateIpeINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicEvaluateWithSingleReferenceINTEL,
@@ -6921,19 +5816,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     ),
     inst!(
         SubgroupAvcSicGetIpeLumaShapeINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicGetBestIpeLumaDistortionINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
@@ -6945,37 +5834,25 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
     ),
     inst!(
         SubgroupAvcSicGetPackedIpeLumaModesINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicGetIpeChromaModeINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationChromaINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationChromaINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
     inst!(
         SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL,
-        [
-            SubgroupAvcMotionEstimationINTEL,
-            SubgroupAvcMotionEstimationIntraINTEL
-        ],
+        [SubgroupAvcMotionEstimationINTEL, SubgroupAvcMotionEstimationIntraINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
@@ -6997,12 +5874,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One)]
     ),
-    inst!(
-        RestoreMemoryINTEL,
-        [VariableLengthArrayINTEL],
-        [],
-        [(IdRef, One)]
-    ),
+    inst!(RestoreMemoryINTEL, [VariableLengthArrayINTEL], [], [(IdRef, One)]),
     inst!(
         ArbitraryFloatSinCosPiALTERA,
         [ArbitraryPrecisionFloatingPointALTERA],
@@ -7831,23 +6703,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ReadPipeBlockingALTERA,
         [BlockingPipesALTERA],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         WritePipeBlockingALTERA,
         [BlockingPipesALTERA],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FPGARegALTERA,
@@ -7871,89 +6733,49 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryGetIntersectionTKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionInstanceCustomIndexKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionInstanceIdKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionGeometryIndexKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionPrimitiveIndexKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionBarycentricsKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionFrontFaceKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionCandidateAABBOpaqueKHR,
@@ -7965,23 +6787,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryGetIntersectionObjectRayDirectionKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionObjectRayOriginKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetWorldRayDirectionKHR,
@@ -7999,23 +6811,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         RayQueryGetIntersectionObjectToWorldKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         RayQueryGetIntersectionWorldToObjectKHR,
         [RayQueryKHR],
         ["SPV_KHR_ray_query"],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         AtomicFAddEXT,
@@ -8121,18 +6923,8 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
-    inst!(
-        TaskSequenceReleaseALTERA,
-        [TaskSequenceALTERA],
-        [],
-        [(IdRef, One)]
-    ),
-    inst!(
-        TypeTaskSequenceALTERA,
-        [TaskSequenceALTERA],
-        [],
-        [(IdResult, One)]
-    ),
+    inst!(TaskSequenceReleaseALTERA, [TaskSequenceALTERA], [], [(IdRef, One)]),
+    inst!(TypeTaskSequenceALTERA, [TaskSequenceALTERA], [], [(IdResult, One)]),
     inst!(
         SubgroupBlockPrefetchINTEL,
         [SubgroupBufferPrefetchINTEL],
@@ -8254,12 +7046,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         UntypedVariableLengthArrayINTEL,
         [UntypedVariableLengthArrayINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (IdRef, One),
-            (IdRef, One)
-        ]
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         ConditionalExtensionINTEL,
@@ -8313,11 +7100,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         SpecConstantCapabilitiesINTEL,
         [FunctionVariantsINTEL],
         [],
-        [
-            (IdResultType, One),
-            (IdResult, One),
-            (Capability, ZeroOrMore)
-        ]
+        [(IdResultType, One), (IdResult, One), (Capability, ZeroOrMore)]
     ),
     inst!(
         ConditionalCopyObjectINTEL,
@@ -8444,12 +7227,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         MaskedScatterINTEL,
         [MaskedGatherScatterINTEL],
         [],
-        [
-            (IdRef, One),
-            (IdRef, One),
-            (LiteralInteger, One),
-            (IdRef, One)
-        ]
+        [(IdRef, One), (IdRef, One), (LiteralInteger, One), (IdRef, One)]
     ),
     inst!(
         ConvertHandleToImageINTEL,

@@ -13,6 +13,8 @@ use bitflags::bitflags;
 pub enum DebugPrintfOp {
     DebugPrintf = 1u32,
 }
+#[cfg(feature = "pliron")]
+crate :: utils :: parse :: parsable_enum ! (DebugPrintfOp ; DebugPrintf = 1u32 ,);
 impl DebugPrintfOp {
     pub fn from_u32(n: u32) -> Option<Self> {
         Some(match n {

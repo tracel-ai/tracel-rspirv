@@ -24,6 +24,8 @@ pub struct Instruction {
     #[serde(default)]
     pub operands: Vec<Operand>,
     #[serde(default)]
+    pub version: String,
+    #[serde(default)]
     pub capabilities: Vec<String>,
     #[serde(default)]
     pub extensions: Vec<String>,
@@ -43,6 +45,8 @@ pub struct Enumerant {
     #[serde(default)]
     pub parameters: Vec<Operand>,
     #[serde(default)]
+    pub version: String,
+    #[serde(default)]
     pub capabilities: Vec<String>,
     #[serde(default)]
     pub extensions: Vec<String>,
@@ -60,7 +64,7 @@ pub struct OperandKind {
     pub bases: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Grammar {
     pub copyright: Vec<String>,
     #[serde(deserialize_with = "num_or_hex")]
@@ -167,7 +171,7 @@ pub enum Class {
     Exclude,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize, Hash)]
 pub enum Category {
     BitEnum,
     Composite,

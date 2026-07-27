@@ -43,10 +43,7 @@ impl Constant {
     }
 
     pub fn is_composite_constant(&self) -> bool {
-        matches!(
-            self,
-            Constant::Composite { .. } | Constant::SpecComposite { .. }
-        )
+        matches!(self, Constant::Composite { .. } | Constant::SpecComposite { .. })
     }
 
     pub fn is_null_constant(&self) -> bool {

@@ -186,19 +186,10 @@ mod tests {
             v
         }
         assert_eq!(vec![0u32], assemble_str_helper(""));
+        assert_eq!(vec![u32::from_le_bytes(*b"h\0\0\0")], assemble_str_helper("h"));
+        assert_eq!(vec![u32::from_le_bytes(*b"hell"), 0u32], assemble_str_helper("hell"));
         assert_eq!(
-            vec![u32::from_le_bytes(*b"h\0\0\0")],
-            assemble_str_helper("h")
-        );
-        assert_eq!(
-            vec![u32::from_le_bytes(*b"hell"), 0u32],
-            assemble_str_helper("hell")
-        );
-        assert_eq!(
-            vec![
-                u32::from_le_bytes(*b"hell"),
-                u32::from_le_bytes(*b"o\0\0\0")
-            ],
+            vec![u32::from_le_bytes(*b"hell"), u32::from_le_bytes(*b"o\0\0\0")],
             assemble_str_helper("hello")
         );
     }
@@ -213,9 +204,7 @@ mod tests {
         assert_eq!(vec![v.bits()], dr::Operand::FunctionControl(v).assemble());
         let v = spirv::FunctionControl::DONT_INLINE | spirv::FunctionControl::CONST;
         assert_eq!(vec![v.bits()], dr::Operand::FunctionControl(v).assemble());
-        let v = spirv::FunctionControl::DONT_INLINE
-            | spirv::FunctionControl::PURE
-            | spirv::FunctionControl::CONST;
+        let v = spirv::FunctionControl::DONT_INLINE | spirv::FunctionControl::PURE | spirv::FunctionControl::CONST;
         assert_eq!(vec![v.bits()], dr::Operand::FunctionControl(v).assemble());
     }
 

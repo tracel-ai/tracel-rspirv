@@ -46,20 +46,12 @@ impl Builder {
         self.type_int_id(None, width, signedness)
     }
     #[doc = "Appends an OpTypeInt instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_int_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-        width: u32,
-        signedness: u32,
-    ) -> spirv::Word {
+    pub fn type_int_id(&mut self, result_id: Option<spirv::Word>, width: u32, signedness: u32) -> spirv::Word {
         let mut inst = dr::Instruction::new(
             spirv::Op::TypeInt,
             None,
             result_id,
-            vec![
-                dr::Operand::LiteralBit32(width),
-                dr::Operand::LiteralBit32(signedness),
-            ],
+            vec![dr::Operand::LiteralBit32(width), dr::Operand::LiteralBit32(signedness)],
         );
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
@@ -74,11 +66,7 @@ impl Builder {
         }
     }
     #[doc = "Appends an OpTypeFloat instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_float(
-        &mut self,
-        width: u32,
-        floating_point_encoding: Option<spirv::FPEncoding>,
-    ) -> spirv::Word {
+    pub fn type_float(&mut self, width: u32, floating_point_encoding: Option<spirv::FPEncoding>) -> spirv::Word {
         self.type_float_id(None, width, floating_point_encoding)
     }
     #[doc = "Appends an OpTypeFloat instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -110,11 +98,7 @@ impl Builder {
         }
     }
     #[doc = "Appends an OpTypeVector instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_vector(
-        &mut self,
-        component_type: spirv::Word,
-        component_count: u32,
-    ) -> spirv::Word {
+    pub fn type_vector(&mut self, component_type: spirv::Word, component_count: u32) -> spirv::Word {
         self.type_vector_id(None, component_type, component_count)
     }
     #[doc = "Appends an OpTypeVector instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -160,10 +144,7 @@ impl Builder {
             spirv::Op::TypeMatrix,
             None,
             result_id,
-            vec![
-                dr::Operand::IdRef(column_type),
-                dr::Operand::LiteralBit32(column_count),
-            ],
+            vec![dr::Operand::IdRef(column_type), dr::Operand::LiteralBit32(column_count)],
         );
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
@@ -267,11 +248,7 @@ impl Builder {
         self.type_sampled_image_id(None, image_type)
     }
     #[doc = "Appends an OpTypeSampledImage instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_sampled_image_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-        image_type: spirv::Word,
-    ) -> spirv::Word {
+    pub fn type_sampled_image_id(&mut self, result_id: Option<spirv::Word>, image_type: spirv::Word) -> spirv::Word {
         let mut inst = dr::Instruction::new(
             spirv::Op::TypeSampledImage,
             None,
@@ -324,11 +301,7 @@ impl Builder {
         self.type_runtime_array_id(None, element_type)
     }
     #[doc = "Appends an OpTypeRuntimeArray instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_runtime_array_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-        element_type: spirv::Word,
-    ) -> spirv::Word {
+    pub fn type_runtime_array_id(&mut self, result_id: Option<spirv::Word>, element_type: spirv::Word) -> spirv::Word {
         let mut inst = dr::Instruction::new(
             spirv::Op::TypeRuntimeArray,
             None,
@@ -348,10 +321,7 @@ impl Builder {
         }
     }
     #[doc = "Appends an OpTypeStruct instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_struct(
-        &mut self,
-        member_0_type_member_1_type: impl IntoIterator<Item = spirv::Word>,
-    ) -> spirv::Word {
+    pub fn type_struct(&mut self, member_0_type_member_1_type: impl IntoIterator<Item = spirv::Word>) -> spirv::Word {
         self.type_struct_id(None, member_0_type_member_1_type)
     }
     #[doc = "Appends an OpTypeStruct instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -361,11 +331,8 @@ impl Builder {
         member_0_type_member_1_type: impl IntoIterator<Item = spirv::Word>,
     ) -> spirv::Word {
         let mut inst = dr::Instruction::new(spirv::Op::TypeStruct, None, result_id, vec![]);
-        inst.operands.extend(
-            member_0_type_member_1_type
-                .into_iter()
-                .map(dr::Operand::IdRef),
-        );
+        inst.operands
+            .extend(member_0_type_member_1_type.into_iter().map(dr::Operand::IdRef));
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
             result_id
@@ -399,11 +366,8 @@ impl Builder {
             result_id,
             vec![dr::Operand::IdRef(return_type)],
         );
-        inst.operands.extend(
-            parameter_0_type_parameter_1_type
-                .into_iter()
-                .map(dr::Operand::IdRef),
-        );
+        inst.operands
+            .extend(parameter_0_type_parameter_1_type.into_iter().map(dr::Operand::IdRef));
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
             result_id
@@ -497,11 +461,7 @@ impl Builder {
         self.type_pipe_id(None, qualifier)
     }
     #[doc = "Appends an OpTypePipe instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_pipe_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-        qualifier: spirv::AccessQualifier,
-    ) -> spirv::Word {
+    pub fn type_pipe_id(&mut self, result_id: Option<spirv::Word>, qualifier: spirv::AccessQualifier) -> spirv::Word {
         let mut inst = dr::Instruction::new(
             spirv::Op::TypePipe,
             None,
@@ -620,8 +580,7 @@ impl Builder {
             result_id,
             vec![dr::Operand::LiteralBit32(num_inputs)],
         );
-        inst.operands
-            .extend(in_out_types.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(in_out_types.into_iter().map(dr::Operand::IdRef));
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
             result_id
@@ -802,11 +761,7 @@ impl Builder {
         }
     }
     #[doc = "Appends an OpTypeVectorIdEXT instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_vector_id_ext(
-        &mut self,
-        component_type: spirv::Word,
-        component_count: spirv::Word,
-    ) -> spirv::Word {
+    pub fn type_vector_id_ext(&mut self, component_type: spirv::Word, component_count: spirv::Word) -> spirv::Word {
         self.type_vector_id_ext_id(None, component_type, component_count)
     }
     #[doc = "Appends an OpTypeVectorIdEXT instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -820,10 +775,7 @@ impl Builder {
             spirv::Op::TypeVectorIdEXT,
             None,
             result_id,
-            vec![
-                dr::Operand::IdRef(component_type),
-                dr::Operand::IdRef(component_count),
-            ],
+            vec![dr::Operand::IdRef(component_type), dr::Operand::IdRef(component_count)],
         );
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
@@ -861,16 +813,8 @@ impl Builder {
         self.type_acceleration_structure_khr_id(None)
     }
     #[doc = "Appends an OpTypeAccelerationStructureKHR instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_acceleration_structure_khr_id(
-        &mut self,
-        result_id: Option<spirv::Word>,
-    ) -> spirv::Word {
-        let mut inst = dr::Instruction::new(
-            spirv::Op::TypeAccelerationStructureKHR,
-            None,
-            result_id,
-            vec![],
-        );
+    pub fn type_acceleration_structure_khr_id(&mut self, result_id: Option<spirv::Word>) -> spirv::Word {
+        let mut inst = dr::Instruction::new(spirv::Op::TypeAccelerationStructureKHR, None, result_id, vec![]);
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
             result_id
@@ -926,11 +870,7 @@ impl Builder {
         }
     }
     #[doc = "Appends an OpTypeTensorLayoutNV instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_tensor_layout_nv(
-        &mut self,
-        dim: spirv::Word,
-        clamp_mode: spirv::Word,
-    ) -> spirv::Word {
+    pub fn type_tensor_layout_nv(&mut self, dim: spirv::Word, clamp_mode: spirv::Word) -> spirv::Word {
         self.type_tensor_layout_nv_id(None, dim, clamp_mode)
     }
     #[doc = "Appends an OpTypeTensorLayoutNV instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -995,10 +935,7 @@ impl Builder {
         }
     }
     #[doc = "Appends an OpTypeBufferSurfaceINTEL instruction and returns the result id, or return the existing id if the instruction was already present."]
-    pub fn type_buffer_surface_intel(
-        &mut self,
-        access_qualifier: spirv::AccessQualifier,
-    ) -> spirv::Word {
+    pub fn type_buffer_surface_intel(&mut self, access_qualifier: spirv::AccessQualifier) -> spirv::Word {
         self.type_buffer_surface_intel_id(None, access_qualifier)
     }
     #[doc = "Appends an OpTypeBufferSurfaceINTEL instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -1038,13 +975,9 @@ impl Builder {
         result_id: Option<spirv::Word>,
         member_0_type_member_1_type: impl IntoIterator<Item = spirv::Word>,
     ) -> spirv::Word {
-        let mut inst =
-            dr::Instruction::new(spirv::Op::TypeStructContinuedINTEL, None, result_id, vec![]);
-        inst.operands.extend(
-            member_0_type_member_1_type
-                .into_iter()
-                .map(dr::Operand::IdRef),
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::TypeStructContinuedINTEL, None, result_id, vec![]);
+        inst.operands
+            .extend(member_0_type_member_1_type.into_iter().map(dr::Operand::IdRef));
         if let Some(result_id) = result_id {
             self.module.types_global_values.push(inst);
             result_id

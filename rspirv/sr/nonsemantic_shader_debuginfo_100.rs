@@ -40,11 +40,7 @@ pub trait DebugInfoBuilder {
         flags: DebugInfoFlags,
     ) -> spirv::Word;
     #[doc = "Appends an DebugTypeQualifier instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_type_qualifier(
-        &mut self,
-        base_type: spirv::Word,
-        type_qualifier: DebugTypeQualifier,
-    ) -> spirv::Word;
+    fn debug_type_qualifier(&mut self, base_type: spirv::Word, type_qualifier: DebugTypeQualifier) -> spirv::Word;
     #[doc = "Appends an DebugTypeArray instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_type_array(
         &mut self,
@@ -123,11 +119,7 @@ pub trait DebugInfoBuilder {
         flags: DebugInfoFlags,
     ) -> spirv::Word;
     #[doc = "Appends an DebugTypePtrToMember instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_type_ptr_to_member(
-        &mut self,
-        member_type: spirv::Word,
-        parent: spirv::Word,
-    ) -> spirv::Word;
+    fn debug_type_ptr_to_member(&mut self, member_type: spirv::Word, parent: spirv::Word) -> spirv::Word;
     #[doc = "Appends an DebugTypeTemplate instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_type_template(
         &mut self,
@@ -222,20 +214,11 @@ pub trait DebugInfoBuilder {
         parent: spirv::Word,
     ) -> spirv::Word;
     #[doc = "Appends an DebugScope instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_scope(
-        &mut self,
-        scope: spirv::Word,
-        inlined_at: Option<spirv::Word>,
-    ) -> Result<(), dr::Error>;
+    fn debug_scope(&mut self, scope: spirv::Word, inlined_at: Option<spirv::Word>) -> Result<(), dr::Error>;
     #[doc = "Appends an DebugNoScope instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_no_scope(&mut self) -> Result<(), dr::Error>;
     #[doc = "Appends an DebugInlinedAt instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_inlined_at(
-        &mut self,
-        line: u32,
-        scope: spirv::Word,
-        inlined: Option<spirv::Word>,
-    ) -> spirv::Word;
+    fn debug_inlined_at(&mut self, line: u32, scope: spirv::Word, inlined: Option<spirv::Word>) -> spirv::Word;
     #[doc = "Appends an DebugLocalVariable instruction and returns the result id, or return the existing id if the instruction was already present."]
     #[allow(clippy::too_many_arguments)]
     fn debug_local_variable(
@@ -250,11 +233,7 @@ pub trait DebugInfoBuilder {
         arg_number: Option<spirv::Word>,
     ) -> spirv::Word;
     #[doc = "Appends an DebugInlinedVariable instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_inlined_variable(
-        &mut self,
-        variable: spirv::Word,
-        inlined: spirv::Word,
-    ) -> spirv::Word;
+    fn debug_inlined_variable(&mut self, variable: spirv::Word, inlined: spirv::Word) -> spirv::Word;
     #[doc = "Appends an DebugDeclare instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_declare(
         &mut self,
@@ -272,11 +251,7 @@ pub trait DebugInfoBuilder {
         indexes: impl IntoIterator<Item = spirv::Word>,
     ) -> Result<(), dr::Error>;
     #[doc = "Appends an DebugOperation instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_operation(
-        &mut self,
-        op_code: DebugOperation,
-        operands: impl IntoIterator<Item = u32>,
-    ) -> spirv::Word;
+    fn debug_operation(&mut self, op_code: DebugOperation, operands: impl IntoIterator<Item = u32>) -> spirv::Word;
     #[doc = "Appends an DebugExpression instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_expression(&mut self, operands: impl IntoIterator<Item = spirv::Word>) -> spirv::Word;
     #[doc = "Appends an DebugMacroDef instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -302,17 +277,9 @@ pub trait DebugInfoBuilder {
         parent: spirv::Word,
     ) -> spirv::Word;
     #[doc = "Appends an DebugSource instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_source(
-        &mut self,
-        file: impl Into<String>,
-        text: Option<impl Into<String>>,
-    ) -> spirv::Word;
+    fn debug_source(&mut self, file: impl Into<String>, text: Option<impl Into<String>>) -> spirv::Word;
     #[doc = "Appends an DebugFunctionDefinition instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_function_definition(
-        &mut self,
-        function: spirv::Word,
-        definition: spirv::Word,
-    ) -> Result<(), dr::Error>;
+    fn debug_function_definition(&mut self, function: spirv::Word, definition: spirv::Word) -> Result<(), dr::Error>;
     #[doc = "Appends an DebugSourceContinued instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_source_continued(&mut self, text: impl Into<String>);
     #[doc = "Appends an DebugLine instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -327,11 +294,7 @@ pub trait DebugInfoBuilder {
     #[doc = "Appends an DebugNoLine instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_no_line(&mut self) -> Result<(), dr::Error>;
     #[doc = "Appends an DebugBuildIdentifier instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_build_identifier(
-        &mut self,
-        identifier: impl Into<String>,
-        flags: BuildIdentifierFlags,
-    );
+    fn debug_build_identifier(&mut self, identifier: impl Into<String>, flags: BuildIdentifierFlags);
     #[doc = "Appends an DebugStoragePath instruction and returns the result id, or return the existing id if the instruction was already present."]
     fn debug_storage_path(&mut self, path: impl Into<String>);
     #[doc = "Appends an DebugEntryPoint instruction and returns the result id, or return the existing id if the instruction was already present."]
@@ -343,12 +306,7 @@ pub trait DebugInfoBuilder {
         command_line_arguments: impl Into<String>,
     );
     #[doc = "Appends an DebugTypeMatrix instruction and returns the result id, or return the existing id if the instruction was already present."]
-    fn debug_type_matrix(
-        &mut self,
-        vector_type: spirv::Word,
-        vector_count: u32,
-        column_major: bool,
-    ) -> spirv::Word;
+    fn debug_type_matrix(&mut self, vector_type: spirv::Word, vector_count: u32, column_major: bool) -> spirv::Word;
 }
 impl DebugInfoBuilder for Builder {
     fn debug_info_none(&mut self) -> spirv::Word {
@@ -392,11 +350,7 @@ impl DebugInfoBuilder for Builder {
 
         Builder::shader_debug_type_pointer(self, base_type, storage_class, flags)
     }
-    fn debug_type_qualifier(
-        &mut self,
-        base_type: spirv::Word,
-        type_qualifier: DebugTypeQualifier,
-    ) -> spirv::Word {
+    fn debug_type_qualifier(&mut self, base_type: spirv::Word, type_qualifier: DebugTypeQualifier) -> spirv::Word {
         let type_qualifier = const_u32(self, type_qualifier as u32);
 
         Builder::shader_debug_type_qualifier(self, base_type, type_qualifier)
@@ -531,9 +485,7 @@ impl DebugInfoBuilder for Builder {
         let size = const_u32(self, size);
         let flags = const_u32(self, flags.bits());
 
-        Builder::shader_debug_type_member(
-            self, name, ty, source, line, column, offset, size, flags, value,
-        )
+        Builder::shader_debug_type_member(self, name, ty, source, line, column, offset, size, flags, value)
     }
     fn debug_type_inheritance(
         &mut self,
@@ -548,11 +500,7 @@ impl DebugInfoBuilder for Builder {
 
         Builder::shader_debug_type_inheritance(self, parent, offset, size, flags)
     }
-    fn debug_type_ptr_to_member(
-        &mut self,
-        member_type: spirv::Word,
-        parent: spirv::Word,
-    ) -> spirv::Word {
+    fn debug_type_ptr_to_member(&mut self, member_type: spirv::Word, parent: spirv::Word) -> spirv::Word {
         Builder::shader_debug_type_ptr_to_member(self, member_type, parent)
     }
     fn debug_type_template(
@@ -575,15 +523,7 @@ impl DebugInfoBuilder for Builder {
         let line = const_u32(self, line);
         let column = const_u32(self, column);
 
-        Builder::shader_debug_type_template_parameter(
-            self,
-            name,
-            actual_type,
-            value,
-            source,
-            line,
-            column,
-        )
+        Builder::shader_debug_type_template_parameter(self, name, actual_type, value, source, line, column)
     }
     fn debug_type_template_template_parameter(
         &mut self,
@@ -598,14 +538,7 @@ impl DebugInfoBuilder for Builder {
         let line = const_u32(self, line);
         let column = const_u32(self, column);
 
-        Builder::shader_debug_type_template_template_parameter(
-            self,
-            name,
-            template_name,
-            source,
-            line,
-            column,
-        )
+        Builder::shader_debug_type_template_template_parameter(self, name, template_name, source, line, column)
     }
     fn debug_type_template_parameter_pack(
         &mut self,
@@ -619,14 +552,7 @@ impl DebugInfoBuilder for Builder {
         let line = const_u32(self, line);
         let column = const_u32(self, column);
 
-        Builder::shader_debug_type_template_parameter_pack(
-            self,
-            name,
-            source,
-            line,
-            column,
-            template_parameters,
-        )
+        Builder::shader_debug_type_template_parameter_pack(self, name, source, line, column, template_parameters)
     }
     fn debug_global_variable(
         &mut self,
@@ -678,17 +604,7 @@ impl DebugInfoBuilder for Builder {
         let linkage_name = debug_string(self, linkage_name);
         let flags = const_u32(self, flags.bits());
 
-        Builder::shader_debug_function_declaration(
-            self,
-            name,
-            ty,
-            source,
-            line,
-            column,
-            parent,
-            linkage_name,
-            flags,
-        )
+        Builder::shader_debug_function_declaration(self, name, ty, source, line, column, parent, linkage_name, flags)
     }
     fn debug_function(
         &mut self,
@@ -748,22 +664,13 @@ impl DebugInfoBuilder for Builder {
 
         Builder::shader_debug_lexical_block_discriminator(self, source, discriminator, parent)
     }
-    fn debug_scope(
-        &mut self,
-        scope: spirv::Word,
-        inlined_at: Option<spirv::Word>,
-    ) -> Result<(), dr::Error> {
+    fn debug_scope(&mut self, scope: spirv::Word, inlined_at: Option<spirv::Word>) -> Result<(), dr::Error> {
         Builder::shader_debug_scope(self, scope, inlined_at).map(|_| ())
     }
     fn debug_no_scope(&mut self) -> Result<(), dr::Error> {
         Builder::shader_debug_no_scope(self).map(|_| ())
     }
-    fn debug_inlined_at(
-        &mut self,
-        line: u32,
-        scope: spirv::Word,
-        inlined: Option<spirv::Word>,
-    ) -> spirv::Word {
+    fn debug_inlined_at(&mut self, line: u32, scope: spirv::Word, inlined: Option<spirv::Word>) -> spirv::Word {
         let line = const_u32(self, line);
 
         Builder::shader_debug_inlined_at(self, line, scope, inlined)
@@ -785,15 +692,9 @@ impl DebugInfoBuilder for Builder {
         let flags = const_u32(self, flags.bits());
         let arg_number = arg_number.map(|arg| const_u32(self, arg));
 
-        Builder::shader_debug_local_variable(
-            self, name, ty, source, line, column, parent, flags, arg_number,
-        )
+        Builder::shader_debug_local_variable(self, name, ty, source, line, column, parent, flags, arg_number)
     }
-    fn debug_inlined_variable(
-        &mut self,
-        variable: spirv::Word,
-        inlined: spirv::Word,
-    ) -> spirv::Word {
+    fn debug_inlined_variable(&mut self, variable: spirv::Word, inlined: spirv::Word) -> spirv::Word {
         Builder::shader_debug_inlined_variable(self, variable, inlined)
     }
     fn debug_declare(
@@ -814,11 +715,7 @@ impl DebugInfoBuilder for Builder {
     ) -> Result<(), dr::Error> {
         Builder::shader_debug_value(self, local_variable, value, expression, indexes).map(|_| ())
     }
-    fn debug_operation(
-        &mut self,
-        op_code: DebugOperation,
-        operands: impl IntoIterator<Item = u32>,
-    ) -> spirv::Word {
+    fn debug_operation(&mut self, op_code: DebugOperation, operands: impl IntoIterator<Item = u32>) -> spirv::Word {
         let op_code = const_u32(self, op_code as u32);
         let operands = operands
             .into_iter()
@@ -867,21 +764,13 @@ impl DebugInfoBuilder for Builder {
 
         Builder::shader_debug_imported_entity(self, name, tag, source, entity, line, column, parent)
     }
-    fn debug_source(
-        &mut self,
-        file: impl Into<String>,
-        text: Option<impl Into<String>>,
-    ) -> spirv::Word {
+    fn debug_source(&mut self, file: impl Into<String>, text: Option<impl Into<String>>) -> spirv::Word {
         let file = debug_string(self, file);
         let text = text.map(|text| debug_string(self, text));
 
         Builder::shader_debug_source(self, file, text)
     }
-    fn debug_function_definition(
-        &mut self,
-        function: spirv::Word,
-        definition: spirv::Word,
-    ) -> Result<(), dr::Error> {
+    fn debug_function_definition(&mut self, function: spirv::Word, definition: spirv::Word) -> Result<(), dr::Error> {
         Builder::shader_debug_function_definition(self, function, definition).map(|_| ())
     }
     #[allow(clippy::too_many_arguments)]
@@ -903,17 +792,12 @@ impl DebugInfoBuilder for Builder {
         let column_start = const_u32(self, column_start);
         let column_end = const_u32(self, column_end);
 
-        Builder::shader_debug_line(self, source, line_start, line_end, column_start, column_end)
-            .map(|_| ())
+        Builder::shader_debug_line(self, source, line_start, line_end, column_start, column_end).map(|_| ())
     }
     fn debug_no_line(&mut self) -> Result<(), dr::Error> {
         Builder::shader_debug_no_line(self).map(|_| ())
     }
-    fn debug_build_identifier(
-        &mut self,
-        identifier: impl Into<String>,
-        flags: BuildIdentifierFlags,
-    ) {
+    fn debug_build_identifier(&mut self, identifier: impl Into<String>, flags: BuildIdentifierFlags) {
         let identifier = debug_string(self, identifier);
         let flags = const_u32(self, flags.bits());
 
@@ -942,12 +826,7 @@ impl DebugInfoBuilder for Builder {
             command_line_arguments,
         );
     }
-    fn debug_type_matrix(
-        &mut self,
-        vector_type: spirv::Word,
-        vector_count: u32,
-        column_major: bool,
-    ) -> spirv::Word {
+    fn debug_type_matrix(&mut self, vector_type: spirv::Word, vector_count: u32, column_major: bool) -> spirv::Word {
         let bool = self.type_bool();
         let vector_count = const_u32(self, vector_count);
         let column_major = match column_major {

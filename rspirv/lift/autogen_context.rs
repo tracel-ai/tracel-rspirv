@@ -10,9 +10,7 @@ impl LiftContext {
                 variable_parent: {
                     let mut vec = Vec::new();
                     while let Some(item) = match (operands.next(), operands.next()) {
-                        (Some(&dr::Operand::IdRef(first)), Some(&dr::Operand::IdRef(second))) => {
-                            Some((first, second))
-                        }
+                        (Some(&dr::Operand::IdRef(first)), Some(&dr::Operand::IdRef(second))) => Some((first, second)),
                         (None, None) => None,
                         _ => return Err(OperandError::WrongType.into()),
                     } {
@@ -111,10 +109,9 @@ impl LiftContext {
                 target: {
                     let mut vec = Vec::new();
                     while let Some(item) = match (operands.next(), operands.next()) {
-                        (
-                            Some(&dr::Operand::LiteralBit32(first)),
-                            Some(&dr::Operand::IdRef(second)),
-                        ) => Some((first, self.lookup_jump(second))),
+                        (Some(&dr::Operand::LiteralBit32(first)), Some(&dr::Operand::IdRef(second))) => {
+                            Some((first, self.lookup_jump(second)))
+                        }
                         (None, None) => None,
                         _ => return Err(OperandError::WrongType.into()),
                     } {
@@ -181,10 +178,7 @@ impl LiftContext {
             _ => Err(InstructionError::WrongOpcode),
         }
     }
-    pub fn lift_terminator(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<ops::Terminator, InstructionError> {
+    pub fn lift_terminator(&mut self, raw: &dr::Instruction) -> Result<ops::Terminator, InstructionError> {
         let mut operands = raw.operands.iter();
         match raw.class.opcode as u32 {
             4448u32 => Ok(ops::Terminator::IgnoreIntersectionKHR),
@@ -618,10 +612,9 @@ impl LiftContext {
                 targets: {
                     let mut vec = Vec::new();
                     while let Some(item) = match (operands.next(), operands.next()) {
-                        (
-                            Some(&dr::Operand::IdRef(first)),
-                            Some(&dr::Operand::LiteralBit32(second)),
-                        ) => Some((self.lookup_jump(first), second)),
+                        (Some(&dr::Operand::IdRef(first)), Some(&dr::Operand::LiteralBit32(second))) => {
+                            Some((self.lookup_jump(first), second))
+                        }
                         (None, None) => None,
                         _ => return Err(OperandError::WrongType.into()),
                     } {
@@ -8075,16 +8068,14 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5307u32 => Ok(
-                ops::Op::HitObjectGetIntersectionTriangleVertexPositionsEXT {
-                    hit_object: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5307u32 => Ok(ops::Op::HitObjectGetIntersectionTriangleVertexPositionsEXT {
+                hit_object: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5308u32 => Ok(ops::Op::HitObjectGetRayFlagsEXT {
                 hit_object: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -10117,38 +10108,34 @@ impl LiftContext {
             5710u32 => Ok(ops::Op::TypeAvcImeDualReferenceStreaminINTEL),
             5711u32 => Ok(ops::Op::TypeAvcRefResultINTEL),
             5712u32 => Ok(ops::Op::TypeAvcSicResultINTEL),
-            5713u32 => Ok(
-                ops::Op::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
-                    slice_type: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    qp: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5714u32 => Ok(
-                ops::Op::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
-                    reference_base_penalty: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5713u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
+                slice_type: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                qp: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5714u32 => Ok(ops::Op::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
+                reference_base_penalty: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5715u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
                 slice_type: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
@@ -10177,22 +10164,20 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5717u32 => Ok(
-                ops::Op::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
-                    slice_type: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    qp: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5717u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
+                slice_type: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                qp: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5718u32 => Ok(ops::Op::SubgroupAvcMceSetInterDirectionPenaltyINTEL {
                 direction_cost: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -10207,38 +10192,34 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5719u32 => Ok(
-                ops::Op::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
-                    slice_type: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    qp: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5720u32 => Ok(
-                ops::Op::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
-                    slice_type: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    qp: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5719u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
+                slice_type: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                qp: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5720u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
+                slice_type: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(self.types.lookup_token(*value)),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                qp: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5721u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL),
             5722u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL),
             5723u32 => Ok(ops::Op::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL),
@@ -10292,60 +10273,54 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5729u32 => Ok(
-                ops::Op::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
-                    source_field_polarity: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5730u32 => Ok(
-                ops::Op::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
-                    reference_field_polarity: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5731u32 => Ok(
-                ops::Op::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
-                    forward_reference_field_polarity: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    backward_reference_field_polarity: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5729u32 => Ok(ops::Op::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
+                source_field_polarity: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5730u32 => Ok(ops::Op::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
+                reference_field_polarity: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5731u32 => Ok(ops::Op::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
+                forward_reference_field_polarity: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                backward_reference_field_polarity: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5732u32 => Ok(ops::Op::SubgroupAvcMceConvertToImePayloadINTEL {
                 payload: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -10458,28 +10433,26 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5746u32 => Ok(
-                ops::Op::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
-                    packed_reference_ids: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    packed_reference_parameter_field_polarities: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5746u32 => Ok(ops::Op::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
+                packed_reference_ids: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                packed_reference_parameter_field_polarities: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5747u32 => Ok(ops::Op::SubgroupAvcImeInitializeINTEL {
                 src_coord: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -10616,22 +10589,20 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5755u32 => Ok(
-                ops::Op::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
-                    threshold: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5755u32 => Ok(ops::Op::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
+                threshold: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5756u32 => Ok(ops::Op::SubgroupAvcImeSetWeightedSadINTEL {
                 packed_sad_weights: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -10692,180 +10663,168 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5759u32 => Ok(
-                ops::Op::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    streamin_components: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5760u32 => Ok(
-                ops::Op::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    fwd_ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    bwd_ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    streamin_components: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5761u32 => Ok(
-                ops::Op::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5762u32 => Ok(
-                ops::Op::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    fwd_ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    bwd_ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5763u32 => Ok(
-                ops::Op::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    streamin_components: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5764u32 => Ok(
-                ops::Op::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    fwd_ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    bwd_ref_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    streamin_components: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5759u32 => Ok(ops::Op::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                streamin_components: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5760u32 => Ok(ops::Op::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                fwd_ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                bwd_ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                streamin_components: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5761u32 => Ok(ops::Op::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5762u32 => Ok(ops::Op::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                fwd_ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                bwd_ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5763u32 => Ok(ops::Op::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                streamin_components: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5764u32 => Ok(ops::Op::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                fwd_ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                bwd_ref_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                streamin_components: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5765u32 => Ok(ops::Op::SubgroupAvcImeConvertToMceResultINTEL {
                 payload: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -11042,36 +11001,30 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5778u32 => Ok(
-                ops::Op::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5779u32 => Ok(
-                ops::Op::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
-            5780u32 => Ok(
-                ops::Op::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5778u32 => Ok(ops::Op::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5779u32 => Ok(ops::Op::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
+            5780u32 => Ok(ops::Op::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5781u32 => Ok(ops::Op::SubgroupAvcFmeInitializeINTEL {
                 src_coord: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -11256,34 +11209,32 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5789u32 => Ok(
-                ops::Op::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    packed_reference_ids: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    packed_reference_field_polarities: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5789u32 => Ok(ops::Op::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                packed_reference_ids: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                packed_reference_field_polarities: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5790u32 => Ok(ops::Op::SubgroupAvcRefConvertToMceResultINTEL {
                 payload: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -11648,34 +11599,32 @@ impl LiftContext {
                 })
                 .ok_or(OperandError::Missing)?,
             }),
-            5807u32 => Ok(
-                ops::Op::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
-                    src_image: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    packed_reference_ids: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    packed_reference_field_polarities: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                    payload: (match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => Some(*value),
-                        Some(_) => return Err(OperandError::WrongType.into()),
-                        None => None,
-                    })
-                    .ok_or(OperandError::Missing)?,
-                },
-            ),
+            5807u32 => Ok(ops::Op::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
+                src_image: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                packed_reference_ids: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                packed_reference_field_polarities: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+                payload: (match operands.next() {
+                    Some(dr::Operand::IdRef(value)) => Some(*value),
+                    Some(_) => return Err(OperandError::WrongType.into()),
+                    None => None,
+                })
+                .ok_or(OperandError::Missing)?,
+            }),
             5808u32 => Ok(ops::Op::SubgroupAvcSicConvertToMceResultINTEL {
                 payload: (match operands.next() {
                     Some(dr::Operand::IdRef(value)) => Some(*value),
@@ -15126,9 +15075,7 @@ impl LiftContext {
                 member_0_type_member_1_type: {
                     let mut vec = Vec::new();
                     while let Some(item) = match operands.next() {
-                        Some(dr::Operand::IdRef(value)) => {
-                            Some(StructMember::new(self.types.lookup_token(*value)))
-                        }
+                        Some(dr::Operand::IdRef(value)) => Some(StructMember::new(self.types.lookup_token(*value))),
                         Some(_) => return Err(OperandError::WrongType.into()),
                         None => None,
                     } {
@@ -15407,10 +15354,7 @@ impl LiftContext {
         }
     }
     #[allow(unused)]
-    pub fn lift_extension(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<instructions::Extension, InstructionError> {
+    pub fn lift_extension(&mut self, raw: &dr::Instruction) -> Result<instructions::Extension, InstructionError> {
         if raw.class.opcode as u32 != 10u32 {
             return Err(InstructionError::WrongOpcode);
         }
@@ -15443,10 +15387,7 @@ impl LiftContext {
         })
     }
     #[allow(unused)]
-    pub fn lift_ext_inst(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<instructions::ExtInst, InstructionError> {
+    pub fn lift_ext_inst(&mut self, raw: &dr::Instruction) -> Result<instructions::ExtInst, InstructionError> {
         if raw.class.opcode as u32 != 12u32 {
             return Err(InstructionError::WrongOpcode);
         }
@@ -15478,10 +15419,7 @@ impl LiftContext {
         })
     }
     #[allow(unused)]
-    pub fn lift_memory_model(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<instructions::MemoryModel, InstructionError> {
+    pub fn lift_memory_model(&mut self, raw: &dr::Instruction) -> Result<instructions::MemoryModel, InstructionError> {
         if raw.class.opcode as u32 != 14u32 {
             return Err(InstructionError::WrongOpcode);
         }
@@ -15502,10 +15440,7 @@ impl LiftContext {
         })
     }
     #[allow(unused)]
-    pub fn lift_entry_point(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<instructions::EntryPoint, InstructionError> {
+    pub fn lift_entry_point(&mut self, raw: &dr::Instruction) -> Result<instructions::EntryPoint, InstructionError> {
         if raw.class.opcode as u32 != 15u32 {
             return Err(InstructionError::WrongOpcode);
         }
@@ -15567,10 +15502,7 @@ impl LiftContext {
         })
     }
     #[allow(unused)]
-    pub fn lift_capability(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<instructions::Capability, InstructionError> {
+    pub fn lift_capability(&mut self, raw: &dr::Instruction) -> Result<instructions::Capability, InstructionError> {
         if raw.class.opcode as u32 != 17u32 {
             return Err(InstructionError::WrongOpcode);
         }
@@ -15585,10 +15517,7 @@ impl LiftContext {
         })
     }
     #[allow(unused)]
-    pub fn lift_function(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<instructions::Function, InstructionError> {
+    pub fn lift_function(&mut self, raw: &dr::Instruction) -> Result<instructions::Function, InstructionError> {
         if raw.class.opcode as u32 != 54u32 {
             return Err(InstructionError::WrongOpcode);
         }
@@ -15619,10 +15548,7 @@ impl LiftContext {
         Ok(instructions::FunctionParameter {})
     }
     #[allow(unused)]
-    pub fn lift_function_end(
-        &mut self,
-        raw: &dr::Instruction,
-    ) -> Result<instructions::FunctionEnd, InstructionError> {
+    pub fn lift_function_end(&mut self, raw: &dr::Instruction) -> Result<instructions::FunctionEnd, InstructionError> {
         if raw.class.opcode as u32 != 56u32 {
             return Err(InstructionError::WrongOpcode);
         }

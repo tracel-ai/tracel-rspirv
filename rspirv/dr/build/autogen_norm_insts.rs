@@ -344,8 +344,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -366,8 +365,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -387,8 +385,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -409,8 +406,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -431,8 +427,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base), dr::Operand::IdRef(element)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -454,8 +449,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base), dr::Operand::IdRef(element)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -473,10 +467,7 @@ impl Builder {
             spirv::Op::ArrayLength,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(structure),
-                dr::Operand::LiteralBit32(array_member),
-            ],
+            vec![dr::Operand::IdRef(structure), dr::Operand::LiteralBit32(array_member)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -496,10 +487,7 @@ impl Builder {
             spirv::Op::ArrayLength,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(structure),
-                dr::Operand::LiteralBit32(array_member),
-            ],
+            vec![dr::Operand::IdRef(structure), dr::Operand::LiteralBit32(array_member)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -558,8 +546,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base), dr::Operand::IdRef(element)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -581,8 +568,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base), dr::Operand::IdRef(element)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -728,14 +714,8 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CompositeConstruct,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
-        inst.operands
-            .extend(constituents.into_iter().map(dr::Operand::IdRef));
+        let mut inst = dr::Instruction::new(spirv::Op::CompositeConstruct, Some(result_type), Some(_id), vec![]);
+        inst.operands.extend(constituents.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -749,14 +729,8 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CompositeConstruct,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
-        inst.operands
-            .extend(constituents.into_iter().map(dr::Operand::IdRef));
+        let mut inst = dr::Instruction::new(spirv::Op::CompositeConstruct, Some(result_type), Some(_id), vec![]);
+        inst.operands.extend(constituents.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -776,8 +750,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(composite)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -798,8 +771,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(composite)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -820,8 +792,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(object), dr::Operand::IdRef(composite)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -843,8 +814,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(object), dr::Operand::IdRef(composite)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::LiteralBit32));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -977,10 +947,7 @@ impl Builder {
             spirv::Op::ImageSampleImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -1006,10 +973,7 @@ impl Builder {
             spirv::Op::ImageSampleImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -1034,13 +998,9 @@ impl Builder {
             spirv::Op::ImageSampleExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -1062,13 +1022,9 @@ impl Builder {
             spirv::Op::ImageSampleExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -1157,8 +1113,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -1187,8 +1142,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -1209,10 +1163,7 @@ impl Builder {
             spirv::Op::ImageSampleProjImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -1238,10 +1189,7 @@ impl Builder {
             spirv::Op::ImageSampleProjImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -1266,13 +1214,9 @@ impl Builder {
             spirv::Op::ImageSampleProjExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -1294,13 +1238,9 @@ impl Builder {
             spirv::Op::ImageSampleProjExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -1389,8 +1329,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -1419,8 +1358,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -1829,10 +1767,7 @@ impl Builder {
             spirv::Op::ImageQuerySizeLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(image),
-                dr::Operand::IdRef(level_of_detail),
-            ],
+            vec![dr::Operand::IdRef(image), dr::Operand::IdRef(level_of_detail)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -1852,10 +1787,7 @@ impl Builder {
             spirv::Op::ImageQuerySizeLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(image),
-                dr::Operand::IdRef(level_of_detail),
-            ],
+            vec![dr::Operand::IdRef(image), dr::Operand::IdRef(level_of_detail)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -1911,10 +1843,7 @@ impl Builder {
             spirv::Op::ImageQueryLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -1934,10 +1863,7 @@ impl Builder {
             spirv::Op::ImageQueryLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -2548,10 +2474,7 @@ impl Builder {
             spirv::Op::GenericCastToPtrExplicit,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(pointer),
-                dr::Operand::StorageClass(storage),
-            ],
+            vec![dr::Operand::IdRef(pointer), dr::Operand::StorageClass(storage)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -2571,10 +2494,7 @@ impl Builder {
             spirv::Op::GenericCastToPtrExplicit,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(pointer),
-                dr::Operand::StorageClass(storage),
-            ],
+            vec![dr::Operand::IdRef(pointer), dr::Operand::StorageClass(storage)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -3406,10 +3326,7 @@ impl Builder {
             spirv::Op::MatrixTimesMatrix,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(left_matrix),
-                dr::Operand::IdRef(right_matrix),
-            ],
+            vec![dr::Operand::IdRef(left_matrix), dr::Operand::IdRef(right_matrix)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -3429,10 +3346,7 @@ impl Builder {
             spirv::Op::MatrixTimesMatrix,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(left_matrix),
-                dr::Operand::IdRef(right_matrix),
-            ],
+            vec![dr::Operand::IdRef(left_matrix), dr::Operand::IdRef(right_matrix)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -6017,11 +5931,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpEmitStreamVertex instruction to the current block."]
-    pub fn insert_emit_stream_vertex(
-        &mut self,
-        insert_point: InsertPoint,
-        stream: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_emit_stream_vertex(&mut self, insert_point: InsertPoint, stream: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::EmitStreamVertex,
@@ -6045,11 +5955,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpEndStreamPrimitive instruction to the current block."]
-    pub fn insert_end_stream_primitive(
-        &mut self,
-        insert_point: InsertPoint,
-        stream: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_end_stream_primitive(&mut self, insert_point: InsertPoint, stream: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::EndStreamPrimitive,
@@ -6104,20 +6010,13 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpMemoryBarrier instruction to the current block."]
-    pub fn memory_barrier(
-        &mut self,
-        memory: spirv::Word,
-        semantics: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn memory_barrier(&mut self, memory: spirv::Word, semantics: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::MemoryBarrier,
             None,
             None,
-            vec![
-                dr::Operand::IdScope(memory),
-                dr::Operand::IdMemorySemantics(semantics),
-            ],
+            vec![dr::Operand::IdScope(memory), dr::Operand::IdMemorySemantics(semantics)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -6134,10 +6033,7 @@ impl Builder {
             spirv::Op::MemoryBarrier,
             None,
             None,
-            vec![
-                dr::Operand::IdScope(memory),
-                dr::Operand::IdMemorySemantics(semantics),
-            ],
+            vec![dr::Operand::IdScope(memory), dr::Operand::IdMemorySemantics(semantics)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -7036,10 +6932,7 @@ impl Builder {
             spirv::Op::LoopMerge,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(merge_block),
-                dr::Operand::IdRef(continue_target),
-            ],
+            vec![dr::Operand::IdRef(merge_block), dr::Operand::IdRef(continue_target)],
         );
         inst.operands.push(dr::Operand::LoopControl(loop_control));
         inst.operands.extend(loop_control_extra);
@@ -7060,10 +6953,7 @@ impl Builder {
             spirv::Op::LoopMerge,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(merge_block),
-                dr::Operand::IdRef(continue_target),
-            ],
+            vec![dr::Operand::IdRef(merge_block), dr::Operand::IdRef(continue_target)],
         );
         inst.operands.push(dr::Operand::LoopControl(loop_control));
         inst.operands.extend(loop_control_extra);
@@ -7227,10 +7117,7 @@ impl Builder {
             spirv::Op::GroupAll,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -7250,10 +7137,7 @@ impl Builder {
             spirv::Op::GroupAll,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -7272,10 +7156,7 @@ impl Builder {
             spirv::Op::GroupAny,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -7295,10 +7176,7 @@ impl Builder {
             spirv::Op::GroupAny,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -8612,8 +8490,7 @@ impl Builder {
                 dr::Operand::IdRef(param_align),
             ],
         );
-        inst.operands
-            .extend(local_size.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(local_size.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -8654,8 +8531,7 @@ impl Builder {
                 dr::Operand::IdRef(param_align),
             ],
         );
-        inst.operands
-            .extend(local_size.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(local_size.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -8882,56 +8758,28 @@ impl Builder {
     #[doc = "Appends an OpRetainEvent instruction to the current block."]
     pub fn retain_event(&mut self, event: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::RetainEvent,
-            None,
-            None,
-            vec![dr::Operand::IdRef(event)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::RetainEvent, None, None, vec![dr::Operand::IdRef(event)]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpRetainEvent instruction to the current block."]
-    pub fn insert_retain_event(
-        &mut self,
-        insert_point: InsertPoint,
-        event: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_retain_event(&mut self, insert_point: InsertPoint, event: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::RetainEvent,
-            None,
-            None,
-            vec![dr::Operand::IdRef(event)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::RetainEvent, None, None, vec![dr::Operand::IdRef(event)]);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpReleaseEvent instruction to the current block."]
     pub fn release_event(&mut self, event: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::ReleaseEvent,
-            None,
-            None,
-            vec![dr::Operand::IdRef(event)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::ReleaseEvent, None, None, vec![dr::Operand::IdRef(event)]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpReleaseEvent instruction to the current block."]
-    pub fn insert_release_event(
-        &mut self,
-        insert_point: InsertPoint,
-        event: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_release_event(&mut self, insert_point: InsertPoint, event: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::ReleaseEvent,
-            None,
-            None,
-            vec![dr::Operand::IdRef(event)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::ReleaseEvent, None, None, vec![dr::Operand::IdRef(event)]);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -8943,12 +8791,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CreateUserEvent,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::CreateUserEvent, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -8961,12 +8804,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CreateUserEvent,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::CreateUserEvent, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9008,11 +8846,7 @@ impl Builder {
         Ok(_id)
     }
     #[doc = "Appends an OpSetUserEventStatus instruction to the current block."]
-    pub fn set_user_event_status(
-        &mut self,
-        event: spirv::Word,
-        status: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn set_user_event_status(&mut self, event: spirv::Word, status: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::SetUserEventStatus,
@@ -9091,12 +8925,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::GetDefaultQueue,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::GetDefaultQueue, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -9109,12 +8938,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::GetDefaultQueue,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::GetDefaultQueue, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -9183,10 +9007,7 @@ impl Builder {
             spirv::Op::ImageSparseSampleImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -9212,10 +9033,7 @@ impl Builder {
             spirv::Op::ImageSparseSampleImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -9240,13 +9058,9 @@ impl Builder {
             spirv::Op::ImageSparseSampleExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -9268,13 +9082,9 @@ impl Builder {
             spirv::Op::ImageSparseSampleExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -9363,8 +9173,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -9393,8 +9202,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -9415,10 +9223,7 @@ impl Builder {
             spirv::Op::ImageSparseSampleProjImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -9444,10 +9249,7 @@ impl Builder {
             spirv::Op::ImageSparseSampleProjImplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
         if let Some(v) = image_operands {
             inst.operands.push(dr::Operand::ImageOperands(v));
@@ -9472,13 +9274,9 @@ impl Builder {
             spirv::Op::ImageSparseSampleProjExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -9500,13 +9298,9 @@ impl Builder {
             spirv::Op::ImageSparseSampleProjExplicitLod,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(sampled_image),
-                dr::Operand::IdRef(coordinate),
-            ],
+            vec![dr::Operand::IdRef(sampled_image), dr::Operand::IdRef(coordinate)],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -9595,8 +9389,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -9625,8 +9418,7 @@ impl Builder {
                 dr::Operand::IdRef(d_ref),
             ],
         );
-        inst.operands
-            .push(dr::Operand::ImageOperands(image_operands));
+        inst.operands.push(dr::Operand::ImageOperands(image_operands));
         inst.operands.extend(image_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -10348,10 +10140,7 @@ impl Builder {
             spirv::Op::GroupNonUniformAll,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -10371,10 +10160,7 @@ impl Builder {
             spirv::Op::GroupNonUniformAll,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -10393,10 +10179,7 @@ impl Builder {
             spirv::Op::GroupNonUniformAny,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -10416,10 +10199,7 @@ impl Builder {
             spirv::Op::GroupNonUniformAny,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -10565,10 +10345,7 @@ impl Builder {
             spirv::Op::GroupNonUniformBallot,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -10588,10 +10365,7 @@ impl Builder {
             spirv::Op::GroupNonUniformBallot,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdScope(execution),
-                dr::Operand::IdRef(predicate),
-            ],
+            vec![dr::Operand::IdScope(execution), dr::Operand::IdRef(predicate)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -12225,12 +11999,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::DepthAttachmentReadEXT,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::DepthAttachmentReadEXT, Some(result_type), Some(_id), vec![]);
         if let Some(v) = sample {
             inst.operands.push(dr::Operand::IdRef(v));
         }
@@ -12247,12 +12016,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::DepthAttachmentReadEXT,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::DepthAttachmentReadEXT, Some(result_type), Some(_id), vec![]);
         if let Some(v) = sample {
             inst.operands.push(dr::Operand::IdRef(v));
         }
@@ -12496,13 +12260,9 @@ impl Builder {
             spirv::Op::GraphEntryPointARM,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(graph),
-                dr::Operand::LiteralString(name.into()),
-            ],
+            vec![dr::Operand::IdRef(graph), dr::Operand::LiteralString(name.into())],
         );
-        inst.operands
-            .extend(interface.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(interface.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -12519,26 +12279,17 @@ impl Builder {
             spirv::Op::GraphEntryPointARM,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(graph),
-                dr::Operand::LiteralString(name.into()),
-            ],
+            vec![dr::Operand::IdRef(graph), dr::Operand::LiteralString(name.into())],
         );
-        inst.operands
-            .extend(interface.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(interface.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpGraphARM instruction to the current block."]
-    pub fn graph_arm(
-        &mut self,
-        result_type: spirv::Word,
-        result_id: Option<spirv::Word>,
-    ) -> BuildResult<spirv::Word> {
+    pub fn graph_arm(&mut self, result_type: spirv::Word, result_id: Option<spirv::Word>) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::GraphARM, Some(result_type), Some(_id), vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::GraphARM, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -12551,8 +12302,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::GraphARM, Some(result_type), Some(_id), vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::GraphARM, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -12572,8 +12322,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(input_index)],
         );
-        inst.operands
-            .extend(element_index.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(element_index.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -12594,8 +12343,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(input_index)],
         );
-        inst.operands
-            .extend(element_index.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(element_index.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -12613,8 +12361,7 @@ impl Builder {
             None,
             vec![dr::Operand::IdRef(value), dr::Operand::IdRef(output_index)],
         );
-        inst.operands
-            .extend(element_index.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(element_index.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -12633,8 +12380,7 @@ impl Builder {
             None,
             vec![dr::Operand::IdRef(value), dr::Operand::IdRef(output_index)],
         );
-        inst.operands
-            .extend(element_index.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(element_index.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -12722,8 +12468,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base_type), dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -12745,8 +12490,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base_type), dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -12767,8 +12511,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base_type), dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -12790,8 +12533,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(base_type), dr::Operand::IdRef(base)],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -12891,8 +12633,7 @@ impl Builder {
                 dr::Operand::IdRef(element),
             ],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -12919,8 +12660,7 @@ impl Builder {
                 dr::Operand::IdRef(element),
             ],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -12946,8 +12686,7 @@ impl Builder {
                 dr::Operand::IdRef(element),
             ],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -12974,8 +12713,7 @@ impl Builder {
                 dr::Operand::IdRef(element),
             ],
         );
-        inst.operands
-            .extend(indexes.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(indexes.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -13042,10 +12780,7 @@ impl Builder {
             spirv::Op::UntypedPrefetchKHR,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(pointer_type),
-                dr::Operand::IdRef(num_bytes),
-            ],
+            vec![dr::Operand::IdRef(pointer_type), dr::Operand::IdRef(num_bytes)],
         );
         if let Some(v) = rw {
             inst.operands.push(dr::Operand::IdRef(v));
@@ -13074,10 +12809,7 @@ impl Builder {
             spirv::Op::UntypedPrefetchKHR,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(pointer_type),
-                dr::Operand::IdRef(num_bytes),
-            ],
+            vec![dr::Operand::IdRef(pointer_type), dr::Operand::IdRef(num_bytes)],
         );
         if let Some(v) = rw {
             inst.operands.push(dr::Operand::IdRef(v));
@@ -13512,20 +13244,13 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpExecuteCallableKHR instruction to the current block."]
-    pub fn execute_callable_khr(
-        &mut self,
-        sbt_index: spirv::Word,
-        callable_data: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn execute_callable_khr(&mut self, sbt_index: spirv::Word, callable_data: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::ExecuteCallableKHR,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(sbt_index),
-                dr::Operand::IdRef(callable_data),
-            ],
+            vec![dr::Operand::IdRef(sbt_index), dr::Operand::IdRef(callable_data)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -13542,10 +13267,7 @@ impl Builder {
             spirv::Op::ExecuteCallableKHR,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(sbt_index),
-                dr::Operand::IdRef(callable_data),
-            ],
+            vec![dr::Operand::IdRef(sbt_index), dr::Operand::IdRef(callable_data)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -13916,10 +13638,7 @@ impl Builder {
             spirv::Op::CooperativeMatrixLoadKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(pointer),
-                dr::Operand::IdRef(memory_layout),
-            ],
+            vec![dr::Operand::IdRef(pointer), dr::Operand::IdRef(memory_layout)],
         );
         if let Some(v) = stride {
             inst.operands.push(dr::Operand::IdRef(v));
@@ -13949,10 +13668,7 @@ impl Builder {
             spirv::Op::CooperativeMatrixLoadKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(pointer),
-                dr::Operand::IdRef(memory_layout),
-            ],
+            vec![dr::Operand::IdRef(pointer), dr::Operand::IdRef(memory_layout)],
         );
         if let Some(v) = stride {
             inst.operands.push(dr::Operand::IdRef(v));
@@ -14043,15 +13759,10 @@ impl Builder {
             spirv::Op::CooperativeMatrixMulAddKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(a),
-                dr::Operand::IdRef(b),
-                dr::Operand::IdRef(c),
-            ],
+            vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)],
         );
         if let Some(v) = cooperative_matrix_operands {
-            inst.operands
-                .push(dr::Operand::CooperativeMatrixOperands(v));
+            inst.operands.push(dr::Operand::CooperativeMatrixOperands(v));
         }
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -14073,15 +13784,10 @@ impl Builder {
             spirv::Op::CooperativeMatrixMulAddKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(a),
-                dr::Operand::IdRef(b),
-                dr::Operand::IdRef(c),
-            ],
+            vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)],
         );
         if let Some(v) = cooperative_matrix_operands {
-            inst.operands
-                .push(dr::Operand::CooperativeMatrixOperands(v));
+            inst.operands.push(dr::Operand::CooperativeMatrixOperands(v));
         }
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -14285,10 +13991,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpRayQueryConfirmIntersectionKHR instruction to the current block."]
-    pub fn ray_query_confirm_intersection_khr(
-        &mut self,
-        ray_query: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn ray_query_confirm_intersection_khr(&mut self, ray_query: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::RayQueryConfirmIntersectionKHR,
@@ -14366,10 +14069,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionTypeKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -14389,10 +14089,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionTypeKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -15669,10 +15366,7 @@ impl Builder {
             spirv::Op::IsNodePayloadValidAMDX,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(payload_type),
-                dr::Operand::IdRef(node_index),
-            ],
+            vec![dr::Operand::IdRef(payload_type), dr::Operand::IdRef(node_index)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -15692,10 +15386,7 @@ impl Builder {
             spirv::Op::IsNodePayloadValidAMDX,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(payload_type),
-                dr::Operand::IdRef(node_index),
-            ],
+            vec![dr::Operand::IdRef(payload_type), dr::Operand::IdRef(node_index)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -15935,15 +15626,10 @@ impl Builder {
         Ok(_id)
     }
     #[doc = "Appends an OpPoisonKHR instruction to the current block."]
-    pub fn poison_khr(
-        &mut self,
-        result_type: spirv::Word,
-        result_id: Option<spirv::Word>,
-    ) -> BuildResult<spirv::Word> {
+    pub fn poison_khr(&mut self, result_type: spirv::Word, result_id: Option<spirv::Word>) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::PoisonKHR, Some(result_type), Some(_id), vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::PoisonKHR, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -15956,8 +15642,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::PoisonKHR, Some(result_type), Some(_id), vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::PoisonKHR, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -16857,11 +16542,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpHitObjectExecuteShaderNV instruction to the current block."]
-    pub fn hit_object_execute_shader_nv(
-        &mut self,
-        hit_object: spirv::Word,
-        payload: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn hit_object_execute_shader_nv(&mut self, hit_object: spirv::Word, payload: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::HitObjectExecuteShaderNV,
@@ -16937,10 +16618,7 @@ impl Builder {
             spirv::Op::HitObjectGetAttributesNV,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(hit_object),
-                dr::Operand::IdRef(hit_object_attribute),
-            ],
+            vec![dr::Operand::IdRef(hit_object), dr::Operand::IdRef(hit_object_attribute)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -16957,10 +16635,7 @@ impl Builder {
             spirv::Op::HitObjectGetAttributesNV,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(hit_object),
-                dr::Operand::IdRef(hit_object_attribute),
-            ],
+            vec![dr::Operand::IdRef(hit_object), dr::Operand::IdRef(hit_object_attribute)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -17457,11 +17132,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpReorderThreadWithHintNV instruction to the current block."]
-    pub fn reorder_thread_with_hint_nv(
-        &mut self,
-        hint: spirv::Word,
-        bits: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn reorder_thread_with_hint_nv(&mut self, hint: spirv::Word, bits: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::ReorderThreadWithHintNV,
@@ -17593,8 +17264,7 @@ impl Builder {
             inst.operands.push(dr::Operand::IdRef(v));
         }
         if let Some(v) = cooperative_matrix_operands {
-            inst.operands
-                .push(dr::Operand::CooperativeMatrixOperands(v));
+            inst.operands.push(dr::Operand::CooperativeMatrixOperands(v));
         }
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -17639,8 +17309,7 @@ impl Builder {
             inst.operands.push(dr::Operand::IdRef(v));
         }
         if let Some(v) = cooperative_matrix_operands {
-            inst.operands
-                .push(dr::Operand::CooperativeMatrixOperands(v));
+            inst.operands.push(dr::Operand::CooperativeMatrixOperands(v));
         }
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -17796,8 +17465,7 @@ impl Builder {
             inst.operands.push(dr::Operand::IdRef(v));
         }
         if let Some(v) = cooperative_matrix_operands {
-            inst.operands
-                .push(dr::Operand::CooperativeMatrixOperands(v));
+            inst.operands.push(dr::Operand::CooperativeMatrixOperands(v));
         }
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -17848,8 +17516,7 @@ impl Builder {
             inst.operands.push(dr::Operand::IdRef(v));
         }
         if let Some(v) = cooperative_matrix_operands {
-            inst.operands
-                .push(dr::Operand::CooperativeMatrixOperands(v));
+            inst.operands.push(dr::Operand::CooperativeMatrixOperands(v));
         }
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -17892,20 +17559,13 @@ impl Builder {
         Ok(_id)
     }
     #[doc = "Appends an OpSetMeshOutputsEXT instruction to the current block."]
-    pub fn set_mesh_outputs_ext(
-        &mut self,
-        vertex_count: spirv::Word,
-        primitive_count: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn set_mesh_outputs_ext(&mut self, vertex_count: spirv::Word, primitive_count: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::SetMeshOutputsEXT,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(vertex_count),
-                dr::Operand::IdRef(primitive_count),
-            ],
+            vec![dr::Operand::IdRef(vertex_count), dr::Operand::IdRef(primitive_count)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -17922,10 +17582,7 @@ impl Builder {
             spirv::Op::SetMeshOutputsEXT,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(vertex_count),
-                dr::Operand::IdRef(primitive_count),
-            ],
+            vec![dr::Operand::IdRef(vertex_count), dr::Operand::IdRef(primitive_count)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -17978,10 +17635,7 @@ impl Builder {
             spirv::Op::WritePackedPrimitiveIndices4x8NV,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(index_offset),
-                dr::Operand::IdRef(packed_indices),
-            ],
+            vec![dr::Operand::IdRef(index_offset), dr::Operand::IdRef(packed_indices)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -17998,10 +17652,7 @@ impl Builder {
             spirv::Op::WritePackedPrimitiveIndices4x8NV,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(index_offset),
-                dr::Operand::IdRef(packed_indices),
-            ],
+            vec![dr::Operand::IdRef(index_offset), dr::Operand::IdRef(packed_indices)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -18480,10 +18131,7 @@ impl Builder {
             spirv::Op::HitObjectSetShaderBindingTableRecordIndexEXT,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(hit_object),
-                dr::Operand::IdRef(sbt_record_index),
-            ],
+            vec![dr::Operand::IdRef(hit_object), dr::Operand::IdRef(sbt_record_index)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -18500,10 +18148,7 @@ impl Builder {
             spirv::Op::HitObjectSetShaderBindingTableRecordIndexEXT,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(hit_object),
-                dr::Operand::IdRef(sbt_record_index),
-            ],
+            vec![dr::Operand::IdRef(hit_object), dr::Operand::IdRef(sbt_record_index)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -18752,11 +18397,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpReorderThreadWithHintEXT instruction to the current block."]
-    pub fn reorder_thread_with_hint_ext(
-        &mut self,
-        hint: spirv::Word,
-        bits: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn reorder_thread_with_hint_ext(&mut self, hint: spirv::Word, bits: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::ReorderThreadWithHintEXT,
@@ -19022,11 +18663,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpHitObjectExecuteShaderEXT instruction to the current block."]
-    pub fn hit_object_execute_shader_ext(
-        &mut self,
-        hit_object: spirv::Word,
-        payload: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn hit_object_execute_shader_ext(&mut self, hit_object: spirv::Word, payload: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::HitObjectExecuteShaderEXT,
@@ -19102,10 +18739,7 @@ impl Builder {
             spirv::Op::HitObjectGetAttributesEXT,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(hit_object),
-                dr::Operand::IdRef(hit_object_attribute),
-            ],
+            vec![dr::Operand::IdRef(hit_object), dr::Operand::IdRef(hit_object_attribute)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -19122,10 +18756,7 @@ impl Builder {
             spirv::Op::HitObjectGetAttributesEXT,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(hit_object),
-                dr::Operand::IdRef(hit_object_attribute),
-            ],
+            vec![dr::Operand::IdRef(hit_object), dr::Operand::IdRef(hit_object_attribute)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -19888,10 +19519,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionTriangleVertexPositionsKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -19911,29 +19539,19 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionTriangleVertexPositionsKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
     #[doc = "Appends an OpExecuteCallableNV instruction to the current block."]
-    pub fn execute_callable_nv(
-        &mut self,
-        sbt_index: spirv::Word,
-        callable_data_id: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn execute_callable_nv(&mut self, sbt_index: spirv::Word, callable_data_id: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::ExecuteCallableNV,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(sbt_index),
-                dr::Operand::IdRef(callable_data_id),
-            ],
+            vec![dr::Operand::IdRef(sbt_index), dr::Operand::IdRef(callable_data_id)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -19950,10 +19568,7 @@ impl Builder {
             spirv::Op::ExecuteCallableNV,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(sbt_index),
-                dr::Operand::IdRef(callable_data_id),
-            ],
+            vec![dr::Operand::IdRef(sbt_index), dr::Operand::IdRef(callable_data_id)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -19972,10 +19587,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionClusterIdNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -19995,10 +19607,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionClusterIdNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -20397,11 +20006,7 @@ impl Builder {
             spirv::Op::CooperativeMatrixMulAddNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(a),
-                dr::Operand::IdRef(b),
-                dr::Operand::IdRef(c),
-            ],
+            vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -20422,11 +20027,7 @@ impl Builder {
             spirv::Op::CooperativeMatrixMulAddNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(a),
-                dr::Operand::IdRef(b),
-                dr::Operand::IdRef(c),
-            ],
+            vec![dr::Operand::IdRef(a), dr::Operand::IdRef(b), dr::Operand::IdRef(c)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -20471,38 +20072,28 @@ impl Builder {
     #[doc = "Appends an OpBeginInvocationInterlockEXT instruction to the current block."]
     pub fn begin_invocation_interlock_ext(&mut self) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::BeginInvocationInterlockEXT, None, None, vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::BeginInvocationInterlockEXT, None, None, vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpBeginInvocationInterlockEXT instruction to the current block."]
-    pub fn insert_begin_invocation_interlock_ext(
-        &mut self,
-        insert_point: InsertPoint,
-    ) -> BuildResult<()> {
+    pub fn insert_begin_invocation_interlock_ext(&mut self, insert_point: InsertPoint) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::BeginInvocationInterlockEXT, None, None, vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::BeginInvocationInterlockEXT, None, None, vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpEndInvocationInterlockEXT instruction to the current block."]
     pub fn end_invocation_interlock_ext(&mut self) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::EndInvocationInterlockEXT, None, None, vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::EndInvocationInterlockEXT, None, None, vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpEndInvocationInterlockEXT instruction to the current block."]
-    pub fn insert_end_invocation_interlock_ext(
-        &mut self,
-        insert_point: InsertPoint,
-    ) -> BuildResult<()> {
+    pub fn insert_end_invocation_interlock_ext(&mut self, insert_point: InsertPoint) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::EndInvocationInterlockEXT, None, None, vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::EndInvocationInterlockEXT, None, None, vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -20580,12 +20171,10 @@ impl Builder {
                 dr::Operand::IdRef(tensor_layout),
             ],
         );
-        inst.operands
-            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.push(dr::Operand::MemoryAccess(memory_operand));
         inst.operands.extend(memory_operand_extra);
-        inst.operands.push(dr::Operand::TensorAddressingOperands(
-            tensor_addressing_operands,
-        ));
+        inst.operands
+            .push(dr::Operand::TensorAddressingOperands(tensor_addressing_operands));
         inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -20616,12 +20205,10 @@ impl Builder {
                 dr::Operand::IdRef(tensor_layout),
             ],
         );
-        inst.operands
-            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.push(dr::Operand::MemoryAccess(memory_operand));
         inst.operands.extend(memory_operand_extra);
-        inst.operands.push(dr::Operand::TensorAddressingOperands(
-            tensor_addressing_operands,
-        ));
+        inst.operands
+            .push(dr::Operand::TensorAddressingOperands(tensor_addressing_operands));
         inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -20648,12 +20235,10 @@ impl Builder {
                 dr::Operand::IdRef(tensor_layout),
             ],
         );
-        inst.operands
-            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.push(dr::Operand::MemoryAccess(memory_operand));
         inst.operands.extend(memory_operand_extra);
-        inst.operands.push(dr::Operand::TensorAddressingOperands(
-            tensor_addressing_operands,
-        ));
+        inst.operands
+            .push(dr::Operand::TensorAddressingOperands(tensor_addressing_operands));
         inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
@@ -20681,12 +20266,10 @@ impl Builder {
                 dr::Operand::IdRef(tensor_layout),
             ],
         );
-        inst.operands
-            .push(dr::Operand::MemoryAccess(memory_operand));
+        inst.operands.push(dr::Operand::MemoryAccess(memory_operand));
         inst.operands.extend(memory_operand_extra);
-        inst.operands.push(dr::Operand::TensorAddressingOperands(
-            tensor_addressing_operands,
-        ));
+        inst.operands
+            .push(dr::Operand::TensorAddressingOperands(tensor_addressing_operands));
         inst.operands.extend(tensor_addressing_operands_extra);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
@@ -20708,8 +20291,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(matrix), dr::Operand::IdRef(func)],
         );
-        inst.operands
-            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(operands.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20731,8 +20313,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(matrix), dr::Operand::IdRef(func)],
         );
-        inst.operands
-            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(operands.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20744,12 +20325,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CreateTensorLayoutNV,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::CreateTensorLayoutNV, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20762,12 +20338,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CreateTensorLayoutNV,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::CreateTensorLayoutNV, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20787,8 +20358,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(dim.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(dim.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20809,8 +20379,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(dim.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(dim.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20830,8 +20399,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(stride.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(stride.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20852,8 +20420,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(stride.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(stride.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20873,8 +20440,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(operands.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20895,8 +20461,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(operands.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(operands.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20947,12 +20512,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CreateTensorViewNV,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::CreateTensorViewNV, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -20965,12 +20525,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::CreateTensorViewNV,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::CreateTensorViewNV, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -20990,8 +20545,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_view)],
         );
-        inst.operands
-            .extend(dim.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(dim.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -21012,8 +20566,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_view)],
         );
-        inst.operands
-            .extend(dim.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(dim.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -21033,8 +20586,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_view)],
         );
-        inst.operands
-            .extend(stride.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(stride.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -21055,8 +20607,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_view)],
         );
-        inst.operands
-            .extend(stride.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(stride.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -21068,12 +20619,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::IsHelperInvocationEXT,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::IsHelperInvocationEXT, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -21086,12 +20632,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::IsHelperInvocationEXT,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::IsHelperInvocationEXT, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -21168,8 +20709,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(block_size.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(block_size.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -21190,8 +20730,7 @@ impl Builder {
             Some(_id),
             vec![dr::Operand::IdRef(tensor_layout)],
         );
-        inst.operands
-            .extend(block_size.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(block_size.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -21529,10 +21068,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionSpherePositionNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -21552,10 +21088,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionSpherePositionNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -21574,10 +21107,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionSphereRadiusNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -21597,10 +21127,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionSphereRadiusNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -21619,10 +21146,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionLSSPositionsNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -21642,10 +21166,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionLSSPositionsNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -21664,10 +21185,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionLSSRadiiNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -21687,10 +21205,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionLSSRadiiNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -21709,10 +21224,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionLSSHitValueNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -21732,10 +21244,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionLSSHitValueNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -21976,10 +21485,7 @@ impl Builder {
             spirv::Op::RayQueryIsSphereHitNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -21999,10 +21505,7 @@ impl Builder {
             spirv::Op::RayQueryIsSphereHitNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -22021,10 +21524,7 @@ impl Builder {
             spirv::Op::RayQueryIsLSSHitNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -22044,10 +21544,7 @@ impl Builder {
             spirv::Op::RayQueryIsLSSHitNV,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -22266,11 +21763,7 @@ impl Builder {
         Ok(_id)
     }
     #[doc = "Appends an OpSubgroupBlockWriteINTEL instruction to the current block."]
-    pub fn subgroup_block_write_intel(
-        &mut self,
-        ptr: spirv::Word,
-        data: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn subgroup_block_write_intel(&mut self, ptr: spirv::Word, data: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::SubgroupBlockWriteINTEL,
@@ -23145,11 +22638,7 @@ impl Builder {
         Ok(())
     }
     #[doc = "Appends an OpAssumeTrueKHR instruction to the current block."]
-    pub fn insert_assume_true_khr(
-        &mut self,
-        insert_point: InsertPoint,
-        condition: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_assume_true_khr(&mut self, insert_point: InsertPoint, condition: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::AssumeTrueKHR,
@@ -23174,10 +22663,7 @@ impl Builder {
             spirv::Op::ExpectKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(value),
-                dr::Operand::IdRef(expected_value),
-            ],
+            vec![dr::Operand::IdRef(value), dr::Operand::IdRef(expected_value)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23197,10 +22683,7 @@ impl Builder {
             spirv::Op::ExpectKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(value),
-                dr::Operand::IdRef(expected_value),
-            ],
+            vec![dr::Operand::IdRef(value), dr::Operand::IdRef(expected_value)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23250,12 +22733,7 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::SaveMemoryINTEL,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::SaveMemoryINTEL, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -23268,55 +22746,30 @@ impl Builder {
     ) -> BuildResult<spirv::Word> {
         let _id = result_id.unwrap_or_else(|| self.id());
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::SaveMemoryINTEL,
-            Some(result_type),
-            Some(_id),
-            vec![],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::SaveMemoryINTEL, Some(result_type), Some(_id), vec![]);
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
     #[doc = "Appends an OpRestoreMemoryINTEL instruction to the current block."]
     pub fn restore_memory_intel(&mut self, ptr: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::RestoreMemoryINTEL,
-            None,
-            None,
-            vec![dr::Operand::IdRef(ptr)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::RestoreMemoryINTEL, None, None, vec![dr::Operand::IdRef(ptr)]);
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpRestoreMemoryINTEL instruction to the current block."]
-    pub fn insert_restore_memory_intel(
-        &mut self,
-        insert_point: InsertPoint,
-        ptr: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_restore_memory_intel(&mut self, insert_point: InsertPoint, ptr: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::RestoreMemoryINTEL,
-            None,
-            None,
-            vec![dr::Operand::IdRef(ptr)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::RestoreMemoryINTEL, None, None, vec![dr::Operand::IdRef(ptr)]);
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
     #[doc = "Appends an OpLoopControlINTEL instruction to the current block."]
-    pub fn loop_control_intel(
-        &mut self,
-        loop_control_parameters: impl IntoIterator<Item = u32>,
-    ) -> BuildResult<()> {
+    pub fn loop_control_intel(&mut self, loop_control_parameters: impl IntoIterator<Item = u32>) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(spirv::Op::LoopControlINTEL, None, None, vec![]);
-        inst.operands.extend(
-            loop_control_parameters
-                .into_iter()
-                .map(dr::Operand::LiteralBit32),
-        );
+        inst.operands
+            .extend(loop_control_parameters.into_iter().map(dr::Operand::LiteralBit32));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(())
     }
@@ -23328,11 +22781,8 @@ impl Builder {
     ) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(spirv::Op::LoopControlINTEL, None, None, vec![]);
-        inst.operands.extend(
-            loop_control_parameters
-                .into_iter()
-                .map(dr::Operand::LiteralBit32),
-        );
+        inst.operands
+            .extend(loop_control_parameters.into_iter().map(dr::Operand::LiteralBit32));
         self.insert_into_block(insert_point, inst)?;
         Ok(())
     }
@@ -23424,10 +22874,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionTKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23447,10 +22894,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionTKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23469,10 +22913,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionInstanceCustomIndexKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23492,10 +22933,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionInstanceCustomIndexKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23514,10 +22952,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionInstanceIdKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23537,10 +22972,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionInstanceIdKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23559,10 +22991,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23582,10 +23011,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23604,10 +23030,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionGeometryIndexKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23627,10 +23050,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionGeometryIndexKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23649,10 +23069,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionPrimitiveIndexKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23672,10 +23089,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionPrimitiveIndexKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23694,10 +23108,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionBarycentricsKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23717,10 +23128,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionBarycentricsKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23739,10 +23147,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionFrontFaceKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23762,10 +23167,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionFrontFaceKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23821,10 +23223,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionObjectRayDirectionKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23844,10 +23243,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionObjectRayDirectionKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23866,10 +23262,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionObjectRayOriginKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -23889,10 +23282,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionObjectRayOriginKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -23985,10 +23375,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionObjectToWorldKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -24008,10 +23395,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionObjectToWorldKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -24030,10 +23414,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionWorldToObjectKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -24053,10 +23434,7 @@ impl Builder {
             spirv::Op::RayQueryGetIntersectionWorldToObjectKHR,
             Some(result_type),
             Some(_id),
-            vec![
-                dr::Operand::IdRef(ray_query),
-                dr::Operand::IdRef(intersection),
-            ],
+            vec![dr::Operand::IdRef(ray_query), dr::Operand::IdRef(intersection)],
         );
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
@@ -24129,8 +23507,7 @@ impl Builder {
             Some(_id),
             vec![],
         );
-        inst.operands
-            .extend(constituents.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(constituents.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
     }
@@ -24150,8 +23527,7 @@ impl Builder {
             Some(_id),
             vec![],
         );
-        inst.operands
-            .extend(constituents.into_iter().map(dr::Operand::IdRef));
+        inst.operands.extend(constituents.into_iter().map(dr::Operand::IdRef));
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)
     }
@@ -24773,8 +24149,7 @@ impl Builder {
             ],
         );
         if let Some(v) = matrix_multiply_accumulate_operands {
-            inst.operands
-                .push(dr::Operand::MatrixMultiplyAccumulateOperands(v));
+            inst.operands.push(dr::Operand::MatrixMultiplyAccumulateOperands(v));
         }
         self.insert_into_block(InsertPoint::End, inst)?;
         Ok(_id)
@@ -24805,8 +24180,7 @@ impl Builder {
             ],
         );
         if let Some(v) = matrix_multiply_accumulate_operands {
-            inst.operands
-                .push(dr::Operand::MatrixMultiplyAccumulateOperands(v));
+            inst.operands.push(dr::Operand::MatrixMultiplyAccumulateOperands(v));
         }
         self.insert_into_block(insert_point, inst)?;
         Ok(_id)

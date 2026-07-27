@@ -14,6 +14,12 @@ static AUTOGEN_COMMENT : &str = "\
 //   external/spirv.core.grammar.json.
 // DO NOT MODIFY!";
 
+const KEYWORDS: &[&str] = &[
+    "as", "async", "await", "break", "const", "continue", "crate", "dyn", "else", "enum", "extern", "false", "fn",
+    "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref", "return", "self", "Self",
+    "static", "struct", "super", "trait", "true", "type", "unsafe", "use", "where", "while", "macro",
+];
+
 pub fn write_autogen_comment(file: &mut fs::File) {
     file.write_all(AUTOGEN_COMMENT.as_bytes()).unwrap();
     file.write_all(b"\n\n").unwrap();
@@ -24,8 +30,8 @@ pub fn as_ident(ident: &str) -> Ident {
     let first_char = ident.chars().next().unwrap();
     if first_char.is_ascii_digit() {
         Ident::new(&format!("_{ident}"), Span::call_site())
-    } else if ident == "macro" {
-        Ident::new(&format!("{ident}_"), Span::call_site())
+    } else if KEYWORDS.contains(&ident) {
+        Ident::new_raw(ident, Span::call_site())
     } else {
         Ident::new(ident, Span::call_site())
     }
@@ -52,8 +58,7 @@ pub fn get_dr_operand_kind(kind: &str) -> Ident {
 pub fn get_enum_underlying_type(kind: &str, generic_string: bool) -> TokenStream {
     if kind.starts_with("Id") {
         quote! { spirv::Word }
-    } else if kind == "LiteralInteger" || kind == "LiteralExtInstInteger" || kind == "LiteralFloat"
-    {
+    } else if kind == "LiteralInteger" || kind == "LiteralExtInstInteger" || kind == "LiteralFloat" {
         quote! { u32 }
     } else if kind == "LiteralSpecConstantOpInteger" {
         quote! { spirv::Op }

@@ -34,16 +34,13 @@ fn bit_enum_attribute() -> TokenStream {
     }
 }
 
-fn generate_enum(
-    enum_name: &proc_macro2::Ident,
-    variants: &[(u32, proc_macro2::Ident)],
-    comment: &str,
-) -> TokenStream {
+fn generate_enum(enum_name: &proc_macro2::Ident, variants: &[(u32, proc_macro2::Ident)], comment: &str) -> TokenStream {
     let mut variants = variants.to_vec();
     variants.sort_by_key(|&(number, _)| number);
     let enumerants = variants
         .iter()
-        .map(|(number, name)| quote! { #name = #number });
+        .map(|(number, name)| quote! { #name = #number })
+        .collect::<Vec<_>>();
 
     // Each item is a tuple indicating an inclusive range as opposed to an exclusive range like
     // is common.
@@ -91,6 +88,8 @@ fn generate_enum(
             #empty_enum
             #(#enumerants),*
         }
+        #[cfg(feature = "pliron")]
+        crate::utils::parse::parsable_enum!(#enum_name; #(#enumerants,)*);
 
         impl #enum_name {
             pub fn from_u32(n: u32) -> Option<Self> {
@@ -110,12 +109,7 @@ fn gen_bit_enum_operand_kind(spec_url: &str, grammar: &structs::OperandKind) -> 
 
     for enumerant in grammar.enumerants.iter() {
         // Special treatment for "NaN"
-        let symbol = as_ident(
-            &enumerant
-                .symbol
-                .to_shouty_snake_case()
-                .replace("NA_N", "NAN"),
-        );
+        let symbol = as_ident(&enumerant.symbol.to_shouty_snake_case().replace("NA_N", "NAN"));
         let value = enumerant.value;
 
         elements.push(quote! {
@@ -150,10 +144,7 @@ fn gen_bit_enum_operand_kind(spec_url: &str, grammar: &structs::OperandKind) -> 
         }
     }
 
-    let comment = format!(
-        "SPIR-V operand kind: {}",
-        get_spec_link(spec_url, &grammar.kind)
-    );
+    let comment = format!("SPIR-V operand kind: {}", get_spec_link(spec_url, &grammar.kind));
     let kind = as_ident(&grammar.kind);
     let attribute = bit_enum_attribute();
 
@@ -165,6 +156,9 @@ fn gen_bit_enum_operand_kind(spec_url: &str, grammar: &structs::OperandKind) -> 
                 #(#elements)*
             }
         }
+
+        #[cfg(feature = "pliron")]
+        crate::utils::parse::parsable_flags!(#kind);
     }
 }
 
@@ -234,10 +228,7 @@ fn gen_value_enum_operand_kind(spec_url: &str, grammar: &structs::OperandKind) -
     let the_enum = generate_enum(
         &kind,
         &variants,
-        &format!(
-            "SPIR-V operand kind: {}",
-            get_spec_link(spec_url, &grammar.kind)
-        ),
+        &format!("SPIR-V operand kind: {}", get_spec_link(spec_url, &grammar.kind)),
     );
 
     // TODO: Only FPEncoding doesn't list any valid values besides a "Max". This type shouldn't be
@@ -338,11 +329,7 @@ pub fn gen_spirv_header(grammar: &structs::Grammar) -> TokenStream {
     }
 }
 
-pub fn gen_spirv_ext_header(
-    op_name: &str,
-    url: &str,
-    grammar: &structs::ExtInstSetGrammar,
-) -> TokenStream {
+pub fn gen_spirv_ext_header(op_name: &str, url: &str, grammar: &structs::ExtInstSetGrammar) -> TokenStream {
     let version = grammar
         .version
         .map(|v| v as u8)
@@ -378,10 +365,7 @@ pub fn gen_spirv_ext_header(
     let the_enum = generate_enum(
         &op,
         &variants,
-        &format!(
-            "SPIR-V extension {} opcodes",
-            get_spec_link(url, "instructions")
-        ),
+        &format!("SPIR-V extension {} opcodes", get_spec_link(url, "instructions")),
     );
 
     quote! {

@@ -77,9 +77,7 @@ pub enum Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            Error::StreamExpected(index) => {
-                write!(f, "expected more bytes in the stream at index {}", index)
-            }
+            Error::StreamExpected(index) => write!(f, "expected more bytes in the stream at index {}", index),
             Error::LimitReached(index) => write!(f, "reached word limit at index {}", index),
             Error::ImageOperandsUnknown(index, word) => write!(
                 f,
@@ -121,11 +119,9 @@ impl fmt::Display for Error {
                 "unknown value {} for operand kind KernelProfilingInfo at index {}",
                 word, index
             ),
-            Error::RayFlagsUnknown(index, word) => write!(
-                f,
-                "unknown value {} for operand kind RayFlags at index {}",
-                word, index
-            ),
+            Error::RayFlagsUnknown(index, word) => {
+                write!(f, "unknown value {} for operand kind RayFlags at index {}", word, index)
+            }
             Error::FragmentShadingRateUnknown(index, word) => write!(
                 f,
                 "unknown value {} for operand kind FragmentShadingRate at index {}",
@@ -166,11 +162,9 @@ impl fmt::Display for Error {
                 "unknown value {} for operand kind StorageClass at index {}",
                 word, index
             ),
-            Error::DimUnknown(index, word) => write!(
-                f,
-                "unknown value {} for operand kind Dim at index {}",
-                word, index
-            ),
+            Error::DimUnknown(index, word) => {
+                write!(f, "unknown value {} for operand kind Dim at index {}", word, index)
+            }
             Error::SamplerAddressingModeUnknown(index, word) => write!(
                 f,
                 "unknown value {} for operand kind SamplerAddressingMode at index {}",
@@ -246,16 +240,12 @@ impl fmt::Display for Error {
                 "unknown value {} for operand kind Decoration at index {}",
                 word, index
             ),
-            Error::BuiltInUnknown(index, word) => write!(
-                f,
-                "unknown value {} for operand kind BuiltIn at index {}",
-                word, index
-            ),
-            Error::ScopeUnknown(index, word) => write!(
-                f,
-                "unknown value {} for operand kind Scope at index {}",
-                word, index
-            ),
+            Error::BuiltInUnknown(index, word) => {
+                write!(f, "unknown value {} for operand kind BuiltIn at index {}", word, index)
+            }
+            Error::ScopeUnknown(index, word) => {
+                write!(f, "unknown value {} for operand kind Scope at index {}", word, index)
+            }
             Error::GroupOperationUnknown(index, word) => write!(
                 f,
                 "unknown value {} for operand kind GroupOperation at index {}",
@@ -366,9 +356,7 @@ impl fmt::Display for Error {
                 "unknown value {} for operand kind TensorOperands at index {}",
                 word, index
             ),
-            Error::DecodeStringFailed(index, ref e) => {
-                write!(f, "cannot decode string at index {}: {}", index, e)
-            }
+            Error::DecodeStringFailed(index, ref e) => write!(f, "cannot decode string at index {}: {}", index, e),
         }
     }
 }

@@ -6,27 +6,13 @@ impl Builder {
     #[doc = "Appends an OpBranch instruction and ends the current block."]
     pub fn branch(&mut self, target_label: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::Branch,
-            None,
-            None,
-            vec![dr::Operand::IdRef(target_label)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::Branch, None, None, vec![dr::Operand::IdRef(target_label)]);
         self.end_block(inst)
     }
     #[doc = "Insert an OpBranch instruction and ends the current block."]
-    pub fn insert_branch(
-        &mut self,
-        insert_point: InsertPoint,
-        target_label: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_branch(&mut self, insert_point: InsertPoint, target_label: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::Branch,
-            None,
-            None,
-            vec![dr::Operand::IdRef(target_label)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::Branch, None, None, vec![dr::Operand::IdRef(target_label)]);
         self.insert_end_block(insert_point, inst)
     }
     #[doc = "Appends an OpBranchConditional instruction and ends the current block."]
@@ -144,27 +130,13 @@ impl Builder {
     #[doc = "Appends an OpReturnValue instruction and ends the current block."]
     pub fn ret_value(&mut self, value: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::ReturnValue,
-            None,
-            None,
-            vec![dr::Operand::IdRef(value)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::ReturnValue, None, None, vec![dr::Operand::IdRef(value)]);
         self.end_block(inst)
     }
     #[doc = "Insert an OpReturnValue instruction and ends the current block."]
-    pub fn insert_ret_value(
-        &mut self,
-        insert_point: InsertPoint,
-        value: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn insert_ret_value(&mut self, insert_point: InsertPoint, value: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst = dr::Instruction::new(
-            spirv::Op::ReturnValue,
-            None,
-            None,
-            vec![dr::Operand::IdRef(value)],
-        );
+        let mut inst = dr::Instruction::new(spirv::Op::ReturnValue, None, None, vec![dr::Operand::IdRef(value)]);
         self.insert_end_block(insert_point, inst)
     }
     #[doc = "Appends an OpUnreachable instruction and ends the current block."]
@@ -270,20 +242,13 @@ impl Builder {
         self.insert_end_block(insert_point, inst)
     }
     #[doc = "Appends an OpAbortKHR instruction and ends the current block."]
-    pub fn abort_khr(
-        &mut self,
-        message_type: spirv::Word,
-        message: spirv::Word,
-    ) -> BuildResult<()> {
+    pub fn abort_khr(&mut self, message_type: spirv::Word, message: spirv::Word) -> BuildResult<()> {
         #[allow(unused_mut)]
         let mut inst = dr::Instruction::new(
             spirv::Op::AbortKHR,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(message_type),
-                dr::Operand::IdRef(message),
-            ],
+            vec![dr::Operand::IdRef(message_type), dr::Operand::IdRef(message)],
         );
         self.end_block(inst)
     }
@@ -299,10 +264,7 @@ impl Builder {
             spirv::Op::AbortKHR,
             None,
             None,
-            vec![
-                dr::Operand::IdRef(message_type),
-                dr::Operand::IdRef(message),
-            ],
+            vec![dr::Operand::IdRef(message_type), dr::Operand::IdRef(message)],
         );
         self.insert_end_block(insert_point, inst)
     }
@@ -358,18 +320,13 @@ impl Builder {
     #[doc = "Appends an OpDemoteToHelperInvocation instruction and ends the current block."]
     pub fn demote_to_helper_invocation(&mut self) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::DemoteToHelperInvocation, None, None, vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::DemoteToHelperInvocation, None, None, vec![]);
         self.end_block(inst)
     }
     #[doc = "Insert an OpDemoteToHelperInvocation instruction and ends the current block."]
-    pub fn insert_demote_to_helper_invocation(
-        &mut self,
-        insert_point: InsertPoint,
-    ) -> BuildResult<()> {
+    pub fn insert_demote_to_helper_invocation(&mut self, insert_point: InsertPoint) -> BuildResult<()> {
         #[allow(unused_mut)]
-        let mut inst =
-            dr::Instruction::new(spirv::Op::DemoteToHelperInvocation, None, None, vec![]);
+        let mut inst = dr::Instruction::new(spirv::Op::DemoteToHelperInvocation, None, None, vec![]);
         self.insert_end_block(insert_point, inst)
     }
 }
