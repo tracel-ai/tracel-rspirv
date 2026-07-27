@@ -51,18 +51,6 @@ macro_rules! parsable_flags {
                     let flags = $crate::utils::parse::flags_parse(parse_flag, state_stream)?;
                     Ok((Self::from_bits_retain(flags.0), flags.1))
                 }
-
-                fn parser<'a>(
-                    _arg: Self::Arg,
-                ) -> Box<
-                    dyn ::pliron::combine::Parser<
-                            ::pliron::parsable::StateStream<'a>,
-                            Output = Self::Parsed,
-                            PartialState = (),
-                        > + 'a,
-                > {
-                    todo!()
-                }
             }
         };
     };

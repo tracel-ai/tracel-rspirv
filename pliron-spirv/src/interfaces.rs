@@ -136,7 +136,7 @@ impl PromotableOpInterface for LoadOp {
 impl PromotableOpInterface for StoreOp {
     fn promotion_kind(&self, ctx: &Context, alloc_info: &AllocInfo) -> PromotableOpKind {
         if self.get_operand_pointer(ctx) == alloc_info.ptr {
-            PromotableOpKind::Store(self.get_operand_pointer(ctx))
+            PromotableOpKind::Store(self.get_operand_object(ctx))
         } else {
             PromotableOpKind::NonPromotableUse
         }
