@@ -1002,6 +1002,24 @@ impl From<ComponentTypeAttr> for ComponentType {
         value.0
     }
 }
+#[pliron_attr(name = "spirv.gather_modes", format = "$0", verifier = "succ")]
+#[derive(PartialEq, Clone, Debug)]
+pub struct GatherModesAttr(pub GatherModes);
+impl GatherModesAttr {
+    pub fn new(value: GatherModes) -> Self {
+        Self(value)
+    }
+}
+impl From<GatherModes> for GatherModesAttr {
+    fn from(value: GatherModes) -> Self {
+        Self(value)
+    }
+}
+impl From<GatherModesAttr> for GatherModes {
+    fn from(value: GatherModesAttr) -> Self {
+        value.0
+    }
+}
 #[pliron_attr(name = "spirv.tensor_operands", format = "$0", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug)]
 pub struct TensorOperandsAttr(pub TensorOperands);

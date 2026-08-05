@@ -24005,6 +24005,76 @@ pub mod arm {
 pub mod ext {
     use super::*;
     #[pliron_op(
+        name = "spirv.EXT_BitcastExtract",
+        operands = (base, offset),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct BitcastExtractOp;
+    crate::format::canonical_format!(
+        BitcastExtractOp; crate ::format::FormatVar::Value("base", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("offset", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_bitcast_extract_ext {}
+    impl BitcastExtractOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, base: Value, offset: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![base, offset],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for BitcastExtractOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let base = builder.value_id(self.get_operand_base(ctx));
+            let offset = builder.value_id(self.get_operand_offset(ctx));
+            builder
+                .bitcast_extract_ext(result_ty, Some(result), base, offset)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for BitcastExtractOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::BitcastExtractEXT]);
+            result
+        }
+    }
+    #[pliron_op(
         name = "spirv.EXT_CompositeConstructReplicate",
         operands = (value),
         interfaces = [NResultsInterface<1>,
@@ -24432,7 +24502,13 @@ pub mod ext {
     }
     #[pliron_op(
         name = "spirv.EXT_HitObjectRecordFromQuery",
-        operands = (hit_object, ray_query, sbt_record_index, hit_object_attributes),
+        operands = (
+            hit_object,
+            ray_query,
+            sbt_record_index,
+            hit_object_attributes,
+            hit_kind
+        ),
         interfaces = [DecoratableOp],
         verifier = "succ"
     )]
@@ -24443,7 +24519,8 @@ pub mod ext {
         ::format::Quantifier::One), crate ::format::FormatVar::Value("sbt_record_index",
         crate ::format::Quantifier::One), crate
         ::format::FormatVar::Value("hit_object_attributes", crate
-        ::format::Quantifier::One)
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("hit_kind", crate
+        ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_hit_object_record_from_query_ext {}
     impl HitObjectRecordFromQueryOp {
@@ -24454,13 +24531,14 @@ pub mod ext {
             ray_query: Value,
             sbt_record_index: Value,
             hit_object_attributes: Value,
+            hit_kind: Option<Value>,
         ) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![],
-                    flat_vec![hit_object, ray_query, sbt_record_index, hit_object_attributes],
+                    flat_vec![hit_object, ray_query, sbt_record_index, hit_object_attributes, hit_kind],
                     vec![],
                     0,
                 ),
@@ -24478,8 +24556,15 @@ pub mod ext {
             let ray_query = builder.value_id(self.get_operand_ray_query(ctx));
             let sbt_record_index = builder.value_id(self.get_operand_sbt_record_index(ctx));
             let hit_object_attributes = builder.value_id(self.get_operand_hit_object_attributes(ctx));
+            let hit_kind = op.operands().skip(4usize).next().map(|opd| builder.value_id(opd));
             builder
-                .hit_object_record_from_query_ext(hit_object, ray_query, sbt_record_index, hit_object_attributes)
+                .hit_object_record_from_query_ext(
+                    hit_object,
+                    ray_query,
+                    sbt_record_index,
+                    hit_object_attributes,
+                    hit_kind,
+                )
                 .into_pliron_result()?;
             Ok(())
         }
@@ -27348,6 +27433,280 @@ pub mod ext {
         }
     }
     #[pliron_op(
+        name = "spirv.EXT_ControlBarrierArrive",
+        operands = (),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ControlBarrierArriveOp;
+    crate::format::canonical_format!(
+        ControlBarrierArriveOp; crate ::format::attr!(&
+        spirv_control_barrier_arrive_ext::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_arrive_ext::ATTR_MEMORY, ScopeAttr, "memory", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_arrive_ext::ATTR_SEMANTICS, MemorySemanticsAttr,
+        "semantics", crate ::format::Quantifier::One)
+    );
+    mod spirv_control_barrier_arrive_ext {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_control_barrier_arrive_ext_execution".try_into().unwrap()
+            });
+        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_arrive_ext_memory".try_into().unwrap());
+        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_control_barrier_arrive_ext_semantics".try_into().unwrap()
+            });
+    }
+    impl ControlBarrierArriveOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            execution: impl Into<ScopeAttr>,
+            memory: impl Into<ScopeAttr>,
+            semantics: impl Into<MemorySemanticsAttr>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_memory(ctx, memory.into());
+            op.set_attr_semantics(ctx, semantics.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_ext::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_arrive_ext::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
+        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_ext::ATTR_MEMORY)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `memory`.
+        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_arrive_ext::ATTR_MEMORY.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
+        pub fn get_attr_semantics<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_arrive_ext::ATTR_SEMANTICS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `semantics`.
+        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_arrive_ext::ATTR_SEMANTICS.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ControlBarrierArriveOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
+            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
+            builder
+                .control_barrier_arrive_ext(execution, memory, semantics)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ControlBarrierArriveOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SplitBarrierEXT]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.EXT_ControlBarrierWait",
+        operands = (),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ControlBarrierWaitOp;
+    crate::format::canonical_format!(
+        ControlBarrierWaitOp; crate ::format::attr!(&
+        spirv_control_barrier_wait_ext::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_wait_ext::ATTR_MEMORY, ScopeAttr, "memory", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_wait_ext::ATTR_SEMANTICS, MemorySemanticsAttr, "semantics",
+        crate ::format::Quantifier::One)
+    );
+    mod spirv_control_barrier_wait_ext {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_ext_execution".try_into().unwrap());
+        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_ext_memory".try_into().unwrap());
+        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_ext_semantics".try_into().unwrap());
+    }
+    impl ControlBarrierWaitOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            execution: impl Into<ScopeAttr>,
+            memory: impl Into<ScopeAttr>,
+            semantics: impl Into<MemorySemanticsAttr>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_memory(ctx, memory.into());
+            op.set_attr_semantics(ctx, semantics.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_wait_ext::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_wait_ext::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
+        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_wait_ext::ATTR_MEMORY)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `memory`.
+        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_wait_ext::ATTR_MEMORY.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
+        pub fn get_attr_semantics<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_wait_ext::ATTR_SEMANTICS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `semantics`.
+        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_wait_ext::ATTR_SEMANTICS.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ControlBarrierWaitOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
+            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
+            builder
+                .control_barrier_wait_ext(execution, memory, semantics)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ControlBarrierWaitOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SplitBarrierEXT]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
         name = "spirv.EXT_ArithmeticFence",
         operands = (target),
         interfaces = [NResultsInterface<1>,
@@ -29388,9 +29747,7 @@ pub mod intel {
     #[pliron_op(
         name = "spirv.INTEL_CompositeConstructContinued",
         operands = (constituents),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
+        interfaces = [DecoratableOp],
         verifier = "succ"
     )]
     pub struct CompositeConstructContinuedOp;
@@ -29401,12 +29758,12 @@ pub mod intel {
     mod spirv_composite_construct_continued_intel {}
     impl CompositeConstructContinuedOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, constituents: Vec<Value>) -> Self {
+        pub fn new(ctx: &mut Context, constituents: Vec<Value>) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
-                    vec![result_ty],
+                    vec![],
                     flat_vec![constituents],
                     vec![],
                     0,
@@ -29421,17 +29778,14 @@ pub mod intel {
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
             let constituents = op
                 .operands()
                 .skip(0usize)
                 .map(|opd| builder.value_id(opd))
                 .collect::<Vec<_>>();
             builder
-                .composite_construct_continued_intel(result_ty, Some(result), constituents)
+                .composite_construct_continued_intel(constituents)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
@@ -29590,284 +29944,6 @@ pub mod intel {
             #[allow(unused_mut)]
             let mut result = vec![];
             result.push(vec![Capability::BFloat16ConversionINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ControlBarrierArrive",
-        operands = (),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ControlBarrierArriveOp;
-    crate::format::canonical_format!(
-        ControlBarrierArriveOp; crate ::format::attr!(&
-        spirv_control_barrier_arrive_intel::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_arrive_intel::ATTR_MEMORY, ScopeAttr, "memory", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_arrive_intel::ATTR_SEMANTICS, MemorySemanticsAttr,
-        "semantics", crate ::format::Quantifier::One)
-    );
-    mod spirv_control_barrier_arrive_intel {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_arrive_intel_execution".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_arrive_intel_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_arrive_intel_semantics".try_into().unwrap()
-            });
-    }
-    impl ControlBarrierArriveOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            execution: impl Into<ScopeAttr>,
-            memory: impl Into<ScopeAttr>,
-            semantics: impl Into<MemorySemanticsAttr>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
-            };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_memory(ctx, memory.into());
-            op.set_attr_semantics(ctx, semantics.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_intel::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_arrive_intel::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
-        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_intel::ATTR_MEMORY)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `memory`.
-        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_arrive_intel::ATTR_MEMORY.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
-        pub fn get_attr_semantics<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_arrive_intel::ATTR_SEMANTICS)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `semantics`.
-        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_arrive_intel::ATTR_SEMANTICS.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ControlBarrierArriveOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
-            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
-            builder
-                .control_barrier_arrive_intel(execution, memory, semantics)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ControlBarrierArriveOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SplitBarrierINTEL]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ControlBarrierWait",
-        operands = (),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ControlBarrierWaitOp;
-    crate::format::canonical_format!(
-        ControlBarrierWaitOp; crate ::format::attr!(&
-        spirv_control_barrier_wait_intel::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_wait_intel::ATTR_MEMORY, ScopeAttr, "memory", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_wait_intel::ATTR_SEMANTICS, MemorySemanticsAttr,
-        "semantics", crate ::format::Quantifier::One)
-    );
-    mod spirv_control_barrier_wait_intel {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_wait_intel_execution".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_intel_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_wait_intel_semantics".try_into().unwrap()
-            });
-    }
-    impl ControlBarrierWaitOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            execution: impl Into<ScopeAttr>,
-            memory: impl Into<ScopeAttr>,
-            semantics: impl Into<MemorySemanticsAttr>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
-            };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_memory(ctx, memory.into());
-            op.set_attr_semantics(ctx, semantics.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_wait_intel::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_wait_intel::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
-        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_wait_intel::ATTR_MEMORY)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `memory`.
-        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_wait_intel::ATTR_MEMORY.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
-        pub fn get_attr_semantics<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_wait_intel::ATTR_SEMANTICS)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `semantics`.
-        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_wait_intel::ATTR_SEMANTICS.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ControlBarrierWaitOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
-            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
-            builder
-                .control_barrier_wait_intel(execution, memory, semantics)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ControlBarrierWaitOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SplitBarrierINTEL]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
             result
         }
     }
@@ -31001,6 +31077,292 @@ pub mod intel {
             #[allow(unused_mut)]
             let mut result = vec![];
             result.push(vec![Capability::SpecConditionalINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_PredicatedLoad",
+        operands = (pointer, predicate, default_value),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct PredicatedLoadOp;
+    crate::format::canonical_format!(
+        PredicatedLoadOp; crate ::format::FormatVar::Value("pointer", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("predicate", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("default_value",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::MemoryAccess(&
+        spirv_predicated_load_intel::ATTR_MEMORY_ACCESS, "memory_access"), crate
+        ::format::attr!(& spirv_predicated_load_intel::ATTR_ALIGN, LiteralIntegerAttr,
+        "align", crate ::format::Quantifier::ZeroOrOne)
+    );
+    mod spirv_predicated_load_intel {
+        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_predicated_load_intel_memory_access".try_into().unwrap());
+        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_predicated_load_intel_align".try_into().unwrap());
+    }
+    impl PredicatedLoadOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            pointer: Value,
+            predicate: Value,
+            default_value: Value,
+            memory_access: impl Into<MemoryAccessAttr>,
+            align: Option<u32>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![pointer, predicate, default_value],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_memory_access(ctx, memory_access.into());
+            if let Some(align) = align {
+                op.set_attr_align(ctx, align.into());
+            }
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory_access`.
+        pub fn get_attr_memory_access<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, MemoryAccessAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<MemoryAccessAttr>(&spirv_predicated_load_intel::ATTR_MEMORY_ACCESS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `memory_access`.
+        pub fn set_attr_memory_access(&self, ctx: &::pliron::context::Context, value: MemoryAccessAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_predicated_load_intel::ATTR_MEMORY_ACCESS.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `align`.
+        pub fn get_attr_align<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> Option<::core::cell::Ref<'a, LiteralIntegerAttr>> {
+            ::core::cell::Ref::filter_map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<LiteralIntegerAttr>(&spirv_predicated_load_intel::ATTR_ALIGN)
+            })
+            .ok()
+        }
+        ///Set the value of the attribute named `align`.
+        pub fn set_attr_align(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_predicated_load_intel::ATTR_ALIGN.clone(), value);
+        }
+        ///Remove the attribute named `align`.
+        pub fn remove_attr_align(&self, ctx: &::pliron::context::Context) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .0
+                .remove(&*spirv_predicated_load_intel::ATTR_ALIGN);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for PredicatedLoadOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let pointer = builder.value_id(self.get_operand_pointer(ctx));
+            let predicate = builder.value_id(self.get_operand_predicate(ctx));
+            let default_value = builder.value_id(self.get_operand_default_value(ctx));
+            let memory_access = opt_memory_access(self.get_attr_memory_access(ctx).0);
+            let align = self.get_attr_align(ctx).map(|it| it.0.into());
+            builder
+                .predicated_load_intel(
+                    result_ty,
+                    Some(result),
+                    pointer,
+                    predicate,
+                    default_value,
+                    memory_access,
+                    align,
+                )
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for PredicatedLoadOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_memory_access(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::PredicatedIOINTEL]);
+            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_PredicatedStore",
+        operands = (pointer, object, predicate),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct PredicatedStoreOp;
+    crate::format::canonical_format!(
+        PredicatedStoreOp; crate ::format::FormatVar::Value("pointer", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("object", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("predicate", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::MemoryAccess(&
+        spirv_predicated_store_intel::ATTR_MEMORY_ACCESS, "memory_access"), crate
+        ::format::attr!(& spirv_predicated_store_intel::ATTR_ALIGN, LiteralIntegerAttr,
+        "align", crate ::format::Quantifier::ZeroOrOne)
+    );
+    mod spirv_predicated_store_intel {
+        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_predicated_store_intel_memory_access".try_into().unwrap()
+            });
+        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_predicated_store_intel_align".try_into().unwrap());
+    }
+    impl PredicatedStoreOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            pointer: Value,
+            object: Value,
+            predicate: Value,
+            memory_access: impl Into<MemoryAccessAttr>,
+            align: Option<u32>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![pointer, object, predicate],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_memory_access(ctx, memory_access.into());
+            if let Some(align) = align {
+                op.set_attr_align(ctx, align.into());
+            }
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory_access`.
+        pub fn get_attr_memory_access<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, MemoryAccessAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<MemoryAccessAttr>(&spirv_predicated_store_intel::ATTR_MEMORY_ACCESS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `memory_access`.
+        pub fn set_attr_memory_access(&self, ctx: &::pliron::context::Context, value: MemoryAccessAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_predicated_store_intel::ATTR_MEMORY_ACCESS.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `align`.
+        pub fn get_attr_align<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> Option<::core::cell::Ref<'a, LiteralIntegerAttr>> {
+            ::core::cell::Ref::filter_map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<LiteralIntegerAttr>(&spirv_predicated_store_intel::ATTR_ALIGN)
+            })
+            .ok()
+        }
+        ///Set the value of the attribute named `align`.
+        pub fn set_attr_align(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_predicated_store_intel::ATTR_ALIGN.clone(), value);
+        }
+        ///Remove the attribute named `align`.
+        pub fn remove_attr_align(&self, ctx: &::pliron::context::Context) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .0
+                .remove(&*spirv_predicated_store_intel::ATTR_ALIGN);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for PredicatedStoreOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let pointer = builder.value_id(self.get_operand_pointer(ctx));
+            let object = builder.value_id(self.get_operand_object(ctx));
+            let predicate = builder.value_id(self.get_operand_predicate(ctx));
+            let memory_access = opt_memory_access(self.get_attr_memory_access(ctx).0);
+            let align = self.get_attr_align(ctx).map(|it| it.0.into());
+            builder
+                .predicated_store_intel(pointer, object, predicate, memory_access, align)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for PredicatedStoreOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_memory_access(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::PredicatedIOINTEL]);
+            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_capabilities());
             result
         }
     }

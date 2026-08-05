@@ -294,6 +294,8 @@ pub static ATTR_STABLE_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLoc
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stable_kernel_argument_altera".try_into().unwrap());
 pub static ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_implement_in_register_map_altera".try_into().unwrap());
+pub static ATTR_INTRINSIC_SAMSUNG: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_intrinsic_samsung".try_into().unwrap());
 #[op_interface]
 pub trait DecoratableOp {
     fn verify(_op: &dyn Op, _ctx: &Context) -> Result<()>
@@ -1168,6 +1170,13 @@ pub trait DecoratableOp {
         get_decoration_implement_in_register_map_altera(self, ctx)
     }
     #[allow(non_snake_case)]
+    fn get_decoration_intrinsic_samsung<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
+    where
+        Self: Sized,
+    {
+        get_decoration_intrinsic_samsung(self, ctx)
+    }
+    #[allow(non_snake_case)]
     fn set_decoration_relaxed_precision(&self, ctx: &Context)
     where
         Self: Sized,
@@ -2013,6 +2022,13 @@ pub trait DecoratableOp {
         Self: Sized,
     {
         set_decoration_implement_in_register_map_altera(self, ctx, value);
+    }
+    #[allow(non_snake_case)]
+    fn set_decoration_intrinsic_samsung(&self, ctx: &Context, value: LiteralIntegerAttr)
+    where
+        Self: Sized,
+    {
+        set_decoration_intrinsic_samsung(self, ctx, value);
     }
     fn all_decorations(&self, ctx: &Context) -> Vec<(Decoration, Vec<Operand>)>
     where
@@ -2959,6 +2975,17 @@ pub fn get_decoration_implement_in_register_map_altera<'a>(
     .ok()
 }
 #[allow(non_snake_case)]
+#[inline(never)]
+pub fn get_decoration_intrinsic_samsung<'a>(
+    op: &dyn DecoratableOp,
+    ctx: &'a Context,
+) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_INTRINSIC_SAMSUNG)
+    })
+    .ok()
+}
+#[allow(non_snake_case)]
 pub fn set_decoration_relaxed_precision(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
@@ -3829,6 +3856,13 @@ pub fn set_decoration_implement_in_register_map_altera(
         .attributes
         .set(ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA.clone(), value);
 }
+#[allow(non_snake_case)]
+pub fn set_decoration_intrinsic_samsung(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_INTRINSIC_SAMSUNG.clone(), value);
+}
 impl DecorationExt for Decoration {
     fn decoration_key(&self) -> &'static Identifier {
         match self {
@@ -3955,6 +3989,7 @@ impl DecorationExt for Decoration {
             Decoration::MMHostInterfaceWaitRequestALTERA => &ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA,
             Decoration::StableKernelArgumentALTERA => &ATTR_STABLE_KERNEL_ARGUMENT_ALTERA,
             Decoration::ImplementInRegisterMapALTERA => &ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA,
+            Decoration::IntrinsicSAMSUNG => &ATTR_INTRINSIC_SAMSUNG,
             _ => unimplemented!("Unsupported decoration"),
         }
     }
@@ -4088,6 +4123,7 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
         "spirv_decoration_mm_host_interface_wait_request_altera" => Some(Decoration::MMHostInterfaceWaitRequestALTERA),
         "spirv_decoration_stable_kernel_argument_altera" => Some(Decoration::StableKernelArgumentALTERA),
         "spirv_decoration_implement_in_register_map_altera" => Some(Decoration::ImplementInRegisterMapALTERA),
+        "spirv_decoration_intrinsic_samsung" => Some(Decoration::IntrinsicSAMSUNG),
         _ => None,
     }
 }
@@ -4149,7 +4185,8 @@ impl DecorationInfo {
             | Decoration::MMHostInterfaceLatencyALTERA
             | Decoration::MMHostInterfaceMaxBurstALTERA
             | Decoration::MMHostInterfaceWaitRequestALTERA
-            | Decoration::ImplementInRegisterMapALTERA => {
+            | Decoration::ImplementInRegisterMapALTERA
+            | Decoration::IntrinsicSAMSUNG => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
                 vec![Operand::LiteralBit32(attr.0)]

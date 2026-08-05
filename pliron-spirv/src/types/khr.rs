@@ -62,7 +62,7 @@ impl VerCapExtTypeInterface for CooperativeMatrixType {
                 Some(FPEncoding::Float8E4M3EXT) | Some(FPEncoding::Float8E5M2EXT) => {
                     out.push(vec![Capability::Float8CooperativeMatrixEXT])
                 }
-                None => {}
+                _ => {}
             }
         }
         out.extend(Operand::from(self.scope).required_capabilities());
