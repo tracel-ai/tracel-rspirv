@@ -62,6 +62,7 @@ pub enum OperandKind {
     FPEncoding,
     CooperativeVectorMatrixLayout,
     ComponentType,
+    GatherModes,
     IdResultType,
     IdResult,
     IdMemorySemantics,
@@ -2707,6 +2708,12 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [],
         [(IdResult, One), (LiteralInteger, One), (IdRef, ZeroOrMore)]
     ),
+    inst!(
+        BitcastExtractEXT,
+        [BitcastExtractEXT],
+        [],
+        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
+    ),
     inst!(TerminateInvocation, [Shader], ["SPV_KHR_terminate_invocation"], []),
     inst!(
         TypeUntypedPointerKHR,
@@ -3250,6 +3257,20 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [CooperativeMatrixConversionQCOM],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
+    ),
+    inst!(
+        ImageGatherQCOM,
+        [ImageGatherLinearQCOM, ImageGatherExtendedModesQCOM],
+        [],
+        [
+            (IdResultType, One),
+            (IdResult, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One),
+            (ImageOperands, ZeroOrOne)
+        ]
     ),
     inst!(
         GroupIAddNonUniformAMD,
@@ -3933,7 +3954,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         HitObjectRecordFromQueryEXT,
         [ShaderInvocationReorderEXT],
         [],
-        [(IdRef, One), (IdRef, One), (IdRef, One), (IdRef, One)]
+        [
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, ZeroOrOne)
+        ]
     ),
     inst!(
         HitObjectRecordMissEXT,
@@ -6703,13 +6730,13 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         ReadPipeBlockingALTERA,
         [BlockingPipesALTERA],
         [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
+        [(IdRef, One), (IdRef, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         WritePipeBlockingALTERA,
         [BlockingPipesALTERA],
         [],
-        [(IdResultType, One), (IdResult, One), (IdRef, One), (IdRef, One)]
+        [(IdRef, One), (IdRef, One), (IdRef, One), (IdRef, One)]
     ),
     inst!(
         FPGARegALTERA,
@@ -6865,7 +6892,7 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         CompositeConstructContinuedINTEL,
         [LongCompositesINTEL],
         [],
-        [(IdResultType, One), (IdResult, One), (IdRef, ZeroOrMore)]
+        [(IdRef, ZeroOrMore)]
     ),
     inst!(
         ConvertFToBF16INTEL,
@@ -6880,14 +6907,14 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [(IdResultType, One), (IdResult, One), (IdRef, One)]
     ),
     inst!(
-        ControlBarrierArriveINTEL,
-        [SplitBarrierINTEL],
+        ControlBarrierArriveEXT,
+        [SplitBarrierEXT],
         [],
         [(IdScope, One), (IdScope, One), (IdMemorySemantics, One)]
     ),
     inst!(
-        ControlBarrierWaitINTEL,
-        [SplitBarrierINTEL],
+        ControlBarrierWaitEXT,
+        [SplitBarrierEXT],
         [],
         [(IdScope, One), (IdScope, One), (IdMemorySemantics, One)]
     ),
@@ -7107,6 +7134,25 @@ static INSTRUCTION_TABLE: &[Instruction<'static>] = &[
         [SpecConditionalINTEL],
         [],
         [(IdResultType, One), (IdResult, One), (IdRef, ZeroOrMore)]
+    ),
+    inst!(
+        PredicatedLoadINTEL,
+        [PredicatedIOINTEL],
+        [],
+        [
+            (IdResultType, One),
+            (IdResult, One),
+            (IdRef, One),
+            (IdRef, One),
+            (IdRef, One),
+            (MemoryAccess, ZeroOrOne)
+        ]
+    ),
+    inst!(
+        PredicatedStoreINTEL,
+        [PredicatedIOINTEL],
+        [],
+        [(IdRef, One), (IdRef, One), (IdRef, One), (MemoryAccess, ZeroOrOne)]
     ),
     inst!(
         GroupIMulKHR,
