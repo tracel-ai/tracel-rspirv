@@ -7,7 +7,6 @@ version.workspace = true
 [dependencies]
 derive-new = "0.7"
 derive_more = { version = "2", features = ["from", "into"] }
-indexmap = { workspace = true }
 itertools = "0.15"
 pliron = { workspace = true }
 thiserror = "2"

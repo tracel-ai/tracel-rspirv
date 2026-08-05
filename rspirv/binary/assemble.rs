@@ -1,5 +1,4 @@
 use crate::dr;
-use std::convert::TryInto;
 
 /// Trait for assembling functionalities.
 pub trait Assemble {
@@ -28,11 +27,10 @@ impl Assemble for dr::ModuleHeader {
 }
 
 fn assemble_str(s: &str, result: &mut Vec<u32>) {
-    let chunks = s.as_bytes().chunks_exact(4);
-    let remainder = chunks.remainder();
+    let (chunks, remainder) = s.as_bytes().as_chunks::<4>();
     let mut last = [0; 4];
     last[..remainder.len()].copy_from_slice(remainder);
-    result.extend(chunks.map(|chunk| u32::from_le_bytes(chunk.try_into().unwrap())));
+    result.extend(chunks.iter().map(|chunk| u32::from_le_bytes(*chunk)));
     result.push(u32::from_le_bytes(last));
 }
 
