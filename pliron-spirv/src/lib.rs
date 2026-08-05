@@ -13,7 +13,6 @@ use alloc::{
     string::{String, ToString},
     vec::Vec,
 };
-use indexmap::IndexMap;
 use pliron::{
     attribute::{AttrObj, Attribute},
     basic_block::BasicBlock,
@@ -26,8 +25,8 @@ use pliron::{
     operation::Operation,
     printable::Printable,
     result::Result,
-    std_deps::hash::FxHashMap,
     r#type::{Type, TypeHandle, type_cast},
+    utils::table::{HMap, IMap},
     value::Value,
     verify_err,
     verify_error_noloc,
@@ -67,12 +66,12 @@ pub enum PlironSpirvError {
 #[derive(Default)]
 pub struct PlironBuilder {
     builder: Builder,
-    types: IndexMap<TypeHandle, Word>,
-    constants: FxHashMap<(TypeHandle, u64), Word>,
-    values: FxHashMap<Value, Word>,
-    symbols: FxHashMap<Identifier, Word>,
-    blocks: FxHashMap<Ptr<BasicBlock>, Word>,
-    strings: FxHashMap<String, Word>,
+    types: IMap<TypeHandle, Word>,
+    constants: HMap<(TypeHandle, u64), Word>,
+    values: HMap<Value, Word>,
+    symbols: HMap<Identifier, Word>,
+    blocks: HMap<(Ptr<BasicBlock>, BlockPos), Word>,
+    strings: HMap<String, Word>,
 }
 
 impl Deref for PlironBuilder {
@@ -87,6 +86,12 @@ impl DerefMut for PlironBuilder {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.builder
     }
+}
+
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+pub(crate) enum BlockPos {
+    Start,
+    End,
 }
 
 impl PlironBuilder {
@@ -104,6 +109,18 @@ impl PlironBuilder {
         }
     }
 
+    pub(crate) fn merge_values(&mut self, value_1: Value, value_2: Value) {
+        match (self.values.get(&value_1), self.values.get(&value_2)) {
+            (Some(_), Some(_)) => panic!("Both values already have IDs"),
+            (Some(id), None) => self.values.insert(value_2, *id),
+            (None, Some(id)) => self.values.insert(value_1, *id),
+            (None, None) => {
+                let id = self.value_id(value_1);
+                self.values.insert(value_2, id)
+            }
+        };
+    }
+
     pub(crate) fn symbol_id(&mut self, symbol: impl Into<Identifier>) -> Word {
         let sym = symbol.into();
         if let Some(existing) = self.symbols.get(&sym) {
@@ -115,12 +132,12 @@ impl PlironBuilder {
         }
     }
 
-    pub(crate) fn label_id(&mut self, block: Ptr<BasicBlock>) -> Word {
-        if let Some(existing) = self.blocks.get(&block) {
+    pub(crate) fn label_id(&mut self, block: Ptr<BasicBlock>, pos: BlockPos) -> Word {
+        if let Some(existing) = self.blocks.get(&(block, pos)) {
             *existing
         } else {
             let id = self.id();
-            self.blocks.insert(block, id);
+            self.blocks.insert((block, pos), id);
             id
         }
     }

@@ -35,6 +35,7 @@ use tracel_rspirv::{
 };
 
 use crate::{
+    BlockPos,
     ToSpirvAttr,
     autogen_attrs::StorageClassAttr,
     decorations::all_decorations_for_op,
@@ -419,7 +420,7 @@ impl BranchOpFoldInterface for BranchOp {
 #[op_interface_impl]
 impl ToSpirvOp for BranchOp {
     fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-        let label_id = builder.label_id(self.get_successor(ctx));
+        let label_id = builder.label_id(self.get_successor(ctx), BlockPos::Start);
         builder.branch(label_id).into_pliron_result()
     }
 }
@@ -503,8 +504,8 @@ impl BranchOpFoldInterface for BranchConditionalOp {
 impl ToSpirvOp for BranchConditionalOp {
     fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
         let condition = builder.value_id(self.get_operand_condition(ctx));
-        let true_label_id = builder.label_id(self.true_dest(ctx));
-        let false_label_id = builder.label_id(self.false_dest(ctx));
+        let true_label_id = builder.label_id(self.true_dest(ctx), BlockPos::Start);
+        let false_label_id = builder.label_id(self.false_dest(ctx), BlockPos::Start);
         builder
             .branch_conditional(condition, true_label_id, false_label_id, [])
             .into_pliron_result()
@@ -599,7 +600,7 @@ impl BranchOpFoldInterface for SwitchOp {
 impl ToSpirvOp for SwitchOp {
     fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
         let selector = builder.value_id(self.get_operand_selector(ctx));
-        let default_label = builder.label_id(self.default_destination(ctx));
+        let default_label = builder.label_id(self.default_destination(ctx), BlockPos::Start);
         let cases = self.cases(ctx).into_iter().map(|attr| {
             if attr.get_type().deref(ctx).width() > 32 {
                 Operand::LiteralBit64(attr.value().to_u64())
@@ -610,7 +611,7 @@ impl ToSpirvOp for SwitchOp {
         let case_dests = self.case_destinations(ctx);
         let case_labels = case_dests
             .into_iter()
-            .map(|dest| builder.label_id(dest))
+            .map(|dest| builder.label_id(dest, BlockPos::Start))
             .collect::<Vec<_>>();
         let case_pairs = cases.zip(case_labels);
         builder.switch(selector, default_label, case_pairs).into_pliron_result()
@@ -642,20 +643,31 @@ impl SelectionOp {
 impl ToSpirvOp for SelectionOp {
     fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
         let region = self.region(ctx);
-        let entry_block = self.entry_block(ctx);
-        let merge_block = region.deref(ctx).get_tail().unwrap();
-        let merge_label = builder.label_id(merge_block);
+        let entry = self.entry_block(ctx);
+        let merge = region.deref(ctx).get_tail().unwrap();
+        let merge_label = builder.label_id(merge, BlockPos::Start);
         let blocks = region.deref(ctx).iter(ctx).skip(1).collect::<Vec<_>>();
+
+        // Remap merge operands to result ID, they represent the same SPIR-V value
+        {
+            let merge_term = merge.deref(ctx).get_terminator(ctx).expect("Should have terminator");
+            let merge_opds = merge_term.deref(ctx).operands().collect::<Vec<_>>();
+            let results = self.get_operation().deref(ctx).results().collect::<Vec<_>>();
+            for (merge_opd, res) in merge_opds.into_iter().zip(results) {
+                builder.merge_values(merge_opd, res);
+            }
+        }
 
         builder
             .selection_merge(merge_label, SelectionControl::NONE)
             .into_pliron_result()?;
-        for op in entry_block.deref(ctx).iter(ctx) {
+        for op in entry.deref(ctx).iter(ctx) {
             op_to_spirv(ctx, builder, op)?;
         }
         for block in blocks {
-            block_to_spirv(ctx, builder, block, false, block == merge_block)?;
+            block_to_spirv(ctx, builder, block, false, block == merge)?;
         }
+
         Ok(())
     }
 }
@@ -690,8 +702,18 @@ impl ToSpirvOp for LoopOp {
             return verify_err!(self.loc(ctx), "Loop region must have exactly 4 blocks");
         };
 
-        let merge_label = builder.label_id(merge);
-        let continue_label = builder.label_id(r#loop);
+        // Remap merge operands to result ID, they represent the same SPIR-V value
+        {
+            let merge_term = merge.deref(ctx).get_terminator(ctx).expect("Should have terminator");
+            let merge_opds = merge_term.deref(ctx).operands().collect::<Vec<_>>();
+            let results = self.get_operation().deref(ctx).results().collect::<Vec<_>>();
+            for (merge_opd, res) in merge_opds.into_iter().zip(results) {
+                builder.merge_values(merge_opd, res);
+            }
+        }
+
+        let merge_label = builder.label_id(merge, BlockPos::Start);
+        let continue_label = builder.label_id(r#loop, BlockPos::Start);
 
         for op in entry.deref(ctx).iter(ctx) {
             op_to_spirv(ctx, builder, op)?;
@@ -981,6 +1003,9 @@ impl FunctionControlInterface for FuncOp {
 #[op_interface_impl]
 impl ToSpirvOp for FuncOp {
     fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+        // Precompute block IDs to deal with synthetic splits later
+        compute_block_ids(ctx, builder, self);
+
         let entry = self.get_entry_block(ctx);
         let args = entry.deref(ctx).arguments().collect::<Vec<_>>();
         let func_ty =
@@ -1019,6 +1044,29 @@ pub(crate) fn apply_all_decorations(ctx: &Context, builder: &mut PlironBuilder, 
     }
 }
 
+pub(crate) fn compute_block_ids(ctx: &Context, builder: &mut PlironBuilder, func: &FuncOp) {
+    let root = func.get_region(ctx);
+    let mut worklist = vec![root];
+
+    while let Some(region) = worklist.pop() {
+        for block in region.deref(ctx).iter(ctx) {
+            let mut id = builder.label_id(block, BlockPos::Start);
+            for op in block.deref(ctx).iter(ctx) {
+                worklist.extend(op.deref(ctx).regions());
+
+                if Operation::is_op::<SelectionOp>(op, ctx) || Operation::is_op::<LoopOp>(op, ctx) {
+                    let region = op.deref(ctx).get_region(0);
+                    let entry = region.deref(ctx).get_entry_block().expect("Should have entry");
+                    let merge = region.deref(ctx).get_tail().expect("Should have merge");
+                    builder.blocks.insert((entry, BlockPos::Start), id);
+                    id = builder.label_id(merge, BlockPos::Start);
+                }
+            }
+            builder.blocks.insert((block, BlockPos::End), id);
+        }
+    }
+}
+
 pub(crate) fn block_to_spirv(
     ctx: &Context,
     builder: &mut PlironBuilder,
@@ -1026,7 +1074,7 @@ pub(crate) fn block_to_spirv(
     is_entry: bool,
     keep_selected: bool,
 ) -> Result<()> {
-    let label_id = builder.label_id(block);
+    let label_id = builder.label_id(block, BlockPos::Start);
     builder.begin_block(Some(label_id)).into_pliron_result()?;
     let block_id = builder.selected_block();
 
@@ -1041,7 +1089,7 @@ pub(crate) fn block_to_spirv(
             let branch = op_cast::<dyn BranchOpInterface>(&*branch).expect("Should be branch op");
             let arg_operands = branch.successor_operands(ctx, idx);
             for (i, opd) in arg_operands.into_iter().enumerate() {
-                pred_args[i].push((builder.value_id(opd), builder.label_id(block)));
+                pred_args[i].push((builder.value_id(opd), builder.label_id(pred, BlockPos::End)));
             }
         }
 

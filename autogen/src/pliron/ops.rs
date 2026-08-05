@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::btree_map::BTreeMap;
 
 use heck::ToSnekCase;
 use proc_macro2::TokenStream;
@@ -89,7 +89,7 @@ pub enum OpdKind {
 impl PlironGenerator {
     pub fn generate_ops(&self) -> TokenStream {
         let mut root_ops = vec![];
-        let mut vendor_ops: HashMap<&str, Vec<_>> = HashMap::new();
+        let mut vendor_ops: BTreeMap<&str, Vec<_>> = BTreeMap::new();
         for op in self.grammar.instructions.iter() {
             let (_, vendor) = split_vendor_tag(&op.opname);
             let op = self.generate_op(op);
@@ -195,8 +195,8 @@ impl PlironGenerator {
 
     pub fn operands(&self, op: &Instruction) -> Vec<OpdKind> {
         let mut opd_id = 0;
-        let mut names_count = HashMap::<Ident, usize>::new();
-        let attr_name = |names_count: &mut HashMap<Ident, usize>, name: &str, kind: &str| -> Ident {
+        let mut names_count = BTreeMap::<Ident, usize>::new();
+        let attr_name = |names_count: &mut BTreeMap<Ident, usize>, name: &str, kind: &str| -> Ident {
             if name.is_empty() {
                 let ident = as_ident(&kind.to_snek_case());
                 *names_count.entry(ident.clone()).or_default() += 1;
@@ -269,7 +269,7 @@ impl PlironGenerator {
                 other => panic!("Unsupported operand kind {} in op {}", other, op.opname),
             })
             .collect::<Vec<_>>();
-        let mut name_suffix_id = HashMap::<Ident, usize>::new();
+        let mut name_suffix_id = BTreeMap::<Ident, usize>::new();
         for opd in opds.iter_mut() {
             match opd {
                 OpdKind::ResultType | OpdKind::ResultValue | OpdKind::Value(..) => {}

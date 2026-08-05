@@ -22355,6 +22355,1653 @@ impl VerCapExtOpInterface for SUDotAccSatOp {
         result
     }
 }
+pub mod amd {
+    use super::*;
+    #[pliron_op(
+        name = "spirv.AMD_GroupIAddNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupIAddNonUniformOp;
+    crate::format::canonical_format!(
+        GroupIAddNonUniformOp; crate ::format::attr!(&
+        spirv_group_i_add_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_i_add_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_i_add_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_i_add_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_i_add_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupIAddNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_i_add_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_i_add_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_i_add_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_i_add_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupIAddNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_i_add_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupIAddNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_GroupFAddNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupFAddNonUniformOp;
+    crate::format::canonical_format!(
+        GroupFAddNonUniformOp; crate ::format::attr!(&
+        spirv_group_f_add_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_f_add_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_f_add_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_f_add_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_f_add_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupFAddNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_f_add_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_f_add_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_f_add_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_f_add_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupFAddNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_f_add_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupFAddNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_GroupFMinNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupFMinNonUniformOp;
+    crate::format::canonical_format!(
+        GroupFMinNonUniformOp; crate ::format::attr!(&
+        spirv_group_f_min_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_f_min_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_f_min_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_f_min_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_f_min_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupFMinNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_f_min_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_f_min_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_f_min_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_f_min_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupFMinNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_f_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupFMinNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_GroupUMinNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupUMinNonUniformOp;
+    crate::format::canonical_format!(
+        GroupUMinNonUniformOp; crate ::format::attr!(&
+        spirv_group_u_min_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_u_min_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_u_min_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_u_min_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_u_min_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupUMinNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_u_min_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_u_min_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_u_min_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_u_min_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupUMinNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_u_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupUMinNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_GroupSMinNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupSMinNonUniformOp;
+    crate::format::canonical_format!(
+        GroupSMinNonUniformOp; crate ::format::attr!(&
+        spirv_group_s_min_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_s_min_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_s_min_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_s_min_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_s_min_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupSMinNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_s_min_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_s_min_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_s_min_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_s_min_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupSMinNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_s_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupSMinNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_GroupFMaxNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupFMaxNonUniformOp;
+    crate::format::canonical_format!(
+        GroupFMaxNonUniformOp; crate ::format::attr!(&
+        spirv_group_f_max_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_f_max_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_f_max_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_f_max_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_f_max_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupFMaxNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_f_max_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_f_max_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_f_max_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_f_max_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupFMaxNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_f_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupFMaxNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_GroupUMaxNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupUMaxNonUniformOp;
+    crate::format::canonical_format!(
+        GroupUMaxNonUniformOp; crate ::format::attr!(&
+        spirv_group_u_max_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_u_max_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_u_max_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_u_max_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_u_max_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupUMaxNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_u_max_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_u_max_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_u_max_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_u_max_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupUMaxNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_u_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupUMaxNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_GroupSMaxNonUniform",
+        operands = (x),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct GroupSMaxNonUniformOp;
+    crate::format::canonical_format!(
+        GroupSMaxNonUniformOp; crate ::format::attr!(&
+        spirv_group_s_max_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_group_s_max_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
+        "operation", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+    );
+    mod spirv_group_s_max_non_uniform_amd {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_s_max_non_uniform_amd_execution".try_into().unwrap()
+            });
+        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_group_s_max_non_uniform_amd_operation".try_into().unwrap()
+            });
+    }
+    impl GroupSMaxNonUniformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            execution: impl Into<ScopeAttr>,
+            operation: impl Into<GroupOperationAttr>,
+            x: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![x],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_operation(ctx, operation.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_group_s_max_non_uniform_amd::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_s_max_non_uniform_amd::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
+        pub fn get_attr_operation<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<GroupOperationAttr>(&spirv_group_s_max_non_uniform_amd::ATTR_OPERATION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `operation`.
+        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_group_s_max_non_uniform_amd::ATTR_OPERATION.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for GroupSMaxNonUniformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let operation = self.get_attr_operation(ctx).clone().0;
+            let x = builder.value_id(self.get_operand_x(ctx));
+            builder
+                .group_s_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for GroupSMaxNonUniformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_ballot"]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Groups]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_FragmentMaskFetch",
+        operands = (image, coordinate),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct FragmentMaskFetchOp;
+    crate::format::canonical_format!(
+        FragmentMaskFetchOp; crate ::format::FormatVar::Value("image", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_fragment_mask_fetch_amd {}
+    impl FragmentMaskFetchOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, image: Value, coordinate: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![image, coordinate],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for FragmentMaskFetchOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let image = builder.value_id(self.get_operand_image(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            builder
+                .fragment_mask_fetch_amd(result_ty, Some(result), image, coordinate)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for FragmentMaskFetchOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_fragment_mask"]);
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::FragmentMaskAMD]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMD_FragmentFetch",
+        operands = (image, coordinate, fragment_index),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct FragmentFetchOp;
+    crate::format::canonical_format!(
+        FragmentFetchOp; crate ::format::FormatVar::Value("image", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("fragment_index",
+        crate ::format::Quantifier::One)
+    );
+    mod spirv_fragment_fetch_amd {}
+    impl FragmentFetchOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            image: Value,
+            coordinate: Value,
+            fragment_index: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![image, coordinate, fragment_index],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for FragmentFetchOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let image = builder.value_id(self.get_operand_image(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            let fragment_index = builder.value_id(self.get_operand_fragment_index(ctx));
+            builder
+                .fragment_fetch_amd(result_ty, Some(result), image, coordinate, fragment_index)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for FragmentFetchOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_AMD_shader_fragment_mask"]);
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::FragmentMaskAMD]);
+            result
+        }
+    }
+}
+pub mod amdx {
+    use super::*;
+    #[pliron_op(
+        name = "spirv.AMDX_AllocateNodePayloads",
+        operands = (payload_count, node_index),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct AllocateNodePayloadsOp;
+    crate::format::canonical_format!(
+        AllocateNodePayloadsOp; crate ::format::attr!(&
+        spirv_allocate_node_payloads_amdx::ATTR_VISIBILITY, ScopeAttr, "visibility",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("payload_count", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("node_index", crate ::format::Quantifier::One)
+    );
+    mod spirv_allocate_node_payloads_amdx {
+        pub static ATTR_VISIBILITY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_allocate_node_payloads_amdx_visibility".try_into().unwrap()
+            });
+    }
+    impl AllocateNodePayloadsOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            visibility: impl Into<ScopeAttr>,
+            payload_count: Value,
+            node_index: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![payload_count, node_index],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_visibility(ctx, visibility.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `visibility`.
+        pub fn get_attr_visibility<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_allocate_node_payloads_amdx::ATTR_VISIBILITY)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `visibility`.
+        pub fn set_attr_visibility(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_allocate_node_payloads_amdx::ATTR_VISIBILITY.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for AllocateNodePayloadsOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let visibility = self.get_attr_visibility(ctx).spirv_id(ctx, builder)?;
+            let payload_count = builder.value_id(self.get_operand_payload_count(ctx));
+            let node_index = builder.value_id(self.get_operand_node_index(ctx));
+            builder
+                .allocate_node_payloads_amdx(result_ty, Some(result), visibility, payload_count, node_index)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for AllocateNodePayloadsOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_visibility(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_visibility(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::ShaderEnqueueAMDX]);
+            result.extend(Operand::from(self.get_attr_visibility(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMDX_EnqueueNodePayloads",
+        operands = (payload_array),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct EnqueueNodePayloadsOp;
+    crate::format::canonical_format!(
+        EnqueueNodePayloadsOp; crate ::format::FormatVar::Value("payload_array", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_enqueue_node_payloads_amdx {}
+    impl EnqueueNodePayloadsOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, payload_array: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![payload_array],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for EnqueueNodePayloadsOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let payload_array = builder.value_id(self.get_operand_payload_array(ctx));
+            builder.enqueue_node_payloads_amdx(payload_array).into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for EnqueueNodePayloadsOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::ShaderEnqueueAMDX]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMDX_FinishWritingNodePayload",
+        operands = (payload),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct FinishWritingNodePayloadOp;
+    crate::format::canonical_format!(
+        FinishWritingNodePayloadOp; crate ::format::FormatVar::Value("payload", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_finish_writing_node_payload_amdx {}
+    impl FinishWritingNodePayloadOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, payload: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![payload],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for FinishWritingNodePayloadOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let payload = builder.value_id(self.get_operand_payload(ctx));
+            builder
+                .finish_writing_node_payload_amdx(result_ty, Some(result), payload)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for FinishWritingNodePayloadOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::ShaderEnqueueAMDX]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMDX_NodePayloadArrayLength",
+        operands = (payload_array),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct NodePayloadArrayLengthOp;
+    crate::format::canonical_format!(
+        NodePayloadArrayLengthOp; crate ::format::FormatVar::Value("payload_array", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_node_payload_array_length_amdx {}
+    impl NodePayloadArrayLengthOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, payload_array: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![payload_array],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for NodePayloadArrayLengthOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let payload_array = builder.value_id(self.get_operand_payload_array(ctx));
+            builder
+                .node_payload_array_length_amdx(result_ty, Some(result), payload_array)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for NodePayloadArrayLengthOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::ShaderEnqueueAMDX]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.AMDX_IsNodePayloadValid",
+        operands = (payload_type, node_index),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct IsNodePayloadValidOp;
+    crate::format::canonical_format!(
+        IsNodePayloadValidOp; crate ::format::FormatVar::Value("payload_type", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("node_index", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_is_node_payload_valid_amdx {}
+    impl IsNodePayloadValidOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, payload_type: Value, node_index: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![payload_type, node_index],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for IsNodePayloadValidOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let payload_type = builder.value_id(self.get_operand_payload_type(ctx));
+            let node_index = builder.value_id(self.get_operand_node_index(ctx));
+            builder
+                .is_node_payload_valid_amdx(result_ty, Some(result), payload_type, node_index)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for IsNodePayloadValidOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::ShaderEnqueueAMDX]);
+            result
+        }
+    }
+}
+pub mod arm {
+    use super::*;
+    #[pliron_op(
+        name = "spirv.ARM_TensorQuerySize",
+        operands = (tensor, dimension),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct TensorQuerySizeOp;
+    crate::format::canonical_format!(
+        TensorQuerySizeOp; crate ::format::FormatVar::Value("tensor", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("dimension", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_tensor_query_size_arm {}
+    impl TensorQuerySizeOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, tensor: Value, dimension: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![tensor, dimension],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for TensorQuerySizeOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let tensor = builder.value_id(self.get_operand_tensor(ctx));
+            let dimension = builder.value_id(self.get_operand_dimension(ctx));
+            builder
+                .tensor_query_size_arm(result_ty, Some(result), tensor, dimension)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for TensorQuerySizeOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::TensorsARM]);
+            result
+        }
+    }
+}
 pub mod ext {
     use super::*;
     #[pliron_op(
@@ -25769,1072 +27416,439 @@ pub mod ext {
         }
     }
 }
-pub mod amd {
+pub mod intel {
     use super::*;
     #[pliron_op(
-        name = "spirv.AMD_GroupIAddNonUniform",
-        operands = (x),
+        name = "spirv.INTEL_SubgroupShuffle",
+        operands = (data, invocation_id),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct GroupIAddNonUniformOp;
+    pub struct SubgroupShuffleOp;
     crate::format::canonical_format!(
-        GroupIAddNonUniformOp; crate ::format::attr!(&
-        spirv_group_i_add_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_i_add_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+        SubgroupShuffleOp; crate ::format::FormatVar::Value("data", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("invocation_id",
+        crate ::format::Quantifier::One)
     );
-    mod spirv_group_i_add_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_i_add_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_i_add_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupIAddNonUniformOp {
+    mod spirv_subgroup_shuffle_intel {}
+    impl SubgroupShuffleOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, data: Value, invocation_id: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![x],
+                    flat_vec![data, invocation_id],
                     vec![],
                     0,
                 ),
             };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
             op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_i_add_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_i_add_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_i_add_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_i_add_non_uniform_amd::ATTR_OPERATION.clone(), value);
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for GroupIAddNonUniformOp {
+    impl ToSpirvOp for SubgroupShuffleOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
+            let data = builder.value_id(self.get_operand_data(ctx));
+            let invocation_id = builder.value_id(self.get_operand_invocation_id(ctx));
             builder
-                .group_i_add_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .subgroup_shuffle_intel(result_ty, Some(result), data, invocation_id)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupIAddNonUniformOp {
+    impl VerCapExtOpInterface for SubgroupShuffleOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
             let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
             Some(result)
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result.push(vec![Capability::SubgroupShuffleINTEL]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.AMD_GroupFAddNonUniform",
-        operands = (x),
+        name = "spirv.INTEL_SubgroupShuffleDown",
+        operands = (current, next, delta),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct GroupFAddNonUniformOp;
+    pub struct SubgroupShuffleDownOp;
     crate::format::canonical_format!(
-        GroupFAddNonUniformOp; crate ::format::attr!(&
-        spirv_group_f_add_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_f_add_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+        SubgroupShuffleDownOp; crate ::format::FormatVar::Value("current", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("next", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("delta", crate
+        ::format::Quantifier::One)
     );
-    mod spirv_group_f_add_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_add_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_add_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupFAddNonUniformOp {
+    mod spirv_subgroup_shuffle_down_intel {}
+    impl SubgroupShuffleDownOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, current: Value, next: Value, delta: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![x],
+                    flat_vec![current, next, delta],
                     vec![],
                     0,
                 ),
             };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
             op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_f_add_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_f_add_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_f_add_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_f_add_non_uniform_amd::ATTR_OPERATION.clone(), value);
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for GroupFAddNonUniformOp {
+    impl ToSpirvOp for SubgroupShuffleDownOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
+            let current = builder.value_id(self.get_operand_current(ctx));
+            let next = builder.value_id(self.get_operand_next(ctx));
+            let delta = builder.value_id(self.get_operand_delta(ctx));
             builder
-                .group_f_add_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .subgroup_shuffle_down_intel(result_ty, Some(result), current, next, delta)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupFAddNonUniformOp {
+    impl VerCapExtOpInterface for SubgroupShuffleDownOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
             let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
             Some(result)
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result.push(vec![Capability::SubgroupShuffleINTEL]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.AMD_GroupFMinNonUniform",
-        operands = (x),
+        name = "spirv.INTEL_SubgroupShuffleUp",
+        operands = (previous, current, delta),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct GroupFMinNonUniformOp;
+    pub struct SubgroupShuffleUpOp;
     crate::format::canonical_format!(
-        GroupFMinNonUniformOp; crate ::format::attr!(&
-        spirv_group_f_min_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_f_min_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+        SubgroupShuffleUpOp; crate ::format::FormatVar::Value("previous", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("current", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("delta", crate
+        ::format::Quantifier::One)
     );
-    mod spirv_group_f_min_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_min_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_min_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupFMinNonUniformOp {
+    mod spirv_subgroup_shuffle_up_intel {}
+    impl SubgroupShuffleUpOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, previous: Value, current: Value, delta: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![x],
+                    flat_vec![previous, current, delta],
                     vec![],
                     0,
                 ),
             };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
             op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_f_min_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_f_min_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_f_min_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_f_min_non_uniform_amd::ATTR_OPERATION.clone(), value);
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for GroupFMinNonUniformOp {
+    impl ToSpirvOp for SubgroupShuffleUpOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
+            let previous = builder.value_id(self.get_operand_previous(ctx));
+            let current = builder.value_id(self.get_operand_current(ctx));
+            let delta = builder.value_id(self.get_operand_delta(ctx));
             builder
-                .group_f_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .subgroup_shuffle_up_intel(result_ty, Some(result), previous, current, delta)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupFMinNonUniformOp {
+    impl VerCapExtOpInterface for SubgroupShuffleUpOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
             let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
             Some(result)
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result.push(vec![Capability::SubgroupShuffleINTEL]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.AMD_GroupUMinNonUniform",
-        operands = (x),
+        name = "spirv.INTEL_SubgroupShuffleXor",
+        operands = (data, value),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct GroupUMinNonUniformOp;
+    pub struct SubgroupShuffleXorOp;
     crate::format::canonical_format!(
-        GroupUMinNonUniformOp; crate ::format::attr!(&
-        spirv_group_u_min_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_u_min_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+        SubgroupShuffleXorOp; crate ::format::FormatVar::Value("data", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("value", crate
+        ::format::Quantifier::One)
     );
-    mod spirv_group_u_min_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_min_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_min_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupUMinNonUniformOp {
+    mod spirv_subgroup_shuffle_xor_intel {}
+    impl SubgroupShuffleXorOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, data: Value, value: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![x],
+                    flat_vec![data, value],
                     vec![],
                     0,
                 ),
             };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
             op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_u_min_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_u_min_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_u_min_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_u_min_non_uniform_amd::ATTR_OPERATION.clone(), value);
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for GroupUMinNonUniformOp {
+    impl ToSpirvOp for SubgroupShuffleXorOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
+            let data = builder.value_id(self.get_operand_data(ctx));
+            let value = builder.value_id(self.get_operand_value(ctx));
             builder
-                .group_u_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .subgroup_shuffle_xor_intel(result_ty, Some(result), data, value)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupUMinNonUniformOp {
+    impl VerCapExtOpInterface for SubgroupShuffleXorOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
             let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
             Some(result)
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result.push(vec![Capability::SubgroupShuffleINTEL]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.AMD_GroupSMinNonUniform",
-        operands = (x),
+        name = "spirv.INTEL_SubgroupBlockRead",
+        operands = (ptr),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct GroupSMinNonUniformOp;
+    pub struct SubgroupBlockReadOp;
     crate::format::canonical_format!(
-        GroupSMinNonUniformOp; crate ::format::attr!(&
-        spirv_group_s_min_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_s_min_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+        SubgroupBlockReadOp; crate ::format::FormatVar::Value("ptr", crate
+        ::format::Quantifier::One)
     );
-    mod spirv_group_s_min_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_min_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_min_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupSMinNonUniformOp {
+    mod spirv_subgroup_block_read_intel {}
+    impl SubgroupBlockReadOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, ptr: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![x],
+                    flat_vec![ptr],
                     vec![],
                     0,
                 ),
             };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
             op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_s_min_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_s_min_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_s_min_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_s_min_non_uniform_amd::ATTR_OPERATION.clone(), value);
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for GroupSMinNonUniformOp {
+    impl ToSpirvOp for SubgroupBlockReadOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
+            let ptr = builder.value_id(self.get_operand_ptr(ctx));
             builder
-                .group_s_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
+                .subgroup_block_read_intel(result_ty, Some(result), ptr)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupSMinNonUniformOp {
+    impl VerCapExtOpInterface for SubgroupBlockReadOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
             let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
             Some(result)
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result.push(vec![Capability::SubgroupBufferBlockIOINTEL]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.AMD_GroupFMaxNonUniform",
-        operands = (x),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
+        name = "spirv.INTEL_SubgroupBlockWrite",
+        operands = (ptr, data),
+        interfaces = [DecoratableOp],
         verifier = "succ"
     )]
-    pub struct GroupFMaxNonUniformOp;
+    pub struct SubgroupBlockWriteOp;
     crate::format::canonical_format!(
-        GroupFMaxNonUniformOp; crate ::format::attr!(&
-        spirv_group_f_max_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_f_max_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
+        SubgroupBlockWriteOp; crate ::format::FormatVar::Value("ptr", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("data", crate
+        ::format::Quantifier::One)
     );
-    mod spirv_group_f_max_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_max_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_max_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupFMaxNonUniformOp {
+    mod spirv_subgroup_block_write_intel {}
+    impl SubgroupBlockWriteOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
+        pub fn new(ctx: &mut Context, ptr: Value, data: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![x],
+                    vec![],
+                    flat_vec![ptr, data],
                     vec![],
                     0,
                 ),
             };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
             op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_f_max_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_f_max_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_f_max_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_f_max_non_uniform_amd::ATTR_OPERATION.clone(), value);
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for GroupFMaxNonUniformOp {
+    impl ToSpirvOp for SubgroupBlockWriteOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
-            builder
-                .group_f_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            let ptr = builder.value_id(self.get_operand_ptr(ctx));
+            let data = builder.value_id(self.get_operand_data(ctx));
+            builder.subgroup_block_write_intel(ptr, data).into_pliron_result()?;
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupFMaxNonUniformOp {
+    impl VerCapExtOpInterface for SubgroupBlockWriteOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
             let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
             Some(result)
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
+            result.push(vec![Capability::SubgroupBufferBlockIOINTEL]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.AMD_GroupUMaxNonUniform",
-        operands = (x),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct GroupUMaxNonUniformOp;
-    crate::format::canonical_format!(
-        GroupUMaxNonUniformOp; crate ::format::attr!(&
-        spirv_group_u_max_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_u_max_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
-    );
-    mod spirv_group_u_max_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_max_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_max_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupUMaxNonUniformOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![x],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_u_max_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_u_max_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_u_max_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_u_max_non_uniform_amd::ATTR_OPERATION.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for GroupUMaxNonUniformOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
-            builder
-                .group_u_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupUMaxNonUniformOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.AMD_GroupSMaxNonUniform",
-        operands = (x),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct GroupSMaxNonUniformOp;
-    crate::format::canonical_format!(
-        GroupSMaxNonUniformOp; crate ::format::attr!(&
-        spirv_group_s_max_non_uniform_amd::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_group_s_max_non_uniform_amd::ATTR_OPERATION, GroupOperationAttr,
-        "operation", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
-    );
-    mod spirv_group_s_max_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_max_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_max_non_uniform_amd_operation".try_into().unwrap()
-            });
-    }
-    impl GroupSMaxNonUniformOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            execution: impl Into<ScopeAttr>,
-            operation: impl Into<GroupOperationAttr>,
-            x: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![x],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_operation(ctx, operation.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_group_s_max_non_uniform_amd::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_s_max_non_uniform_amd::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `operation`.
-        pub fn get_attr_operation<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, GroupOperationAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<GroupOperationAttr>(&spirv_group_s_max_non_uniform_amd::ATTR_OPERATION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `operation`.
-        pub fn set_attr_operation(&self, ctx: &::pliron::context::Context, value: GroupOperationAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_group_s_max_non_uniform_amd::ATTR_OPERATION.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for GroupSMaxNonUniformOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let operation = self.get_attr_operation(ctx).clone().0;
-            let x = builder.value_id(self.get_operand_x(ctx));
-            builder
-                .group_s_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for GroupSMaxNonUniformOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_operation(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_ballot"]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::Groups]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.AMD_FragmentMaskFetch",
+        name = "spirv.INTEL_SubgroupImageBlockRead",
         operands = (image, coordinate),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct FragmentMaskFetchOp;
+    pub struct SubgroupImageBlockReadOp;
     crate::format::canonical_format!(
-        FragmentMaskFetchOp; crate ::format::FormatVar::Value("image", crate
+        SubgroupImageBlockReadOp; crate ::format::FormatVar::Value("image", crate
         ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
         ::format::Quantifier::One)
     );
-    mod spirv_fragment_mask_fetch_amd {}
-    impl FragmentMaskFetchOp {
+    mod spirv_subgroup_image_block_read_intel {}
+    impl SubgroupImageBlockReadOp {
         #[allow(clippy::too_many_arguments)]
         pub fn new(ctx: &mut Context, result_ty: TypeHandle, image: Value, coordinate: Value) -> Self {
             let op = Self {
@@ -26851,7 +27865,7 @@ pub mod amd {
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for FragmentMaskFetchOp {
+    impl ToSpirvOp for SubgroupImageBlockReadOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
@@ -26861,14 +27875,14 @@ pub mod amd {
             let image = builder.value_id(self.get_operand_image(ctx));
             let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
             builder
-                .fragment_mask_fetch_amd(result_ty, Some(result), image, coordinate)
+                .subgroup_image_block_read_intel(result_ty, Some(result), image, coordinate)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for FragmentMaskFetchOp {
+    impl VerCapExtOpInterface for SubgroupImageBlockReadOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
@@ -26879,48 +27893,116 @@ pub mod amd {
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_fragment_mask"]);
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::FragmentMaskAMD]);
+            result.push(vec![Capability::SubgroupImageBlockIOINTEL]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.AMD_FragmentFetch",
-        operands = (image, coordinate, fragment_index),
+        name = "spirv.INTEL_SubgroupImageBlockWrite",
+        operands = (image, coordinate, data),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct SubgroupImageBlockWriteOp;
+    crate::format::canonical_format!(
+        SubgroupImageBlockWriteOp; crate ::format::FormatVar::Value("image", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("data", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_subgroup_image_block_write_intel {}
+    impl SubgroupImageBlockWriteOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, image: Value, coordinate: Value, data: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![image, coordinate, data],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for SubgroupImageBlockWriteOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let image = builder.value_id(self.get_operand_image(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            let data = builder.value_id(self.get_operand_data(ctx));
+            builder
+                .subgroup_image_block_write_intel(image, coordinate, data)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for SubgroupImageBlockWriteOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SubgroupImageBlockIOINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_SubgroupImageMediaBlockRead",
+        operands = (image, coordinate, width, height),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct FragmentFetchOp;
+    pub struct SubgroupImageMediaBlockReadOp;
     crate::format::canonical_format!(
-        FragmentFetchOp; crate ::format::FormatVar::Value("image", crate
+        SubgroupImageMediaBlockReadOp; crate ::format::FormatVar::Value("image", crate
         ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("fragment_index",
-        crate ::format::Quantifier::One)
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("height", crate
+        ::format::Quantifier::One)
     );
-    mod spirv_fragment_fetch_amd {}
-    impl FragmentFetchOp {
+    mod spirv_subgroup_image_media_block_read_intel {}
+    impl SubgroupImageMediaBlockReadOp {
         #[allow(clippy::too_many_arguments)]
         pub fn new(
             ctx: &mut Context,
             result_ty: TypeHandle,
             image: Value,
             coordinate: Value,
-            fragment_index: Value,
+            width: Value,
+            height: Value,
         ) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![image, coordinate, fragment_index],
+                    flat_vec![image, coordinate, width, height],
                     vec![],
                     0,
                 ),
@@ -26929,7 +28011,7 @@ pub mod amd {
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for FragmentFetchOp {
+    impl ToSpirvOp for SubgroupImageMediaBlockReadOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
@@ -26938,16 +28020,17 @@ pub mod amd {
             let result = builder.value_id(self.get_result(ctx));
             let image = builder.value_id(self.get_operand_image(ctx));
             let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            let fragment_index = builder.value_id(self.get_operand_fragment_index(ctx));
+            let width = builder.value_id(self.get_operand_width(ctx));
+            let height = builder.value_id(self.get_operand_height(ctx));
             builder
-                .fragment_fetch_amd(result_ty, Some(result), image, coordinate, fragment_index)
+                .subgroup_image_media_block_read_intel(result_ty, Some(result), image, coordinate, width, height)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for FragmentFetchOp {
+    impl VerCapExtOpInterface for SubgroupImageMediaBlockReadOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
@@ -26958,44 +28041,48 @@ pub mod amd {
         fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec!["SPV_AMD_shader_fragment_mask"]);
             result
         }
         #[allow(unused_variables, clippy::vec_init_then_push)]
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::FragmentMaskAMD]);
+            result.push(vec![Capability::SubgroupImageMediaBlockIOINTEL]);
             result
         }
     }
-}
-pub mod arm {
-    use super::*;
     #[pliron_op(
-        name = "spirv.ARM_TensorQuerySize",
-        operands = (tensor, dimension),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
+        name = "spirv.INTEL_SubgroupImageMediaBlockWrite",
+        operands = (image, coordinate, width, height, data),
+        interfaces = [DecoratableOp],
         verifier = "succ"
     )]
-    pub struct TensorQuerySizeOp;
+    pub struct SubgroupImageMediaBlockWriteOp;
     crate::format::canonical_format!(
-        TensorQuerySizeOp; crate ::format::FormatVar::Value("tensor", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("dimension", crate
+        SubgroupImageMediaBlockWriteOp; crate ::format::FormatVar::Value("image", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("height", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("data", crate
         ::format::Quantifier::One)
     );
-    mod spirv_tensor_query_size_arm {}
-    impl TensorQuerySizeOp {
+    mod spirv_subgroup_image_media_block_write_intel {}
+    impl SubgroupImageMediaBlockWriteOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, tensor: Value, dimension: Value) -> Self {
+        pub fn new(
+            ctx: &mut Context,
+            image: Value,
+            coordinate: Value,
+            width: Value,
+            height: Value,
+            data: Value,
+        ) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![tensor, dimension],
+                    vec![],
+                    flat_vec![image, coordinate, width, height, data],
                     vec![],
                     0,
                 ),
@@ -27004,24 +28091,24 @@ pub mod arm {
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for TensorQuerySizeOp {
+    impl ToSpirvOp for SubgroupImageMediaBlockWriteOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let tensor = builder.value_id(self.get_operand_tensor(ctx));
-            let dimension = builder.value_id(self.get_operand_dimension(ctx));
+            let image = builder.value_id(self.get_operand_image(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            let width = builder.value_id(self.get_operand_width(ctx));
+            let height = builder.value_id(self.get_operand_height(ctx));
+            let data = builder.value_id(self.get_operand_data(ctx));
             builder
-                .tensor_query_size_arm(result_ty, Some(result), tensor, dimension)
+                .subgroup_image_media_block_write_intel(image, coordinate, width, height, data)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for TensorQuerySizeOp {
+    impl VerCapExtOpInterface for SubgroupImageMediaBlockWriteOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
@@ -27038,7 +28125,3158 @@ pub mod arm {
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::TensorsARM]);
+            result.push(vec![Capability::SubgroupImageMediaBlockIOINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_UCountLeadingZeros",
+        operands = (operand),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct UCountLeadingZerosOp;
+    crate::format::canonical_format!(
+        UCountLeadingZerosOp; crate ::format::FormatVar::Value("operand", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_u_count_leading_zeros_intel {}
+    impl UCountLeadingZerosOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for UCountLeadingZerosOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand = builder.value_id(self.get_operand_operand(ctx));
+            builder
+                .u_count_leading_zeros_intel(result_ty, Some(result), operand)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for UCountLeadingZerosOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_UCountTrailingZeros",
+        operands = (operand),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct UCountTrailingZerosOp;
+    crate::format::canonical_format!(
+        UCountTrailingZerosOp; crate ::format::FormatVar::Value("operand", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_u_count_trailing_zeros_intel {}
+    impl UCountTrailingZerosOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for UCountTrailingZerosOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand = builder.value_id(self.get_operand_operand(ctx));
+            builder
+                .u_count_trailing_zeros_intel(result_ty, Some(result), operand)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for UCountTrailingZerosOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_AbsISub",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct AbsISubOp;
+    crate::format::canonical_format!(
+        AbsISubOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_abs_i_sub_intel {}
+    impl AbsISubOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for AbsISubOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .abs_i_sub_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for AbsISubOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_AbsUSub",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct AbsUSubOp;
+    crate::format::canonical_format!(
+        AbsUSubOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_abs_u_sub_intel {}
+    impl AbsUSubOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for AbsUSubOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .abs_u_sub_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for AbsUSubOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_IAddSat",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct IAddSatOp;
+    crate::format::canonical_format!(
+        IAddSatOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_i_add_sat_intel {}
+    impl IAddSatOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for IAddSatOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .i_add_sat_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for IAddSatOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_UAddSat",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct UAddSatOp;
+    crate::format::canonical_format!(
+        UAddSatOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_u_add_sat_intel {}
+    impl UAddSatOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for UAddSatOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .u_add_sat_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for UAddSatOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_IAverage",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct IAverageOp;
+    crate::format::canonical_format!(
+        IAverageOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_i_average_intel {}
+    impl IAverageOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for IAverageOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .i_average_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for IAverageOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_UAverage",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct UAverageOp;
+    crate::format::canonical_format!(
+        UAverageOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_u_average_intel {}
+    impl UAverageOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for UAverageOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .u_average_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for UAverageOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_IAverageRounded",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct IAverageRoundedOp;
+    crate::format::canonical_format!(
+        IAverageRoundedOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_i_average_rounded_intel {}
+    impl IAverageRoundedOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for IAverageRoundedOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .i_average_rounded_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for IAverageRoundedOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_UAverageRounded",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct UAverageRoundedOp;
+    crate::format::canonical_format!(
+        UAverageRoundedOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_u_average_rounded_intel {}
+    impl UAverageRoundedOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for UAverageRoundedOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .u_average_rounded_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for UAverageRoundedOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_ISubSat",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ISubSatOp;
+    crate::format::canonical_format!(
+        ISubSatOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_i_sub_sat_intel {}
+    impl ISubSatOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ISubSatOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .i_sub_sat_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ISubSatOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_USubSat",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct USubSatOp;
+    crate::format::canonical_format!(
+        USubSatOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_u_sub_sat_intel {}
+    impl USubSatOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for USubSatOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .u_sub_sat_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for USubSatOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_IMul32x16",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct IMul32x16Op;
+    crate::format::canonical_format!(
+        IMul32x16Op; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_i_mul32x16_intel {}
+    impl IMul32x16Op {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for IMul32x16Op {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .i_mul32x16_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for IMul32x16Op {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_UMul32x16",
+        operands = (operand_1, operand_2),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct UMul32x16Op;
+    crate::format::canonical_format!(
+        UMul32x16Op; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_u_mul32x16_intel {}
+    impl UMul32x16Op {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for UMul32x16Op {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            builder
+                .u_mul32x16_intel(result_ty, Some(result), operand_1, operand_2)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for UMul32x16Op {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::IntegerFunctions2INTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_VariableLengthArray",
+        operands = (length),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct VariableLengthArrayOp;
+    crate::format::canonical_format!(
+        VariableLengthArrayOp; crate ::format::FormatVar::Value("length", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_variable_length_array_intel {}
+    impl VariableLengthArrayOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, length: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![length],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for VariableLengthArrayOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let length = builder.value_id(self.get_operand_length(ctx));
+            builder
+                .variable_length_array_intel(result_ty, Some(result), length)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for VariableLengthArrayOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::VariableLengthArrayINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_SaveMemory",
+        operands = (),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct SaveMemoryOp;
+    crate::format::canonical_format!(SaveMemoryOp;);
+    mod spirv_save_memory_intel {}
+    impl SaveMemoryOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for SaveMemoryOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            builder
+                .save_memory_intel(result_ty, Some(result))
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for SaveMemoryOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::VariableLengthArrayINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_RestoreMemory",
+        operands = (ptr),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct RestoreMemoryOp;
+    crate::format::canonical_format!(
+        RestoreMemoryOp; crate ::format::FormatVar::Value("ptr", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_restore_memory_intel {}
+    impl RestoreMemoryOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, ptr: Value) -> Self {
+            let op = Self {
+                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![ptr], vec![], 0),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for RestoreMemoryOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let ptr = builder.value_id(self.get_operand_ptr(ctx));
+            builder.restore_memory_intel(ptr).into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for RestoreMemoryOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::VariableLengthArrayINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_LoopControl",
+        operands = (),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct LoopControlOp;
+    crate::format::canonical_format!(
+        LoopControlOp; crate ::format::attr!(&
+        spirv_loop_control_intel::ATTR_LOOP_CONTROL_PARAMETERS, LiteralIntegerAttr,
+        "loop_control_parameters", crate ::format::Quantifier::ZeroOrMore)
+    );
+    mod spirv_loop_control_intel {
+        pub static ATTR_LOOP_CONTROL_PARAMETERS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_loop_control_intel_loop_control_parameters".try_into().unwrap()
+            });
+    }
+    impl LoopControlOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, loop_control_parameters: Vec<LiteralIntegerAttr>) -> Self {
+            let op = Self {
+                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
+            };
+            op.set_attr_loop_control_parameters(ctx, as_vec_attr(loop_control_parameters));
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `loop_control_parameters`.
+        pub fn get_attr_loop_control_parameters<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, VecAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<VecAttr>(&spirv_loop_control_intel::ATTR_LOOP_CONTROL_PARAMETERS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `loop_control_parameters`.
+        pub fn set_attr_loop_control_parameters(&self, ctx: &::pliron::context::Context, value: VecAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_loop_control_intel::ATTR_LOOP_CONTROL_PARAMETERS.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for LoopControlOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let loop_control_parameters =
+                from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx))
+                    .into_iter()
+                    .map(|it| it.clone().0);
+            builder
+                .loop_control_intel(loop_control_parameters)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for LoopControlOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            for attr in from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx)) {
+                result = result.max(Operand::from(attr.clone().0).minimum_version()?);
+            }
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec!["SPV_INTEL_unstructured_loop_controls"]);
+            for attr in from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx)) {
+                result.extend(Operand::from(attr.clone().0).required_extensions());
+            }
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::UnstructuredLoopControlsINTEL]);
+            for attr in from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx)) {
+                result.extend(Operand::from(attr.clone().0).required_capabilities());
+            }
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_CompositeConstructContinued",
+        operands = (constituents),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct CompositeConstructContinuedOp;
+    crate::format::canonical_format!(
+        CompositeConstructContinuedOp; crate ::format::FormatVar::Value("constituents",
+        crate ::format::Quantifier::ZeroOrMore)
+    );
+    mod spirv_composite_construct_continued_intel {}
+    impl CompositeConstructContinuedOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, constituents: Vec<Value>) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![constituents],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for CompositeConstructContinuedOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let constituents = op
+                .operands()
+                .skip(0usize)
+                .map(|opd| builder.value_id(opd))
+                .collect::<Vec<_>>();
+            builder
+                .composite_construct_continued_intel(result_ty, Some(result), constituents)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for CompositeConstructContinuedOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::LongCompositesINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_ConvertFToBF16",
+        operands = (float_value),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ConvertFToBF16Op;
+    crate::format::canonical_format!(
+        ConvertFToBF16Op; crate ::format::FormatVar::Value("float_value", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_convert_f_to_bf16intel {}
+    impl ConvertFToBF16Op {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, float_value: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![float_value],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ConvertFToBF16Op {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let float_value = builder.value_id(self.get_operand_float_value(ctx));
+            builder
+                .convert_f_to_bf16intel(result_ty, Some(result), float_value)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ConvertFToBF16Op {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::BFloat16ConversionINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_ConvertBF16ToF",
+        operands = (b_float16_value),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ConvertBF16ToFOp;
+    crate::format::canonical_format!(
+        ConvertBF16ToFOp; crate ::format::FormatVar::Value("b_float16_value", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_convert_bf16_to_fintel {}
+    impl ConvertBF16ToFOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, b_float16_value: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![b_float16_value],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ConvertBF16ToFOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let b_float16_value = builder.value_id(self.get_operand_b_float16_value(ctx));
+            builder
+                .convert_bf16_to_fintel(result_ty, Some(result), b_float16_value)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ConvertBF16ToFOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::BFloat16ConversionINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_ControlBarrierArrive",
+        operands = (),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ControlBarrierArriveOp;
+    crate::format::canonical_format!(
+        ControlBarrierArriveOp; crate ::format::attr!(&
+        spirv_control_barrier_arrive_intel::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_arrive_intel::ATTR_MEMORY, ScopeAttr, "memory", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_arrive_intel::ATTR_SEMANTICS, MemorySemanticsAttr,
+        "semantics", crate ::format::Quantifier::One)
+    );
+    mod spirv_control_barrier_arrive_intel {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_control_barrier_arrive_intel_execution".try_into().unwrap()
+            });
+        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_arrive_intel_memory".try_into().unwrap());
+        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_control_barrier_arrive_intel_semantics".try_into().unwrap()
+            });
+    }
+    impl ControlBarrierArriveOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            execution: impl Into<ScopeAttr>,
+            memory: impl Into<ScopeAttr>,
+            semantics: impl Into<MemorySemanticsAttr>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_memory(ctx, memory.into());
+            op.set_attr_semantics(ctx, semantics.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_intel::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_arrive_intel::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
+        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_intel::ATTR_MEMORY)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `memory`.
+        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_arrive_intel::ATTR_MEMORY.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
+        pub fn get_attr_semantics<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_arrive_intel::ATTR_SEMANTICS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `semantics`.
+        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_arrive_intel::ATTR_SEMANTICS.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ControlBarrierArriveOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
+            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
+            builder
+                .control_barrier_arrive_intel(execution, memory, semantics)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ControlBarrierArriveOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SplitBarrierINTEL]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_ControlBarrierWait",
+        operands = (),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ControlBarrierWaitOp;
+    crate::format::canonical_format!(
+        ControlBarrierWaitOp; crate ::format::attr!(&
+        spirv_control_barrier_wait_intel::ATTR_EXECUTION, ScopeAttr, "execution", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_wait_intel::ATTR_MEMORY, ScopeAttr, "memory", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_control_barrier_wait_intel::ATTR_SEMANTICS, MemorySemanticsAttr,
+        "semantics", crate ::format::Quantifier::One)
+    );
+    mod spirv_control_barrier_wait_intel {
+        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_control_barrier_wait_intel_execution".try_into().unwrap()
+            });
+        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_intel_memory".try_into().unwrap());
+        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_control_barrier_wait_intel_semantics".try_into().unwrap()
+            });
+    }
+    impl ControlBarrierWaitOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            execution: impl Into<ScopeAttr>,
+            memory: impl Into<ScopeAttr>,
+            semantics: impl Into<MemorySemanticsAttr>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
+            };
+            op.set_attr_execution(ctx, execution.into());
+            op.set_attr_memory(ctx, memory.into());
+            op.set_attr_semantics(ctx, semantics.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
+        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_wait_intel::ATTR_EXECUTION)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `execution`.
+        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_wait_intel::ATTR_EXECUTION.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
+        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<ScopeAttr>(&spirv_control_barrier_wait_intel::ATTR_MEMORY)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `memory`.
+        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_wait_intel::ATTR_MEMORY.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
+        pub fn get_attr_semantics<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_wait_intel::ATTR_SEMANTICS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `semantics`.
+        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_control_barrier_wait_intel::ATTR_SEMANTICS.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ControlBarrierWaitOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
+            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
+            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
+            builder
+                .control_barrier_wait_intel(execution, memory, semantics)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ControlBarrierWaitOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
+            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SplitBarrierINTEL]);
+            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
+            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_SubgroupBlockPrefetch",
+        operands = (ptr, num_bytes),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct SubgroupBlockPrefetchOp;
+    crate::format::canonical_format!(
+        SubgroupBlockPrefetchOp; crate ::format::FormatVar::Value("ptr", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("num_bytes", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::MemoryAccess(&
+        spirv_subgroup_block_prefetch_intel::ATTR_MEMORY_ACCESS, "memory_access"), crate
+        ::format::attr!(& spirv_subgroup_block_prefetch_intel::ATTR_ALIGN,
+        LiteralIntegerAttr, "align", crate ::format::Quantifier::ZeroOrOne)
+    );
+    mod spirv_subgroup_block_prefetch_intel {
+        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_subgroup_block_prefetch_intel_memory_access".try_into().unwrap()
+            });
+        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_subgroup_block_prefetch_intel_align".try_into().unwrap());
+    }
+    impl SubgroupBlockPrefetchOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            ptr: Value,
+            num_bytes: Value,
+            memory_access: impl Into<MemoryAccessAttr>,
+            align: Option<u32>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![ptr, num_bytes],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_memory_access(ctx, memory_access.into());
+            if let Some(align) = align {
+                op.set_attr_align(ctx, align.into());
+            }
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory_access`.
+        pub fn get_attr_memory_access<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, MemoryAccessAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<MemoryAccessAttr>(&spirv_subgroup_block_prefetch_intel::ATTR_MEMORY_ACCESS)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `memory_access`.
+        pub fn set_attr_memory_access(&self, ctx: &::pliron::context::Context, value: MemoryAccessAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_subgroup_block_prefetch_intel::ATTR_MEMORY_ACCESS.clone(), value);
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `align`.
+        pub fn get_attr_align<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> Option<::core::cell::Ref<'a, LiteralIntegerAttr>> {
+            ::core::cell::Ref::filter_map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<LiteralIntegerAttr>(&spirv_subgroup_block_prefetch_intel::ATTR_ALIGN)
+            })
+            .ok()
+        }
+        ///Set the value of the attribute named `align`.
+        pub fn set_attr_align(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_subgroup_block_prefetch_intel::ATTR_ALIGN.clone(), value);
+        }
+        ///Remove the attribute named `align`.
+        pub fn remove_attr_align(&self, ctx: &::pliron::context::Context) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .0
+                .remove(&*spirv_subgroup_block_prefetch_intel::ATTR_ALIGN);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for SubgroupBlockPrefetchOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let ptr = builder.value_id(self.get_operand_ptr(ctx));
+            let num_bytes = builder.value_id(self.get_operand_num_bytes(ctx));
+            let memory_access = opt_memory_access(self.get_attr_memory_access(ctx).0);
+            let align = self.get_attr_align(ctx).map(|it| it.0.into());
+            builder
+                .subgroup_block_prefetch_intel(ptr, num_bytes, memory_access, align)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for SubgroupBlockPrefetchOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_memory_access(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SubgroupBufferPrefetchINTEL]);
+            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_Subgroup2DBlockLoad",
+        operands = (
+            element_size,
+            block_width,
+            block_height,
+            block_count,
+            src_base_pointer,
+            memory_width,
+            memory_height,
+            memory_pitch,
+            coordinate,
+            dst_pointer
+        ),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct Subgroup2DBlockLoadOp;
+    crate::format::canonical_format!(
+        Subgroup2DBlockLoadOp; crate ::format::FormatVar::Value("element_size", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_height",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_count",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("src_base_pointer", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("memory_width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_height",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("memory_pitch", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("coordinate", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("dst_pointer", crate ::format::Quantifier::One)
+    );
+    mod spirv_subgroup2_d_block_load_intel {}
+    impl Subgroup2DBlockLoadOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            element_size: Value,
+            block_width: Value,
+            block_height: Value,
+            block_count: Value,
+            src_base_pointer: Value,
+            memory_width: Value,
+            memory_height: Value,
+            memory_pitch: Value,
+            coordinate: Value,
+            dst_pointer: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![
+                        element_size,
+                        block_width,
+                        block_height,
+                        block_count,
+                        src_base_pointer,
+                        memory_width,
+                        memory_height,
+                        memory_pitch,
+                        coordinate,
+                        dst_pointer
+                    ],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for Subgroup2DBlockLoadOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let element_size = builder.value_id(self.get_operand_element_size(ctx));
+            let block_width = builder.value_id(self.get_operand_block_width(ctx));
+            let block_height = builder.value_id(self.get_operand_block_height(ctx));
+            let block_count = builder.value_id(self.get_operand_block_count(ctx));
+            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
+            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
+            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
+            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            let dst_pointer = builder.value_id(self.get_operand_dst_pointer(ctx));
+            builder
+                .subgroup2_d_block_load_intel(
+                    element_size,
+                    block_width,
+                    block_height,
+                    block_count,
+                    src_base_pointer,
+                    memory_width,
+                    memory_height,
+                    memory_pitch,
+                    coordinate,
+                    dst_pointer,
+                )
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for Subgroup2DBlockLoadOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Subgroup2DBlockIOINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_Subgroup2DBlockLoadTransform",
+        operands = (
+            element_size,
+            block_width,
+            block_height,
+            block_count,
+            src_base_pointer,
+            memory_width,
+            memory_height,
+            memory_pitch,
+            coordinate,
+            dst_pointer
+        ),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct Subgroup2DBlockLoadTransformOp;
+    crate::format::canonical_format!(
+        Subgroup2DBlockLoadTransformOp; crate ::format::FormatVar::Value("element_size",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("block_height", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("block_count", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("src_base_pointer", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_width",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("memory_height", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("memory_pitch", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("dst_pointer", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_subgroup2_d_block_load_transform_intel {}
+    impl Subgroup2DBlockLoadTransformOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            element_size: Value,
+            block_width: Value,
+            block_height: Value,
+            block_count: Value,
+            src_base_pointer: Value,
+            memory_width: Value,
+            memory_height: Value,
+            memory_pitch: Value,
+            coordinate: Value,
+            dst_pointer: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![
+                        element_size,
+                        block_width,
+                        block_height,
+                        block_count,
+                        src_base_pointer,
+                        memory_width,
+                        memory_height,
+                        memory_pitch,
+                        coordinate,
+                        dst_pointer
+                    ],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for Subgroup2DBlockLoadTransformOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let element_size = builder.value_id(self.get_operand_element_size(ctx));
+            let block_width = builder.value_id(self.get_operand_block_width(ctx));
+            let block_height = builder.value_id(self.get_operand_block_height(ctx));
+            let block_count = builder.value_id(self.get_operand_block_count(ctx));
+            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
+            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
+            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
+            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            let dst_pointer = builder.value_id(self.get_operand_dst_pointer(ctx));
+            builder
+                .subgroup2_d_block_load_transform_intel(
+                    element_size,
+                    block_width,
+                    block_height,
+                    block_count,
+                    src_base_pointer,
+                    memory_width,
+                    memory_height,
+                    memory_pitch,
+                    coordinate,
+                    dst_pointer,
+                )
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for Subgroup2DBlockLoadTransformOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Subgroup2DBlockTransformINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_Subgroup2DBlockLoadTranspose",
+        operands = (
+            element_size,
+            block_width,
+            block_height,
+            block_count,
+            src_base_pointer,
+            memory_width,
+            memory_height,
+            memory_pitch,
+            coordinate,
+            dst_pointer
+        ),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct Subgroup2DBlockLoadTransposeOp;
+    crate::format::canonical_format!(
+        Subgroup2DBlockLoadTransposeOp; crate ::format::FormatVar::Value("element_size",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("block_height", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("block_count", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("src_base_pointer", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_width",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("memory_height", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("memory_pitch", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("dst_pointer", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_subgroup2_d_block_load_transpose_intel {}
+    impl Subgroup2DBlockLoadTransposeOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            element_size: Value,
+            block_width: Value,
+            block_height: Value,
+            block_count: Value,
+            src_base_pointer: Value,
+            memory_width: Value,
+            memory_height: Value,
+            memory_pitch: Value,
+            coordinate: Value,
+            dst_pointer: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![
+                        element_size,
+                        block_width,
+                        block_height,
+                        block_count,
+                        src_base_pointer,
+                        memory_width,
+                        memory_height,
+                        memory_pitch,
+                        coordinate,
+                        dst_pointer
+                    ],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for Subgroup2DBlockLoadTransposeOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let element_size = builder.value_id(self.get_operand_element_size(ctx));
+            let block_width = builder.value_id(self.get_operand_block_width(ctx));
+            let block_height = builder.value_id(self.get_operand_block_height(ctx));
+            let block_count = builder.value_id(self.get_operand_block_count(ctx));
+            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
+            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
+            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
+            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            let dst_pointer = builder.value_id(self.get_operand_dst_pointer(ctx));
+            builder
+                .subgroup2_d_block_load_transpose_intel(
+                    element_size,
+                    block_width,
+                    block_height,
+                    block_count,
+                    src_base_pointer,
+                    memory_width,
+                    memory_height,
+                    memory_pitch,
+                    coordinate,
+                    dst_pointer,
+                )
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for Subgroup2DBlockLoadTransposeOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Subgroup2DBlockTransposeINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_Subgroup2DBlockPrefetch",
+        operands = (
+            element_size,
+            block_width,
+            block_height,
+            block_count,
+            src_base_pointer,
+            memory_width,
+            memory_height,
+            memory_pitch,
+            coordinate
+        ),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct Subgroup2DBlockPrefetchOp;
+    crate::format::canonical_format!(
+        Subgroup2DBlockPrefetchOp; crate ::format::FormatVar::Value("element_size", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_height",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_count",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("src_base_pointer", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("memory_width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_height",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("memory_pitch", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("coordinate", crate ::format::Quantifier::One)
+    );
+    mod spirv_subgroup2_d_block_prefetch_intel {}
+    impl Subgroup2DBlockPrefetchOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            element_size: Value,
+            block_width: Value,
+            block_height: Value,
+            block_count: Value,
+            src_base_pointer: Value,
+            memory_width: Value,
+            memory_height: Value,
+            memory_pitch: Value,
+            coordinate: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![
+                        element_size,
+                        block_width,
+                        block_height,
+                        block_count,
+                        src_base_pointer,
+                        memory_width,
+                        memory_height,
+                        memory_pitch,
+                        coordinate
+                    ],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for Subgroup2DBlockPrefetchOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let element_size = builder.value_id(self.get_operand_element_size(ctx));
+            let block_width = builder.value_id(self.get_operand_block_width(ctx));
+            let block_height = builder.value_id(self.get_operand_block_height(ctx));
+            let block_count = builder.value_id(self.get_operand_block_count(ctx));
+            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
+            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
+            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
+            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            builder
+                .subgroup2_d_block_prefetch_intel(
+                    element_size,
+                    block_width,
+                    block_height,
+                    block_count,
+                    src_base_pointer,
+                    memory_width,
+                    memory_height,
+                    memory_pitch,
+                    coordinate,
+                )
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for Subgroup2DBlockPrefetchOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Subgroup2DBlockIOINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_Subgroup2DBlockStore",
+        operands = (
+            element_size,
+            block_width,
+            block_height,
+            block_count,
+            src_pointer,
+            dst_base_pointer,
+            memory_width,
+            memory_height,
+            memory_pitch,
+            coordinate
+        ),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct Subgroup2DBlockStoreOp;
+    crate::format::canonical_format!(
+        Subgroup2DBlockStoreOp; crate ::format::FormatVar::Value("element_size", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_height",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_count",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("src_pointer",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("dst_base_pointer", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("memory_width", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_height",
+        crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("memory_pitch", crate ::format::Quantifier::One),
+        crate ::format::FormatVar::Value("coordinate", crate ::format::Quantifier::One)
+    );
+    mod spirv_subgroup2_d_block_store_intel {}
+    impl Subgroup2DBlockStoreOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            element_size: Value,
+            block_width: Value,
+            block_height: Value,
+            block_count: Value,
+            src_pointer: Value,
+            dst_base_pointer: Value,
+            memory_width: Value,
+            memory_height: Value,
+            memory_pitch: Value,
+            coordinate: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![
+                        element_size,
+                        block_width,
+                        block_height,
+                        block_count,
+                        src_pointer,
+                        dst_base_pointer,
+                        memory_width,
+                        memory_height,
+                        memory_pitch,
+                        coordinate
+                    ],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for Subgroup2DBlockStoreOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let element_size = builder.value_id(self.get_operand_element_size(ctx));
+            let block_width = builder.value_id(self.get_operand_block_width(ctx));
+            let block_height = builder.value_id(self.get_operand_block_height(ctx));
+            let block_count = builder.value_id(self.get_operand_block_count(ctx));
+            let src_pointer = builder.value_id(self.get_operand_src_pointer(ctx));
+            let dst_base_pointer = builder.value_id(self.get_operand_dst_base_pointer(ctx));
+            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
+            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
+            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
+            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
+            builder
+                .subgroup2_d_block_store_intel(
+                    element_size,
+                    block_width,
+                    block_height,
+                    block_count,
+                    src_pointer,
+                    dst_base_pointer,
+                    memory_width,
+                    memory_height,
+                    memory_pitch,
+                    coordinate,
+                )
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for Subgroup2DBlockStoreOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::Subgroup2DBlockIOINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_SubgroupMatrixMultiplyAccumulate",
+        operands = (k_dim, matrix_a, matrix_b, matrix_c),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct SubgroupMatrixMultiplyAccumulateOp;
+    crate::format::canonical_format!(
+        SubgroupMatrixMultiplyAccumulateOp; crate ::format::FormatVar::Value("k_dim",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("matrix_a",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("matrix_b",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("matrix_c",
+        crate ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS,
+        MatrixMultiplyAccumulateOperandsAttr, "matrix_multiply_accumulate_operands",
+        crate ::format::Quantifier::ZeroOrOne)
+    );
+    mod spirv_subgroup_matrix_multiply_accumulate_intel {
+        pub static ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS: ::pliron::std_deps::sync::LazyLock<
+            ::pliron::identifier::Identifier,
+        > = ::pliron::std_deps::sync::LazyLock::new(|| {
+            "spirv_subgroup_matrix_multiply_accumulate_intel_matrix_multiply_accumulate_operands"
+                .try_into()
+                .unwrap()
+        });
+    }
+    impl SubgroupMatrixMultiplyAccumulateOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            k_dim: Value,
+            matrix_a: Value,
+            matrix_b: Value,
+            matrix_c: Value,
+            matrix_multiply_accumulate_operands: Option<MatrixMultiplyAccumulateOperandsAttr>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![k_dim, matrix_a, matrix_b, matrix_c],
+                    vec![],
+                    0,
+                ),
+            };
+            if let Some(attr) = matrix_multiply_accumulate_operands {
+                op.set_attr_matrix_multiply_accumulate_operands(ctx, attr);
+            }
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `matrix_multiply_accumulate_operands`.
+        pub fn get_attr_matrix_multiply_accumulate_operands<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> Option<::core::cell::Ref<'a, MatrixMultiplyAccumulateOperandsAttr>> {
+            ::core::cell::Ref::filter_map(self.op.deref(ctx), |op| {
+                op.attributes.get::<MatrixMultiplyAccumulateOperandsAttr>(
+                    &spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS,
+                )
+            })
+            .ok()
+        }
+        ///Set the value of the attribute named `matrix_multiply_accumulate_operands`.
+        pub fn set_attr_matrix_multiply_accumulate_operands(
+            &self,
+            ctx: &::pliron::context::Context,
+            value: MatrixMultiplyAccumulateOperandsAttr,
+        ) {
+            self.op.deref_mut(ctx).attributes.set(
+                spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS.clone(),
+                value,
+            );
+        }
+        ///Remove the attribute named `matrix_multiply_accumulate_operands`.
+        pub fn remove_attr_matrix_multiply_accumulate_operands(&self, ctx: &::pliron::context::Context) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .0
+                .remove(&*spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for SubgroupMatrixMultiplyAccumulateOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let k_dim = builder.value_id(self.get_operand_k_dim(ctx));
+            let matrix_a = builder.value_id(self.get_operand_matrix_a(ctx));
+            let matrix_b = builder.value_id(self.get_operand_matrix_b(ctx));
+            let matrix_c = builder.value_id(self.get_operand_matrix_c(ctx));
+            let matrix_multiply_accumulate_operands = self
+                .get_attr_matrix_multiply_accumulate_operands(ctx)
+                .map(|it| it.clone().0);
+            builder
+                .subgroup_matrix_multiply_accumulate_intel(
+                    result_ty,
+                    Some(result),
+                    k_dim,
+                    matrix_a,
+                    matrix_b,
+                    matrix_c,
+                    matrix_multiply_accumulate_operands,
+                )
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for SubgroupMatrixMultiplyAccumulateOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            if let Some(attr) = self.get_attr_matrix_multiply_accumulate_operands(ctx) {
+                result = result.max(Operand::from(attr.clone().0).minimum_version()?);
+            }
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            if let Some(attr) = self.get_attr_matrix_multiply_accumulate_operands(ctx) {
+                result.extend(Operand::from(attr.clone().0).required_extensions());
+            }
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SubgroupMatrixMultiplyAccumulateINTEL]);
+            if let Some(attr) = self.get_attr_matrix_multiply_accumulate_operands(ctx) {
+                result.extend(Operand::from(attr.clone().0).required_capabilities());
+            }
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_BitwiseFunction",
+        operands = (a, b, c, lut_index),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct BitwiseFunctionOp;
+    crate::format::canonical_format!(
+        BitwiseFunctionOp; crate ::format::FormatVar::Value("a", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("b", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("c", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("lut_index", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_bitwise_function_intel {}
+    impl BitwiseFunctionOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, a: Value, b: Value, c: Value, lut_index: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![a, b, c, lut_index],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for BitwiseFunctionOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let a = builder.value_id(self.get_operand_a(ctx));
+            let b = builder.value_id(self.get_operand_b(ctx));
+            let c = builder.value_id(self.get_operand_c(ctx));
+            let lut_index = builder.value_id(self.get_operand_lut_index(ctx));
+            builder
+                .bitwise_function_intel(result_ty, Some(result), a, b, c, lut_index)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for BitwiseFunctionOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::TernaryBitwiseFunctionINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_UntypedVariableLengthArray",
+        operands = (element_type, length),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct UntypedVariableLengthArrayOp;
+    crate::format::canonical_format!(
+        UntypedVariableLengthArrayOp; crate ::format::FormatVar::Value("element_type",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("length",
+        crate ::format::Quantifier::One)
+    );
+    mod spirv_untyped_variable_length_array_intel {}
+    impl UntypedVariableLengthArrayOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, element_type: Value, length: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![element_type, length],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for UntypedVariableLengthArrayOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let element_type = builder.value_id(self.get_operand_element_type(ctx));
+            let length = builder.value_id(self.get_operand_length(ctx));
+            builder
+                .untyped_variable_length_array_intel(result_ty, Some(result), element_type, length)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for UntypedVariableLengthArrayOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::UntypedVariableLengthArrayINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_ConditionalCopyObject",
+        operands = (condition_0_operand_0_condition_1_operand_1),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct ConditionalCopyObjectOp;
+    crate::format::canonical_format!(
+        ConditionalCopyObjectOp; crate
+        ::format::FormatVar::Value("condition_0_operand_0_condition_1_operand_1", crate
+        ::format::Quantifier::ZeroOrMore)
+    );
+    mod spirv_conditional_copy_object_intel {}
+    impl ConditionalCopyObjectOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            condition_0_operand_0_condition_1_operand_1: Vec<Value>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![condition_0_operand_0_condition_1_operand_1],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for ConditionalCopyObjectOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let condition_0_operand_0_condition_1_operand_1 = op
+                .operands()
+                .skip(0usize)
+                .map(|opd| builder.value_id(opd))
+                .collect::<Vec<_>>();
+            builder
+                .conditional_copy_object_intel(result_ty, Some(result), condition_0_operand_0_condition_1_operand_1)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for ConditionalCopyObjectOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::SpecConditionalINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_RoundFToTF32",
+        operands = (float_value),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct RoundFToTF32Op;
+    crate::format::canonical_format!(
+        RoundFToTF32Op; crate ::format::FormatVar::Value("float_value", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_round_f_to_tf32intel {}
+    impl RoundFToTF32Op {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, float_value: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![float_value],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for RoundFToTF32Op {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let float_value = builder.value_id(self.get_operand_float_value(ctx));
+            builder
+                .round_f_to_tf32intel(result_ty, Some(result), float_value)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for RoundFToTF32Op {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::TensorFloat32RoundingINTEL]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_MaskedGather",
+        operands = (ptr_vector, mask, fill_empty),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct MaskedGatherOp;
+    crate::format::canonical_format!(
+        MaskedGatherOp; crate ::format::FormatVar::Value("ptr_vector", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_masked_gather_intel::ATTR_ALIGNMENT, LiteralIntegerAttr, "alignment", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("mask", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("fill_empty", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_masked_gather_intel {
+        pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_masked_gather_intel_alignment".try_into().unwrap());
+    }
+    impl MaskedGatherOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            ptr_vector: Value,
+            alignment: impl Into<LiteralIntegerAttr>,
+            mask: Value,
+            fill_empty: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![ptr_vector, mask, fill_empty],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_alignment(ctx, alignment.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `alignment`.
+        pub fn get_attr_alignment<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, LiteralIntegerAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<LiteralIntegerAttr>(&spirv_masked_gather_intel::ATTR_ALIGNMENT)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `alignment`.
+        pub fn set_attr_alignment(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_masked_gather_intel::ATTR_ALIGNMENT.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for MaskedGatherOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let ptr_vector = builder.value_id(self.get_operand_ptr_vector(ctx));
+            let alignment = self.get_attr_alignment(ctx).clone().0;
+            let mask = builder.value_id(self.get_operand_mask(ctx));
+            let fill_empty = builder.value_id(self.get_operand_fill_empty(ctx));
+            builder
+                .masked_gather_intel(result_ty, Some(result), ptr_vector, alignment, mask, fill_empty)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for MaskedGatherOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_alignment(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::MaskedGatherScatterINTEL]);
+            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.INTEL_MaskedScatter",
+        operands = (input_vector, ptr_vector, mask),
+        interfaces = [DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct MaskedScatterOp;
+    crate::format::canonical_format!(
+        MaskedScatterOp; crate ::format::FormatVar::Value("input_vector", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("ptr_vector", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_masked_scatter_intel::ATTR_ALIGNMENT, LiteralIntegerAttr, "alignment",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("mask", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_masked_scatter_intel {
+        pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_masked_scatter_intel_alignment".try_into().unwrap());
+    }
+    impl MaskedScatterOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            input_vector: Value,
+            ptr_vector: Value,
+            alignment: impl Into<LiteralIntegerAttr>,
+            mask: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![],
+                    flat_vec![input_vector, ptr_vector, mask],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_alignment(ctx, alignment.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `alignment`.
+        pub fn get_attr_alignment<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, LiteralIntegerAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<LiteralIntegerAttr>(&spirv_masked_scatter_intel::ATTR_ALIGNMENT)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `alignment`.
+        pub fn set_attr_alignment(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_masked_scatter_intel::ATTR_ALIGNMENT.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for MaskedScatterOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let input_vector = builder.value_id(self.get_operand_input_vector(ctx));
+            let ptr_vector = builder.value_id(self.get_operand_ptr_vector(ctx));
+            let alignment = self.get_attr_alignment(ctx).clone().0;
+            let mask = builder.value_id(self.get_operand_mask(ctx));
+            builder
+                .masked_scatter_intel(input_vector, ptr_vector, alignment, mask)
+                .into_pliron_result()?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for MaskedScatterOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_alignment(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::MaskedGatherScatterINTEL]);
+            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_capabilities());
             result
         }
     }
@@ -32592,657 +36830,6 @@ pub mod khr {
             result.push(vec![Capability::GroupUniformArithmeticKHR]);
             result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
             result.extend(Operand::from(self.get_attr_operation(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-}
-pub mod qcom {
-    use super::*;
-    #[pliron_op(
-        name = "spirv.QCOM_BitCastArray",
-        operands = (source_array),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct BitCastArrayOp;
-    crate::format::canonical_format!(
-        BitCastArrayOp; crate ::format::FormatVar::Value("source_array", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_bit_cast_array_qcom {}
-    impl BitCastArrayOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_array: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![source_array],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for BitCastArrayOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let source_array = builder.value_id(self.get_operand_source_array(ctx));
-            builder
-                .bit_cast_array_qcom(result_ty, Some(result), source_array)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for BitCastArrayOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.QCOM_CompositeConstructCoopMat",
-        operands = (source_array),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct CompositeConstructCoopMatOp;
-    crate::format::canonical_format!(
-        CompositeConstructCoopMatOp; crate ::format::FormatVar::Value("source_array",
-        crate ::format::Quantifier::One)
-    );
-    mod spirv_composite_construct_coop_mat_qcom {}
-    impl CompositeConstructCoopMatOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_array: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![source_array],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for CompositeConstructCoopMatOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let source_array = builder.value_id(self.get_operand_source_array(ctx));
-            builder
-                .composite_construct_coop_mat_qcom(result_ty, Some(result), source_array)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for CompositeConstructCoopMatOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.QCOM_CompositeExtractCoopMat",
-        operands = (source_cooperative_matrix),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct CompositeExtractCoopMatOp;
-    crate::format::canonical_format!(
-        CompositeExtractCoopMatOp; crate
-        ::format::FormatVar::Value("source_cooperative_matrix", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_composite_extract_coop_mat_qcom {}
-    impl CompositeExtractCoopMatOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_cooperative_matrix: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![source_cooperative_matrix],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for CompositeExtractCoopMatOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let source_cooperative_matrix = builder.value_id(self.get_operand_source_cooperative_matrix(ctx));
-            builder
-                .composite_extract_coop_mat_qcom(result_ty, Some(result), source_cooperative_matrix)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for CompositeExtractCoopMatOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.QCOM_ExtractSubArray",
-        operands = (source_array, index),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ExtractSubArrayOp;
-    crate::format::canonical_format!(
-        ExtractSubArrayOp; crate ::format::FormatVar::Value("source_array", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("index", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_extract_sub_array_qcom {}
-    impl ExtractSubArrayOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_array: Value, index: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![source_array, index],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ExtractSubArrayOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let source_array = builder.value_id(self.get_operand_source_array(ctx));
-            let index = builder.value_id(self.get_operand_index(ctx));
-            builder
-                .extract_sub_array_qcom(result_ty, Some(result), source_array, index)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ExtractSubArrayOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
-            result
-        }
-    }
-}
-pub mod amdx {
-    use super::*;
-    #[pliron_op(
-        name = "spirv.AMDX_AllocateNodePayloads",
-        operands = (payload_count, node_index),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct AllocateNodePayloadsOp;
-    crate::format::canonical_format!(
-        AllocateNodePayloadsOp; crate ::format::attr!(&
-        spirv_allocate_node_payloads_amdx::ATTR_VISIBILITY, ScopeAttr, "visibility",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("payload_count", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("node_index", crate ::format::Quantifier::One)
-    );
-    mod spirv_allocate_node_payloads_amdx {
-        pub static ATTR_VISIBILITY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_allocate_node_payloads_amdx_visibility".try_into().unwrap()
-            });
-    }
-    impl AllocateNodePayloadsOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            visibility: impl Into<ScopeAttr>,
-            payload_count: Value,
-            node_index: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![payload_count, node_index],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_visibility(ctx, visibility.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `visibility`.
-        pub fn get_attr_visibility<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_allocate_node_payloads_amdx::ATTR_VISIBILITY)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `visibility`.
-        pub fn set_attr_visibility(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_allocate_node_payloads_amdx::ATTR_VISIBILITY.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for AllocateNodePayloadsOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let visibility = self.get_attr_visibility(ctx).spirv_id(ctx, builder)?;
-            let payload_count = builder.value_id(self.get_operand_payload_count(ctx));
-            let node_index = builder.value_id(self.get_operand_node_index(ctx));
-            builder
-                .allocate_node_payloads_amdx(result_ty, Some(result), visibility, payload_count, node_index)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for AllocateNodePayloadsOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_visibility(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_visibility(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::ShaderEnqueueAMDX]);
-            result.extend(Operand::from(self.get_attr_visibility(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.AMDX_EnqueueNodePayloads",
-        operands = (payload_array),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct EnqueueNodePayloadsOp;
-    crate::format::canonical_format!(
-        EnqueueNodePayloadsOp; crate ::format::FormatVar::Value("payload_array", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_enqueue_node_payloads_amdx {}
-    impl EnqueueNodePayloadsOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, payload_array: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![payload_array],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for EnqueueNodePayloadsOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let payload_array = builder.value_id(self.get_operand_payload_array(ctx));
-            builder.enqueue_node_payloads_amdx(payload_array).into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for EnqueueNodePayloadsOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::ShaderEnqueueAMDX]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.AMDX_FinishWritingNodePayload",
-        operands = (payload),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct FinishWritingNodePayloadOp;
-    crate::format::canonical_format!(
-        FinishWritingNodePayloadOp; crate ::format::FormatVar::Value("payload", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_finish_writing_node_payload_amdx {}
-    impl FinishWritingNodePayloadOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, payload: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![payload],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for FinishWritingNodePayloadOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let payload = builder.value_id(self.get_operand_payload(ctx));
-            builder
-                .finish_writing_node_payload_amdx(result_ty, Some(result), payload)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for FinishWritingNodePayloadOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::ShaderEnqueueAMDX]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.AMDX_NodePayloadArrayLength",
-        operands = (payload_array),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct NodePayloadArrayLengthOp;
-    crate::format::canonical_format!(
-        NodePayloadArrayLengthOp; crate ::format::FormatVar::Value("payload_array", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_node_payload_array_length_amdx {}
-    impl NodePayloadArrayLengthOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, payload_array: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![payload_array],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for NodePayloadArrayLengthOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let payload_array = builder.value_id(self.get_operand_payload_array(ctx));
-            builder
-                .node_payload_array_length_amdx(result_ty, Some(result), payload_array)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for NodePayloadArrayLengthOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::ShaderEnqueueAMDX]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.AMDX_IsNodePayloadValid",
-        operands = (payload_type, node_index),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct IsNodePayloadValidOp;
-    crate::format::canonical_format!(
-        IsNodePayloadValidOp; crate ::format::FormatVar::Value("payload_type", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("node_index", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_is_node_payload_valid_amdx {}
-    impl IsNodePayloadValidOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, payload_type: Value, node_index: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![payload_type, node_index],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for IsNodePayloadValidOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let payload_type = builder.value_id(self.get_operand_payload_type(ctx));
-            let node_index = builder.value_id(self.get_operand_node_index(ctx));
-            builder
-                .is_node_payload_valid_amdx(result_ty, Some(result), payload_type, node_index)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for IsNodePayloadValidOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::ShaderEnqueueAMDX]);
             result
         }
     }
@@ -40660,32 +44247,99 @@ pub mod nv {
         }
     }
 }
-pub mod intel {
+pub mod qcom {
     use super::*;
     #[pliron_op(
-        name = "spirv.INTEL_SubgroupShuffle",
-        operands = (data, invocation_id),
+        name = "spirv.QCOM_BitCastArray",
+        operands = (source_array),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct SubgroupShuffleOp;
+    pub struct BitCastArrayOp;
     crate::format::canonical_format!(
-        SubgroupShuffleOp; crate ::format::FormatVar::Value("data", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("invocation_id",
+        BitCastArrayOp; crate ::format::FormatVar::Value("source_array", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_bit_cast_array_qcom {}
+    impl BitCastArrayOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_array: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![source_array],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for BitCastArrayOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let source_array = builder.value_id(self.get_operand_source_array(ctx));
+            builder
+                .bit_cast_array_qcom(result_ty, Some(result), source_array)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for BitCastArrayOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.QCOM_CompositeConstructCoopMat",
+        operands = (source_array),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct CompositeConstructCoopMatOp;
+    crate::format::canonical_format!(
+        CompositeConstructCoopMatOp; crate ::format::FormatVar::Value("source_array",
         crate ::format::Quantifier::One)
     );
-    mod spirv_subgroup_shuffle_intel {}
-    impl SubgroupShuffleOp {
+    mod spirv_composite_construct_coop_mat_qcom {}
+    impl CompositeConstructCoopMatOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, data: Value, invocation_id: Value) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_array: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![data, invocation_id],
+                    flat_vec![source_array],
                     vec![],
                     0,
                 ),
@@ -40694,24 +44348,23 @@ pub mod intel {
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for SubgroupShuffleOp {
+    impl ToSpirvOp for CompositeConstructCoopMatOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let data = builder.value_id(self.get_operand_data(ctx));
-            let invocation_id = builder.value_id(self.get_operand_invocation_id(ctx));
+            let source_array = builder.value_id(self.get_operand_source_array(ctx));
             builder
-                .subgroup_shuffle_intel(result_ty, Some(result), data, invocation_id)
+                .composite_construct_coop_mat_qcom(result_ty, Some(result), source_array)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupShuffleOp {
+    impl VerCapExtOpInterface for CompositeConstructCoopMatOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
@@ -40728,35 +44381,34 @@ pub mod intel {
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::SubgroupShuffleINTEL]);
+            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.INTEL_SubgroupShuffleDown",
-        operands = (current, next, delta),
+        name = "spirv.QCOM_CompositeExtractCoopMat",
+        operands = (source_cooperative_matrix),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct SubgroupShuffleDownOp;
+    pub struct CompositeExtractCoopMatOp;
     crate::format::canonical_format!(
-        SubgroupShuffleDownOp; crate ::format::FormatVar::Value("current", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("next", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("delta", crate
+        CompositeExtractCoopMatOp; crate
+        ::format::FormatVar::Value("source_cooperative_matrix", crate
         ::format::Quantifier::One)
     );
-    mod spirv_subgroup_shuffle_down_intel {}
-    impl SubgroupShuffleDownOp {
+    mod spirv_composite_extract_coop_mat_qcom {}
+    impl CompositeExtractCoopMatOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, current: Value, next: Value, delta: Value) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_cooperative_matrix: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![current, next, delta],
+                    flat_vec![source_cooperative_matrix],
                     vec![],
                     0,
                 ),
@@ -40765,25 +44417,23 @@ pub mod intel {
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for SubgroupShuffleDownOp {
+    impl ToSpirvOp for CompositeExtractCoopMatOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let current = builder.value_id(self.get_operand_current(ctx));
-            let next = builder.value_id(self.get_operand_next(ctx));
-            let delta = builder.value_id(self.get_operand_delta(ctx));
+            let source_cooperative_matrix = builder.value_id(self.get_operand_source_cooperative_matrix(ctx));
             builder
-                .subgroup_shuffle_down_intel(result_ty, Some(result), current, next, delta)
+                .composite_extract_coop_mat_qcom(result_ty, Some(result), source_cooperative_matrix)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupShuffleDownOp {
+    impl VerCapExtOpInterface for CompositeExtractCoopMatOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
@@ -40800,35 +44450,34 @@ pub mod intel {
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::SubgroupShuffleINTEL]);
+            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
             result
         }
     }
     #[pliron_op(
-        name = "spirv.INTEL_SubgroupShuffleUp",
-        operands = (previous, current, delta),
+        name = "spirv.QCOM_ExtractSubArray",
+        operands = (source_array, index),
         interfaces = [NResultsInterface<1>,
         OneResultInterface,
         DecoratableOp],
         verifier = "succ"
     )]
-    pub struct SubgroupShuffleUpOp;
+    pub struct ExtractSubArrayOp;
     crate::format::canonical_format!(
-        SubgroupShuffleUpOp; crate ::format::FormatVar::Value("previous", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("current", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("delta", crate
+        ExtractSubArrayOp; crate ::format::FormatVar::Value("source_array", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("index", crate
         ::format::Quantifier::One)
     );
-    mod spirv_subgroup_shuffle_up_intel {}
-    impl SubgroupShuffleUpOp {
+    mod spirv_extract_sub_array_qcom {}
+    impl ExtractSubArrayOp {
         #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, previous: Value, current: Value, delta: Value) -> Self {
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, source_array: Value, index: Value) -> Self {
             let op = Self {
                 op: Operation::new(
                     ctx,
                     Self::get_concrete_op_info(),
                     vec![result_ty],
-                    flat_vec![previous, current, delta],
+                    flat_vec![source_array, index],
                     vec![],
                     0,
                 ),
@@ -40837,25 +44486,24 @@ pub mod intel {
         }
     }
     #[op_interface_impl]
-    impl ToSpirvOp for SubgroupShuffleUpOp {
+    impl ToSpirvOp for ExtractSubArrayOp {
         #[allow(unused, clippy::all)]
         fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
             #[allow(unused)]
             let op = self.get_operation().deref(ctx);
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
-            let previous = builder.value_id(self.get_operand_previous(ctx));
-            let current = builder.value_id(self.get_operand_current(ctx));
-            let delta = builder.value_id(self.get_operand_delta(ctx));
+            let source_array = builder.value_id(self.get_operand_source_array(ctx));
+            let index = builder.value_id(self.get_operand_index(ctx));
             builder
-                .subgroup_shuffle_up_intel(result_ty, Some(result), previous, current, delta)
+                .extract_sub_array_qcom(result_ty, Some(result), source_array, index)
                 .into_pliron_result()?;
             crate::ops::apply_all_decorations(ctx, builder, self, result);
             Ok(())
         }
     }
     #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupShuffleUpOp {
+    impl VerCapExtOpInterface for ExtractSubArrayOp {
         #[allow(unused_variables)]
         fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
             #[allow(unused_mut)]
@@ -40872,3655 +44520,7 @@ pub mod intel {
         fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
             #[allow(unused_mut)]
             let mut result = vec![];
-            result.push(vec![Capability::SubgroupShuffleINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupShuffleXor",
-        operands = (data, value),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupShuffleXorOp;
-    crate::format::canonical_format!(
-        SubgroupShuffleXorOp; crate ::format::FormatVar::Value("data", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("value", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup_shuffle_xor_intel {}
-    impl SubgroupShuffleXorOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, data: Value, value: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![data, value],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupShuffleXorOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let data = builder.value_id(self.get_operand_data(ctx));
-            let value = builder.value_id(self.get_operand_value(ctx));
-            builder
-                .subgroup_shuffle_xor_intel(result_ty, Some(result), data, value)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupShuffleXorOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupShuffleINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupBlockRead",
-        operands = (ptr),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupBlockReadOp;
-    crate::format::canonical_format!(
-        SubgroupBlockReadOp; crate ::format::FormatVar::Value("ptr", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup_block_read_intel {}
-    impl SubgroupBlockReadOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, ptr: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![ptr],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupBlockReadOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let ptr = builder.value_id(self.get_operand_ptr(ctx));
-            builder
-                .subgroup_block_read_intel(result_ty, Some(result), ptr)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupBlockReadOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupBufferBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupBlockWrite",
-        operands = (ptr, data),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupBlockWriteOp;
-    crate::format::canonical_format!(
-        SubgroupBlockWriteOp; crate ::format::FormatVar::Value("ptr", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("data", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup_block_write_intel {}
-    impl SubgroupBlockWriteOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, ptr: Value, data: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![ptr, data],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupBlockWriteOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let ptr = builder.value_id(self.get_operand_ptr(ctx));
-            let data = builder.value_id(self.get_operand_data(ctx));
-            builder.subgroup_block_write_intel(ptr, data).into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupBlockWriteOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupBufferBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupImageBlockRead",
-        operands = (image, coordinate),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupImageBlockReadOp;
-    crate::format::canonical_format!(
-        SubgroupImageBlockReadOp; crate ::format::FormatVar::Value("image", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup_image_block_read_intel {}
-    impl SubgroupImageBlockReadOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, image: Value, coordinate: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![image, coordinate],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupImageBlockReadOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let image = builder.value_id(self.get_operand_image(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            builder
-                .subgroup_image_block_read_intel(result_ty, Some(result), image, coordinate)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupImageBlockReadOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupImageBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupImageBlockWrite",
-        operands = (image, coordinate, data),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupImageBlockWriteOp;
-    crate::format::canonical_format!(
-        SubgroupImageBlockWriteOp; crate ::format::FormatVar::Value("image", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("data", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup_image_block_write_intel {}
-    impl SubgroupImageBlockWriteOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, image: Value, coordinate: Value, data: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![image, coordinate, data],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupImageBlockWriteOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let image = builder.value_id(self.get_operand_image(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            let data = builder.value_id(self.get_operand_data(ctx));
-            builder
-                .subgroup_image_block_write_intel(image, coordinate, data)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupImageBlockWriteOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupImageBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupImageMediaBlockRead",
-        operands = (image, coordinate, width, height),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupImageMediaBlockReadOp;
-    crate::format::canonical_format!(
-        SubgroupImageMediaBlockReadOp; crate ::format::FormatVar::Value("image", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("height", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup_image_media_block_read_intel {}
-    impl SubgroupImageMediaBlockReadOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            image: Value,
-            coordinate: Value,
-            width: Value,
-            height: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![image, coordinate, width, height],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupImageMediaBlockReadOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let image = builder.value_id(self.get_operand_image(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            let width = builder.value_id(self.get_operand_width(ctx));
-            let height = builder.value_id(self.get_operand_height(ctx));
-            builder
-                .subgroup_image_media_block_read_intel(result_ty, Some(result), image, coordinate, width, height)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupImageMediaBlockReadOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupImageMediaBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupImageMediaBlockWrite",
-        operands = (image, coordinate, width, height, data),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupImageMediaBlockWriteOp;
-    crate::format::canonical_format!(
-        SubgroupImageMediaBlockWriteOp; crate ::format::FormatVar::Value("image", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("height", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("data", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup_image_media_block_write_intel {}
-    impl SubgroupImageMediaBlockWriteOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            image: Value,
-            coordinate: Value,
-            width: Value,
-            height: Value,
-            data: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![image, coordinate, width, height, data],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupImageMediaBlockWriteOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let image = builder.value_id(self.get_operand_image(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            let width = builder.value_id(self.get_operand_width(ctx));
-            let height = builder.value_id(self.get_operand_height(ctx));
-            let data = builder.value_id(self.get_operand_data(ctx));
-            builder
-                .subgroup_image_media_block_write_intel(image, coordinate, width, height, data)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupImageMediaBlockWriteOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupImageMediaBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_UCountLeadingZeros",
-        operands = (operand),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct UCountLeadingZerosOp;
-    crate::format::canonical_format!(
-        UCountLeadingZerosOp; crate ::format::FormatVar::Value("operand", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_u_count_leading_zeros_intel {}
-    impl UCountLeadingZerosOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for UCountLeadingZerosOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand = builder.value_id(self.get_operand_operand(ctx));
-            builder
-                .u_count_leading_zeros_intel(result_ty, Some(result), operand)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for UCountLeadingZerosOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_UCountTrailingZeros",
-        operands = (operand),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct UCountTrailingZerosOp;
-    crate::format::canonical_format!(
-        UCountTrailingZerosOp; crate ::format::FormatVar::Value("operand", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_u_count_trailing_zeros_intel {}
-    impl UCountTrailingZerosOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for UCountTrailingZerosOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand = builder.value_id(self.get_operand_operand(ctx));
-            builder
-                .u_count_trailing_zeros_intel(result_ty, Some(result), operand)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for UCountTrailingZerosOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_AbsISub",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct AbsISubOp;
-    crate::format::canonical_format!(
-        AbsISubOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_abs_i_sub_intel {}
-    impl AbsISubOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for AbsISubOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .abs_i_sub_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for AbsISubOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_AbsUSub",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct AbsUSubOp;
-    crate::format::canonical_format!(
-        AbsUSubOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_abs_u_sub_intel {}
-    impl AbsUSubOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for AbsUSubOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .abs_u_sub_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for AbsUSubOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_IAddSat",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct IAddSatOp;
-    crate::format::canonical_format!(
-        IAddSatOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_i_add_sat_intel {}
-    impl IAddSatOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for IAddSatOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .i_add_sat_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for IAddSatOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_UAddSat",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct UAddSatOp;
-    crate::format::canonical_format!(
-        UAddSatOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_u_add_sat_intel {}
-    impl UAddSatOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for UAddSatOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .u_add_sat_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for UAddSatOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_IAverage",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct IAverageOp;
-    crate::format::canonical_format!(
-        IAverageOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_i_average_intel {}
-    impl IAverageOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for IAverageOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .i_average_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for IAverageOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_UAverage",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct UAverageOp;
-    crate::format::canonical_format!(
-        UAverageOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_u_average_intel {}
-    impl UAverageOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for UAverageOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .u_average_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for UAverageOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_IAverageRounded",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct IAverageRoundedOp;
-    crate::format::canonical_format!(
-        IAverageRoundedOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_i_average_rounded_intel {}
-    impl IAverageRoundedOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for IAverageRoundedOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .i_average_rounded_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for IAverageRoundedOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_UAverageRounded",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct UAverageRoundedOp;
-    crate::format::canonical_format!(
-        UAverageRoundedOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_u_average_rounded_intel {}
-    impl UAverageRoundedOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for UAverageRoundedOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .u_average_rounded_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for UAverageRoundedOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ISubSat",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ISubSatOp;
-    crate::format::canonical_format!(
-        ISubSatOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_i_sub_sat_intel {}
-    impl ISubSatOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ISubSatOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .i_sub_sat_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ISubSatOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_USubSat",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct USubSatOp;
-    crate::format::canonical_format!(
-        USubSatOp; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_u_sub_sat_intel {}
-    impl USubSatOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for USubSatOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .u_sub_sat_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for USubSatOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_IMul32x16",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct IMul32x16Op;
-    crate::format::canonical_format!(
-        IMul32x16Op; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_i_mul32x16_intel {}
-    impl IMul32x16Op {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for IMul32x16Op {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .i_mul32x16_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for IMul32x16Op {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_UMul32x16",
-        operands = (operand_1, operand_2),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct UMul32x16Op;
-    crate::format::canonical_format!(
-        UMul32x16Op; crate ::format::FormatVar::Value("operand_1", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_u_mul32x16_intel {}
-    impl UMul32x16Op {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, operand_1: Value, operand_2: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![operand_1, operand_2],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for UMul32x16Op {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
-            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
-            builder
-                .u_mul32x16_intel(result_ty, Some(result), operand_1, operand_2)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for UMul32x16Op {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::IntegerFunctions2INTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_VariableLengthArray",
-        operands = (length),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct VariableLengthArrayOp;
-    crate::format::canonical_format!(
-        VariableLengthArrayOp; crate ::format::FormatVar::Value("length", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_variable_length_array_intel {}
-    impl VariableLengthArrayOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, length: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![length],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for VariableLengthArrayOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let length = builder.value_id(self.get_operand_length(ctx));
-            builder
-                .variable_length_array_intel(result_ty, Some(result), length)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for VariableLengthArrayOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::VariableLengthArrayINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SaveMemory",
-        operands = (),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SaveMemoryOp;
-    crate::format::canonical_format!(SaveMemoryOp;);
-    mod spirv_save_memory_intel {}
-    impl SaveMemoryOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SaveMemoryOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            builder
-                .save_memory_intel(result_ty, Some(result))
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SaveMemoryOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::VariableLengthArrayINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_RestoreMemory",
-        operands = (ptr),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct RestoreMemoryOp;
-    crate::format::canonical_format!(
-        RestoreMemoryOp; crate ::format::FormatVar::Value("ptr", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_restore_memory_intel {}
-    impl RestoreMemoryOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, ptr: Value) -> Self {
-            let op = Self {
-                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![ptr], vec![], 0),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for RestoreMemoryOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let ptr = builder.value_id(self.get_operand_ptr(ctx));
-            builder.restore_memory_intel(ptr).into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for RestoreMemoryOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::VariableLengthArrayINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_LoopControl",
-        operands = (),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct LoopControlOp;
-    crate::format::canonical_format!(
-        LoopControlOp; crate ::format::attr!(&
-        spirv_loop_control_intel::ATTR_LOOP_CONTROL_PARAMETERS, LiteralIntegerAttr,
-        "loop_control_parameters", crate ::format::Quantifier::ZeroOrMore)
-    );
-    mod spirv_loop_control_intel {
-        pub static ATTR_LOOP_CONTROL_PARAMETERS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_loop_control_intel_loop_control_parameters".try_into().unwrap()
-            });
-    }
-    impl LoopControlOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, loop_control_parameters: Vec<LiteralIntegerAttr>) -> Self {
-            let op = Self {
-                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
-            };
-            op.set_attr_loop_control_parameters(ctx, as_vec_attr(loop_control_parameters));
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `loop_control_parameters`.
-        pub fn get_attr_loop_control_parameters<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, VecAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<VecAttr>(&spirv_loop_control_intel::ATTR_LOOP_CONTROL_PARAMETERS)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `loop_control_parameters`.
-        pub fn set_attr_loop_control_parameters(&self, ctx: &::pliron::context::Context, value: VecAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_loop_control_intel::ATTR_LOOP_CONTROL_PARAMETERS.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for LoopControlOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let loop_control_parameters =
-                from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx))
-                    .into_iter()
-                    .map(|it| it.clone().0);
-            builder
-                .loop_control_intel(loop_control_parameters)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for LoopControlOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            for attr in from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx)) {
-                result = result.max(Operand::from(attr.clone().0).minimum_version()?);
-            }
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec!["SPV_INTEL_unstructured_loop_controls"]);
-            for attr in from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx)) {
-                result.extend(Operand::from(attr.clone().0).required_extensions());
-            }
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::UnstructuredLoopControlsINTEL]);
-            for attr in from_vec_attr::<LiteralIntegerAttr>(self.get_attr_loop_control_parameters(ctx)) {
-                result.extend(Operand::from(attr.clone().0).required_capabilities());
-            }
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_CompositeConstructContinued",
-        operands = (constituents),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct CompositeConstructContinuedOp;
-    crate::format::canonical_format!(
-        CompositeConstructContinuedOp; crate ::format::FormatVar::Value("constituents",
-        crate ::format::Quantifier::ZeroOrMore)
-    );
-    mod spirv_composite_construct_continued_intel {}
-    impl CompositeConstructContinuedOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, constituents: Vec<Value>) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![constituents],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for CompositeConstructContinuedOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let constituents = op
-                .operands()
-                .skip(0usize)
-                .map(|opd| builder.value_id(opd))
-                .collect::<Vec<_>>();
-            builder
-                .composite_construct_continued_intel(result_ty, Some(result), constituents)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for CompositeConstructContinuedOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::LongCompositesINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ConvertFToBF16",
-        operands = (float_value),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ConvertFToBF16Op;
-    crate::format::canonical_format!(
-        ConvertFToBF16Op; crate ::format::FormatVar::Value("float_value", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_convert_f_to_bf16intel {}
-    impl ConvertFToBF16Op {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, float_value: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![float_value],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ConvertFToBF16Op {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let float_value = builder.value_id(self.get_operand_float_value(ctx));
-            builder
-                .convert_f_to_bf16intel(result_ty, Some(result), float_value)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ConvertFToBF16Op {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::BFloat16ConversionINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ConvertBF16ToF",
-        operands = (b_float16_value),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ConvertBF16ToFOp;
-    crate::format::canonical_format!(
-        ConvertBF16ToFOp; crate ::format::FormatVar::Value("b_float16_value", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_convert_bf16_to_fintel {}
-    impl ConvertBF16ToFOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, b_float16_value: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![b_float16_value],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ConvertBF16ToFOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let b_float16_value = builder.value_id(self.get_operand_b_float16_value(ctx));
-            builder
-                .convert_bf16_to_fintel(result_ty, Some(result), b_float16_value)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ConvertBF16ToFOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::BFloat16ConversionINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ControlBarrierArrive",
-        operands = (),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ControlBarrierArriveOp;
-    crate::format::canonical_format!(
-        ControlBarrierArriveOp; crate ::format::attr!(&
-        spirv_control_barrier_arrive_intel::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_arrive_intel::ATTR_MEMORY, ScopeAttr, "memory", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_arrive_intel::ATTR_SEMANTICS, MemorySemanticsAttr,
-        "semantics", crate ::format::Quantifier::One)
-    );
-    mod spirv_control_barrier_arrive_intel {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_arrive_intel_execution".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_arrive_intel_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_arrive_intel_semantics".try_into().unwrap()
-            });
-    }
-    impl ControlBarrierArriveOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            execution: impl Into<ScopeAttr>,
-            memory: impl Into<ScopeAttr>,
-            semantics: impl Into<MemorySemanticsAttr>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
-            };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_memory(ctx, memory.into());
-            op.set_attr_semantics(ctx, semantics.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_intel::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_arrive_intel::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
-        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_arrive_intel::ATTR_MEMORY)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `memory`.
-        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_arrive_intel::ATTR_MEMORY.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
-        pub fn get_attr_semantics<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_arrive_intel::ATTR_SEMANTICS)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `semantics`.
-        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_arrive_intel::ATTR_SEMANTICS.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ControlBarrierArriveOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
-            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
-            builder
-                .control_barrier_arrive_intel(execution, memory, semantics)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ControlBarrierArriveOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SplitBarrierINTEL]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ControlBarrierWait",
-        operands = (),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ControlBarrierWaitOp;
-    crate::format::canonical_format!(
-        ControlBarrierWaitOp; crate ::format::attr!(&
-        spirv_control_barrier_wait_intel::ATTR_EXECUTION, ScopeAttr, "execution", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_wait_intel::ATTR_MEMORY, ScopeAttr, "memory", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_control_barrier_wait_intel::ATTR_SEMANTICS, MemorySemanticsAttr,
-        "semantics", crate ::format::Quantifier::One)
-    );
-    mod spirv_control_barrier_wait_intel {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_wait_intel_execution".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_intel_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_wait_intel_semantics".try_into().unwrap()
-            });
-    }
-    impl ControlBarrierWaitOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            execution: impl Into<ScopeAttr>,
-            memory: impl Into<ScopeAttr>,
-            semantics: impl Into<MemorySemanticsAttr>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], flat_vec![], vec![], 0),
-            };
-            op.set_attr_execution(ctx, execution.into());
-            op.set_attr_memory(ctx, memory.into());
-            op.set_attr_semantics(ctx, semantics.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `execution`.
-        pub fn get_attr_execution<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_wait_intel::ATTR_EXECUTION)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `execution`.
-        pub fn set_attr_execution(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_wait_intel::ATTR_EXECUTION.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory`.
-        pub fn get_attr_memory<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, ScopeAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<ScopeAttr>(&spirv_control_barrier_wait_intel::ATTR_MEMORY)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `memory`.
-        pub fn set_attr_memory(&self, ctx: &::pliron::context::Context, value: ScopeAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_wait_intel::ATTR_MEMORY.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `semantics`.
-        pub fn get_attr_semantics<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, MemorySemanticsAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<MemorySemanticsAttr>(&spirv_control_barrier_wait_intel::ATTR_SEMANTICS)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `semantics`.
-        pub fn set_attr_semantics(&self, ctx: &::pliron::context::Context, value: MemorySemanticsAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_control_barrier_wait_intel::ATTR_SEMANTICS.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ControlBarrierWaitOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let execution = self.get_attr_execution(ctx).spirv_id(ctx, builder)?;
-            let memory = self.get_attr_memory(ctx).spirv_id(ctx, builder)?;
-            let semantics = self.get_attr_semantics(ctx).spirv_id(ctx, builder)?;
-            builder
-                .control_barrier_wait_intel(execution, memory, semantics)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ControlBarrierWaitOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_execution(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_memory(ctx).clone().0).minimum_version()?);
-            result = result.max(Operand::from(self.get_attr_semantics(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_extensions());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SplitBarrierINTEL]);
-            result.extend(Operand::from(self.get_attr_execution(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_memory(ctx).clone().0).required_capabilities());
-            result.extend(Operand::from(self.get_attr_semantics(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupBlockPrefetch",
-        operands = (ptr, num_bytes),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupBlockPrefetchOp;
-    crate::format::canonical_format!(
-        SubgroupBlockPrefetchOp; crate ::format::FormatVar::Value("ptr", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("num_bytes", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::MemoryAccess(&
-        spirv_subgroup_block_prefetch_intel::ATTR_MEMORY_ACCESS, "memory_access"), crate
-        ::format::attr!(& spirv_subgroup_block_prefetch_intel::ATTR_ALIGN,
-        LiteralIntegerAttr, "align", crate ::format::Quantifier::ZeroOrOne)
-    );
-    mod spirv_subgroup_block_prefetch_intel {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_subgroup_block_prefetch_intel_memory_access".try_into().unwrap()
-            });
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_subgroup_block_prefetch_intel_align".try_into().unwrap());
-    }
-    impl SubgroupBlockPrefetchOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            ptr: Value,
-            num_bytes: Value,
-            memory_access: impl Into<MemoryAccessAttr>,
-            align: Option<u32>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![ptr, num_bytes],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_memory_access(ctx, memory_access.into());
-            if let Some(align) = align {
-                op.set_attr_align(ctx, align.into());
-            }
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory_access`.
-        pub fn get_attr_memory_access<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, MemoryAccessAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<MemoryAccessAttr>(&spirv_subgroup_block_prefetch_intel::ATTR_MEMORY_ACCESS)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `memory_access`.
-        pub fn set_attr_memory_access(&self, ctx: &::pliron::context::Context, value: MemoryAccessAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_subgroup_block_prefetch_intel::ATTR_MEMORY_ACCESS.clone(), value);
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `align`.
-        pub fn get_attr_align<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> Option<::core::cell::Ref<'a, LiteralIntegerAttr>> {
-            ::core::cell::Ref::filter_map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&spirv_subgroup_block_prefetch_intel::ATTR_ALIGN)
-            })
-            .ok()
-        }
-        ///Set the value of the attribute named `align`.
-        pub fn set_attr_align(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_subgroup_block_prefetch_intel::ATTR_ALIGN.clone(), value);
-        }
-        ///Remove the attribute named `align`.
-        pub fn remove_attr_align(&self, ctx: &::pliron::context::Context) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .0
-                .remove(&*spirv_subgroup_block_prefetch_intel::ATTR_ALIGN);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupBlockPrefetchOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let ptr = builder.value_id(self.get_operand_ptr(ctx));
-            let num_bytes = builder.value_id(self.get_operand_num_bytes(ctx));
-            let memory_access = opt_memory_access(self.get_attr_memory_access(ctx).0);
-            let align = self.get_attr_align(ctx).map(|it| it.0.into());
-            builder
-                .subgroup_block_prefetch_intel(ptr, num_bytes, memory_access, align)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupBlockPrefetchOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_memory_access(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupBufferPrefetchINTEL]);
-            result.extend(Operand::from(self.get_attr_memory_access(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_Subgroup2DBlockLoad",
-        operands = (
-            element_size,
-            block_width,
-            block_height,
-            block_count,
-            src_base_pointer,
-            memory_width,
-            memory_height,
-            memory_pitch,
-            coordinate,
-            dst_pointer
-        ),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct Subgroup2DBlockLoadOp;
-    crate::format::canonical_format!(
-        Subgroup2DBlockLoadOp; crate ::format::FormatVar::Value("element_size", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_height",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_count",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("src_base_pointer", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("memory_width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_height",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("memory_pitch", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("coordinate", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("dst_pointer", crate ::format::Quantifier::One)
-    );
-    mod spirv_subgroup2_d_block_load_intel {}
-    impl Subgroup2DBlockLoadOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            element_size: Value,
-            block_width: Value,
-            block_height: Value,
-            block_count: Value,
-            src_base_pointer: Value,
-            memory_width: Value,
-            memory_height: Value,
-            memory_pitch: Value,
-            coordinate: Value,
-            dst_pointer: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![
-                        element_size,
-                        block_width,
-                        block_height,
-                        block_count,
-                        src_base_pointer,
-                        memory_width,
-                        memory_height,
-                        memory_pitch,
-                        coordinate,
-                        dst_pointer
-                    ],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for Subgroup2DBlockLoadOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let element_size = builder.value_id(self.get_operand_element_size(ctx));
-            let block_width = builder.value_id(self.get_operand_block_width(ctx));
-            let block_height = builder.value_id(self.get_operand_block_height(ctx));
-            let block_count = builder.value_id(self.get_operand_block_count(ctx));
-            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
-            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
-            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
-            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            let dst_pointer = builder.value_id(self.get_operand_dst_pointer(ctx));
-            builder
-                .subgroup2_d_block_load_intel(
-                    element_size,
-                    block_width,
-                    block_height,
-                    block_count,
-                    src_base_pointer,
-                    memory_width,
-                    memory_height,
-                    memory_pitch,
-                    coordinate,
-                    dst_pointer,
-                )
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for Subgroup2DBlockLoadOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::Subgroup2DBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_Subgroup2DBlockLoadTransform",
-        operands = (
-            element_size,
-            block_width,
-            block_height,
-            block_count,
-            src_base_pointer,
-            memory_width,
-            memory_height,
-            memory_pitch,
-            coordinate,
-            dst_pointer
-        ),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct Subgroup2DBlockLoadTransformOp;
-    crate::format::canonical_format!(
-        Subgroup2DBlockLoadTransformOp; crate ::format::FormatVar::Value("element_size",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("block_height", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("block_count", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("src_base_pointer", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_width",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("memory_height", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("memory_pitch", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("dst_pointer", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup2_d_block_load_transform_intel {}
-    impl Subgroup2DBlockLoadTransformOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            element_size: Value,
-            block_width: Value,
-            block_height: Value,
-            block_count: Value,
-            src_base_pointer: Value,
-            memory_width: Value,
-            memory_height: Value,
-            memory_pitch: Value,
-            coordinate: Value,
-            dst_pointer: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![
-                        element_size,
-                        block_width,
-                        block_height,
-                        block_count,
-                        src_base_pointer,
-                        memory_width,
-                        memory_height,
-                        memory_pitch,
-                        coordinate,
-                        dst_pointer
-                    ],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for Subgroup2DBlockLoadTransformOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let element_size = builder.value_id(self.get_operand_element_size(ctx));
-            let block_width = builder.value_id(self.get_operand_block_width(ctx));
-            let block_height = builder.value_id(self.get_operand_block_height(ctx));
-            let block_count = builder.value_id(self.get_operand_block_count(ctx));
-            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
-            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
-            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
-            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            let dst_pointer = builder.value_id(self.get_operand_dst_pointer(ctx));
-            builder
-                .subgroup2_d_block_load_transform_intel(
-                    element_size,
-                    block_width,
-                    block_height,
-                    block_count,
-                    src_base_pointer,
-                    memory_width,
-                    memory_height,
-                    memory_pitch,
-                    coordinate,
-                    dst_pointer,
-                )
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for Subgroup2DBlockLoadTransformOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::Subgroup2DBlockTransformINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_Subgroup2DBlockLoadTranspose",
-        operands = (
-            element_size,
-            block_width,
-            block_height,
-            block_count,
-            src_base_pointer,
-            memory_width,
-            memory_height,
-            memory_pitch,
-            coordinate,
-            dst_pointer
-        ),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct Subgroup2DBlockLoadTransposeOp;
-    crate::format::canonical_format!(
-        Subgroup2DBlockLoadTransposeOp; crate ::format::FormatVar::Value("element_size",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("block_height", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("block_count", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("src_base_pointer", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_width",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("memory_height", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("memory_pitch", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("coordinate", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("dst_pointer", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_subgroup2_d_block_load_transpose_intel {}
-    impl Subgroup2DBlockLoadTransposeOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            element_size: Value,
-            block_width: Value,
-            block_height: Value,
-            block_count: Value,
-            src_base_pointer: Value,
-            memory_width: Value,
-            memory_height: Value,
-            memory_pitch: Value,
-            coordinate: Value,
-            dst_pointer: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![
-                        element_size,
-                        block_width,
-                        block_height,
-                        block_count,
-                        src_base_pointer,
-                        memory_width,
-                        memory_height,
-                        memory_pitch,
-                        coordinate,
-                        dst_pointer
-                    ],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for Subgroup2DBlockLoadTransposeOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let element_size = builder.value_id(self.get_operand_element_size(ctx));
-            let block_width = builder.value_id(self.get_operand_block_width(ctx));
-            let block_height = builder.value_id(self.get_operand_block_height(ctx));
-            let block_count = builder.value_id(self.get_operand_block_count(ctx));
-            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
-            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
-            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
-            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            let dst_pointer = builder.value_id(self.get_operand_dst_pointer(ctx));
-            builder
-                .subgroup2_d_block_load_transpose_intel(
-                    element_size,
-                    block_width,
-                    block_height,
-                    block_count,
-                    src_base_pointer,
-                    memory_width,
-                    memory_height,
-                    memory_pitch,
-                    coordinate,
-                    dst_pointer,
-                )
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for Subgroup2DBlockLoadTransposeOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::Subgroup2DBlockTransposeINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_Subgroup2DBlockPrefetch",
-        operands = (
-            element_size,
-            block_width,
-            block_height,
-            block_count,
-            src_base_pointer,
-            memory_width,
-            memory_height,
-            memory_pitch,
-            coordinate
-        ),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct Subgroup2DBlockPrefetchOp;
-    crate::format::canonical_format!(
-        Subgroup2DBlockPrefetchOp; crate ::format::FormatVar::Value("element_size", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_height",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_count",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("src_base_pointer", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("memory_width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_height",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("memory_pitch", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("coordinate", crate ::format::Quantifier::One)
-    );
-    mod spirv_subgroup2_d_block_prefetch_intel {}
-    impl Subgroup2DBlockPrefetchOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            element_size: Value,
-            block_width: Value,
-            block_height: Value,
-            block_count: Value,
-            src_base_pointer: Value,
-            memory_width: Value,
-            memory_height: Value,
-            memory_pitch: Value,
-            coordinate: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![
-                        element_size,
-                        block_width,
-                        block_height,
-                        block_count,
-                        src_base_pointer,
-                        memory_width,
-                        memory_height,
-                        memory_pitch,
-                        coordinate
-                    ],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for Subgroup2DBlockPrefetchOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let element_size = builder.value_id(self.get_operand_element_size(ctx));
-            let block_width = builder.value_id(self.get_operand_block_width(ctx));
-            let block_height = builder.value_id(self.get_operand_block_height(ctx));
-            let block_count = builder.value_id(self.get_operand_block_count(ctx));
-            let src_base_pointer = builder.value_id(self.get_operand_src_base_pointer(ctx));
-            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
-            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
-            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            builder
-                .subgroup2_d_block_prefetch_intel(
-                    element_size,
-                    block_width,
-                    block_height,
-                    block_count,
-                    src_base_pointer,
-                    memory_width,
-                    memory_height,
-                    memory_pitch,
-                    coordinate,
-                )
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for Subgroup2DBlockPrefetchOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::Subgroup2DBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_Subgroup2DBlockStore",
-        operands = (
-            element_size,
-            block_width,
-            block_height,
-            block_count,
-            src_pointer,
-            dst_base_pointer,
-            memory_width,
-            memory_height,
-            memory_pitch,
-            coordinate
-        ),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct Subgroup2DBlockStoreOp;
-    crate::format::canonical_format!(
-        Subgroup2DBlockStoreOp; crate ::format::FormatVar::Value("element_size", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("block_height",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("block_count",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("src_pointer",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("dst_base_pointer", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("memory_width", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("memory_height",
-        crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("memory_pitch", crate ::format::Quantifier::One),
-        crate ::format::FormatVar::Value("coordinate", crate ::format::Quantifier::One)
-    );
-    mod spirv_subgroup2_d_block_store_intel {}
-    impl Subgroup2DBlockStoreOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            element_size: Value,
-            block_width: Value,
-            block_height: Value,
-            block_count: Value,
-            src_pointer: Value,
-            dst_base_pointer: Value,
-            memory_width: Value,
-            memory_height: Value,
-            memory_pitch: Value,
-            coordinate: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![
-                        element_size,
-                        block_width,
-                        block_height,
-                        block_count,
-                        src_pointer,
-                        dst_base_pointer,
-                        memory_width,
-                        memory_height,
-                        memory_pitch,
-                        coordinate
-                    ],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for Subgroup2DBlockStoreOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let element_size = builder.value_id(self.get_operand_element_size(ctx));
-            let block_width = builder.value_id(self.get_operand_block_width(ctx));
-            let block_height = builder.value_id(self.get_operand_block_height(ctx));
-            let block_count = builder.value_id(self.get_operand_block_count(ctx));
-            let src_pointer = builder.value_id(self.get_operand_src_pointer(ctx));
-            let dst_base_pointer = builder.value_id(self.get_operand_dst_base_pointer(ctx));
-            let memory_width = builder.value_id(self.get_operand_memory_width(ctx));
-            let memory_height = builder.value_id(self.get_operand_memory_height(ctx));
-            let memory_pitch = builder.value_id(self.get_operand_memory_pitch(ctx));
-            let coordinate = builder.value_id(self.get_operand_coordinate(ctx));
-            builder
-                .subgroup2_d_block_store_intel(
-                    element_size,
-                    block_width,
-                    block_height,
-                    block_count,
-                    src_pointer,
-                    dst_base_pointer,
-                    memory_width,
-                    memory_height,
-                    memory_pitch,
-                    coordinate,
-                )
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for Subgroup2DBlockStoreOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::Subgroup2DBlockIOINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_SubgroupMatrixMultiplyAccumulate",
-        operands = (k_dim, matrix_a, matrix_b, matrix_c),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct SubgroupMatrixMultiplyAccumulateOp;
-    crate::format::canonical_format!(
-        SubgroupMatrixMultiplyAccumulateOp; crate ::format::FormatVar::Value("k_dim",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("matrix_a",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("matrix_b",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("matrix_c",
-        crate ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS,
-        MatrixMultiplyAccumulateOperandsAttr, "matrix_multiply_accumulate_operands",
-        crate ::format::Quantifier::ZeroOrOne)
-    );
-    mod spirv_subgroup_matrix_multiply_accumulate_intel {
-        pub static ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_subgroup_matrix_multiply_accumulate_intel_matrix_multiply_accumulate_operands"
-                .try_into()
-                .unwrap()
-        });
-    }
-    impl SubgroupMatrixMultiplyAccumulateOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            k_dim: Value,
-            matrix_a: Value,
-            matrix_b: Value,
-            matrix_c: Value,
-            matrix_multiply_accumulate_operands: Option<MatrixMultiplyAccumulateOperandsAttr>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![k_dim, matrix_a, matrix_b, matrix_c],
-                    vec![],
-                    0,
-                ),
-            };
-            if let Some(attr) = matrix_multiply_accumulate_operands {
-                op.set_attr_matrix_multiply_accumulate_operands(ctx, attr);
-            }
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `matrix_multiply_accumulate_operands`.
-        pub fn get_attr_matrix_multiply_accumulate_operands<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> Option<::core::cell::Ref<'a, MatrixMultiplyAccumulateOperandsAttr>> {
-            ::core::cell::Ref::filter_map(self.op.deref(ctx), |op| {
-                op.attributes.get::<MatrixMultiplyAccumulateOperandsAttr>(
-                    &spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS,
-                )
-            })
-            .ok()
-        }
-        ///Set the value of the attribute named `matrix_multiply_accumulate_operands`.
-        pub fn set_attr_matrix_multiply_accumulate_operands(
-            &self,
-            ctx: &::pliron::context::Context,
-            value: MatrixMultiplyAccumulateOperandsAttr,
-        ) {
-            self.op.deref_mut(ctx).attributes.set(
-                spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS.clone(),
-                value,
-            );
-        }
-        ///Remove the attribute named `matrix_multiply_accumulate_operands`.
-        pub fn remove_attr_matrix_multiply_accumulate_operands(&self, ctx: &::pliron::context::Context) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .0
-                .remove(&*spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for SubgroupMatrixMultiplyAccumulateOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let k_dim = builder.value_id(self.get_operand_k_dim(ctx));
-            let matrix_a = builder.value_id(self.get_operand_matrix_a(ctx));
-            let matrix_b = builder.value_id(self.get_operand_matrix_b(ctx));
-            let matrix_c = builder.value_id(self.get_operand_matrix_c(ctx));
-            let matrix_multiply_accumulate_operands = self
-                .get_attr_matrix_multiply_accumulate_operands(ctx)
-                .map(|it| it.clone().0);
-            builder
-                .subgroup_matrix_multiply_accumulate_intel(
-                    result_ty,
-                    Some(result),
-                    k_dim,
-                    matrix_a,
-                    matrix_b,
-                    matrix_c,
-                    matrix_multiply_accumulate_operands,
-                )
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for SubgroupMatrixMultiplyAccumulateOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            if let Some(attr) = self.get_attr_matrix_multiply_accumulate_operands(ctx) {
-                result = result.max(Operand::from(attr.clone().0).minimum_version()?);
-            }
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            if let Some(attr) = self.get_attr_matrix_multiply_accumulate_operands(ctx) {
-                result.extend(Operand::from(attr.clone().0).required_extensions());
-            }
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SubgroupMatrixMultiplyAccumulateINTEL]);
-            if let Some(attr) = self.get_attr_matrix_multiply_accumulate_operands(ctx) {
-                result.extend(Operand::from(attr.clone().0).required_capabilities());
-            }
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_BitwiseFunction",
-        operands = (a, b, c, lut_index),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct BitwiseFunctionOp;
-    crate::format::canonical_format!(
-        BitwiseFunctionOp; crate ::format::FormatVar::Value("a", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("b", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("c", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("lut_index", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_bitwise_function_intel {}
-    impl BitwiseFunctionOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, a: Value, b: Value, c: Value, lut_index: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![a, b, c, lut_index],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for BitwiseFunctionOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let a = builder.value_id(self.get_operand_a(ctx));
-            let b = builder.value_id(self.get_operand_b(ctx));
-            let c = builder.value_id(self.get_operand_c(ctx));
-            let lut_index = builder.value_id(self.get_operand_lut_index(ctx));
-            builder
-                .bitwise_function_intel(result_ty, Some(result), a, b, c, lut_index)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for BitwiseFunctionOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::TernaryBitwiseFunctionINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_UntypedVariableLengthArray",
-        operands = (element_type, length),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct UntypedVariableLengthArrayOp;
-    crate::format::canonical_format!(
-        UntypedVariableLengthArrayOp; crate ::format::FormatVar::Value("element_type",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("length",
-        crate ::format::Quantifier::One)
-    );
-    mod spirv_untyped_variable_length_array_intel {}
-    impl UntypedVariableLengthArrayOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, element_type: Value, length: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![element_type, length],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for UntypedVariableLengthArrayOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let element_type = builder.value_id(self.get_operand_element_type(ctx));
-            let length = builder.value_id(self.get_operand_length(ctx));
-            builder
-                .untyped_variable_length_array_intel(result_ty, Some(result), element_type, length)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for UntypedVariableLengthArrayOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::UntypedVariableLengthArrayINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_ConditionalCopyObject",
-        operands = (condition_0_operand_0_condition_1_operand_1),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct ConditionalCopyObjectOp;
-    crate::format::canonical_format!(
-        ConditionalCopyObjectOp; crate
-        ::format::FormatVar::Value("condition_0_operand_0_condition_1_operand_1", crate
-        ::format::Quantifier::ZeroOrMore)
-    );
-    mod spirv_conditional_copy_object_intel {}
-    impl ConditionalCopyObjectOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            condition_0_operand_0_condition_1_operand_1: Vec<Value>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![condition_0_operand_0_condition_1_operand_1],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for ConditionalCopyObjectOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let condition_0_operand_0_condition_1_operand_1 = op
-                .operands()
-                .skip(0usize)
-                .map(|opd| builder.value_id(opd))
-                .collect::<Vec<_>>();
-            builder
-                .conditional_copy_object_intel(result_ty, Some(result), condition_0_operand_0_condition_1_operand_1)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for ConditionalCopyObjectOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::SpecConditionalINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_RoundFToTF32",
-        operands = (float_value),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct RoundFToTF32Op;
-    crate::format::canonical_format!(
-        RoundFToTF32Op; crate ::format::FormatVar::Value("float_value", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_round_f_to_tf32intel {}
-    impl RoundFToTF32Op {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, float_value: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![float_value],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for RoundFToTF32Op {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let float_value = builder.value_id(self.get_operand_float_value(ctx));
-            builder
-                .round_f_to_tf32intel(result_ty, Some(result), float_value)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for RoundFToTF32Op {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::TensorFloat32RoundingINTEL]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_MaskedGather",
-        operands = (ptr_vector, mask, fill_empty),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct MaskedGatherOp;
-    crate::format::canonical_format!(
-        MaskedGatherOp; crate ::format::FormatVar::Value("ptr_vector", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_masked_gather_intel::ATTR_ALIGNMENT, LiteralIntegerAttr, "alignment", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("mask", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("fill_empty", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_masked_gather_intel {
-        pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_masked_gather_intel_alignment".try_into().unwrap());
-    }
-    impl MaskedGatherOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            ptr_vector: Value,
-            alignment: impl Into<LiteralIntegerAttr>,
-            mask: Value,
-            fill_empty: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![ptr_vector, mask, fill_empty],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_alignment(ctx, alignment.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `alignment`.
-        pub fn get_attr_alignment<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, LiteralIntegerAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&spirv_masked_gather_intel::ATTR_ALIGNMENT)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `alignment`.
-        pub fn set_attr_alignment(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_masked_gather_intel::ATTR_ALIGNMENT.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for MaskedGatherOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let ptr_vector = builder.value_id(self.get_operand_ptr_vector(ctx));
-            let alignment = self.get_attr_alignment(ctx).clone().0;
-            let mask = builder.value_id(self.get_operand_mask(ctx));
-            let fill_empty = builder.value_id(self.get_operand_fill_empty(ctx));
-            builder
-                .masked_gather_intel(result_ty, Some(result), ptr_vector, alignment, mask, fill_empty)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for MaskedGatherOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_alignment(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::MaskedGatherScatterINTEL]);
-            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.INTEL_MaskedScatter",
-        operands = (input_vector, ptr_vector, mask),
-        interfaces = [DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct MaskedScatterOp;
-    crate::format::canonical_format!(
-        MaskedScatterOp; crate ::format::FormatVar::Value("input_vector", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("ptr_vector", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_masked_scatter_intel::ATTR_ALIGNMENT, LiteralIntegerAttr, "alignment",
-        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("mask", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_masked_scatter_intel {
-        pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_masked_scatter_intel_alignment".try_into().unwrap());
-    }
-    impl MaskedScatterOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            input_vector: Value,
-            ptr_vector: Value,
-            alignment: impl Into<LiteralIntegerAttr>,
-            mask: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![],
-                    flat_vec![input_vector, ptr_vector, mask],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_alignment(ctx, alignment.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `alignment`.
-        pub fn get_attr_alignment<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, LiteralIntegerAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<LiteralIntegerAttr>(&spirv_masked_scatter_intel::ATTR_ALIGNMENT)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `alignment`.
-        pub fn set_attr_alignment(&self, ctx: &::pliron::context::Context, value: LiteralIntegerAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_masked_scatter_intel::ATTR_ALIGNMENT.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for MaskedScatterOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let input_vector = builder.value_id(self.get_operand_input_vector(ctx));
-            let ptr_vector = builder.value_id(self.get_operand_ptr_vector(ctx));
-            let alignment = self.get_attr_alignment(ctx).clone().0;
-            let mask = builder.value_id(self.get_operand_mask(ctx));
-            builder
-                .masked_scatter_intel(input_vector, ptr_vector, alignment, mask)
-                .into_pliron_result()?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for MaskedScatterOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_alignment(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::MaskedGatherScatterINTEL]);
-            result.extend(Operand::from(self.get_attr_alignment(ctx).clone().0).required_capabilities());
+            result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
             result
         }
     }

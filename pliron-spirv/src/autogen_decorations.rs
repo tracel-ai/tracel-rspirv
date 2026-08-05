@@ -3960,7 +3960,7 @@ impl DecorationExt for Decoration {
     }
 }
 pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
-    match identifier.as_str() {
+    match identifier.as_ref() {
         "spirv_decoration_relaxed_precision" => Some(Decoration::RelaxedPrecision),
         "spirv_decoration_block" => Some(Decoration::Block),
         "spirv_decoration_buffer_block" => Some(Decoration::BufferBlock),
@@ -4094,6 +4094,21 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
 impl DecorationInfo {
     pub fn as_operands(&self) -> Vec<Operand> {
         match self.decoration {
+            Decoration::BuiltIn => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<BuiltInAttr>().unwrap();
+                vec![Operand::BuiltIn(attr.0)]
+            }
+            Decoration::FPFastMathMode => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<FPFastMathModeAttr>().unwrap();
+                vec![Operand::FPFastMathMode(attr.0)]
+            }
+            Decoration::FPRoundingMode => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<FPRoundingModeAttr>().unwrap();
+                vec![Operand::FPRoundingMode(attr.0)]
+            }
             Decoration::ArrayStride
             | Decoration::MatrixStride
             | Decoration::Stream
@@ -4146,26 +4161,6 @@ impl DecorationInfo {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<StringAttr>().unwrap();
                 vec![Operand::LiteralString(attr.as_str().to_string())]
-            }
-            Decoration::BuiltIn => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<BuiltInAttr>().unwrap();
-                vec![Operand::BuiltIn(attr.0)]
-            }
-            Decoration::FPFastMathMode => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<FPFastMathModeAttr>().unwrap();
-                vec![Operand::FPFastMathMode(attr.0)]
-            }
-            Decoration::FuncParamAttr => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<VecAttr>().unwrap();
-                todo!()
-            }
-            Decoration::FPRoundingMode => {
-                #[allow(unused)]
-                let attr = self.value.downcast_ref::<FPRoundingModeAttr>().unwrap();
-                vec![Operand::FPRoundingMode(attr.0)]
             }
             Decoration::RelaxedPrecision
             | Decoration::Block
@@ -4242,6 +4237,11 @@ impl DecorationInfo {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
                 vec![]
+            }
+            Decoration::FuncParamAttr => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<VecAttr>().unwrap();
+                todo!()
             }
             _ => unimplemented!("Unsupported decoration"),
         }

@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::btree_map::BTreeMap;
 
 use heck::ToSnekCase;
 use proc_macro2::TokenStream;
@@ -202,7 +202,7 @@ impl PlironGenerator {
             }
         });
 
-        let mut arg_kinds: HashMap<(Ident, String), (TokenStream, Vec<Ident>)> = HashMap::new();
+        let mut arg_kinds: BTreeMap<(Ident, String), (TokenStream, Vec<Ident>)> = BTreeMap::new();
 
         for (variant, _, ty, as_args) in decorations.iter() {
             arg_kinds
@@ -278,7 +278,7 @@ impl PlironGenerator {
             }
 
             pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
-                match identifier.as_str() {
+                match identifier.as_ref() {
                     #(#keys_to_decorations,)*
                     _ => None,
                 }

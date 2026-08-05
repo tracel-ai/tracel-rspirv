@@ -102,7 +102,7 @@ pub(crate) fn flags_parse<'a>(
         .flat_map(move |flags: Vec<Identifier>| -> core::result::Result<u32, _> {
             let flags = flags
                 .into_iter()
-                .map(|it| parse(it.as_str()))
+                .map(|it| parse(it.as_ref()))
                 .collect::<core::result::Result<Vec<_>, _>>()
                 .map_err(|err| input_error!(cur_loc.clone(), ParseError(err)))?;
             Ok(flags.into_iter().reduce(|a, b| a | b).unwrap_or(0))
