@@ -5,11 +5,11 @@ name = "tracel-rspirv"
 version = { workspace = true }
 
 description = "Rust library APIs for SPIR-V module manipulation"
-documentation = "https://docs.rs/rspirv"
+documentation = "https://docs.rs/tracel-rspirv"
 keywords = ["spirv", "vulkan", "opengl", "opencl"]
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/gfx-rs/rspirv"
+repository = "https://github.com/tracel-ai/tracel-rspirv"
 
 [lib]
 path = "lib.rs"

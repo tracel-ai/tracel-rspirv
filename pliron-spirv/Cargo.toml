@@ -4,6 +4,13 @@ name = "pliron-spirv"
 rust-version.workspace = true
 version.workspace = true
 
+description = "Pliron dialect for SPIR-V"
+documentation = "https://docs.rs/pliron-spirv"
+keywords = ["spirv", "vulkan", "opengl", "opencl", "pliron"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/tracel-ai/tracel-rspirv"
+
 [dependencies]
 derive-new = "0.7"
 derive_more = { version = "2", features = ["from", "into"] }
@@ -15,4 +22,4 @@ thiserror = "2"
 default-features = false
 features = ["pliron"]
 path = "../rspirv"
-version = "=0.13.2"
+version = "=0.13.3"
