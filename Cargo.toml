@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 edition = "2024"
 rust-version = "1.91"
-version = "0.13.3+sdk-1.4.357.0"
+version = "0.14.0+sdk-1.4.357.0"
 
 [workspace.dependencies]
 indexmap = "2.14.0"
