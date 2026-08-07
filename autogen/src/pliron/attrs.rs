@@ -43,7 +43,7 @@ impl PlironGenerator {
         let attr_name = format!("spirv.{}", operand.kind.to_snek_case());
         let attr = quote! {
             #[pliron_attr(name = #attr_name, format = "$0", verifier = "succ")]
-            #[derive(PartialEq, Clone, Debug)]
+            #[derive(PartialEq, Clone, Debug, Hash)]
             pub struct #attr_ty(pub #inner_ty);
         };
 

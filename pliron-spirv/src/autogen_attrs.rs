@@ -5,7 +5,7 @@
 use crate::prelude::*;
 use tracel_rspirv::spirv::*;
 #[pliron_attr(name = "spirv.image_operands", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ImageOperandsAttr(pub ImageOperands);
 impl ImageOperandsAttr {
     pub fn new(value: ImageOperands) -> Self {
@@ -23,7 +23,7 @@ impl From<ImageOperandsAttr> for ImageOperands {
     }
 }
 #[pliron_attr(name = "spirv.fp_fast_math_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FPFastMathModeAttr(pub FPFastMathMode);
 impl FPFastMathModeAttr {
     pub fn new(value: FPFastMathMode) -> Self {
@@ -41,7 +41,7 @@ impl From<FPFastMathModeAttr> for FPFastMathMode {
     }
 }
 #[pliron_attr(name = "spirv.selection_control", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct SelectionControlAttr(pub SelectionControl);
 impl SelectionControlAttr {
     pub fn new(value: SelectionControl) -> Self {
@@ -59,7 +59,7 @@ impl From<SelectionControlAttr> for SelectionControl {
     }
 }
 #[pliron_attr(name = "spirv.loop_control", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct LoopControlAttr(pub LoopControl);
 impl LoopControlAttr {
     pub fn new(value: LoopControl) -> Self {
@@ -77,7 +77,7 @@ impl From<LoopControlAttr> for LoopControl {
     }
 }
 #[pliron_attr(name = "spirv.function_control", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FunctionControlAttr(pub FunctionControl);
 impl FunctionControlAttr {
     pub fn new(value: FunctionControl) -> Self {
@@ -95,7 +95,7 @@ impl From<FunctionControlAttr> for FunctionControl {
     }
 }
 #[pliron_attr(name = "spirv.memory_semantics", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct MemorySemanticsAttr(pub MemorySemantics);
 impl MemorySemanticsAttr {
     pub fn new(value: MemorySemantics) -> Self {
@@ -113,7 +113,7 @@ impl From<MemorySemanticsAttr> for MemorySemantics {
     }
 }
 #[pliron_attr(name = "spirv.memory_access", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct MemoryAccessAttr(pub MemoryAccess);
 impl MemoryAccessAttr {
     pub fn new(value: MemoryAccess) -> Self {
@@ -131,7 +131,7 @@ impl From<MemoryAccessAttr> for MemoryAccess {
     }
 }
 #[pliron_attr(name = "spirv.kernel_profiling_info", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct KernelProfilingInfoAttr(pub KernelProfilingInfo);
 impl KernelProfilingInfoAttr {
     pub fn new(value: KernelProfilingInfo) -> Self {
@@ -149,7 +149,7 @@ impl From<KernelProfilingInfoAttr> for KernelProfilingInfo {
     }
 }
 #[pliron_attr(name = "spirv.ray_flags", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct RayFlagsAttr(pub RayFlags);
 impl RayFlagsAttr {
     pub fn new(value: RayFlags) -> Self {
@@ -167,7 +167,7 @@ impl From<RayFlagsAttr> for RayFlags {
     }
 }
 #[pliron_attr(name = "spirv.fragment_shading_rate", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FragmentShadingRateAttr(pub FragmentShadingRate);
 impl FragmentShadingRateAttr {
     pub fn new(value: FragmentShadingRate) -> Self {
@@ -185,7 +185,7 @@ impl From<FragmentShadingRateAttr> for FragmentShadingRate {
     }
 }
 #[pliron_attr(name = "spirv.raw_access_chain_operands", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct RawAccessChainOperandsAttr(pub RawAccessChainOperands);
 impl RawAccessChainOperandsAttr {
     pub fn new(value: RawAccessChainOperands) -> Self {
@@ -203,7 +203,7 @@ impl From<RawAccessChainOperandsAttr> for RawAccessChainOperands {
     }
 }
 #[pliron_attr(name = "spirv.source_language", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct SourceLanguageAttr(pub SourceLanguage);
 impl SourceLanguageAttr {
     pub fn new(value: SourceLanguage) -> Self {
@@ -221,7 +221,7 @@ impl From<SourceLanguageAttr> for SourceLanguage {
     }
 }
 #[pliron_attr(name = "spirv.execution_model", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ExecutionModelAttr(pub ExecutionModel);
 impl ExecutionModelAttr {
     pub fn new(value: ExecutionModel) -> Self {
@@ -239,7 +239,7 @@ impl From<ExecutionModelAttr> for ExecutionModel {
     }
 }
 #[pliron_attr(name = "spirv.addressing_model", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct AddressingModelAttr(pub AddressingModel);
 impl AddressingModelAttr {
     pub fn new(value: AddressingModel) -> Self {
@@ -257,7 +257,7 @@ impl From<AddressingModelAttr> for AddressingModel {
     }
 }
 #[pliron_attr(name = "spirv.memory_model", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct MemoryModelAttr(pub MemoryModel);
 impl MemoryModelAttr {
     pub fn new(value: MemoryModel) -> Self {
@@ -275,7 +275,7 @@ impl From<MemoryModelAttr> for MemoryModel {
     }
 }
 #[pliron_attr(name = "spirv.execution_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ExecutionModeAttr(pub ExecutionMode);
 impl ExecutionModeAttr {
     pub fn new(value: ExecutionMode) -> Self {
@@ -293,7 +293,7 @@ impl From<ExecutionModeAttr> for ExecutionMode {
     }
 }
 #[pliron_attr(name = "spirv.storage_class", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct StorageClassAttr(pub StorageClass);
 impl StorageClassAttr {
     pub fn new(value: StorageClass) -> Self {
@@ -311,7 +311,7 @@ impl From<StorageClassAttr> for StorageClass {
     }
 }
 #[pliron_attr(name = "spirv.dim", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct DimAttr(pub Dim);
 impl DimAttr {
     pub fn new(value: Dim) -> Self {
@@ -329,7 +329,7 @@ impl From<DimAttr> for Dim {
     }
 }
 #[pliron_attr(name = "spirv.sampler_addressing_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct SamplerAddressingModeAttr(pub SamplerAddressingMode);
 impl SamplerAddressingModeAttr {
     pub fn new(value: SamplerAddressingMode) -> Self {
@@ -347,7 +347,7 @@ impl From<SamplerAddressingModeAttr> for SamplerAddressingMode {
     }
 }
 #[pliron_attr(name = "spirv.sampler_filter_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct SamplerFilterModeAttr(pub SamplerFilterMode);
 impl SamplerFilterModeAttr {
     pub fn new(value: SamplerFilterMode) -> Self {
@@ -365,7 +365,7 @@ impl From<SamplerFilterModeAttr> for SamplerFilterMode {
     }
 }
 #[pliron_attr(name = "spirv.image_format", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ImageFormatAttr(pub ImageFormat);
 impl ImageFormatAttr {
     pub fn new(value: ImageFormat) -> Self {
@@ -383,7 +383,7 @@ impl From<ImageFormatAttr> for ImageFormat {
     }
 }
 #[pliron_attr(name = "spirv.image_channel_order", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ImageChannelOrderAttr(pub ImageChannelOrder);
 impl ImageChannelOrderAttr {
     pub fn new(value: ImageChannelOrder) -> Self {
@@ -401,7 +401,7 @@ impl From<ImageChannelOrderAttr> for ImageChannelOrder {
     }
 }
 #[pliron_attr(name = "spirv.image_channel_data_type", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ImageChannelDataTypeAttr(pub ImageChannelDataType);
 impl ImageChannelDataTypeAttr {
     pub fn new(value: ImageChannelDataType) -> Self {
@@ -419,7 +419,7 @@ impl From<ImageChannelDataTypeAttr> for ImageChannelDataType {
     }
 }
 #[pliron_attr(name = "spirv.fp_rounding_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FPRoundingModeAttr(pub FPRoundingMode);
 impl FPRoundingModeAttr {
     pub fn new(value: FPRoundingMode) -> Self {
@@ -437,7 +437,7 @@ impl From<FPRoundingModeAttr> for FPRoundingMode {
     }
 }
 #[pliron_attr(name = "spirv.fp_denorm_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FPDenormModeAttr(pub FPDenormMode);
 impl FPDenormModeAttr {
     pub fn new(value: FPDenormMode) -> Self {
@@ -455,7 +455,7 @@ impl From<FPDenormModeAttr> for FPDenormMode {
     }
 }
 #[pliron_attr(name = "spirv.quantization_modes", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct QuantizationModesAttr(pub QuantizationModes);
 impl QuantizationModesAttr {
     pub fn new(value: QuantizationModes) -> Self {
@@ -473,7 +473,7 @@ impl From<QuantizationModesAttr> for QuantizationModes {
     }
 }
 #[pliron_attr(name = "spirv.fp_operation_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FPOperationModeAttr(pub FPOperationMode);
 impl FPOperationModeAttr {
     pub fn new(value: FPOperationMode) -> Self {
@@ -491,7 +491,7 @@ impl From<FPOperationModeAttr> for FPOperationMode {
     }
 }
 #[pliron_attr(name = "spirv.overflow_modes", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct OverflowModesAttr(pub OverflowModes);
 impl OverflowModesAttr {
     pub fn new(value: OverflowModes) -> Self {
@@ -509,7 +509,7 @@ impl From<OverflowModesAttr> for OverflowModes {
     }
 }
 #[pliron_attr(name = "spirv.linkage_type", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct LinkageTypeAttr(pub LinkageType);
 impl LinkageTypeAttr {
     pub fn new(value: LinkageType) -> Self {
@@ -527,7 +527,7 @@ impl From<LinkageTypeAttr> for LinkageType {
     }
 }
 #[pliron_attr(name = "spirv.access_qualifier", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct AccessQualifierAttr(pub AccessQualifier);
 impl AccessQualifierAttr {
     pub fn new(value: AccessQualifier) -> Self {
@@ -545,7 +545,7 @@ impl From<AccessQualifierAttr> for AccessQualifier {
     }
 }
 #[pliron_attr(name = "spirv.host_access_qualifier", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct HostAccessQualifierAttr(pub HostAccessQualifier);
 impl HostAccessQualifierAttr {
     pub fn new(value: HostAccessQualifier) -> Self {
@@ -563,7 +563,7 @@ impl From<HostAccessQualifierAttr> for HostAccessQualifier {
     }
 }
 #[pliron_attr(name = "spirv.function_parameter_attribute", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FunctionParameterAttributeAttr(pub FunctionParameterAttribute);
 impl FunctionParameterAttributeAttr {
     pub fn new(value: FunctionParameterAttribute) -> Self {
@@ -581,7 +581,7 @@ impl From<FunctionParameterAttributeAttr> for FunctionParameterAttribute {
     }
 }
 #[pliron_attr(name = "spirv.built_in", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct BuiltInAttr(pub BuiltIn);
 impl BuiltInAttr {
     pub fn new(value: BuiltIn) -> Self {
@@ -599,7 +599,7 @@ impl From<BuiltInAttr> for BuiltIn {
     }
 }
 #[pliron_attr(name = "spirv.scope", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ScopeAttr(pub Scope);
 impl ScopeAttr {
     pub fn new(value: Scope) -> Self {
@@ -617,7 +617,7 @@ impl From<ScopeAttr> for Scope {
     }
 }
 #[pliron_attr(name = "spirv.group_operation", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct GroupOperationAttr(pub GroupOperation);
 impl GroupOperationAttr {
     pub fn new(value: GroupOperation) -> Self {
@@ -635,7 +635,7 @@ impl From<GroupOperationAttr> for GroupOperation {
     }
 }
 #[pliron_attr(name = "spirv.kernel_enqueue_flags", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct KernelEnqueueFlagsAttr(pub KernelEnqueueFlags);
 impl KernelEnqueueFlagsAttr {
     pub fn new(value: KernelEnqueueFlags) -> Self {
@@ -653,7 +653,7 @@ impl From<KernelEnqueueFlagsAttr> for KernelEnqueueFlags {
     }
 }
 #[pliron_attr(name = "spirv.capability", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct CapabilityAttr(pub Capability);
 impl CapabilityAttr {
     pub fn new(value: Capability) -> Self {
@@ -671,7 +671,7 @@ impl From<CapabilityAttr> for Capability {
     }
 }
 #[pliron_attr(name = "spirv.ray_query_intersection", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct RayQueryIntersectionAttr(pub RayQueryIntersection);
 impl RayQueryIntersectionAttr {
     pub fn new(value: RayQueryIntersection) -> Self {
@@ -693,7 +693,7 @@ impl From<RayQueryIntersectionAttr> for RayQueryIntersection {
     format = "$0",
     verifier = "succ"
 )]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct RayQueryCommittedIntersectionTypeAttr(pub RayQueryCommittedIntersectionType);
 impl RayQueryCommittedIntersectionTypeAttr {
     pub fn new(value: RayQueryCommittedIntersectionType) -> Self {
@@ -715,7 +715,7 @@ impl From<RayQueryCommittedIntersectionTypeAttr> for RayQueryCommittedIntersecti
     format = "$0",
     verifier = "succ"
 )]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct RayQueryCandidateIntersectionTypeAttr(pub RayQueryCandidateIntersectionType);
 impl RayQueryCandidateIntersectionTypeAttr {
     pub fn new(value: RayQueryCandidateIntersectionType) -> Self {
@@ -733,7 +733,7 @@ impl From<RayQueryCandidateIntersectionTypeAttr> for RayQueryCandidateIntersecti
     }
 }
 #[pliron_attr(name = "spirv.packed_vector_format", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct PackedVectorFormatAttr(pub PackedVectorFormat);
 impl PackedVectorFormatAttr {
     pub fn new(value: PackedVectorFormat) -> Self {
@@ -751,7 +751,7 @@ impl From<PackedVectorFormatAttr> for PackedVectorFormat {
     }
 }
 #[pliron_attr(name = "spirv.cooperative_matrix_operands", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct CooperativeMatrixOperandsAttr(pub CooperativeMatrixOperands);
 impl CooperativeMatrixOperandsAttr {
     pub fn new(value: CooperativeMatrixOperands) -> Self {
@@ -769,7 +769,7 @@ impl From<CooperativeMatrixOperandsAttr> for CooperativeMatrixOperands {
     }
 }
 #[pliron_attr(name = "spirv.cooperative_matrix_layout", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct CooperativeMatrixLayoutAttr(pub CooperativeMatrixLayout);
 impl CooperativeMatrixLayoutAttr {
     pub fn new(value: CooperativeMatrixLayout) -> Self {
@@ -787,7 +787,7 @@ impl From<CooperativeMatrixLayoutAttr> for CooperativeMatrixLayout {
     }
 }
 #[pliron_attr(name = "spirv.cooperative_matrix_use", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct CooperativeMatrixUseAttr(pub CooperativeMatrixUse);
 impl CooperativeMatrixUseAttr {
     pub fn new(value: CooperativeMatrixUse) -> Self {
@@ -805,7 +805,7 @@ impl From<CooperativeMatrixUseAttr> for CooperativeMatrixUse {
     }
 }
 #[pliron_attr(name = "spirv.cooperative_matrix_reduce", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct CooperativeMatrixReduceAttr(pub CooperativeMatrixReduce);
 impl CooperativeMatrixReduceAttr {
     pub fn new(value: CooperativeMatrixReduce) -> Self {
@@ -823,7 +823,7 @@ impl From<CooperativeMatrixReduceAttr> for CooperativeMatrixReduce {
     }
 }
 #[pliron_attr(name = "spirv.tensor_clamp_mode", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct TensorClampModeAttr(pub TensorClampMode);
 impl TensorClampModeAttr {
     pub fn new(value: TensorClampMode) -> Self {
@@ -841,7 +841,7 @@ impl From<TensorClampModeAttr> for TensorClampMode {
     }
 }
 #[pliron_attr(name = "spirv.tensor_addressing_operands", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct TensorAddressingOperandsAttr(pub TensorAddressingOperands);
 impl TensorAddressingOperandsAttr {
     pub fn new(value: TensorAddressingOperands) -> Self {
@@ -859,7 +859,7 @@ impl From<TensorAddressingOperandsAttr> for TensorAddressingOperands {
     }
 }
 #[pliron_attr(name = "spirv.initialization_mode_qualifier", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct InitializationModeQualifierAttr(pub InitializationModeQualifier);
 impl InitializationModeQualifierAttr {
     pub fn new(value: InitializationModeQualifier) -> Self {
@@ -877,7 +877,7 @@ impl From<InitializationModeQualifierAttr> for InitializationModeQualifier {
     }
 }
 #[pliron_attr(name = "spirv.load_cache_control", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct LoadCacheControlAttr(pub LoadCacheControl);
 impl LoadCacheControlAttr {
     pub fn new(value: LoadCacheControl) -> Self {
@@ -895,7 +895,7 @@ impl From<LoadCacheControlAttr> for LoadCacheControl {
     }
 }
 #[pliron_attr(name = "spirv.store_cache_control", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct StoreCacheControlAttr(pub StoreCacheControl);
 impl StoreCacheControlAttr {
     pub fn new(value: StoreCacheControl) -> Self {
@@ -913,7 +913,7 @@ impl From<StoreCacheControlAttr> for StoreCacheControl {
     }
 }
 #[pliron_attr(name = "spirv.named_maximum_number_of_registers", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct NamedMaximumNumberOfRegistersAttr(pub NamedMaximumNumberOfRegisters);
 impl NamedMaximumNumberOfRegistersAttr {
     pub fn new(value: NamedMaximumNumberOfRegisters) -> Self {
@@ -931,7 +931,7 @@ impl From<NamedMaximumNumberOfRegistersAttr> for NamedMaximumNumberOfRegisters {
     }
 }
 #[pliron_attr(name = "spirv.matrix_multiply_accumulate_operands", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct MatrixMultiplyAccumulateOperandsAttr(pub MatrixMultiplyAccumulateOperands);
 impl MatrixMultiplyAccumulateOperandsAttr {
     pub fn new(value: MatrixMultiplyAccumulateOperands) -> Self {
@@ -949,7 +949,7 @@ impl From<MatrixMultiplyAccumulateOperandsAttr> for MatrixMultiplyAccumulateOper
     }
 }
 #[pliron_attr(name = "spirv.fp_encoding", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct FPEncodingAttr(pub FPEncoding);
 impl FPEncodingAttr {
     pub fn new(value: FPEncoding) -> Self {
@@ -967,7 +967,7 @@ impl From<FPEncodingAttr> for FPEncoding {
     }
 }
 #[pliron_attr(name = "spirv.cooperative_vector_matrix_layout", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct CooperativeVectorMatrixLayoutAttr(pub CooperativeVectorMatrixLayout);
 impl CooperativeVectorMatrixLayoutAttr {
     pub fn new(value: CooperativeVectorMatrixLayout) -> Self {
@@ -985,7 +985,7 @@ impl From<CooperativeVectorMatrixLayoutAttr> for CooperativeVectorMatrixLayout {
     }
 }
 #[pliron_attr(name = "spirv.component_type", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct ComponentTypeAttr(pub ComponentType);
 impl ComponentTypeAttr {
     pub fn new(value: ComponentType) -> Self {
@@ -1003,7 +1003,7 @@ impl From<ComponentTypeAttr> for ComponentType {
     }
 }
 #[pliron_attr(name = "spirv.gather_modes", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct GatherModesAttr(pub GatherModes);
 impl GatherModesAttr {
     pub fn new(value: GatherModes) -> Self {
@@ -1021,7 +1021,7 @@ impl From<GatherModesAttr> for GatherModes {
     }
 }
 #[pliron_attr(name = "spirv.tensor_operands", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Hash)]
 pub struct TensorOperandsAttr(pub TensorOperands);
 impl TensorOperandsAttr {
     pub fn new(value: TensorOperands) -> Self {
