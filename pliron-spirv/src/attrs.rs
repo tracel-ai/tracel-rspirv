@@ -30,11 +30,11 @@ use crate::{PlironBuilder, ToSpirvAttr, prelude::*, types::FloatType};
 pub use crate::autogen_attrs::*;
 
 #[pliron_attr(name = "spirv.literal", format = "$0", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug, new, From, Into)]
+#[derive(PartialEq, Clone, Debug, Hash, new, From, Into)]
 pub struct LiteralIntegerAttr(pub u32);
 
 #[pliron_attr(name = "spirv.string", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug, new, From, Into)]
+#[derive(PartialEq, Clone, Debug, Hash, new, From, Into)]
 pub struct LiteralStringAttr(pub String);
 
 impl From<StringAttr> for LiteralStringAttr {
@@ -59,7 +59,7 @@ impl Parsable for LiteralStringAttr {
 }
 
 #[pliron_attr(name = "spirv.composite", format = "`[` $values ` : ` $ty `]`", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug, new, From, Into)]
+#[derive(PartialEq, Clone, Debug, Hash, new, From, Into)]
 pub struct CompositeAttr {
     pub values: VecAttr,
     pub ty: TypeHandle,
@@ -88,7 +88,7 @@ impl ToSpirvAttr for CompositeAttr {
 }
 
 #[pliron_attr(name = "spirv.float", format = "$bits ` : ` $ty", verifier = "succ")]
-#[derive(PartialEq, Clone, Debug, new, From, Into)]
+#[derive(PartialEq, Clone, Debug, Hash, new, From, Into)]
 pub struct FloatAttr {
     pub bits: u64,
     pub ty: TypedHandle<FloatType>,
@@ -133,7 +133,7 @@ impl ToSpirvAttr for IntegerAttr {
 }
 
 #[pliron_attr(name = "spirv.vce", verifier = "succ")]
-#[derive(Clone, Debug, PartialEq, new)]
+#[derive(Clone, Debug, PartialEq, Hash, new)]
 pub struct VerCapExtAttr {
     pub version: (u8, u8),
     pub capabilities: Vec<Capability>,
