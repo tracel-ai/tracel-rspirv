@@ -58,6 +58,27 @@ impl Parsable for LiteralStringAttr {
     }
 }
 
+#[pliron_attr(name = "spirv.null", format = "`[null: ` $ty `]`", verifier = "succ")]
+#[derive(PartialEq, Clone, Debug, Hash, new)]
+pub struct NullAttr {
+    pub ty: TypeHandle,
+}
+
+#[attr_interface_impl]
+impl TypedAttrInterface for NullAttr {
+    fn get_type(&self, _ctx: &Context) -> TypeHandle {
+        self.ty
+    }
+}
+
+#[attr_interface_impl]
+impl ToSpirvAttr for NullAttr {
+    fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Word> {
+        let result_ty = spirv_type_id(ctx, builder, self.ty)?;
+        builder.constant_null(result_ty).into_pliron_result()
+    }
+}
+
 #[pliron_attr(name = "spirv.composite", format = "`[` $values ` : ` $ty `]`", verifier = "succ")]
 #[derive(PartialEq, Clone, Debug, Hash, new, From, Into)]
 pub struct CompositeAttr {
