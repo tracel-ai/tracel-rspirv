@@ -7,13 +7,15 @@ on:
 
 jobs:
   publish-tracel-rspirv:
-    uses: tracel-ai/github-actions/.github/workflows/publish-crate.yml@v4
+    uses: tracel-ai/github-actions/.github/workflows/publish-crate.yml@v11
     with:
       crate: tracel-rspirv
+      tag-validation: false
     secrets: inherit
   publish-pliron-spirv:
     needs: publish-tracel-rspirv
-    uses: tracel-ai/github-actions/.github/workflows/publish-crate.yml@v4
+    uses: tracel-ai/github-actions/.github/workflows/publish-crate.yml@v11
     with:
       crate: pliron-spirv
+      tag-validation: false
     secrets: inherit
