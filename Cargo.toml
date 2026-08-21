@@ -15,7 +15,6 @@ pliron = { version = "0.17" }
 # pliron = { git = "https://github.com/pliron-org/pliron.git", rev = "4035fde349a97096dc5ef4a040cc14ca9c451ae9", default-features = false }
 rstest = "0.26.1"
 strum = { version = "0.28", features = ["derive"] }
-tracel-xtask = { version = "=4.17.2" }
-
+tracel-xtask = { version = "=5.0.0"  }
 [profile.dev]
 debug = 0
