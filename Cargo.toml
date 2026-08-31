@@ -12,7 +12,7 @@ indexmap = "2.14.0"
 log = { default-features = false, version = "0.4.22" }
 # pliron = { version = "0.17" }
 # pliron = { path = "../pliron", default-features = false }
-pliron = { git = "https://github.com/pliron-org/pliron.git", rev = "d6886bd2ff997dff11b13330c257cfb99308f35f", default-features = false }
+pliron = { git = "https://github.com/pliron-org/pliron.git", rev = "6f4e739266c037a69488031a81f4381e62db9ac3", default-features = false }
 rstest = "0.26.1"
 strum = { version = "0.28", features = ["derive"] }
 tracel-xtask = { version = "=5.0.0"  }
