@@ -21714,6 +21714,25 @@ impl VerCapExtOpInterface for SDotOp {
         #[allow(unused_mut)]
         let mut result = vec![];
         result.push(vec![Capability::DotProduct]);
+        if let Some(vector) = self
+            .get_operand_vector_1(ctx)
+            .get_type(ctx)
+            .deref(ctx)
+            .downcast_ref::<crate::types::VectorType>()
+            && let Some(int) = vector
+                .element_type
+                .deref(ctx)
+                .downcast_ref::<pliron::builtin::types::IntegerType>()
+        {
+            if int.width() == 8 {
+                result.push(vec![Capability::DotProductInput4x8Bit]);
+            } else {
+                result.push(vec![Capability::DotProductInputAll]);
+            }
+        }
+        if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
+            result.push(vec![Capability::DotProductInput4x8BitPacked]);
+        }
         if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
             result.extend(Operand::from(attr.clone().0).required_capabilities());
         }
@@ -21835,6 +21854,25 @@ impl VerCapExtOpInterface for UDotOp {
         #[allow(unused_mut)]
         let mut result = vec![];
         result.push(vec![Capability::DotProduct]);
+        if let Some(vector) = self
+            .get_operand_vector_1(ctx)
+            .get_type(ctx)
+            .deref(ctx)
+            .downcast_ref::<crate::types::VectorType>()
+            && let Some(int) = vector
+                .element_type
+                .deref(ctx)
+                .downcast_ref::<pliron::builtin::types::IntegerType>()
+        {
+            if int.width() == 8 {
+                result.push(vec![Capability::DotProductInput4x8Bit]);
+            } else {
+                result.push(vec![Capability::DotProductInputAll]);
+            }
+        }
+        if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
+            result.push(vec![Capability::DotProductInput4x8BitPacked]);
+        }
         if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
             result.extend(Operand::from(attr.clone().0).required_capabilities());
         }
@@ -21956,6 +21994,25 @@ impl VerCapExtOpInterface for SUDotOp {
         #[allow(unused_mut)]
         let mut result = vec![];
         result.push(vec![Capability::DotProduct]);
+        if let Some(vector) = self
+            .get_operand_vector_1(ctx)
+            .get_type(ctx)
+            .deref(ctx)
+            .downcast_ref::<crate::types::VectorType>()
+            && let Some(int) = vector
+                .element_type
+                .deref(ctx)
+                .downcast_ref::<pliron::builtin::types::IntegerType>()
+        {
+            if int.width() == 8 {
+                result.push(vec![Capability::DotProductInput4x8Bit]);
+            } else {
+                result.push(vec![Capability::DotProductInputAll]);
+            }
+        }
+        if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
+            result.push(vec![Capability::DotProductInput4x8BitPacked]);
+        }
         if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
             result.extend(Operand::from(attr.clone().0).required_capabilities());
         }
@@ -22087,6 +22144,25 @@ impl VerCapExtOpInterface for SDotAccSatOp {
         #[allow(unused_mut)]
         let mut result = vec![];
         result.push(vec![Capability::DotProduct]);
+        if let Some(vector) = self
+            .get_operand_vector_1(ctx)
+            .get_type(ctx)
+            .deref(ctx)
+            .downcast_ref::<crate::types::VectorType>()
+            && let Some(int) = vector
+                .element_type
+                .deref(ctx)
+                .downcast_ref::<pliron::builtin::types::IntegerType>()
+        {
+            if int.width() == 8 {
+                result.push(vec![Capability::DotProductInput4x8Bit]);
+            } else {
+                result.push(vec![Capability::DotProductInputAll]);
+            }
+        }
+        if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
+            result.push(vec![Capability::DotProductInput4x8BitPacked]);
+        }
         if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
             result.extend(Operand::from(attr.clone().0).required_capabilities());
         }
@@ -22218,6 +22294,25 @@ impl VerCapExtOpInterface for UDotAccSatOp {
         #[allow(unused_mut)]
         let mut result = vec![];
         result.push(vec![Capability::DotProduct]);
+        if let Some(vector) = self
+            .get_operand_vector_1(ctx)
+            .get_type(ctx)
+            .deref(ctx)
+            .downcast_ref::<crate::types::VectorType>()
+            && let Some(int) = vector
+                .element_type
+                .deref(ctx)
+                .downcast_ref::<pliron::builtin::types::IntegerType>()
+        {
+            if int.width() == 8 {
+                result.push(vec![Capability::DotProductInput4x8Bit]);
+            } else {
+                result.push(vec![Capability::DotProductInputAll]);
+            }
+        }
+        if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
+            result.push(vec![Capability::DotProductInput4x8BitPacked]);
+        }
         if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
             result.extend(Operand::from(attr.clone().0).required_capabilities());
         }
@@ -22349,6 +22444,25 @@ impl VerCapExtOpInterface for SUDotAccSatOp {
         #[allow(unused_mut)]
         let mut result = vec![];
         result.push(vec![Capability::DotProduct]);
+        if let Some(vector) = self
+            .get_operand_vector_1(ctx)
+            .get_type(ctx)
+            .deref(ctx)
+            .downcast_ref::<crate::types::VectorType>()
+            && let Some(int) = vector
+                .element_type
+                .deref(ctx)
+                .downcast_ref::<pliron::builtin::types::IntegerType>()
+        {
+            if int.width() == 8 {
+                result.push(vec![Capability::DotProductInput4x8Bit]);
+            } else {
+                result.push(vec![Capability::DotProductInputAll]);
+            }
+        }
+        if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
+            result.push(vec![Capability::DotProductInput4x8BitPacked]);
+        }
         if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
             result.extend(Operand::from(attr.clone().0).required_capabilities());
         }
