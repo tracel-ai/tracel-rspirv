@@ -9,10 +9,30 @@ use crate::{
     utils::as_ident,
 };
 
+type ExtraCap = (&'static str, fn() -> TokenStream);
+
+const EXTRA_CAPABILITIES: &[ExtraCap] = &[
+    ("OpSDot", integer_dot_product_extra_capabilities),
+    ("OpUDot", integer_dot_product_extra_capabilities),
+    ("OpSUDot", integer_dot_product_extra_capabilities),
+    ("OpSDotAccSat", integer_dot_product_extra_capabilities),
+    ("OpUDotAccSat", integer_dot_product_extra_capabilities),
+    ("OpSUDotAccSat", integer_dot_product_extra_capabilities),
+];
+
+fn extra_capabilities(name: &str) -> TokenStream {
+    if let Some((_, tokens)) = EXTRA_CAPABILITIES.iter().find(|(op, _)| *op == name) {
+        tokens()
+    } else {
+        quote![]
+    }
+}
+
 impl PlironGenerator {
     pub fn generate_vce_impl(&self, op: &Instruction, ty_name: &Ident, opds: &[OpdKind]) -> TokenStream {
         let version = opt_version_tokens(&op.version);
         let inst_caps = &op.capabilities;
+        let extra_caps = extra_capabilities(&op.opname);
         let inst_extensions = &op.extensions;
 
         let mut min_version = quote! {
@@ -35,6 +55,7 @@ impl PlironGenerator {
             });
             require_capabilities.extend(quote![result.push(vec![#(#caps),*]);]);
         }
+        require_capabilities.extend(extra_caps);
 
         if !inst_extensions.is_empty() {
             required_extensions.extend(quote![result.push(vec![#(#inst_extensions),*]);]);
@@ -119,6 +140,30 @@ impl PlironGenerator {
                     result
                 }
             }
+        }
+    }
+}
+
+fn integer_dot_product_extra_capabilities() -> TokenStream {
+    quote! {
+        if let Some(vector) = self
+            .get_operand_vector_1(ctx)
+            .get_type(ctx)
+            .deref(ctx)
+            .downcast_ref::<crate::types::VectorType>()
+            && let Some(int) = vector
+                .element_type
+                .deref(ctx)
+                .downcast_ref::<pliron::builtin::types::IntegerType>()
+        {
+            if int.width() == 8 {
+                result.push(vec![Capability::DotProductInput4x8Bit]);
+            } else {
+                result.push(vec![Capability::DotProductInputAll]);
+            }
+        }
+        if let Some(attr) = self.get_attr_packed_vector_format(ctx) {
+            result.push(vec![Capability::DotProductInput4x8BitPacked]);
         }
     }
 }
