@@ -44,7 +44,7 @@ impl ToSpirvOp for AcosOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_acos_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -108,7 +108,7 @@ impl ToSpirvOp for AcoshOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_acosh_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -172,7 +172,7 @@ impl ToSpirvOp for AcospiOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_acospi_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -236,7 +236,7 @@ impl ToSpirvOp for AsinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_asin_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -300,7 +300,7 @@ impl ToSpirvOp for AsinhOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_asinh_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -364,7 +364,7 @@ impl ToSpirvOp for AsinpiOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_asinpi_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -428,7 +428,7 @@ impl ToSpirvOp for AtanOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_atan_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -494,7 +494,7 @@ impl ToSpirvOp for Atan2Op {
         let y = builder.value_id(self.get_operand_y(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_atan2_id(result_ty, Some(result), y, x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -558,7 +558,7 @@ impl ToSpirvOp for AtanhOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_atanh_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -622,7 +622,7 @@ impl ToSpirvOp for AtanpiOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_atanpi_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -688,7 +688,7 @@ impl ToSpirvOp for Atan2piOp {
         let y = builder.value_id(self.get_operand_y(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_atan2pi_id(result_ty, Some(result), y, x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -752,7 +752,7 @@ impl ToSpirvOp for CbrtOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_cbrt_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -816,7 +816,7 @@ impl ToSpirvOp for CeilOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_ceil_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -882,7 +882,7 @@ impl ToSpirvOp for CopysignOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_copysign_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -946,7 +946,7 @@ impl ToSpirvOp for CosOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_cos_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1010,7 +1010,7 @@ impl ToSpirvOp for CoshOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_cosh_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1074,7 +1074,7 @@ impl ToSpirvOp for CospiOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_cospi_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1138,7 +1138,7 @@ impl ToSpirvOp for ErfcOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_erfc_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1202,7 +1202,7 @@ impl ToSpirvOp for ErfOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_erf_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1266,7 +1266,7 @@ impl ToSpirvOp for ExpOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_exp_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1330,7 +1330,7 @@ impl ToSpirvOp for Exp2Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_exp2_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1394,7 +1394,7 @@ impl ToSpirvOp for Exp10Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_exp10_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1458,7 +1458,7 @@ impl ToSpirvOp for Expm1Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_expm1_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1522,7 +1522,7 @@ impl ToSpirvOp for FabsOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_fabs_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1588,7 +1588,7 @@ impl ToSpirvOp for FdimOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_fdim_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1652,7 +1652,7 @@ impl ToSpirvOp for FloorOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_floor_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1726,7 +1726,7 @@ impl ToSpirvOp for FmaOp {
         let b = builder.value_id(self.get_operand_b(ctx));
         let c = builder.value_id(self.get_operand_c(ctx));
         builder.cl_fma_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1792,7 +1792,7 @@ impl ToSpirvOp for FmaxOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_fmax_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1858,7 +1858,7 @@ impl ToSpirvOp for FminOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_fmin_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1924,7 +1924,7 @@ impl ToSpirvOp for FmodOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_fmod_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1990,7 +1990,7 @@ impl ToSpirvOp for FractOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let ptr = builder.value_id(self.get_operand_ptr(ctx));
         builder.cl_fract_id(result_ty, Some(result), x, ptr).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2056,7 +2056,7 @@ impl ToSpirvOp for FrexpOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let exp = builder.value_id(self.get_operand_exp(ctx));
         builder.cl_frexp_id(result_ty, Some(result), x, exp).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2122,7 +2122,7 @@ impl ToSpirvOp for HypotOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_hypot_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2186,7 +2186,7 @@ impl ToSpirvOp for IlogbOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_ilogb_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2252,7 +2252,7 @@ impl ToSpirvOp for LdexpOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let k = builder.value_id(self.get_operand_k(ctx));
         builder.cl_ldexp_id(result_ty, Some(result), x, k).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2316,7 +2316,7 @@ impl ToSpirvOp for LgammaOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_lgamma_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2387,7 +2387,7 @@ impl ToSpirvOp for LgammaROp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let signp = builder.value_id(self.get_operand_signp(ctx));
         builder.cl_lgamma_r_id(result_ty, Some(result), x, signp).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2451,7 +2451,7 @@ impl ToSpirvOp for LogOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_log_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2515,7 +2515,7 @@ impl ToSpirvOp for Log2Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_log2_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2579,7 +2579,7 @@ impl ToSpirvOp for Log10Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_log10_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2643,7 +2643,7 @@ impl ToSpirvOp for Log1pOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_log1p_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2707,7 +2707,7 @@ impl ToSpirvOp for LogbOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_logb_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2781,7 +2781,7 @@ impl ToSpirvOp for MadOp {
         let b = builder.value_id(self.get_operand_b(ctx));
         let c = builder.value_id(self.get_operand_c(ctx));
         builder.cl_mad_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2847,7 +2847,7 @@ impl ToSpirvOp for MaxmagOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_maxmag_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2913,7 +2913,7 @@ impl ToSpirvOp for MinmagOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_minmag_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2979,7 +2979,7 @@ impl ToSpirvOp for ModfOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let iptr = builder.value_id(self.get_operand_iptr(ctx));
         builder.cl_modf_id(result_ty, Some(result), x, iptr).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3043,7 +3043,7 @@ impl ToSpirvOp for NanOp {
         let result = builder.value_id(self.get_result(ctx));
         let nancode = builder.value_id(self.get_operand_nancode(ctx));
         builder.cl_nan_id(result_ty, Some(result), nancode).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3109,7 +3109,7 @@ impl ToSpirvOp for NextafterOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_nextafter_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3175,7 +3175,7 @@ impl ToSpirvOp for PowOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_pow_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3241,7 +3241,7 @@ impl ToSpirvOp for PownOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_pown_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3307,7 +3307,7 @@ impl ToSpirvOp for PowrOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_powr_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3373,7 +3373,7 @@ impl ToSpirvOp for RemainderOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_remainder_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3447,7 +3447,7 @@ impl ToSpirvOp for RemquoOp {
         let y = builder.value_id(self.get_operand_y(ctx));
         let quo = builder.value_id(self.get_operand_quo(ctx));
         builder.cl_remquo_id(result_ty, Some(result), x, y, quo).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3511,7 +3511,7 @@ impl ToSpirvOp for RintOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_rint_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3577,7 +3577,7 @@ impl ToSpirvOp for RootnOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_rootn_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3641,7 +3641,7 @@ impl ToSpirvOp for RoundOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_round_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3705,7 +3705,7 @@ impl ToSpirvOp for RsqrtOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_rsqrt_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3769,7 +3769,7 @@ impl ToSpirvOp for SinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_sin_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3840,7 +3840,7 @@ impl ToSpirvOp for SincosOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let cosval = builder.value_id(self.get_operand_cosval(ctx));
         builder.cl_sincos_id(result_ty, Some(result), x, cosval).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3904,7 +3904,7 @@ impl ToSpirvOp for SinhOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_sinh_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3968,7 +3968,7 @@ impl ToSpirvOp for SinpiOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_sinpi_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4032,7 +4032,7 @@ impl ToSpirvOp for SqrtOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_sqrt_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4096,7 +4096,7 @@ impl ToSpirvOp for TanOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_tan_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4160,7 +4160,7 @@ impl ToSpirvOp for TanhOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_tanh_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4224,7 +4224,7 @@ impl ToSpirvOp for TanpiOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_tanpi_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4288,7 +4288,7 @@ impl ToSpirvOp for TgammaOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_tgamma_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4352,7 +4352,7 @@ impl ToSpirvOp for TruncOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_trunc_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4416,7 +4416,7 @@ impl ToSpirvOp for HalfCosOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_cos_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4482,7 +4482,7 @@ impl ToSpirvOp for HalfDivideOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_half_divide_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4546,7 +4546,7 @@ impl ToSpirvOp for HalfExpOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_exp_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4610,7 +4610,7 @@ impl ToSpirvOp for HalfExp2Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_exp2_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4674,7 +4674,7 @@ impl ToSpirvOp for HalfExp10Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_exp10_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4738,7 +4738,7 @@ impl ToSpirvOp for HalfLogOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_log_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4802,7 +4802,7 @@ impl ToSpirvOp for HalfLog2Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_log2_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4866,7 +4866,7 @@ impl ToSpirvOp for HalfLog10Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_log10_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4932,7 +4932,7 @@ impl ToSpirvOp for HalfPowrOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_half_powr_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4996,7 +4996,7 @@ impl ToSpirvOp for HalfRecipOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_recip_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5060,7 +5060,7 @@ impl ToSpirvOp for HalfRsqrtOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_rsqrt_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5124,7 +5124,7 @@ impl ToSpirvOp for HalfSinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_sin_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5188,7 +5188,7 @@ impl ToSpirvOp for HalfSqrtOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_sqrt_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5252,7 +5252,7 @@ impl ToSpirvOp for HalfTanOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_half_tan_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5316,7 +5316,7 @@ impl ToSpirvOp for NativeCosOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_cos_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5383,7 +5383,7 @@ impl ToSpirvOp for NativeDivideOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_native_divide_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5447,7 +5447,7 @@ impl ToSpirvOp for NativeExpOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_exp_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5511,7 +5511,7 @@ impl ToSpirvOp for NativeExp2Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_exp2_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5575,7 +5575,7 @@ impl ToSpirvOp for NativeExp10Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_exp10_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5639,7 +5639,7 @@ impl ToSpirvOp for NativeLogOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_log_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5703,7 +5703,7 @@ impl ToSpirvOp for NativeLog2Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_log2_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5767,7 +5767,7 @@ impl ToSpirvOp for NativeLog10Op {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_log10_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5833,7 +5833,7 @@ impl ToSpirvOp for NativePowrOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_native_powr_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5897,7 +5897,7 @@ impl ToSpirvOp for NativeRecipOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_recip_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5961,7 +5961,7 @@ impl ToSpirvOp for NativeRsqrtOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_rsqrt_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6025,7 +6025,7 @@ impl ToSpirvOp for NativeSinOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_sin_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6089,7 +6089,7 @@ impl ToSpirvOp for NativeSqrtOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_sqrt_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6153,7 +6153,7 @@ impl ToSpirvOp for NativeTanOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_native_tan_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6229,7 +6229,7 @@ impl ToSpirvOp for FclampOp {
         builder
             .cl_fclamp_id(result_ty, Some(result), x, minval, maxval)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6294,7 +6294,7 @@ impl ToSpirvOp for DegreesOp {
         let result = builder.value_id(self.get_result(ctx));
         let radians = builder.value_id(self.get_operand_radians(ctx));
         builder.cl_degrees_id(result_ty, Some(result), radians).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6360,7 +6360,7 @@ impl ToSpirvOp for FmaxCommonOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_fmax_common_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6426,7 +6426,7 @@ impl ToSpirvOp for FminCommonOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_fmin_common_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6500,7 +6500,7 @@ impl ToSpirvOp for MixOp {
         let y = builder.value_id(self.get_operand_y(ctx));
         let a = builder.value_id(self.get_operand_a(ctx));
         builder.cl_mix_id(result_ty, Some(result), x, y, a).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6565,7 +6565,7 @@ impl ToSpirvOp for RadiansOp {
         let result = builder.value_id(self.get_result(ctx));
         let degrees = builder.value_id(self.get_operand_degrees(ctx));
         builder.cl_radians_id(result_ty, Some(result), degrees).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6631,7 +6631,7 @@ impl ToSpirvOp for StepOp {
         let edge = builder.value_id(self.get_operand_edge(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_step_id(result_ty, Some(result), edge, x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6708,7 +6708,7 @@ impl ToSpirvOp for SmoothstepOp {
         builder
             .cl_smoothstep_id(result_ty, Some(result), edge0, edge1, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6772,7 +6772,7 @@ impl ToSpirvOp for SignOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_sign_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6838,7 +6838,7 @@ impl ToSpirvOp for CrossOp {
         let p0 = builder.value_id(self.get_operand_p0(ctx));
         let p1 = builder.value_id(self.get_operand_p1(ctx));
         builder.cl_cross_id(result_ty, Some(result), p0, p1).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6904,7 +6904,7 @@ impl ToSpirvOp for DistanceOp {
         let p0 = builder.value_id(self.get_operand_p0(ctx));
         let p1 = builder.value_id(self.get_operand_p1(ctx));
         builder.cl_distance_id(result_ty, Some(result), p0, p1).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6968,7 +6968,7 @@ impl ToSpirvOp for LengthOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.cl_length_id(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7032,7 +7032,7 @@ impl ToSpirvOp for NormalizeOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.cl_normalize_id(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7101,7 +7101,7 @@ impl ToSpirvOp for FastDistanceOp {
         builder
             .cl_fast_distance_id(result_ty, Some(result), p0, p1)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7165,7 +7165,7 @@ impl ToSpirvOp for FastLengthOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.cl_fast_length_id(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7230,7 +7230,7 @@ impl ToSpirvOp for FastNormalizeOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.cl_fast_normalize_id(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7294,7 +7294,7 @@ impl ToSpirvOp for SAbsOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_s_abs_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7360,7 +7360,7 @@ impl ToSpirvOp for SAbsDiffOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_abs_diff_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7426,7 +7426,7 @@ impl ToSpirvOp for SAddSatOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_add_sat_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7492,7 +7492,7 @@ impl ToSpirvOp for UAddSatOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_add_sat_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7558,7 +7558,7 @@ impl ToSpirvOp for SHaddOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_hadd_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7624,7 +7624,7 @@ impl ToSpirvOp for UHaddOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_hadd_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7690,7 +7690,7 @@ impl ToSpirvOp for SRhaddOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_rhadd_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7756,7 +7756,7 @@ impl ToSpirvOp for URhaddOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_rhadd_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7832,7 +7832,7 @@ impl ToSpirvOp for SClampOp {
         builder
             .cl_s_clamp_id(result_ty, Some(result), x, minval, maxval)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7908,7 +7908,7 @@ impl ToSpirvOp for UClampOp {
         builder
             .cl_u_clamp_id(result_ty, Some(result), x, minval, maxval)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7972,7 +7972,7 @@ impl ToSpirvOp for ClzOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_clz_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8036,7 +8036,7 @@ impl ToSpirvOp for CtzOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_ctz_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8110,7 +8110,7 @@ impl ToSpirvOp for SMadHiOp {
         let b = builder.value_id(self.get_operand_b(ctx));
         let c = builder.value_id(self.get_operand_c(ctx));
         builder.cl_s_mad_hi_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8184,7 +8184,7 @@ impl ToSpirvOp for UMadSatOp {
         let y = builder.value_id(self.get_operand_y(ctx));
         let z = builder.value_id(self.get_operand_z(ctx));
         builder.cl_u_mad_sat_id(result_ty, Some(result), x, y, z).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8258,7 +8258,7 @@ impl ToSpirvOp for SMadSatOp {
         let y = builder.value_id(self.get_operand_y(ctx));
         let z = builder.value_id(self.get_operand_z(ctx));
         builder.cl_s_mad_sat_id(result_ty, Some(result), x, y, z).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8324,7 +8324,7 @@ impl ToSpirvOp for SMaxOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_max_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8390,7 +8390,7 @@ impl ToSpirvOp for UMaxOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_max_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8456,7 +8456,7 @@ impl ToSpirvOp for SMinOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_min_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8522,7 +8522,7 @@ impl ToSpirvOp for UMinOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_min_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8588,7 +8588,7 @@ impl ToSpirvOp for SMulHiOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_mul_hi_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8654,7 +8654,7 @@ impl ToSpirvOp for RotateOp {
         let v = builder.value_id(self.get_operand_v(ctx));
         let i = builder.value_id(self.get_operand_i(ctx));
         builder.cl_rotate_id(result_ty, Some(result), v, i).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8720,7 +8720,7 @@ impl ToSpirvOp for SSubSatOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_sub_sat_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8786,7 +8786,7 @@ impl ToSpirvOp for USubSatOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_sub_sat_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8852,7 +8852,7 @@ impl ToSpirvOp for UUpsampleOp {
         let hi = builder.value_id(self.get_operand_hi(ctx));
         let lo = builder.value_id(self.get_operand_lo(ctx));
         builder.cl_u_upsample_id(result_ty, Some(result), hi, lo).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8918,7 +8918,7 @@ impl ToSpirvOp for SUpsampleOp {
         let hi = builder.value_id(self.get_operand_hi(ctx));
         let lo = builder.value_id(self.get_operand_lo(ctx));
         builder.cl_s_upsample_id(result_ty, Some(result), hi, lo).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8982,7 +8982,7 @@ impl ToSpirvOp for PopcountOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_popcount_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9056,7 +9056,7 @@ impl ToSpirvOp for SMad24Op {
         let y = builder.value_id(self.get_operand_y(ctx));
         let z = builder.value_id(self.get_operand_z(ctx));
         builder.cl_s_mad24_id(result_ty, Some(result), x, y, z).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9130,7 +9130,7 @@ impl ToSpirvOp for UMad24Op {
         let y = builder.value_id(self.get_operand_y(ctx));
         let z = builder.value_id(self.get_operand_z(ctx));
         builder.cl_u_mad24_id(result_ty, Some(result), x, y, z).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9196,7 +9196,7 @@ impl ToSpirvOp for SMul24Op {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_s_mul24_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9262,7 +9262,7 @@ impl ToSpirvOp for UMul24Op {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_mul24_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9369,7 +9369,7 @@ impl ToSpirvOp for VloadnOp {
         builder
             .cl_vloadn_id(result_ty, Some(result), offset, p, n)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9453,7 +9453,7 @@ impl ToSpirvOp for VstorenOp {
         builder
             .cl_vstoren_id(result_ty, Some(result), data, offset, p)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9527,7 +9527,7 @@ impl ToSpirvOp for VloadHalfOp {
         builder
             .cl_vload_half_id(result_ty, Some(result), offset, p)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9637,7 +9637,7 @@ impl ToSpirvOp for VloadHalfnOp {
         builder
             .cl_vload_halfn_id(result_ty, Some(result), offset, p, n)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9722,7 +9722,7 @@ impl ToSpirvOp for VstoreHalfOp {
         builder
             .cl_vstore_half_id(result_ty, Some(result), data, offset, p)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9836,7 +9836,7 @@ impl ToSpirvOp for VstoreHalfROp {
         builder
             .cl_vstore_half_r_id(result_ty, Some(result), data, offset, p, mode)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9923,7 +9923,7 @@ impl ToSpirvOp for VstoreHalfnOp {
         builder
             .cl_vstore_halfn_id(result_ty, Some(result), data, offset, p)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10037,7 +10037,7 @@ impl ToSpirvOp for VstoreHalfnROp {
         builder
             .cl_vstore_halfn_r_id(result_ty, Some(result), data, offset, p, mode)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10157,7 +10157,7 @@ impl ToSpirvOp for VloadaHalfnOp {
         builder
             .cl_vloada_halfn_id(result_ty, Some(result), offset, p, n)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10242,7 +10242,7 @@ impl ToSpirvOp for VstoreaHalfnOp {
         builder
             .cl_vstorea_halfn_id(result_ty, Some(result), data, offset, p)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10356,7 +10356,7 @@ impl ToSpirvOp for VstoreaHalfnROp {
         builder
             .cl_vstorea_halfn_r_id(result_ty, Some(result), data, offset, p, mode)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10439,7 +10439,7 @@ impl ToSpirvOp for ShuffleOp {
         builder
             .cl_shuffle_id(result_ty, Some(result), x, shuffle_mask)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10515,7 +10515,7 @@ impl ToSpirvOp for Shuffle2Op {
         builder
             .cl_shuffle2_id(result_ty, Some(result), x, y, shuffle_mask)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10593,7 +10593,7 @@ impl ToSpirvOp for PrintfOp {
         builder
             .cl_printf_id(result_ty, Some(result), format, additional_arguments)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10666,7 +10666,7 @@ impl ToSpirvOp for PrefetchOp {
         builder
             .cl_prefetch_id(result_ty, Some(result), ptr, num_elements)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10740,7 +10740,7 @@ impl ToSpirvOp for BitselectOp {
         let b = builder.value_id(self.get_operand_b(ctx));
         let c = builder.value_id(self.get_operand_c(ctx));
         builder.cl_bitselect_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10814,7 +10814,7 @@ impl ToSpirvOp for SelectOp {
         let b = builder.value_id(self.get_operand_b(ctx));
         let c = builder.value_id(self.get_operand_c(ctx));
         builder.cl_select_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10878,7 +10878,7 @@ impl ToSpirvOp for UAbsOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.cl_u_abs_id(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10944,7 +10944,7 @@ impl ToSpirvOp for UAbsDiffOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_abs_diff_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11010,7 +11010,7 @@ impl ToSpirvOp for UMulHiOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.cl_u_mul_hi_id(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11084,7 +11084,7 @@ impl ToSpirvOp for UMadHiOp {
         let b = builder.value_id(self.get_operand_b(ctx));
         let c = builder.value_id(self.get_operand_c(ctx));
         builder.cl_u_mad_hi_id(result_ty, Some(result), a, b, c).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }

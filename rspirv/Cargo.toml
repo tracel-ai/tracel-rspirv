@@ -8,7 +8,6 @@ description = "Rust library APIs for SPIR-V module manipulation"
 documentation = "https://docs.rs/tracel-rspirv"
 keywords = ["spirv", "vulkan", "opengl", "opencl"]
 license = "Apache-2.0"
-readme = "README.md"
 repository = "https://github.com/tracel-ai/tracel-rspirv"
 
 [lib]

@@ -10,7 +10,6 @@ description = "Automatic code generation module for rspirv"
 documentation = "https://docs.rs/rspirv"
 keywords = ["spirv", "grammar", "codegen"]
 license = "Apache-2.0"
-readme = "README.md"
 repository = "https://github.com/gfx-rs/rspirv"
 
 [dependencies]

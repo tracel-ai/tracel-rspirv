@@ -552,11 +552,13 @@ impl ToSpirvType for StructType {
         }
 
         for MemberDecorationInfo { index, decoration } in &self.member_decorations {
-            builder.member_decorate(id, *index, decoration.decoration, decoration.as_operands());
+            let operands = decoration.as_operands(ctx, builder)?;
+            builder.member_decorate(id, *index, decoration.decoration, operands);
         }
 
         for decoration in &self.type_decorations {
-            builder.decorate(id, decoration.decoration, decoration.as_operands());
+            let operands = decoration.as_operands(ctx, builder)?;
+            builder.decorate(id, decoration.decoration, operands);
         }
 
         Ok(builder.type_struct_id(Some(id), field_types))

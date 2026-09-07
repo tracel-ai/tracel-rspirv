@@ -30,7 +30,7 @@ impl DecorationInfo {
 impl Hash for DecorationInfo {
     fn hash<H: core::hash::Hasher>(&self, state: &mut H) {
         self.decoration.hash(state);
-        self.as_operands().hash(state);
+        self.value.hash(state);
     }
 }
 
@@ -52,20 +52,28 @@ pub trait DecorationExt {
 }
 
 #[inline(never)]
-pub fn all_decorations_for_op(op: &dyn Op, ctx: &Context) -> Vec<(Decoration, Vec<Operand>)> {
+pub fn all_decorations_for_op(
+    op: &dyn Op,
+    ctx: &Context,
+    builder: &mut PlironBuilder,
+) -> Result<Vec<(Decoration, Vec<Operand>)>> {
     let op = op.get_operation().deref(ctx);
-    all_decorations(&op.attributes)
+    all_decorations(&op.attributes, ctx, builder)
 }
 
-pub fn all_decorations(attrs: &AttributeDict) -> Vec<(Decoration, Vec<Operand>)> {
+pub fn all_decorations(
+    attrs: &AttributeDict,
+    ctx: &Context,
+    builder: &mut PlironBuilder,
+) -> Result<Vec<(Decoration, Vec<Operand>)>> {
     let mut out = Vec::new();
     for (key, value) in attrs.0.iter() {
         if let Some(decoration) = decoration_for_key(key) {
             let info = DecorationInfo::new(decoration, value.clone());
-            out.push((decoration, info.as_operands()));
+            out.push((decoration, info.as_operands(ctx, builder)?));
         }
     }
-    out
+    Ok(out)
 }
 
 pub fn print_decorations(ctx: &Context, attrs: &AttributeDict, f: &mut dyn core::fmt::Write) -> core::fmt::Result {

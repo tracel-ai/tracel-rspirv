@@ -9,6 +9,8 @@ use crate::{
 use core::cell::Ref;
 pub static ATTR_RELAXED_PRECISION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_relaxed_precision".try_into().unwrap());
+pub static ATTR_SPEC_ID: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_spec_id".try_into().unwrap());
 pub static ATTR_BLOCK: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_block".try_into().unwrap());
 pub static ATTR_BUFFER_BLOCK: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
@@ -57,6 +59,8 @@ pub static ATTR_NON_READABLE: ::pliron::std_deps::sync::LazyLock<::pliron::ident
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_non_readable".try_into().unwrap());
 pub static ATTR_UNIFORM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_uniform".try_into().unwrap());
+pub static ATTR_UNIFORM_ID: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_uniform_id".try_into().unwrap());
 pub static ATTR_SATURATED_CONVERSION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_saturated_conversion".try_into().unwrap());
 pub static ATTR_STREAM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
@@ -312,6 +316,13 @@ pub trait DecoratableOp {
         has_decoration_relaxed_precision(self, ctx)
     }
     #[allow(non_snake_case)]
+    fn get_decoration_spec_id<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
+    where
+        Self: Sized,
+    {
+        get_decoration_spec_id(self, ctx)
+    }
+    #[allow(non_snake_case)]
     fn has_decoration_block(&self, ctx: &Context) -> bool
     where
         Self: Sized,
@@ -478,6 +489,13 @@ pub trait DecoratableOp {
         Self: Sized,
     {
         has_decoration_uniform(self, ctx)
+    }
+    #[allow(non_snake_case)]
+    fn get_decoration_uniform_id<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, ScopeAttr>>
+    where
+        Self: Sized,
+    {
+        get_decoration_uniform_id(self, ctx)
     }
     #[allow(non_snake_case)]
     fn has_decoration_saturated_conversion(&self, ctx: &Context) -> bool
@@ -1184,6 +1202,13 @@ pub trait DecoratableOp {
         set_decoration_relaxed_precision(self, ctx);
     }
     #[allow(non_snake_case)]
+    fn set_decoration_spec_id(&self, ctx: &Context, value: LiteralIntegerAttr)
+    where
+        Self: Sized,
+    {
+        set_decoration_spec_id(self, ctx, value);
+    }
+    #[allow(non_snake_case)]
     fn set_decoration_block(&self, ctx: &Context)
     where
         Self: Sized,
@@ -1350,6 +1375,13 @@ pub trait DecoratableOp {
         Self: Sized,
     {
         set_decoration_uniform(self, ctx);
+    }
+    #[allow(non_snake_case)]
+    fn set_decoration_uniform_id(&self, ctx: &Context, value: ScopeAttr)
+    where
+        Self: Sized,
+    {
+        set_decoration_uniform_id(self, ctx, value);
     }
     #[allow(non_snake_case)]
     fn set_decoration_saturated_conversion(&self, ctx: &Context)
@@ -2030,11 +2062,11 @@ pub trait DecoratableOp {
     {
         set_decoration_intrinsic_samsung(self, ctx, value);
     }
-    fn all_decorations(&self, ctx: &Context) -> Vec<(Decoration, Vec<Operand>)>
+    fn all_decorations(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Vec<(Decoration, Vec<Operand>)>>
     where
         Self: Sized,
     {
-        all_decorations_for_op(self, ctx)
+        all_decorations_for_op(self, ctx, builder)
     }
 }
 #[allow(non_snake_case)]
@@ -2042,6 +2074,14 @@ pub trait DecoratableOp {
 pub fn has_decoration_relaxed_precision(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_RELAXED_PRECISION)
+}
+#[allow(non_snake_case)]
+#[inline(never)]
+pub fn get_decoration_spec_id<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<LiteralIntegerAttr>(&ATTR_SPEC_ID)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2198,6 +2238,14 @@ pub fn has_decoration_non_readable(op: &dyn DecoratableOp, ctx: &Context) -> boo
 pub fn has_decoration_uniform(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_UNIFORM)
+}
+#[allow(non_snake_case)]
+#[inline(never)]
+pub fn get_decoration_uniform_id<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> Option<Ref<'a, ScopeAttr>> {
+    Ref::filter_map(op.get_operation().deref(ctx), |op| {
+        op.attributes.get::<ScopeAttr>(&ATTR_UNIFORM_ID)
+    })
+    .ok()
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2993,6 +3041,13 @@ pub fn set_decoration_relaxed_precision(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_RELAXED_PRECISION.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
+pub fn set_decoration_spec_id(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_SPEC_ID.clone(), value);
+}
+#[allow(non_snake_case)]
 pub fn set_decoration_block(op: &dyn DecoratableOp, ctx: &Context) {
     op.get_operation()
         .deref_mut(ctx)
@@ -3159,6 +3214,13 @@ pub fn set_decoration_uniform(op: &dyn DecoratableOp, ctx: &Context) {
         .deref_mut(ctx)
         .attributes
         .set(ATTR_UNIFORM.clone(), UnitAttr::new());
+}
+#[allow(non_snake_case)]
+pub fn set_decoration_uniform_id(op: &dyn DecoratableOp, ctx: &Context, value: ScopeAttr) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_UNIFORM_ID.clone(), value);
 }
 #[allow(non_snake_case)]
 pub fn set_decoration_saturated_conversion(op: &dyn DecoratableOp, ctx: &Context) {
@@ -3867,6 +3929,7 @@ impl DecorationExt for Decoration {
     fn decoration_key(&self) -> &'static Identifier {
         match self {
             Decoration::RelaxedPrecision => &ATTR_RELAXED_PRECISION,
+            Decoration::SpecId => &ATTR_SPEC_ID,
             Decoration::Block => &ATTR_BLOCK,
             Decoration::BufferBlock => &ATTR_BUFFER_BLOCK,
             Decoration::RowMajor => &ATTR_ROW_MAJOR,
@@ -3891,6 +3954,7 @@ impl DecorationExt for Decoration {
             Decoration::NonWritable => &ATTR_NON_WRITABLE,
             Decoration::NonReadable => &ATTR_NON_READABLE,
             Decoration::Uniform => &ATTR_UNIFORM,
+            Decoration::UniformId => &ATTR_UNIFORM_ID,
             Decoration::SaturatedConversion => &ATTR_SATURATED_CONVERSION,
             Decoration::Stream => &ATTR_STREAM,
             Decoration::Location => &ATTR_LOCATION,
@@ -3997,6 +4061,7 @@ impl DecorationExt for Decoration {
 pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
     match identifier.as_ref() {
         "spirv_decoration_relaxed_precision" => Some(Decoration::RelaxedPrecision),
+        "spirv_decoration_spec_id" => Some(Decoration::SpecId),
         "spirv_decoration_block" => Some(Decoration::Block),
         "spirv_decoration_buffer_block" => Some(Decoration::BufferBlock),
         "spirv_decoration_row_major" => Some(Decoration::RowMajor),
@@ -4021,6 +4086,7 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
         "spirv_decoration_non_writable" => Some(Decoration::NonWritable),
         "spirv_decoration_non_readable" => Some(Decoration::NonReadable),
         "spirv_decoration_uniform" => Some(Decoration::Uniform),
+        "spirv_decoration_uniform_id" => Some(Decoration::UniformId),
         "spirv_decoration_saturated_conversion" => Some(Decoration::SaturatedConversion),
         "spirv_decoration_stream" => Some(Decoration::Stream),
         "spirv_decoration_location" => Some(Decoration::Location),
@@ -4128,24 +4194,26 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
     }
 }
 impl DecorationInfo {
-    pub fn as_operands(&self) -> Vec<Operand> {
+    #[allow(unreachable_code)]
+    pub fn as_operands(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Vec<Operand>> {
         match self.decoration {
             Decoration::BuiltIn => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<BuiltInAttr>().unwrap();
-                vec![Operand::BuiltIn(attr.0)]
+                Ok(vec![Operand::BuiltIn(attr.0)])
             }
             Decoration::FPFastMathMode => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<FPFastMathModeAttr>().unwrap();
-                vec![Operand::FPFastMathMode(attr.0)]
+                Ok(vec![Operand::FPFastMathMode(attr.0)])
             }
             Decoration::FPRoundingMode => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<FPRoundingModeAttr>().unwrap();
-                vec![Operand::FPRoundingMode(attr.0)]
+                Ok(vec![Operand::FPRoundingMode(attr.0)])
             }
-            Decoration::ArrayStride
+            Decoration::SpecId
+            | Decoration::ArrayStride
             | Decoration::MatrixStride
             | Decoration::Stream
             | Decoration::Location
@@ -4189,7 +4257,12 @@ impl DecorationInfo {
             | Decoration::IntrinsicSAMSUNG => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<LiteralIntegerAttr>().unwrap();
-                vec![Operand::LiteralBit32(attr.0)]
+                Ok(vec![Operand::LiteralBit32(attr.0)])
+            }
+            Decoration::UniformId => {
+                #[allow(unused)]
+                let attr = self.value.downcast_ref::<ScopeAttr>().unwrap();
+                Ok(vec![Operand::IdRef(attr.spirv_id(ctx, builder)?)])
             }
             Decoration::ClobberINTEL
             | Decoration::UserSemantic
@@ -4197,7 +4270,7 @@ impl DecorationInfo {
             | Decoration::MemoryALTERA => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<StringAttr>().unwrap();
-                vec![Operand::LiteralString(attr.as_str().to_string())]
+                Ok(vec![Operand::LiteralString(attr.as_str().to_string())])
             }
             Decoration::RelaxedPrecision
             | Decoration::Block
@@ -4273,12 +4346,12 @@ impl DecorationInfo {
             | Decoration::StableKernelArgumentALTERA => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<UnitAttr>().unwrap();
-                vec![]
+                Ok(vec![])
             }
             Decoration::FuncParamAttr => {
                 #[allow(unused)]
                 let attr = self.value.downcast_ref::<VecAttr>().unwrap();
-                todo!()
+                Ok(todo!())
             }
             _ => unimplemented!("Unsupported decoration"),
         }

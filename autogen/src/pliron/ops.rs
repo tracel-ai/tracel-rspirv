@@ -565,7 +565,7 @@ impl PlironGenerator {
         let apply_decorations = match has_result {
             true => quote![crate::ops::apply_all_decorations(
                 ctx, builder, self, result
-            );],
+            )?;],
             false => quote![],
         };
 

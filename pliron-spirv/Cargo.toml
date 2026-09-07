@@ -8,7 +8,6 @@ description = "Pliron dialect for SPIR-V"
 documentation = "https://docs.rs/pliron-spirv"
 keywords = ["spirv", "vulkan", "opengl", "opencl", "pliron"]
 license = "Apache-2.0"
-readme = "README.md"
 repository = "https://github.com/tracel-ai/tracel-rspirv"
 
 [dependencies]

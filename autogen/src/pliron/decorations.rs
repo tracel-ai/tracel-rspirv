@@ -11,6 +11,8 @@ use crate::{
 };
 
 const SKIP_DECORATIONS: &[&str] = &[
+    "AlignmentId",
+    "MaxByteOffsetId",
     "LinkageAttributes",
     "NodeSharesPayloadLimitsWithAMDX",
     "NodeMaxPayloadsAMDX",
@@ -51,7 +53,6 @@ impl PlironGenerator {
             .enumerants
             .iter()
             .filter(|it| !SKIP_DECORATIONS.contains(&it.symbol.as_str()))
-            .filter(|it| !it.symbol.ends_with("Id"))
             .map(|variant| {
                 let has_params = !variant.parameters.is_empty();
                 let (ty, as_params) = if !has_params {
@@ -219,7 +220,7 @@ impl PlironGenerator {
                 Decoration::#first #(#rest)* => {
                     #[allow(unused)]
                     let attr = self.value.downcast_ref::<#ty>().unwrap();
-                    #as_args
+                    Ok(#as_args)
                 }
             }
         });
@@ -249,8 +250,8 @@ impl PlironGenerator {
                 #(#trait_getters)*
                 #(#trait_setters)*
 
-                fn all_decorations(&self, ctx: &Context) -> Vec<(Decoration, Vec<Operand>)> where Self: Sized {
-                    all_decorations_for_op(self, ctx)
+                fn all_decorations(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Vec<(Decoration, Vec<Operand>)>> where Self: Sized {
+                    all_decorations_for_op(self, ctx, builder)
                 }
             }
         };
@@ -285,7 +286,8 @@ impl PlironGenerator {
             }
 
             impl DecorationInfo {
-                pub fn as_operands(&self) -> Vec<Operand> {
+                #[allow(unreachable_code)]
+                pub fn as_operands(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<Vec<Operand>> {
                     match self.decoration {
                         #(#as_args),*
                         _ => unimplemented!("Unsupported decoration"),

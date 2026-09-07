@@ -89,7 +89,7 @@ impl ToSpirvOp for UndefOp {
         let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
         let result = builder.value_id(self.get_result(ctx));
         builder.undef(result_ty, Some(result)).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -988,7 +988,7 @@ impl ToSpirvOp for FunctionCallOp {
         builder
             .function_call(result_ty, Some(result), function, argument_0_argument_1)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1084,7 +1084,7 @@ impl ToSpirvOp for VariableOp {
         builder
             .variable(result_ty, Some(result), storage_class, initializer)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1158,7 +1158,7 @@ impl ToSpirvOp for ImageTexelPointerOp {
         builder
             .image_texel_pointer(result_ty, Some(result), image, coordinate, sample)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1283,7 +1283,7 @@ impl ToSpirvOp for LoadOp {
         builder
             .load(result_ty, Some(result), pointer, memory_access, align)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1875,7 +1875,7 @@ impl ToSpirvOp for AccessChainOp {
         builder
             .access_chain(result_ty, Some(result), base, indexes)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -1948,7 +1948,7 @@ impl ToSpirvOp for InBoundsAccessChainOp {
         builder
             .in_bounds_access_chain(result_ty, Some(result), base, indexes)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2023,7 +2023,7 @@ impl ToSpirvOp for PtrAccessChainOp {
         builder
             .ptr_access_chain(result_ty, Some(result), base, element, indexes)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2126,7 +2126,7 @@ impl ToSpirvOp for ArrayLengthOp {
         builder
             .array_length(result_ty, Some(result), structure, array_member)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2197,7 +2197,7 @@ impl ToSpirvOp for GenericPtrMemSemanticsOp {
         builder
             .generic_ptr_mem_semantics(result_ty, Some(result), pointer)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2273,7 +2273,7 @@ impl ToSpirvOp for InBoundsPtrAccessChainOp {
         builder
             .in_bounds_ptr_access_chain(result_ty, Some(result), base, element, indexes)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2343,7 +2343,7 @@ impl ToSpirvOp for VectorExtractDynamicOp {
         builder
             .vector_extract_dynamic(result_ty, Some(result), vector, index)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2414,7 +2414,7 @@ impl ToSpirvOp for VectorInsertDynamicOp {
         builder
             .vector_insert_dynamic(result_ty, Some(result), vector, component, index)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2513,7 +2513,7 @@ impl ToSpirvOp for VectorShuffleOp {
         builder
             .vector_shuffle(result_ty, Some(result), vector_1, vector_2, components)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2593,7 +2593,7 @@ impl ToSpirvOp for CompositeConstructOp {
         builder
             .composite_construct(result_ty, Some(result), constituents)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2684,7 +2684,7 @@ impl ToSpirvOp for CompositeExtractOp {
         builder
             .composite_extract(result_ty, Some(result), composite, indexes)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2792,7 +2792,7 @@ impl ToSpirvOp for CompositeInsertOp {
         builder
             .composite_insert(result_ty, Some(result), object, composite, indexes)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2868,7 +2868,7 @@ impl ToSpirvOp for CopyObjectOp {
         builder
             .copy_object(result_ty, Some(result), operand)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -2935,7 +2935,7 @@ impl ToSpirvOp for TransposeOp {
         builder
             .transpose(result_ty, Some(result), matrix)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3003,7 +3003,7 @@ impl ToSpirvOp for ConvertFToUOp {
         builder
             .convert_f_to_u(result_ty, Some(result), float_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3070,7 +3070,7 @@ impl ToSpirvOp for ConvertFToSOp {
         builder
             .convert_f_to_s(result_ty, Some(result), float_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3137,7 +3137,7 @@ impl ToSpirvOp for ConvertSToFOp {
         builder
             .convert_s_to_f(result_ty, Some(result), signed_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3204,7 +3204,7 @@ impl ToSpirvOp for ConvertUToFOp {
         builder
             .convert_u_to_f(result_ty, Some(result), unsigned_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3271,7 +3271,7 @@ impl ToSpirvOp for UConvertOp {
         builder
             .u_convert(result_ty, Some(result), unsigned_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3338,7 +3338,7 @@ impl ToSpirvOp for SConvertOp {
         builder
             .s_convert(result_ty, Some(result), signed_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3405,7 +3405,7 @@ impl ToSpirvOp for FConvertOp {
         builder
             .f_convert(result_ty, Some(result), float_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3472,7 +3472,7 @@ impl ToSpirvOp for QuantizeToF16Op {
         builder
             .quantize_to_f16(result_ty, Some(result), value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3540,7 +3540,7 @@ impl ToSpirvOp for ConvertPtrToUOp {
         builder
             .convert_ptr_to_u(result_ty, Some(result), pointer)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3608,7 +3608,7 @@ impl ToSpirvOp for SatConvertSToUOp {
         builder
             .sat_convert_s_to_u(result_ty, Some(result), signed_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3676,7 +3676,7 @@ impl ToSpirvOp for SatConvertUToSOp {
         builder
             .sat_convert_u_to_s(result_ty, Some(result), unsigned_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3744,7 +3744,7 @@ impl ToSpirvOp for ConvertUToPtrOp {
         builder
             .convert_u_to_ptr(result_ty, Some(result), integer_value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3812,7 +3812,7 @@ impl ToSpirvOp for PtrCastToGenericOp {
         builder
             .ptr_cast_to_generic(result_ty, Some(result), pointer)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3880,7 +3880,7 @@ impl ToSpirvOp for GenericCastToPtrOp {
         builder
             .generic_cast_to_ptr(result_ty, Some(result), pointer)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -3970,7 +3970,7 @@ impl ToSpirvOp for GenericCastToPtrExplicitOp {
         builder
             .generic_cast_to_ptr_explicit(result_ty, Some(result), pointer, storage)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4039,7 +4039,7 @@ impl ToSpirvOp for BitcastOp {
         let result = builder.value_id(self.get_result(ctx));
         let operand = builder.value_id(self.get_operand_operand(ctx));
         builder.bitcast(result_ty, Some(result), operand).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4106,7 +4106,7 @@ impl ToSpirvOp for SNegateOp {
         builder
             .s_negate(result_ty, Some(result), operand)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4173,7 +4173,7 @@ impl ToSpirvOp for FNegateOp {
         builder
             .f_negate(result_ty, Some(result), operand)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4242,7 +4242,7 @@ impl ToSpirvOp for IAddOp {
         builder
             .i_add(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4311,7 +4311,7 @@ impl ToSpirvOp for FAddOp {
         builder
             .f_add(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4380,7 +4380,7 @@ impl ToSpirvOp for ISubOp {
         builder
             .i_sub(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4449,7 +4449,7 @@ impl ToSpirvOp for FSubOp {
         builder
             .f_sub(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4518,7 +4518,7 @@ impl ToSpirvOp for IMulOp {
         builder
             .i_mul(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4587,7 +4587,7 @@ impl ToSpirvOp for FMulOp {
         builder
             .f_mul(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4656,7 +4656,7 @@ impl ToSpirvOp for UDivOp {
         builder
             .u_div(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4725,7 +4725,7 @@ impl ToSpirvOp for SDivOp {
         builder
             .s_div(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4794,7 +4794,7 @@ impl ToSpirvOp for FDivOp {
         builder
             .f_div(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4863,7 +4863,7 @@ impl ToSpirvOp for UModOp {
         builder
             .u_mod(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -4932,7 +4932,7 @@ impl ToSpirvOp for SRemOp {
         builder
             .s_rem(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5001,7 +5001,7 @@ impl ToSpirvOp for SModOp {
         builder
             .s_mod(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5070,7 +5070,7 @@ impl ToSpirvOp for FRemOp {
         builder
             .f_rem(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5139,7 +5139,7 @@ impl ToSpirvOp for FModOp {
         builder
             .f_mod(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5208,7 +5208,7 @@ impl ToSpirvOp for VectorTimesScalarOp {
         builder
             .vector_times_scalar(result_ty, Some(result), vector, scalar)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5277,7 +5277,7 @@ impl ToSpirvOp for MatrixTimesScalarOp {
         builder
             .matrix_times_scalar(result_ty, Some(result), matrix, scalar)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5347,7 +5347,7 @@ impl ToSpirvOp for VectorTimesMatrixOp {
         builder
             .vector_times_matrix(result_ty, Some(result), vector, matrix)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5417,7 +5417,7 @@ impl ToSpirvOp for MatrixTimesVectorOp {
         builder
             .matrix_times_vector(result_ty, Some(result), matrix, vector)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5487,7 +5487,7 @@ impl ToSpirvOp for MatrixTimesMatrixOp {
         builder
             .matrix_times_matrix(result_ty, Some(result), left_matrix, right_matrix)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5557,7 +5557,7 @@ impl ToSpirvOp for OuterProductOp {
         builder
             .outer_product(result_ty, Some(result), vector_1, vector_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5626,7 +5626,7 @@ impl ToSpirvOp for DotOp {
         builder
             .dot(result_ty, Some(result), vector_1, vector_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5695,7 +5695,7 @@ impl ToSpirvOp for IAddCarryOp {
         builder
             .i_add_carry(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5764,7 +5764,7 @@ impl ToSpirvOp for ISubBorrowOp {
         builder
             .i_sub_borrow(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5833,7 +5833,7 @@ impl ToSpirvOp for UMulExtendedOp {
         builder
             .u_mul_extended(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5902,7 +5902,7 @@ impl ToSpirvOp for SMulExtendedOp {
         builder
             .s_mul_extended(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -5966,7 +5966,7 @@ impl ToSpirvOp for AnyOp {
         let result = builder.value_id(self.get_result(ctx));
         let vector = builder.value_id(self.get_operand_vector(ctx));
         builder.any(result_ty, Some(result), vector).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6030,7 +6030,7 @@ impl ToSpirvOp for AllOp {
         let result = builder.value_id(self.get_result(ctx));
         let vector = builder.value_id(self.get_operand_vector(ctx));
         builder.all(result_ty, Some(result), vector).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6094,7 +6094,7 @@ impl ToSpirvOp for IsNanOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.is_nan(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6158,7 +6158,7 @@ impl ToSpirvOp for IsInfOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.is_inf(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6222,7 +6222,7 @@ impl ToSpirvOp for IsFiniteOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.is_finite(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6287,7 +6287,7 @@ impl ToSpirvOp for IsNormalOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.is_normal(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6352,7 +6352,7 @@ impl ToSpirvOp for SignBitSetOp {
         let result = builder.value_id(self.get_result(ctx));
         let x = builder.value_id(self.get_operand_x(ctx));
         builder.sign_bit_set(result_ty, Some(result), x).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6422,7 +6422,7 @@ impl ToSpirvOp for LessOrGreaterOp {
         builder
             .less_or_greater(result_ty, Some(result), x, y)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6489,7 +6489,7 @@ impl ToSpirvOp for OrderedOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.ordered(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6556,7 +6556,7 @@ impl ToSpirvOp for UnorderedOp {
         let x = builder.value_id(self.get_operand_x(ctx));
         let y = builder.value_id(self.get_operand_y(ctx));
         builder.unordered(result_ty, Some(result), x, y).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6626,7 +6626,7 @@ impl ToSpirvOp for LogicalEqualOp {
         builder
             .logical_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6695,7 +6695,7 @@ impl ToSpirvOp for LogicalNotEqualOp {
         builder
             .logical_not_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6764,7 +6764,7 @@ impl ToSpirvOp for LogicalOrOp {
         builder
             .logical_or(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6833,7 +6833,7 @@ impl ToSpirvOp for LogicalAndOp {
         builder
             .logical_and(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6900,7 +6900,7 @@ impl ToSpirvOp for LogicalNotOp {
         builder
             .logical_not(result_ty, Some(result), operand)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -6971,7 +6971,7 @@ impl ToSpirvOp for SelectOp {
         builder
             .select(result_ty, Some(result), condition, object_1, object_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7040,7 +7040,7 @@ impl ToSpirvOp for IEqualOp {
         builder
             .i_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7109,7 +7109,7 @@ impl ToSpirvOp for INotEqualOp {
         builder
             .i_not_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7178,7 +7178,7 @@ impl ToSpirvOp for UGreaterThanOp {
         builder
             .u_greater_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7247,7 +7247,7 @@ impl ToSpirvOp for SGreaterThanOp {
         builder
             .s_greater_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7316,7 +7316,7 @@ impl ToSpirvOp for UGreaterThanEqualOp {
         builder
             .u_greater_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7385,7 +7385,7 @@ impl ToSpirvOp for SGreaterThanEqualOp {
         builder
             .s_greater_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7454,7 +7454,7 @@ impl ToSpirvOp for ULessThanOp {
         builder
             .u_less_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7523,7 +7523,7 @@ impl ToSpirvOp for SLessThanOp {
         builder
             .s_less_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7592,7 +7592,7 @@ impl ToSpirvOp for ULessThanEqualOp {
         builder
             .u_less_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7661,7 +7661,7 @@ impl ToSpirvOp for SLessThanEqualOp {
         builder
             .s_less_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7730,7 +7730,7 @@ impl ToSpirvOp for FOrdEqualOp {
         builder
             .f_ord_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7799,7 +7799,7 @@ impl ToSpirvOp for FUnordEqualOp {
         builder
             .f_unord_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7868,7 +7868,7 @@ impl ToSpirvOp for FOrdNotEqualOp {
         builder
             .f_ord_not_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -7937,7 +7937,7 @@ impl ToSpirvOp for FUnordNotEqualOp {
         builder
             .f_unord_not_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8006,7 +8006,7 @@ impl ToSpirvOp for FOrdLessThanOp {
         builder
             .f_ord_less_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8075,7 +8075,7 @@ impl ToSpirvOp for FUnordLessThanOp {
         builder
             .f_unord_less_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8144,7 +8144,7 @@ impl ToSpirvOp for FOrdGreaterThanOp {
         builder
             .f_ord_greater_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8213,7 +8213,7 @@ impl ToSpirvOp for FUnordGreaterThanOp {
         builder
             .f_unord_greater_than(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8282,7 +8282,7 @@ impl ToSpirvOp for FOrdLessThanEqualOp {
         builder
             .f_ord_less_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8351,7 +8351,7 @@ impl ToSpirvOp for FUnordLessThanEqualOp {
         builder
             .f_unord_less_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8420,7 +8420,7 @@ impl ToSpirvOp for FOrdGreaterThanEqualOp {
         builder
             .f_ord_greater_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8489,7 +8489,7 @@ impl ToSpirvOp for FUnordGreaterThanEqualOp {
         builder
             .f_unord_greater_than_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8558,7 +8558,7 @@ impl ToSpirvOp for ShiftRightLogicalOp {
         builder
             .shift_right_logical(result_ty, Some(result), base, shift)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8627,7 +8627,7 @@ impl ToSpirvOp for ShiftRightArithmeticOp {
         builder
             .shift_right_arithmetic(result_ty, Some(result), base, shift)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8696,7 +8696,7 @@ impl ToSpirvOp for ShiftLeftLogicalOp {
         builder
             .shift_left_logical(result_ty, Some(result), base, shift)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8765,7 +8765,7 @@ impl ToSpirvOp for BitwiseOrOp {
         builder
             .bitwise_or(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8834,7 +8834,7 @@ impl ToSpirvOp for BitwiseXorOp {
         builder
             .bitwise_xor(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8903,7 +8903,7 @@ impl ToSpirvOp for BitwiseAndOp {
         builder
             .bitwise_and(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -8967,7 +8967,7 @@ impl ToSpirvOp for NotOp {
         let result = builder.value_id(self.get_result(ctx));
         let operand = builder.value_id(self.get_operand_operand(ctx));
         builder.not(result_ty, Some(result), operand).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9047,7 +9047,7 @@ impl ToSpirvOp for BitFieldInsertOp {
         builder
             .bit_field_insert(result_ty, Some(result), base, insert, offset, count)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9119,7 +9119,7 @@ impl ToSpirvOp for BitFieldSExtractOp {
         builder
             .bit_field_s_extract(result_ty, Some(result), base, offset, count)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9191,7 +9191,7 @@ impl ToSpirvOp for BitFieldUExtractOp {
         builder
             .bit_field_u_extract(result_ty, Some(result), base, offset, count)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9259,7 +9259,7 @@ impl ToSpirvOp for BitReverseOp {
         builder
             .bit_reverse(result_ty, Some(result), base)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9324,7 +9324,7 @@ impl ToSpirvOp for BitCountOp {
         let result = builder.value_id(self.get_result(ctx));
         let base = builder.value_id(self.get_operand_base(ctx));
         builder.bit_count(result_ty, Some(result), base).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9388,7 +9388,7 @@ impl ToSpirvOp for DPdxOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.d_pdx(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9453,7 +9453,7 @@ impl ToSpirvOp for DPdyOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.d_pdy(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9518,7 +9518,7 @@ impl ToSpirvOp for FwidthOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.fwidth(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9583,7 +9583,7 @@ impl ToSpirvOp for DPdxFineOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.d_pdx_fine(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9648,7 +9648,7 @@ impl ToSpirvOp for DPdyFineOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.d_pdy_fine(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9713,7 +9713,7 @@ impl ToSpirvOp for FwidthFineOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.fwidth_fine(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9778,7 +9778,7 @@ impl ToSpirvOp for DPdxCoarseOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.d_pdx_coarse(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9843,7 +9843,7 @@ impl ToSpirvOp for DPdyCoarseOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.d_pdy_coarse(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -9909,7 +9909,7 @@ impl ToSpirvOp for FwidthCoarseOp {
         let result = builder.value_id(self.get_result(ctx));
         let p = builder.value_id(self.get_operand_p(ctx));
         builder.fwidth_coarse(result_ty, Some(result), p).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10469,7 +10469,7 @@ impl ToSpirvOp for AtomicLoadOp {
         builder
             .atomic_load(result_ty, Some(result), pointer, memory, semantics)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10718,7 +10718,7 @@ impl ToSpirvOp for AtomicExchangeOp {
         builder
             .atomic_exchange(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -10883,7 +10883,7 @@ impl ToSpirvOp for AtomicCompareExchangeOp {
                 comparator,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11051,7 +11051,7 @@ impl ToSpirvOp for AtomicCompareExchangeWeakOp {
                 comparator,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11180,7 +11180,7 @@ impl ToSpirvOp for AtomicIIncrementOp {
         builder
             .atomic_i_increment(result_ty, Some(result), pointer, memory, semantics)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11305,7 +11305,7 @@ impl ToSpirvOp for AtomicIDecrementOp {
         builder
             .atomic_i_decrement(result_ty, Some(result), pointer, memory, semantics)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11432,7 +11432,7 @@ impl ToSpirvOp for AtomicIAddOp {
         builder
             .atomic_i_add(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11559,7 +11559,7 @@ impl ToSpirvOp for AtomicISubOp {
         builder
             .atomic_i_sub(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11686,7 +11686,7 @@ impl ToSpirvOp for AtomicSMinOp {
         builder
             .atomic_s_min(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11813,7 +11813,7 @@ impl ToSpirvOp for AtomicUMinOp {
         builder
             .atomic_u_min(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -11940,7 +11940,7 @@ impl ToSpirvOp for AtomicSMaxOp {
         builder
             .atomic_s_max(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12067,7 +12067,7 @@ impl ToSpirvOp for AtomicUMaxOp {
         builder
             .atomic_u_max(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12192,7 +12192,7 @@ impl ToSpirvOp for AtomicAndOp {
         builder
             .atomic_and(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12317,7 +12317,7 @@ impl ToSpirvOp for AtomicOrOp {
         builder
             .atomic_or(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12442,7 +12442,7 @@ impl ToSpirvOp for AtomicXorOp {
         builder
             .atomic_xor(result_ty, Some(result), pointer, memory, semantics, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12562,7 +12562,7 @@ impl ToSpirvOp for GroupAsyncCopyOp {
                 event,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12743,7 +12743,7 @@ impl ToSpirvOp for GroupAllOp {
         builder
             .group_all(result_ty, Some(result), execution, predicate)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12835,7 +12835,7 @@ impl ToSpirvOp for GroupAnyOp {
         builder
             .group_any(result_ty, Some(result), execution, predicate)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -12935,7 +12935,7 @@ impl ToSpirvOp for GroupBroadcastOp {
         builder
             .group_broadcast(result_ty, Some(result), execution, value, local_id)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13057,7 +13057,7 @@ impl ToSpirvOp for GroupIAddOp {
         builder
             .group_i_add(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13182,7 +13182,7 @@ impl ToSpirvOp for GroupFAddOp {
         builder
             .group_f_add(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13307,7 +13307,7 @@ impl ToSpirvOp for GroupFMinOp {
         builder
             .group_f_min(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13432,7 +13432,7 @@ impl ToSpirvOp for GroupUMinOp {
         builder
             .group_u_min(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13557,7 +13557,7 @@ impl ToSpirvOp for GroupSMinOp {
         builder
             .group_s_min(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13682,7 +13682,7 @@ impl ToSpirvOp for GroupFMaxOp {
         builder
             .group_f_max(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13807,7 +13807,7 @@ impl ToSpirvOp for GroupUMaxOp {
         builder
             .group_u_max(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -13932,7 +13932,7 @@ impl ToSpirvOp for GroupSMaxOp {
         builder
             .group_s_max(result_ty, Some(result), execution, operation, x)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14019,7 +14019,7 @@ impl ToSpirvOp for ReadPipeOp {
         builder
             .read_pipe(result_ty, Some(result), pipe, pointer, packet_size, packet_alignment)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14100,7 +14100,7 @@ impl ToSpirvOp for WritePipeOp {
         builder
             .write_pipe(result_ty, Some(result), pipe, pointer, packet_size, packet_alignment)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14196,7 +14196,7 @@ impl ToSpirvOp for ReservedReadPipeOp {
                 packet_alignment,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14292,7 +14292,7 @@ impl ToSpirvOp for ReservedWritePipeOp {
                 packet_alignment,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14380,7 +14380,7 @@ impl ToSpirvOp for ReserveReadPipePacketsOp {
                 packet_alignment,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14468,7 +14468,7 @@ impl ToSpirvOp for ReserveWritePipePacketsOp {
                 packet_alignment,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14674,7 +14674,7 @@ impl ToSpirvOp for IsValidReserveIdOp {
         builder
             .is_valid_reserve_id(result_ty, Some(result), reserve_id)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14752,7 +14752,7 @@ impl ToSpirvOp for GetNumPipePacketsOp {
         builder
             .get_num_pipe_packets(result_ty, Some(result), pipe, packet_size, packet_alignment)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14830,7 +14830,7 @@ impl ToSpirvOp for GetMaxPipePacketsOp {
         builder
             .get_max_pipe_packets(result_ty, Some(result), pipe, packet_size, packet_alignment)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -14944,7 +14944,7 @@ impl ToSpirvOp for GroupReserveReadPipePacketsOp {
                 packet_alignment,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -15061,7 +15061,7 @@ impl ToSpirvOp for GroupReserveWritePipePacketsOp {
                 packet_alignment,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -15347,7 +15347,7 @@ impl ToSpirvOp for EnqueueMarkerOp {
         builder
             .enqueue_marker(result_ty, Some(result), queue, num_events, wait_events, ret_event)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -15491,7 +15491,7 @@ impl ToSpirvOp for EnqueueKernelOp {
                 local_size,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -15583,7 +15583,7 @@ impl ToSpirvOp for GetKernelNDrangeSubGroupCountOp {
                 param_align,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -15675,7 +15675,7 @@ impl ToSpirvOp for GetKernelNDrangeMaxSubGroupSizeOp {
                 param_align,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -15756,7 +15756,7 @@ impl ToSpirvOp for GetKernelWorkGroupSizeOp {
         builder
             .get_kernel_work_group_size(result_ty, Some(result), invoke, param, param_size, param_align)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -15844,7 +15844,7 @@ impl ToSpirvOp for GetKernelPreferredWorkGroupSizeMultipleOp {
                 param_align,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16016,7 +16016,7 @@ impl ToSpirvOp for CreateUserEventOp {
         builder
             .create_user_event(result_ty, Some(result))
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16084,7 +16084,7 @@ impl ToSpirvOp for IsValidEventOp {
         builder
             .is_valid_event(result_ty, Some(result), event)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16278,7 +16278,7 @@ impl ToSpirvOp for GetDefaultQueueOp {
         builder
             .get_default_queue(result_ty, Some(result))
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16362,7 +16362,7 @@ impl ToSpirvOp for BuildNDRangeOp {
                 global_work_offset,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16531,7 +16531,7 @@ impl ToSpirvOp for AtomicFlagTestAndSetOp {
         builder
             .atomic_flag_test_and_set(result_ty, Some(result), pointer, memory, semantics)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16716,7 +16716,7 @@ impl ToSpirvOp for SizeOfOp {
         let result = builder.value_id(self.get_result(ctx));
         let pointer = builder.value_id(self.get_operand_pointer(ctx));
         builder.size_of(result_ty, Some(result), pointer).into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16861,7 +16861,7 @@ impl ToSpirvOp for ConstantPipeStorageOp {
         builder
             .constant_pipe_storage(result_ty, Some(result), packet_size, packet_alignment, capacity)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -16938,7 +16938,7 @@ impl ToSpirvOp for CreatePipeFromPipeStorageOp {
         builder
             .create_pipe_from_pipe_storage(result_ty, Some(result), pipe_storage)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17030,7 +17030,7 @@ impl ToSpirvOp for GetKernelLocalSizeForSubgroupCountOp {
                 param_align,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17111,7 +17111,7 @@ impl ToSpirvOp for GetKernelMaxNumSubgroupsOp {
         builder
             .get_kernel_max_num_subgroups(result_ty, Some(result), invoke, param, param_size, param_align)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17179,7 +17179,7 @@ impl ToSpirvOp for NamedBarrierInitializeOp {
         builder
             .named_barrier_initialize(result_ty, Some(result), subgroup_count)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17465,7 +17465,7 @@ impl ToSpirvOp for GroupNonUniformElectOp {
         builder
             .group_non_uniform_elect(result_ty, Some(result), execution)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17558,7 +17558,7 @@ impl ToSpirvOp for GroupNonUniformAllOp {
         builder
             .group_non_uniform_all(result_ty, Some(result), execution, predicate)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17651,7 +17651,7 @@ impl ToSpirvOp for GroupNonUniformAnyOp {
         builder
             .group_non_uniform_any(result_ty, Some(result), execution, predicate)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17744,7 +17744,7 @@ impl ToSpirvOp for GroupNonUniformAllEqualOp {
         builder
             .group_non_uniform_all_equal(result_ty, Some(result), execution, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17845,7 +17845,7 @@ impl ToSpirvOp for GroupNonUniformBroadcastOp {
         builder
             .group_non_uniform_broadcast(result_ty, Some(result), execution, value, invocation_id)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -17940,7 +17940,7 @@ impl ToSpirvOp for GroupNonUniformBroadcastFirstOp {
         builder
             .group_non_uniform_broadcast_first(result_ty, Some(result), execution, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18033,7 +18033,7 @@ impl ToSpirvOp for GroupNonUniformBallotOp {
         builder
             .group_non_uniform_ballot(result_ty, Some(result), execution, predicate)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18128,7 +18128,7 @@ impl ToSpirvOp for GroupNonUniformInverseBallotOp {
         builder
             .group_non_uniform_inverse_ballot(result_ty, Some(result), execution, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18233,7 +18233,7 @@ impl ToSpirvOp for GroupNonUniformBallotBitExtractOp {
         builder
             .group_non_uniform_ballot_bit_extract(result_ty, Some(result), execution, value, index)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18360,7 +18360,7 @@ impl ToSpirvOp for GroupNonUniformBallotBitCountOp {
         builder
             .group_non_uniform_ballot_bit_count(result_ty, Some(result), execution, operation, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18458,7 +18458,7 @@ impl ToSpirvOp for GroupNonUniformBallotFindLSBOp {
         builder
             .group_non_uniform_ballot_find_lsb(result_ty, Some(result), execution, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18553,7 +18553,7 @@ impl ToSpirvOp for GroupNonUniformBallotFindMSBOp {
         builder
             .group_non_uniform_ballot_find_msb(result_ty, Some(result), execution, value)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18654,7 +18654,7 @@ impl ToSpirvOp for GroupNonUniformShuffleOp {
         builder
             .group_non_uniform_shuffle(result_ty, Some(result), execution, value, invocation_id)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18755,7 +18755,7 @@ impl ToSpirvOp for GroupNonUniformShuffleXorOp {
         builder
             .group_non_uniform_shuffle_xor(result_ty, Some(result), execution, value, mask)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18856,7 +18856,7 @@ impl ToSpirvOp for GroupNonUniformShuffleUpOp {
         builder
             .group_non_uniform_shuffle_up(result_ty, Some(result), execution, value, delta)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -18959,7 +18959,7 @@ impl ToSpirvOp for GroupNonUniformShuffleDownOp {
         builder
             .group_non_uniform_shuffle_down(result_ty, Some(result), execution, value, delta)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -19085,7 +19085,7 @@ impl ToSpirvOp for GroupNonUniformIAddOp {
         builder
             .group_non_uniform_i_add(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -19218,7 +19218,7 @@ impl ToSpirvOp for GroupNonUniformFAddOp {
         builder
             .group_non_uniform_f_add(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -19351,7 +19351,7 @@ impl ToSpirvOp for GroupNonUniformIMulOp {
         builder
             .group_non_uniform_i_mul(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -19484,7 +19484,7 @@ impl ToSpirvOp for GroupNonUniformFMulOp {
         builder
             .group_non_uniform_f_mul(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -19617,7 +19617,7 @@ impl ToSpirvOp for GroupNonUniformSMinOp {
         builder
             .group_non_uniform_s_min(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -19750,7 +19750,7 @@ impl ToSpirvOp for GroupNonUniformUMinOp {
         builder
             .group_non_uniform_u_min(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -19883,7 +19883,7 @@ impl ToSpirvOp for GroupNonUniformFMinOp {
         builder
             .group_non_uniform_f_min(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20016,7 +20016,7 @@ impl ToSpirvOp for GroupNonUniformSMaxOp {
         builder
             .group_non_uniform_s_max(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20149,7 +20149,7 @@ impl ToSpirvOp for GroupNonUniformUMaxOp {
         builder
             .group_non_uniform_u_max(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20282,7 +20282,7 @@ impl ToSpirvOp for GroupNonUniformFMaxOp {
         builder
             .group_non_uniform_f_max(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20415,7 +20415,7 @@ impl ToSpirvOp for GroupNonUniformBitwiseAndOp {
         builder
             .group_non_uniform_bitwise_and(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20548,7 +20548,7 @@ impl ToSpirvOp for GroupNonUniformBitwiseOrOp {
         builder
             .group_non_uniform_bitwise_or(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20681,7 +20681,7 @@ impl ToSpirvOp for GroupNonUniformBitwiseXorOp {
         builder
             .group_non_uniform_bitwise_xor(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20814,7 +20814,7 @@ impl ToSpirvOp for GroupNonUniformLogicalAndOp {
         builder
             .group_non_uniform_logical_and(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -20947,7 +20947,7 @@ impl ToSpirvOp for GroupNonUniformLogicalOrOp {
         builder
             .group_non_uniform_logical_or(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21080,7 +21080,7 @@ impl ToSpirvOp for GroupNonUniformLogicalXorOp {
         builder
             .group_non_uniform_logical_xor(result_ty, Some(result), execution, operation, value, cluster_size)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21190,7 +21190,7 @@ impl ToSpirvOp for GroupNonUniformQuadBroadcastOp {
         builder
             .group_non_uniform_quad_broadcast(result_ty, Some(result), execution, value, index)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21291,7 +21291,7 @@ impl ToSpirvOp for GroupNonUniformQuadSwapOp {
         builder
             .group_non_uniform_quad_swap(result_ty, Some(result), execution, value, direction)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21362,7 +21362,7 @@ impl ToSpirvOp for CopyLogicalOp {
         builder
             .copy_logical(result_ty, Some(result), operand)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21431,7 +21431,7 @@ impl ToSpirvOp for PtrEqualOp {
         builder
             .ptr_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21500,7 +21500,7 @@ impl ToSpirvOp for PtrNotEqualOp {
         builder
             .ptr_not_equal(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21569,7 +21569,7 @@ impl ToSpirvOp for PtrDiffOp {
         builder
             .ptr_diff(result_ty, Some(result), operand_1, operand_2)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21684,7 +21684,7 @@ impl ToSpirvOp for SDotOp {
         builder
             .s_dot(result_ty, Some(result), vector_1, vector_2, packed_vector_format)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21824,7 +21824,7 @@ impl ToSpirvOp for UDotOp {
         builder
             .u_dot(result_ty, Some(result), vector_1, vector_2, packed_vector_format)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -21964,7 +21964,7 @@ impl ToSpirvOp for SUDotOp {
         builder
             .su_dot(result_ty, Some(result), vector_1, vector_2, packed_vector_format)
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -22114,7 +22114,7 @@ impl ToSpirvOp for SDotAccSatOp {
                 packed_vector_format,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -22264,7 +22264,7 @@ impl ToSpirvOp for UDotAccSatOp {
                 packed_vector_format,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -22414,7 +22414,7 @@ impl ToSpirvOp for SUDotAccSatOp {
                 packed_vector_format,
             )
             .into_pliron_result()?;
-        crate::ops::apply_all_decorations(ctx, builder, self, result);
+        crate::ops::apply_all_decorations(ctx, builder, self, result)?;
         Ok(())
     }
 }
@@ -22569,7 +22569,7 @@ pub mod amd {
             builder
                 .group_i_add_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -22700,7 +22700,7 @@ pub mod amd {
             builder
                 .group_f_add_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -22831,7 +22831,7 @@ pub mod amd {
             builder
                 .group_f_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -22962,7 +22962,7 @@ pub mod amd {
             builder
                 .group_u_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23093,7 +23093,7 @@ pub mod amd {
             builder
                 .group_s_min_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23224,7 +23224,7 @@ pub mod amd {
             builder
                 .group_f_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23355,7 +23355,7 @@ pub mod amd {
             builder
                 .group_u_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23486,7 +23486,7 @@ pub mod amd {
             builder
                 .group_s_max_non_uniform_amd(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23563,7 +23563,7 @@ pub mod amd {
             builder
                 .fragment_mask_fetch_amd(result_ty, Some(result), image, coordinate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23642,7 +23642,7 @@ pub mod amd {
             builder
                 .fragment_fetch_amd(result_ty, Some(result), image, coordinate, fragment_index)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23746,7 +23746,7 @@ pub mod amdx {
             builder
                 .allocate_node_payloads_amdx(result_ty, Some(result), visibility, payload_count, node_index)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23878,7 +23878,7 @@ pub mod amdx {
             builder
                 .finish_writing_node_payload_amdx(result_ty, Some(result), payload)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -23946,7 +23946,7 @@ pub mod amdx {
             builder
                 .node_payload_array_length_amdx(result_ty, Some(result), payload_array)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24016,7 +24016,7 @@ pub mod amdx {
             builder
                 .is_node_payload_valid_amdx(result_ty, Some(result), payload_type, node_index)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24089,7 +24089,7 @@ pub mod arm {
             builder
                 .tensor_query_size_arm(result_ty, Some(result), tensor, dimension)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24162,7 +24162,7 @@ pub mod ext {
             builder
                 .bitcast_extract_ext(result_ty, Some(result), base, offset)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24230,7 +24230,7 @@ pub mod ext {
             builder
                 .composite_construct_replicate_ext(result_ty, Some(result), value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24298,7 +24298,7 @@ pub mod ext {
             builder
                 .buffer_pointer_ext(result_ty, Some(result), buffer)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24379,7 +24379,7 @@ pub mod ext {
             builder
                 .untyped_image_texel_pointer_ext(result_ty, Some(result), image_type, image, coordinate, sample)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24588,7 +24588,7 @@ pub mod ext {
             builder
                 .group_non_uniform_partition_ext(result_ty, Some(result), value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -24972,7 +24972,7 @@ pub mod ext {
             builder
                 .hit_object_get_intersection_triangle_vertex_positions_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -25040,7 +25040,7 @@ pub mod ext {
             builder
                 .hit_object_get_ray_flags_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -25649,7 +25649,7 @@ pub mod ext {
             builder
                 .hit_object_get_current_time_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -25786,7 +25786,7 @@ pub mod ext {
             builder
                 .hit_object_get_hit_kind_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -25854,7 +25854,7 @@ pub mod ext {
             builder
                 .hit_object_get_primitive_index_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -25922,7 +25922,7 @@ pub mod ext {
             builder
                 .hit_object_get_geometry_index_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -25990,7 +25990,7 @@ pub mod ext {
             builder
                 .hit_object_get_instance_id_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26058,7 +26058,7 @@ pub mod ext {
             builder
                 .hit_object_get_instance_custom_index_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26126,7 +26126,7 @@ pub mod ext {
             builder
                 .hit_object_get_object_ray_origin_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26194,7 +26194,7 @@ pub mod ext {
             builder
                 .hit_object_get_object_ray_direction_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26262,7 +26262,7 @@ pub mod ext {
             builder
                 .hit_object_get_world_ray_direction_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26330,7 +26330,7 @@ pub mod ext {
             builder
                 .hit_object_get_world_ray_origin_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26398,7 +26398,7 @@ pub mod ext {
             builder
                 .hit_object_get_object_to_world_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26466,7 +26466,7 @@ pub mod ext {
             builder
                 .hit_object_get_world_to_object_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26534,7 +26534,7 @@ pub mod ext {
             builder
                 .hit_object_get_ray_t_max_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26602,7 +26602,7 @@ pub mod ext {
             builder
                 .hit_object_get_ray_t_min_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26670,7 +26670,7 @@ pub mod ext {
             builder
                 .hit_object_get_shader_binding_table_record_index_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26738,7 +26738,7 @@ pub mod ext {
             builder
                 .hit_object_get_shader_record_buffer_handle_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26806,7 +26806,7 @@ pub mod ext {
             builder
                 .hit_object_is_empty_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26874,7 +26874,7 @@ pub mod ext {
             builder
                 .hit_object_is_hit_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -26942,7 +26942,7 @@ pub mod ext {
             builder
                 .hit_object_is_miss_ext(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -27116,7 +27116,7 @@ pub mod ext {
             builder
                 .is_helper_invocation_ext(result_ty, Some(result))
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -27240,7 +27240,7 @@ pub mod ext {
             builder
                 .atomic_f_min_ext(result_ty, Some(result), pointer, memory, semantics, value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -27374,7 +27374,7 @@ pub mod ext {
             builder
                 .atomic_f_max_ext(result_ty, Some(result), pointer, memory, semantics, value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -27508,7 +27508,7 @@ pub mod ext {
             builder
                 .atomic_f_add_ext(result_ty, Some(result), pointer, memory, semantics, value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -27862,7 +27862,7 @@ pub mod ext {
             builder
                 .arithmetic_fence_ext(result_ty, Some(result), target)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -27935,7 +27935,7 @@ pub mod intel {
             builder
                 .subgroup_shuffle_intel(result_ty, Some(result), data, invocation_id)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28007,7 +28007,7 @@ pub mod intel {
             builder
                 .subgroup_shuffle_down_intel(result_ty, Some(result), current, next, delta)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28079,7 +28079,7 @@ pub mod intel {
             builder
                 .subgroup_shuffle_up_intel(result_ty, Some(result), previous, current, delta)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28149,7 +28149,7 @@ pub mod intel {
             builder
                 .subgroup_shuffle_xor_intel(result_ty, Some(result), data, value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28217,7 +28217,7 @@ pub mod intel {
             builder
                 .subgroup_block_read_intel(result_ty, Some(result), ptr)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28350,7 +28350,7 @@ pub mod intel {
             builder
                 .subgroup_image_block_read_intel(result_ty, Some(result), image, coordinate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28498,7 +28498,7 @@ pub mod intel {
             builder
                 .subgroup_image_media_block_read_intel(result_ty, Some(result), image, coordinate, width, height)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28644,7 +28644,7 @@ pub mod intel {
             builder
                 .u_count_leading_zeros_intel(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28712,7 +28712,7 @@ pub mod intel {
             builder
                 .u_count_trailing_zeros_intel(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28782,7 +28782,7 @@ pub mod intel {
             builder
                 .abs_i_sub_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28852,7 +28852,7 @@ pub mod intel {
             builder
                 .abs_u_sub_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28922,7 +28922,7 @@ pub mod intel {
             builder
                 .i_add_sat_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -28992,7 +28992,7 @@ pub mod intel {
             builder
                 .u_add_sat_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29062,7 +29062,7 @@ pub mod intel {
             builder
                 .i_average_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29132,7 +29132,7 @@ pub mod intel {
             builder
                 .u_average_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29202,7 +29202,7 @@ pub mod intel {
             builder
                 .i_average_rounded_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29272,7 +29272,7 @@ pub mod intel {
             builder
                 .u_average_rounded_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29342,7 +29342,7 @@ pub mod intel {
             builder
                 .i_sub_sat_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29412,7 +29412,7 @@ pub mod intel {
             builder
                 .u_sub_sat_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29482,7 +29482,7 @@ pub mod intel {
             builder
                 .i_mul32x16_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29552,7 +29552,7 @@ pub mod intel {
             builder
                 .u_mul32x16_intel(result_ty, Some(result), operand_1, operand_2)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29620,7 +29620,7 @@ pub mod intel {
             builder
                 .variable_length_array_intel(result_ty, Some(result), length)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29684,7 +29684,7 @@ pub mod intel {
             builder
                 .save_memory_intel(result_ty, Some(result))
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -29967,7 +29967,7 @@ pub mod intel {
             builder
                 .convert_f_to_bf16intel(result_ty, Some(result), float_value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -30035,7 +30035,7 @@ pub mod intel {
             builder
                 .convert_bf16_to_fintel(result_ty, Some(result), b_float16_value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -30938,7 +30938,7 @@ pub mod intel {
                     matrix_multiply_accumulate_operands,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31021,7 +31021,7 @@ pub mod intel {
             builder
                 .bitwise_function_intel(result_ty, Some(result), a, b, c, lut_index)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31091,7 +31091,7 @@ pub mod intel {
             builder
                 .untyped_variable_length_array_intel(result_ty, Some(result), element_type, length)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31168,7 +31168,7 @@ pub mod intel {
             builder
                 .conditional_copy_object_intel(result_ty, Some(result), condition_0_operand_0_condition_1_operand_1)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31314,7 +31314,7 @@ pub mod intel {
                     align,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31522,7 +31522,7 @@ pub mod intel {
             builder
                 .round_f_to_tf32intel(result_ty, Some(result), float_value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31626,7 +31626,7 @@ pub mod intel {
             builder
                 .masked_gather_intel(result_ty, Some(result), ptr_vector, alignment, mask, fill_empty)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31815,7 +31815,7 @@ pub mod khr {
             builder
                 .untyped_access_chain_khr(result_ty, Some(result), base_type, base, indexes)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31897,7 +31897,7 @@ pub mod khr {
             builder
                 .untyped_in_bounds_access_chain_khr(result_ty, Some(result), base_type, base, indexes)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -31965,7 +31965,7 @@ pub mod khr {
             builder
                 .subgroup_ballot_khr(result_ty, Some(result), predicate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32034,7 +32034,7 @@ pub mod khr {
             builder
                 .subgroup_first_invocation_khr(result_ty, Some(result), value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32120,7 +32120,7 @@ pub mod khr {
             builder
                 .untyped_ptr_access_chain_khr(result_ty, Some(result), base_type, base, element, indexes)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32205,7 +32205,7 @@ pub mod khr {
             builder
                 .untyped_in_bounds_ptr_access_chain_khr(result_ty, Some(result), base_type, base, element, indexes)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32308,7 +32308,7 @@ pub mod khr {
             builder
                 .untyped_array_length_khr(result_ty, Some(result), structure, pointer, array_member)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32389,7 +32389,7 @@ pub mod khr {
             builder
                 .fma_khr(result_ty, Some(result), operand_1, operand_2, operand_3)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32457,7 +32457,7 @@ pub mod khr {
             builder
                 .subgroup_all_khr(result_ty, Some(result), predicate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32526,7 +32526,7 @@ pub mod khr {
             builder
                 .subgroup_any_khr(result_ty, Some(result), predicate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32595,7 +32595,7 @@ pub mod khr {
             builder
                 .subgroup_all_equal_khr(result_ty, Some(result), predicate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32699,7 +32699,7 @@ pub mod khr {
             builder
                 .group_non_uniform_rotate_khr(result_ty, Some(result), execution, value, delta, cluster_size)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -32772,7 +32772,7 @@ pub mod khr {
             builder
                 .subgroup_read_invocation_khr(result_ty, Some(result), value, index)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -33047,7 +33047,7 @@ pub mod khr {
                     source_memory_operands_align,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -33324,7 +33324,7 @@ pub mod khr {
             builder
                 .convert_u_to_acceleration_structure_khr(result_ty, Some(result), accel)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -33605,7 +33605,7 @@ pub mod khr {
                     memory_operand_align,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -33916,7 +33916,7 @@ pub mod khr {
             builder
                 .cooperative_matrix_mul_add_khr(result_ty, Some(result), a, b, c, cooperative_matrix_operands)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -33993,7 +33993,7 @@ pub mod khr {
             builder
                 .cooperative_matrix_length_khr(result_ty, Some(result), r#type)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34368,7 +34368,7 @@ pub mod khr {
             builder
                 .ray_query_proceed_khr(result_ty, Some(result), ray_query)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34439,7 +34439,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_type_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34527,7 +34527,7 @@ pub mod khr {
             builder
                 .read_clock_khr(result_ty, Some(result), scope)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34598,7 +34598,7 @@ pub mod khr {
             builder
                 .group_non_uniform_quad_all_khr(result_ty, Some(result), predicate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34666,7 +34666,7 @@ pub mod khr {
             builder
                 .group_non_uniform_quad_any_khr(result_ty, Some(result), predicate)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34728,7 +34728,7 @@ pub mod khr {
             let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
             let result = builder.value_id(self.get_result(ctx));
             builder.poison_khr(result_ty, Some(result)).into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34796,7 +34796,7 @@ pub mod khr {
             builder
                 .freeze_khr(result_ty, Some(result), value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34866,7 +34866,7 @@ pub mod khr {
             builder
                 .report_intersection_khr(result_ty, Some(result), hit, hit_kind)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -34942,7 +34942,7 @@ pub mod khr {
                     intersection,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35074,7 +35074,7 @@ pub mod khr {
             builder
                 .expect_khr(result_ty, Some(result), value, expected_value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35143,7 +35143,7 @@ pub mod khr {
             builder
                 .ray_query_get_ray_t_min_khr(result_ty, Some(result), ray_query)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35212,7 +35212,7 @@ pub mod khr {
             builder
                 .ray_query_get_ray_flags_khr(result_ty, Some(result), ray_query)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35283,7 +35283,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_tkhr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35354,7 +35354,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_instance_custom_index_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35425,7 +35425,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_instance_id_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35501,7 +35501,7 @@ pub mod khr {
                     intersection,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35572,7 +35572,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_geometry_index_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35643,7 +35643,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_primitive_index_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35714,7 +35714,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_barycentrics_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35785,7 +35785,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_front_face_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35854,7 +35854,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_candidate_aabb_opaque_khr(result_ty, Some(result), ray_query)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35925,7 +35925,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_object_ray_direction_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -35996,7 +35996,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_object_ray_origin_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36065,7 +36065,7 @@ pub mod khr {
             builder
                 .ray_query_get_world_ray_direction_khr(result_ty, Some(result), ray_query)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36134,7 +36134,7 @@ pub mod khr {
             builder
                 .ray_query_get_world_ray_origin_khr(result_ty, Some(result), ray_query)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36205,7 +36205,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_object_to_world_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36276,7 +36276,7 @@ pub mod khr {
             builder
                 .ray_query_get_intersection_world_to_object_khr(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36396,7 +36396,7 @@ pub mod khr {
             builder
                 .group_i_mul_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36521,7 +36521,7 @@ pub mod khr {
             builder
                 .group_f_mul_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36647,7 +36647,7 @@ pub mod khr {
             builder
                 .group_bitwise_and_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36773,7 +36773,7 @@ pub mod khr {
             builder
                 .group_bitwise_or_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -36899,7 +36899,7 @@ pub mod khr {
             builder
                 .group_bitwise_xor_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -37025,7 +37025,7 @@ pub mod khr {
             builder
                 .group_logical_and_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -37151,7 +37151,7 @@ pub mod khr {
             builder
                 .group_logical_or_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -37277,7 +37277,7 @@ pub mod khr {
             builder
                 .group_logical_xor_khr(result_ty, Some(result), execution, operation, x)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -37755,7 +37755,7 @@ pub mod nv {
             builder
                 .hit_object_get_world_to_object_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -37823,7 +37823,7 @@ pub mod nv {
             builder
                 .hit_object_get_object_to_world_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -37891,7 +37891,7 @@ pub mod nv {
             builder
                 .hit_object_get_object_ray_direction_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -37959,7 +37959,7 @@ pub mod nv {
             builder
                 .hit_object_get_object_ray_origin_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -38175,7 +38175,7 @@ pub mod nv {
             builder
                 .hit_object_get_shader_record_buffer_handle_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -38243,7 +38243,7 @@ pub mod nv {
             builder
                 .hit_object_get_shader_binding_table_record_index_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -38945,7 +38945,7 @@ pub mod nv {
             builder
                 .hit_object_get_current_time_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39079,7 +39079,7 @@ pub mod nv {
             builder
                 .hit_object_get_hit_kind_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39147,7 +39147,7 @@ pub mod nv {
             builder
                 .hit_object_get_primitive_index_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39215,7 +39215,7 @@ pub mod nv {
             builder
                 .hit_object_get_geometry_index_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39283,7 +39283,7 @@ pub mod nv {
             builder
                 .hit_object_get_instance_id_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39351,7 +39351,7 @@ pub mod nv {
             builder
                 .hit_object_get_instance_custom_index_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39419,7 +39419,7 @@ pub mod nv {
             builder
                 .hit_object_get_world_ray_direction_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39487,7 +39487,7 @@ pub mod nv {
             builder
                 .hit_object_get_world_ray_origin_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39555,7 +39555,7 @@ pub mod nv {
             builder
                 .hit_object_get_ray_t_max_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39623,7 +39623,7 @@ pub mod nv {
             builder
                 .hit_object_get_ray_t_min_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39691,7 +39691,7 @@ pub mod nv {
             builder
                 .hit_object_is_empty_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39759,7 +39759,7 @@ pub mod nv {
             builder
                 .hit_object_is_hit_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -39827,7 +39827,7 @@ pub mod nv {
             builder
                 .hit_object_is_miss_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -40075,7 +40075,7 @@ pub mod nv {
                     cooperative_matrix_operands,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -40464,7 +40464,7 @@ pub mod nv {
                     cooperative_matrix_operands,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -40541,7 +40541,7 @@ pub mod nv {
             builder
                 .cooperative_matrix_convert_nv(result_ty, Some(result), matrix)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -40701,7 +40701,7 @@ pub mod nv {
                     barycentric,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -40794,7 +40794,7 @@ pub mod nv {
                     barycentric,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -40931,7 +40931,7 @@ pub mod nv {
             builder
                 .cooperative_vector_load_nv(result_ty, Some(result), pointer, offset, memory_access, align)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -41720,7 +41720,7 @@ pub mod nv {
             builder
                 .ray_query_get_intersection_cluster_id_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -41788,7 +41788,7 @@ pub mod nv {
             builder
                 .hit_object_get_cluster_id_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -41936,7 +41936,7 @@ pub mod nv {
                     align,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42153,7 +42153,7 @@ pub mod nv {
             builder
                 .cooperative_matrix_mul_add_nv(result_ty, Some(result), a, b, c)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42222,7 +42222,7 @@ pub mod nv {
             builder
                 .cooperative_matrix_length_nv(result_ty, Some(result), r#type)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42324,7 +42324,7 @@ pub mod nv {
             builder
                 .cooperative_matrix_reduce_nv(result_ty, Some(result), matrix, reduce, combine_func)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42431,7 +42431,7 @@ pub mod nv {
             builder
                 .cooperative_matrix_per_element_op_nv(result_ty, Some(result), matrix, func, operands)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42495,7 +42495,7 @@ pub mod nv {
             builder
                 .create_tensor_layout_nv(result_ty, Some(result))
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42569,7 +42569,7 @@ pub mod nv {
             builder
                 .tensor_layout_set_dimension_nv(result_ty, Some(result), tensor_layout, dim)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42643,7 +42643,7 @@ pub mod nv {
             builder
                 .tensor_layout_set_stride_nv(result_ty, Some(result), tensor_layout, stride)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42717,7 +42717,7 @@ pub mod nv {
             builder
                 .tensor_layout_slice_nv(result_ty, Some(result), tensor_layout, operands)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42787,7 +42787,7 @@ pub mod nv {
             builder
                 .tensor_layout_set_clamp_value_nv(result_ty, Some(result), tensor_layout, value)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42851,7 +42851,7 @@ pub mod nv {
             builder
                 .create_tensor_view_nv(result_ty, Some(result))
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42925,7 +42925,7 @@ pub mod nv {
             builder
                 .tensor_view_set_dimension_nv(result_ty, Some(result), tensor_view, dim)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -42999,7 +42999,7 @@ pub mod nv {
             builder
                 .tensor_view_set_stride_nv(result_ty, Some(result), tensor_view, stride)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43104,7 +43104,7 @@ pub mod nv {
                     clip_col_span,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43178,7 +43178,7 @@ pub mod nv {
             builder
                 .tensor_layout_set_block_size_nv(result_ty, Some(result), tensor_layout, block_size)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43246,7 +43246,7 @@ pub mod nv {
             builder
                 .cooperative_matrix_transpose_nv(result_ty, Some(result), matrix)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43314,7 +43314,7 @@ pub mod nv {
             builder
                 .convert_u_to_image_nv(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43382,7 +43382,7 @@ pub mod nv {
             builder
                 .convert_u_to_sampler_nv(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43450,7 +43450,7 @@ pub mod nv {
             builder
                 .convert_image_to_unv(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43518,7 +43518,7 @@ pub mod nv {
             builder
                 .convert_sampler_to_unv(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43586,7 +43586,7 @@ pub mod nv {
             builder
                 .convert_u_to_sampled_image_nv(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43654,7 +43654,7 @@ pub mod nv {
             builder
                 .convert_sampled_image_to_unv(result_ty, Some(result), operand)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43789,7 +43789,7 @@ pub mod nv {
                     raw_access_chain_operands,
                 )
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43868,7 +43868,7 @@ pub mod nv {
             builder
                 .ray_query_get_intersection_sphere_position_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -43938,7 +43938,7 @@ pub mod nv {
             builder
                 .ray_query_get_intersection_sphere_radius_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44008,7 +44008,7 @@ pub mod nv {
             builder
                 .ray_query_get_intersection_lss_positions_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44078,7 +44078,7 @@ pub mod nv {
             builder
                 .ray_query_get_intersection_lss_radii_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44148,7 +44148,7 @@ pub mod nv {
             builder
                 .ray_query_get_intersection_lss_hit_value_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44216,7 +44216,7 @@ pub mod nv {
             builder
                 .hit_object_get_sphere_position_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44284,7 +44284,7 @@ pub mod nv {
             builder
                 .hit_object_get_sphere_radius_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44352,7 +44352,7 @@ pub mod nv {
             builder
                 .hit_object_get_lss_positions_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44420,7 +44420,7 @@ pub mod nv {
             builder
                 .hit_object_get_lss_radii_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44488,7 +44488,7 @@ pub mod nv {
             builder
                 .hit_object_is_sphere_hit_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44556,7 +44556,7 @@ pub mod nv {
             builder
                 .hit_object_is_lss_hit_nv(result_ty, Some(result), hit_object)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44626,7 +44626,7 @@ pub mod nv {
             builder
                 .ray_query_is_sphere_hit_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44696,7 +44696,7 @@ pub mod nv {
             builder
                 .ray_query_is_lss_hit_nv(result_ty, Some(result), ray_query, intersection)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44767,7 +44767,7 @@ pub mod qcom {
             builder
                 .bit_cast_array_qcom(result_ty, Some(result), source_array)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44835,7 +44835,7 @@ pub mod qcom {
             builder
                 .composite_construct_coop_mat_qcom(result_ty, Some(result), source_array)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44904,7 +44904,7 @@ pub mod qcom {
             builder
                 .composite_extract_coop_mat_qcom(result_ty, Some(result), source_cooperative_matrix)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -44974,7 +44974,7 @@ pub mod qcom {
             builder
                 .extract_sub_array_qcom(result_ty, Some(result), source_array, index)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -45055,7 +45055,7 @@ pub mod valve {
             builder
                 .f_dot2_mix_acc32_valve(result_ty, Some(result), vector_1, vector_2, accumulator)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -45136,7 +45136,7 @@ pub mod valve {
             builder
                 .f_dot2_mix_acc16_valve(result_ty, Some(result), vector_1, vector_2, accumulator)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }
@@ -45217,7 +45217,7 @@ pub mod valve {
             builder
                 .f_dot4_mix_acc32_valve(result_ty, Some(result), vector_1, vector_2, accumulator)
                 .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result);
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
             Ok(())
         }
     }

@@ -115,7 +115,7 @@ impl ToSpirvOp for GlobalVariableOp {
         let result_ty = spirv_type_id(ctx, builder, ty)?;
         let result = builder.symbol_id(self.get_symbol_name(ctx));
 
-        apply_all_decorations(ctx, builder, self, result);
+        apply_all_decorations(ctx, builder, self, result)?;
 
         builder
             .variable(result_ty, Some(result), storage_class, initializer)
@@ -307,7 +307,7 @@ impl ToSpirvOp for ConstantOp {
         };
         let id = to_spirv.to_spirv(ctx, builder)?;
         builder.values.insert(self.get_result(ctx), id);
-        apply_all_decorations(ctx, builder, self, id);
+        apply_all_decorations(ctx, builder, self, id)?;
         Ok(())
     }
 }
@@ -1038,10 +1038,26 @@ impl ToSpirvOp for FuncOp {
 }
 
 #[inline(never)]
-pub(crate) fn apply_all_decorations(ctx: &Context, builder: &mut PlironBuilder, op: &dyn DecoratableOp, id: Word) {
-    for (decoration, args) in all_decorations_for_op(op, ctx) {
-        builder.decorate(id, decoration, args);
+pub(crate) fn apply_all_decorations(
+    ctx: &Context,
+    builder: &mut PlironBuilder,
+    op: &dyn DecoratableOp,
+    id: Word,
+) -> Result<()> {
+    for (decoration, args) in all_decorations_for_op(op, ctx, builder)? {
+        let is_id = args.iter().any(|opd| {
+            matches!(
+                opd,
+                Operand::IdMemorySemantics(_) | Operand::IdScope(_) | Operand::IdRef(_)
+            )
+        });
+        if is_id {
+            builder.decorate_id(id, decoration, args);
+        } else {
+            builder.decorate(id, decoration, args);
+        }
     }
+    Ok(())
 }
 
 pub(crate) fn compute_block_ids(ctx: &Context, builder: &mut PlironBuilder, func: &FuncOp) {
