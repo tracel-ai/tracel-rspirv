@@ -9,9 +9,8 @@ version = "0.14.1+sdk-1.4.357.0"
 
 [workspace.dependencies]
 log = { default-features = false, version = "0.4.22" }
-# pliron = { version = "0.17" }
+pliron = { version = "0.18", default-features = false }
 # pliron = { path = "../pliron", default-features = false }
-pliron = { git = "https://github.com/pliron-org/pliron.git", rev = "fa72d7f36385438173b8008f709ef179d0f4069e", default-features = false }
 rstest = "0.26.1"
 strum = { version = "0.28", features = ["derive"] }
 tracel-xtask = { version = "=5.0.0" }

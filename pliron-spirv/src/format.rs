@@ -32,7 +32,6 @@ use pliron::{
     operation::Operation,
     parsable::{IntoParseResult, Parsable, ParseResult, StateStream, parser_combinator},
     printable::Printable,
-    std_deps::sync::LazyLock,
     value::Value,
 };
 
@@ -45,11 +44,9 @@ use crate::{
 macro_rules! canonical_format {
     ($ty: ty; $($opds: expr),*) => {
         const _: () = {
-            const OPERANDS: &[crate::format::FormatVar] = &[ $($opds),* ];
-
             impl ::pliron::printable::Printable for $ty {
                 fn fmt(&self, ctx: &Context, _: &::pliron::printable::State, fmt: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-                    crate::format::canonical_syntax_print(self, OPERANDS, ctx, fmt)?;
+                    crate::format::canonical_syntax_print(self, &[ $($opds),* ], ctx, fmt)?;
                     Ok(())
                 }
             }
@@ -60,7 +57,7 @@ macro_rules! canonical_format {
                     state_stream: &mut ::pliron::parsable::StateStream<'__pliron_parse>,
                     arg: Self::Arg,
                 ) -> ::pliron::parsable::ParseResult<'__pliron_parse, Self::Parsed> {
-                    crate::format::canonical_syntax_parse::<Self>(OPERANDS, state_stream, arg)
+                    crate::format::canonical_syntax_parse::<Self>(&[ $($opds),* ], state_stream, arg)
                 }
             }
         };
@@ -83,9 +80,9 @@ pub enum Quantifier {
 
 pub enum FormatVar {
     Value(&'static str, Quantifier),
-    Attribute(&'static LazyLock<Identifier>, AttrParseFn, &'static str, Quantifier),
-    MemoryAccess(&'static LazyLock<Identifier>, &'static str),
-    Symbol(&'static LazyLock<Identifier>, &'static str, Quantifier),
+    Attribute(&'static Identifier, AttrParseFn, &'static str, Quantifier),
+    MemoryAccess(&'static Identifier, &'static str),
+    Symbol(&'static Identifier, &'static str, Quantifier),
 }
 
 #[inline(never)]
@@ -135,11 +132,11 @@ pub fn canonical_syntax_print(
                 }
             }
             FormatVar::Attribute(identifier, _, _, Quantifier::One) => {
-                let attr = op.attributes.0.get(&***identifier).unwrap();
+                let attr = op.attributes.0.get(*identifier).unwrap();
                 opd_disp.push(format!("{}", (**attr).disp(ctx)));
             }
             FormatVar::Attribute(identifier, _, name, Quantifier::ZeroOrOne) => {
-                if let Some(attr) = op.attributes.0.get(&***identifier) {
+                if let Some(attr) = op.attributes.0.get(*identifier) {
                     opd_disp.push(format!("{name} = {}", (**attr).disp(ctx)));
                 }
             }
