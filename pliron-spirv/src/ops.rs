@@ -1,3 +1,5 @@
+use core::ops::Range;
+
 use alloc::{boxed::Box, string::String};
 use pliron::{
     attribute::{AttrObj, attr_cast},
@@ -394,8 +396,8 @@ impl BranchOp {
 
 #[op_interface_impl]
 impl BranchOpInterface for BranchOp {
-    fn successor_operands(&self, ctx: &Context, _succ_idx: usize) -> Vec<Value> {
-        self.get_operation().deref(ctx).operands().collect()
+    fn successor_operand_range(&self, ctx: &Context, _: usize) -> Range<usize> {
+        0..self.get_operation().deref(ctx).get_num_operands()
     }
 
     fn add_successor_operand(&self, ctx: &mut Context, _succ_idx: usize, operand: Value) -> usize {
@@ -404,6 +406,10 @@ impl BranchOpInterface for BranchOp {
 
     fn remove_successor_operand(&self, ctx: &mut Context, _succ_idx: usize, opd_idx: usize) -> Value {
         Operation::remove_operand(self.get_operation(), ctx, opd_idx)
+    }
+
+    fn verify_successor_operand_layout(&self, ctx: &Context) -> Result<()> {
+        <Self as OneSuccInterface>::verify(self, ctx)
     }
 }
 
@@ -431,7 +437,7 @@ impl ToSpirvOp for BranchOp {
     operands = (condition: IntegerType, true_dest_opds, false_dest_opds),
     verifier = "succ"
 )]
-#[derive_op_interface_impl(IsTerminatorInterface, NResultsInterface<0>, NSuccsInterface<2>, OperandSegmentInterface)]
+#[derive_op_interface_impl(IsTerminatorInterface, NResultsInterface<0>, NSuccsInterface<2>, )]
 pub struct BranchConditionalOp;
 impl BranchConditionalOp {
     /// Create a new [CondBrOp].
@@ -472,10 +478,17 @@ impl BranchConditionalOp {
 }
 
 #[op_interface_impl]
+impl OperandSegmentInterface for BranchConditionalOp {
+    fn expected_num_segments(&self, _ctx: &Context) -> Option<usize> {
+        // The condition, the true destination operands and the false destination operands.
+        Some(3)
+    }
+}
+
+#[op_interface_impl]
 impl BranchOpInterface for BranchConditionalOp {
-    fn successor_operands(&self, ctx: &Context, succ_idx: usize) -> Vec<Value> {
-        // Skip the first segment, which is the condition.
-        self.get_segment(ctx, succ_idx + 1)
+    fn successor_operand_range(&self, ctx: &Context, succ_idx: usize) -> Range<usize> {
+        self.segment_range(ctx, succ_idx + 1)
     }
 
     fn add_successor_operand(&self, ctx: &mut Context, succ_idx: usize, operand: Value) -> usize {
@@ -486,6 +499,11 @@ impl BranchOpInterface for BranchConditionalOp {
     fn remove_successor_operand(&self, ctx: &mut Context, succ_idx: usize, opd_idx: usize) -> Value {
         // The successor operands start at segment 1, since segment 0 is the condition operand.
         self.remove_from_segment(ctx, succ_idx + 1, opd_idx)
+    }
+
+    fn verify_successor_operand_layout(&self, ctx: &Context) -> Result<()> {
+        <Self as OperandSegmentInterface>::verify(self, ctx)?;
+        <Self as NSuccsInterface<2>>::verify(self, ctx)
     }
 }
 
@@ -519,7 +537,7 @@ impl ToSpirvOp for BranchConditionalOp {
     operands = (selector),
     verifier = "succ"
 )]
-#[derive_op_interface_impl(IsTerminatorInterface, NResultsInterface<0>, OperandSegmentInterface)]
+#[derive_op_interface_impl(IsTerminatorInterface, NResultsInterface<0>)]
 pub struct SwitchOp;
 impl SwitchOp {
     /// Create a new [CondBrOp].
@@ -568,10 +586,17 @@ impl SwitchOp {
 }
 
 #[op_interface_impl]
+impl OperandSegmentInterface for SwitchOp {
+    fn expected_num_segments(&self, ctx: &Context) -> Option<usize> {
+        Some(self.get_operation().deref(ctx).get_num_successors() + 1)
+    }
+}
+
+#[op_interface_impl]
 impl BranchOpInterface for SwitchOp {
-    fn successor_operands(&self, ctx: &Context, succ_idx: usize) -> Vec<Value> {
-        // Skip the first segment, which is the selector.
-        self.get_segment(ctx, succ_idx + 1)
+    fn successor_operand_range(&self, ctx: &Context, succ_idx: usize) -> Range<usize> {
+        // Skip the first segment, which is the condition.
+        self.segment_range(ctx, succ_idx + 1)
     }
 
     fn add_successor_operand(&self, ctx: &mut Context, succ_idx: usize, operand: Value) -> usize {
@@ -582,6 +607,10 @@ impl BranchOpInterface for SwitchOp {
     fn remove_successor_operand(&self, ctx: &mut Context, succ_idx: usize, opd_idx: usize) -> Value {
         // The successor operands start at segment 1, since segment 0 is the selector operand.
         self.remove_from_segment(ctx, succ_idx + 1, opd_idx)
+    }
+
+    fn verify_successor_operand_layout(&self, ctx: &Context) -> Result<()> {
+        <Self as OperandSegmentInterface>::verify(self, ctx)
     }
 }
 
