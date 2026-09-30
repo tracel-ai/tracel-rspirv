@@ -859,6 +859,8 @@ pub fn gen_dr_builder_debug_ext(
         let name = format_ident!("{}{}", op_prefix, &inst.opname.to_snake_case());
 
         let name_id = format_ident!("{}_id", name);
+        let insert_name = format_ident!("insert_{}", name);
+        let insert_name_id = format_ident!("insert_{}", name_id);
 
         quote! {
             #[allow(clippy::too_many_arguments)]
@@ -868,6 +870,16 @@ pub fn gen_dr_builder_debug_ext(
 
             #[allow(clippy::too_many_arguments)]
             pub fn #name_id(&mut self, result_id: Option<spirv::Word>, #(#param_list),*) -> Result<spirv::Word, dr::Error> {
+                self.#insert_name_id(dr::InsertPoint::End, result_id, #(#arg_list),*)
+            }
+
+            #[allow(clippy::too_many_arguments)]
+            pub fn #insert_name(&mut self, insert_point: dr::InsertPoint, #(#param_list),*) -> Result<spirv::Word, dr::Error> {
+                self.#insert_name_id(insert_point, None, #(#arg_list),*)
+            }
+
+            #[allow(clippy::too_many_arguments)]
+            pub fn #insert_name_id(&mut self, insert_point: dr::InsertPoint, result_id: Option<spirv::Word>, #(#param_list),*) -> Result<spirv::Word, dr::Error> {
                 let extension_set = super::ext_inst_import(self, #ext_name);
 
                 let result_type = self.type_void();
@@ -876,7 +888,7 @@ pub fn gen_dr_builder_debug_ext(
                 let mut args = vec![#(#init_list),*];
                 #(#extras)*
 
-                self.ext_inst(result_type, result_id, extension_set, crate::spirv::#op_name::#opcode as spirv::Word, args)
+                self.insert_ext_inst(insert_point, result_type, result_id, extension_set, crate::spirv::#op_name::#opcode as spirv::Word, args)
             }
         }
     });

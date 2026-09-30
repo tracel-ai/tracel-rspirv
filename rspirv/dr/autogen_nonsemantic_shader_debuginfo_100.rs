@@ -1792,6 +1792,25 @@ impl Builder {
         scope: spirv::Word,
         inlined_at: Option<spirv::Word>,
     ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_scope_id(dr::InsertPoint::End, result_id, scope, inlined_at)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_scope(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        scope: spirv::Word,
+        inlined_at: Option<spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_scope_id(insert_point, None, scope, inlined_at)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_scope_id(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        result_id: Option<spirv::Word>,
+        scope: spirv::Word,
+        inlined_at: Option<spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
@@ -1799,7 +1818,8 @@ impl Builder {
         if let Some(v) = inlined_at {
             args.push(dr::Operand::IdRef(v));
         }
-        self.ext_inst(
+        self.insert_ext_inst(
+            insert_point,
             result_type,
             result_id,
             extension_set,
@@ -1813,11 +1833,24 @@ impl Builder {
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_no_scope_id(&mut self, result_id: Option<spirv::Word>) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_no_scope_id(dr::InsertPoint::End, result_id)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_no_scope(&mut self, insert_point: dr::InsertPoint) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_no_scope_id(insert_point, None)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_no_scope_id(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        result_id: Option<spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
         let mut args = vec![];
-        self.ext_inst(
+        self.insert_ext_inst(
+            insert_point,
             result_type,
             result_id,
             extension_set,
@@ -1844,6 +1877,36 @@ impl Builder {
         expression: spirv::Word,
         indexes: impl IntoIterator<Item = spirv::Word>,
     ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_declare_id(
+            dr::InsertPoint::End,
+            result_id,
+            local_variable,
+            variable,
+            expression,
+            indexes,
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_declare(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        local_variable: spirv::Word,
+        variable: spirv::Word,
+        expression: spirv::Word,
+        indexes: impl IntoIterator<Item = spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_declare_id(insert_point, None, local_variable, variable, expression, indexes)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_declare_id(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        result_id: Option<spirv::Word>,
+        local_variable: spirv::Word,
+        variable: spirv::Word,
+        expression: spirv::Word,
+        indexes: impl IntoIterator<Item = spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
@@ -1853,7 +1916,8 @@ impl Builder {
             dr::Operand::IdRef(expression),
         ];
         args.extend(indexes.into_iter().map(dr::Operand::IdRef));
-        self.ext_inst(
+        self.insert_ext_inst(
+            insert_point,
             result_type,
             result_id,
             extension_set,
@@ -1880,6 +1944,36 @@ impl Builder {
         expression: spirv::Word,
         indexes: impl IntoIterator<Item = spirv::Word>,
     ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_value_id(
+            dr::InsertPoint::End,
+            result_id,
+            local_variable,
+            value,
+            expression,
+            indexes,
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_value(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        local_variable: spirv::Word,
+        value: spirv::Word,
+        expression: spirv::Word,
+        indexes: impl IntoIterator<Item = spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_value_id(insert_point, None, local_variable, value, expression, indexes)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_value_id(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        result_id: Option<spirv::Word>,
+        local_variable: spirv::Word,
+        value: spirv::Word,
+        expression: spirv::Word,
+        indexes: impl IntoIterator<Item = spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
@@ -1889,7 +1983,8 @@ impl Builder {
             dr::Operand::IdRef(expression),
         ];
         args.extend(indexes.into_iter().map(dr::Operand::IdRef));
-        self.ext_inst(
+        self.insert_ext_inst(
+            insert_point,
             result_type,
             result_id,
             extension_set,
@@ -1912,11 +2007,31 @@ impl Builder {
         function: spirv::Word,
         definition: spirv::Word,
     ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_function_definition_id(dr::InsertPoint::End, result_id, function, definition)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_function_definition(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        function: spirv::Word,
+        definition: spirv::Word,
+    ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_function_definition_id(insert_point, None, function, definition)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_function_definition_id(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        result_id: Option<spirv::Word>,
+        function: spirv::Word,
+        definition: spirv::Word,
+    ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
         let mut args = vec![dr::Operand::IdRef(function), dr::Operand::IdRef(definition)];
-        self.ext_inst(
+        self.insert_ext_inst(
+            insert_point,
             result_type,
             result_id,
             extension_set,
@@ -1945,6 +2060,47 @@ impl Builder {
         column_start: spirv::Word,
         column_end: spirv::Word,
     ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_line_id(
+            dr::InsertPoint::End,
+            result_id,
+            source,
+            line_start,
+            line_end,
+            column_start,
+            column_end,
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_line(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        source: spirv::Word,
+        line_start: spirv::Word,
+        line_end: spirv::Word,
+        column_start: spirv::Word,
+        column_end: spirv::Word,
+    ) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_line_id(
+            insert_point,
+            None,
+            source,
+            line_start,
+            line_end,
+            column_start,
+            column_end,
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_line_id(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        result_id: Option<spirv::Word>,
+        source: spirv::Word,
+        line_start: spirv::Word,
+        line_end: spirv::Word,
+        column_start: spirv::Word,
+        column_end: spirv::Word,
+    ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
@@ -1955,7 +2111,8 @@ impl Builder {
             dr::Operand::IdRef(column_start),
             dr::Operand::IdRef(column_end),
         ];
-        self.ext_inst(
+        self.insert_ext_inst(
+            insert_point,
             result_type,
             result_id,
             extension_set,
@@ -1969,11 +2126,24 @@ impl Builder {
     }
     #[allow(clippy::too_many_arguments)]
     pub fn shader_debug_no_line_id(&mut self, result_id: Option<spirv::Word>) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_no_line_id(dr::InsertPoint::End, result_id)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_no_line(&mut self, insert_point: dr::InsertPoint) -> Result<spirv::Word, dr::Error> {
+        self.insert_shader_debug_no_line_id(insert_point, None)
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn insert_shader_debug_no_line_id(
+        &mut self,
+        insert_point: dr::InsertPoint,
+        result_id: Option<spirv::Word>,
+    ) -> Result<spirv::Word, dr::Error> {
         let extension_set = super::ext_inst_import(self, "NonSemantic.Shader.DebugInfo.100");
         let result_type = self.type_void();
         #[allow(unused_mut)]
         let mut args = vec![];
-        self.ext_inst(
+        self.insert_ext_inst(
+            insert_point,
             result_type,
             result_id,
             extension_set,

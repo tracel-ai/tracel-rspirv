@@ -67,6 +67,13 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
           profile: minimal
+      # The pliron-spirv tests validate their output with spirv-val when it is installed.
+      - name: Install SPIRV-Tools (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y spirv-tools
+      - name: Install SPIRV-Tools (macOS)
+        if: runner.os == 'macOS'
+        run: brew install spirv-tools
       - uses: actions-rs/cargo@v1
         with:
           command: check

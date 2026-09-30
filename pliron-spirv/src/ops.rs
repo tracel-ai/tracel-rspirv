@@ -1049,6 +1049,7 @@ impl ToSpirvOp for FuncOp {
         builder
             .begin_function(return_ty, Some(func_id), func_control, func_ty_id)
             .into_pliron_result()?;
+        crate::debug_info::begin_function(ctx, builder, *self)?;
 
         for &arg in args.iter() {
             let ty = spirv_type_id(ctx, builder, arg.get_type(ctx))?;
@@ -1061,6 +1062,7 @@ impl ToSpirvOp for FuncOp {
             block_to_spirv(ctx, builder, block, block == entry, false)?;
         }
 
+        crate::debug_info::end_function(builder, func_id)?;
         builder.end_function().into_pliron_result()?;
 
         Ok(())

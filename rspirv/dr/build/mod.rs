@@ -561,8 +561,37 @@ impl Builder {
         self.module.execution_modes.push(inst);
     }
 
+    /// Appends an `OpExtInst` instruction to the current block.
+    ///
+    /// # Errors
+    ///
+    /// Fails if no block is selected.
     pub fn ext_inst(
         &mut self,
+        result_type: spirv::Word,
+        result_id: Option<spirv::Word>,
+        extension_set: spirv::Word,
+        instruction: spirv::Word,
+        operands: impl IntoIterator<Item = dr::Operand>,
+    ) -> BuildResult<spirv::Word> {
+        self.insert_ext_inst(
+            InsertPoint::End,
+            result_type,
+            result_id,
+            extension_set,
+            instruction,
+            operands,
+        )
+    }
+
+    /// Inserts an `OpExtInst` instruction into the current block at `insert_point`.
+    ///
+    /// # Errors
+    ///
+    /// Fails if no block is selected.
+    pub fn insert_ext_inst(
+        &mut self,
+        insert_point: InsertPoint,
         result_type: spirv::Word,
         result_id: Option<spirv::Word>,
         extension_set: spirv::Word,
@@ -574,10 +603,10 @@ impl Builder {
             dr::Operand::LiteralExtInstInteger(instruction),
         ];
         ops.extend(operands);
-        let _id = result_id.unwrap_or_else(|| self.id());
-        let inst = dr::Instruction::new(spirv::Op::ExtInst, Some(result_type), Some(_id), ops);
-        self.insert_into_block(InsertPoint::End, inst)?;
-        Ok(_id)
+        let id = result_id.unwrap_or_else(|| self.id());
+        let inst = dr::Instruction::new(spirv::Op::ExtInst, Some(result_type), Some(id), ops);
+        self.insert_into_block(insert_point, inst)?;
+        Ok(id)
     }
 
     /// Appends an `OpLine` instruction.
@@ -585,7 +614,43 @@ impl Builder {
     /// If a block is currently selected, the `OpLine` is inserted into that block. If no block is
     /// currently selected, the `OpLine` is inserted into `types_global_values`.
     pub fn line(&mut self, file: spirv::Word, line: u32, column: u32) {
-        let inst = dr::Instruction::new(
+        self.append_debug_line(Self::line_inst(file, line, column));
+    }
+
+    /// Inserts an `OpLine` instruction into the current block at `insert_point`.
+    ///
+    /// # Errors
+    ///
+    /// Fails if no block is selected.
+    pub fn insert_line(
+        &mut self,
+        insert_point: InsertPoint,
+        file: spirv::Word,
+        line: u32,
+        column: u32,
+    ) -> BuildResult<()> {
+        self.insert_into_block(insert_point, Self::line_inst(file, line, column))
+    }
+
+    /// Appends an `OpNoLine` instruction.
+    ///
+    /// If a block is currently selected, the `OpNoLine` is inserted into that block. If no block
+    /// is currently selected, the `OpNoLine` is inserted into `types_global_values`.
+    pub fn no_line(&mut self) {
+        self.append_debug_line(Self::no_line_inst());
+    }
+
+    /// Inserts an `OpNoLine` instruction into the current block at `insert_point`.
+    ///
+    /// # Errors
+    ///
+    /// Fails if no block is selected.
+    pub fn insert_no_line(&mut self, insert_point: InsertPoint) -> BuildResult<()> {
+        self.insert_into_block(insert_point, Self::no_line_inst())
+    }
+
+    fn line_inst(file: spirv::Word, line: u32, column: u32) -> dr::Instruction {
+        dr::Instruction::new(
             spirv::Op::Line,
             None,
             None,
@@ -594,23 +659,16 @@ impl Builder {
                 dr::Operand::LiteralBit32(line),
                 dr::Operand::LiteralBit32(column),
             ],
-        );
-        if self.selected_block.is_some() {
-            self.insert_into_block(InsertPoint::End, inst)
-                .expect("Internal error: insert_into_block failed when selected_block was Some");
-        } else {
-            // types_global_values is the only valid section (other than functions) that
-            // OpLine/OpNoLine can be placed in, so put it there.
-            self.module.types_global_values.push(inst);
-        }
+        )
     }
 
-    /// Appends an `OpNoLine` instruction.
-    ///
-    /// If a block is currently selected, the `OpNoLine` is inserted into that block. If no block
-    /// is currently selected, the `OpNoLine` is inserted into `types_global_values`.
-    pub fn no_line(&mut self) {
-        let inst = dr::Instruction::new(spirv::Op::NoLine, None, None, vec![]);
+    fn no_line_inst() -> dr::Instruction {
+        dr::Instruction::new(spirv::Op::NoLine, None, None, vec![])
+    }
+
+    /// Appends an `OpLine` or an `OpNoLine` to the current block, or to `types_global_values` if
+    /// no block is currently selected.
+    fn append_debug_line(&mut self, inst: dr::Instruction) {
         if self.selected_block.is_some() {
             self.insert_into_block(InsertPoint::End, inst)
                 .expect("Internal error: insert_into_block failed when selected_block was Some");
@@ -1224,6 +1282,50 @@ mod tests {
                     %7 = OpUndef  %2\n\
                     OpReturn\n\
                     OpFunctionEnd"
+        );
+    }
+
+    #[test]
+    fn test_insert_debug_instructions() {
+        let mut b = Builder::new();
+
+        let void = b.type_void();
+        let float = b.type_float(32, None);
+        let voidfvoid = b.type_function(void, vec![]);
+        let file = b.string("kernel.rs");
+        b.begin_function(void, None, spirv::FunctionControl::NONE, voidfvoid)
+            .unwrap();
+        b.begin_block(None).unwrap();
+        b.undef(float, None);
+        b.undef(float, None);
+        b.insert_line(super::InsertPoint::FromBegin(1), file, 3, 5).unwrap();
+        b.insert_no_line(super::InsertPoint::End).unwrap();
+        let scope = b.shader_debug_info_none();
+        b.insert_shader_debug_scope(super::InsertPoint::Begin, scope, None)
+            .unwrap();
+        b.ret().unwrap();
+        b.end_function().unwrap();
+
+        let m = b.module();
+        let opcodes = m.functions[0].blocks[0]
+            .instructions
+            .iter()
+            .map(|inst| inst.class.opcode)
+            .collect::<Vec<_>>();
+        assert_eq!(
+            opcodes,
+            [
+                spirv::Op::ExtInst,
+                spirv::Op::Undef,
+                spirv::Op::Line,
+                spirv::Op::Undef,
+                spirv::Op::NoLine,
+                spirv::Op::Return,
+            ]
+        );
+        assert_eq!(
+            m.functions[0].blocks[0].instructions[0].operands[1],
+            dr::Operand::LiteralExtInstInteger(spirv::DebugInfoOp::DebugScope as spirv::Word)
         );
     }
 }
