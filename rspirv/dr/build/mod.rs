@@ -877,7 +877,6 @@ mod tests {
     use crate::spirv;
 
     use super::Builder;
-    use std::f32;
 
     use crate::binary::Disassemble;
 
@@ -964,7 +963,7 @@ mod tests {
         let mut b = Builder::new();
         let float = b.type_float(32, None);
         // Normal numbers
-        b.constant_bit32(float, f32::consts::PI.to_bits());
+        b.constant_bit32(float, core::f32::consts::PI.to_bits());
         b.constant_bit32(float, 2e-10f32.to_bits());
         // Zero
         b.constant_bit32(float, 0.0f32.to_bits());
@@ -981,7 +980,7 @@ mod tests {
         assert_eq!(spirv::Op::Constant, inst.class.opcode);
         assert_eq!(Some(1), inst.result_type);
         assert_eq!(Some(2), inst.result_id);
-        assert_eq!(dr::Operand::from(f32::consts::PI.to_bits()), inst.operands[0]);
+        assert_eq!(dr::Operand::from(core::f32::consts::PI.to_bits()), inst.operands[0]);
 
         let inst = &m.types_global_values[2];
         assert_eq!(spirv::Op::Constant, inst.class.opcode);

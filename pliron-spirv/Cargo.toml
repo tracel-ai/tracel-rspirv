@@ -10,6 +10,9 @@ keywords = ["spirv", "vulkan", "opengl", "opencl", "pliron"]
 license = "Apache-2.0"
 repository = "https://github.com/tracel-ai/tracel-rspirv"
 
+[lints]
+workspace = true
+
 [dependencies]
 derive-new = "0.7"
 derive_more = { version = "2", features = ["from", "into"] }
