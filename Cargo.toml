@@ -5,15 +5,21 @@ resolver = "2"
 [workspace.package]
 edition = "2024"
 rust-version = "1.91"
-version = "0.15.0+sdk-1.4.357.0"
+version = "0.16.0+sdk-1.4.357.0"
+
+[workspace.lints.clippy]
+# Temporary workaround for linting generated code:
+# https://github.com/rust-lang/rust-clippy/issues/17525
+redundant_field_names = "allow"
 
 [workspace.dependencies]
 log = { default-features = false, version = "0.4.22" }
-pliron = { git = "https://github.com/pliron-org/pliron.git", rev = "81155d96b8797d149de1d88219c431a68a75ef33", default-features = false }
-# pliron = { version = "0.18", default-features = false }
+# pliron = { git = "https://github.com/pliron-org/pliron.git", rev = "81155d96b8797d149de1d88219c431a68a75ef33", default-features = false }
+pliron = { version = "0.19", default-features = false }
 # pliron = { path = "../pliron", default-features = false }
 rstest = "0.26.1"
 strum = { version = "0.28", features = ["derive"] }
 tracel-xtask = { version = "=5.0.0" }
+
 [profile.dev]
 debug = 0
