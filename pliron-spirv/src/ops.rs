@@ -748,16 +748,33 @@ impl ToSpirvOp for LoopOp {
             op_to_spirv(ctx, builder, op)?;
         }
 
-        block_to_spirv(ctx, builder, header, false, true)?;
-        builder
-            .insert_loop_merge(
-                InsertPoint::FromEnd(1),
-                merge_label,
-                continue_label,
-                LoopControl::NONE,
-                [],
-            )
-            .into_pliron_result()?;
+        // A selection or loop in the header's ops starts in the header's block, and a block has at
+        // most one merge instruction. Such a header keeps only its phis and the merge instruction,
+        // and its ops start in a block of their own.
+        if let Some(&body_label) = builder.blocks.get(&(header, BlockPos::Body)) {
+            let header_label = builder.label_id(header, BlockPos::Start);
+            builder.begin_block(Some(header_label)).into_pliron_result()?;
+            phis_to_spirv(ctx, builder, header)?;
+            builder
+                .loop_merge(merge_label, continue_label, LoopControl::NONE, [])
+                .into_pliron_result()?;
+            builder.branch(body_label).into_pliron_result()?;
+            builder.begin_block(Some(body_label)).into_pliron_result()?;
+            for op in header.deref(ctx).iter(ctx) {
+                op_to_spirv(ctx, builder, op)?;
+            }
+        } else {
+            block_to_spirv(ctx, builder, header, false, true)?;
+            builder
+                .insert_loop_merge(
+                    InsertPoint::FromEnd(1),
+                    merge_label,
+                    continue_label,
+                    LoopControl::NONE,
+                    [],
+                )
+                .into_pliron_result()?;
+        }
         builder.select_block(None).into_pliron_result()?;
 
         block_to_spirv(ctx, builder, r#loop, false, false)?;
@@ -1098,21 +1115,37 @@ pub(crate) fn compute_block_ids(ctx: &Context, builder: &mut PlironBuilder, func
 
     while let Some(region) = worklist.pop() {
         for block in region.deref(ctx).iter(ctx) {
-            let mut id = builder.label_id(block, BlockPos::Start);
+            let mut id = match builder.blocks.get(&(block, BlockPos::Body)) {
+                Some(&body) => body,
+                None => builder.label_id(block, BlockPos::Start),
+            };
             for op in block.deref(ctx).iter(ctx) {
                 worklist.extend(op.deref(ctx).regions());
 
-                if Operation::is_op::<SelectionOp>(op, ctx) || Operation::is_op::<LoopOp>(op, ctx) {
+                if is_construct(ctx, op) {
                     let region = op.deref(ctx).get_region(0);
                     let entry = region.deref(ctx).get_entry_block().expect("Should have entry");
                     let merge = region.deref(ctx).get_tail().expect("Should have merge");
                     builder.blocks.insert((entry, BlockPos::Start), id);
                     id = builder.label_id(merge, BlockPos::Start);
                 }
+                // A loop header with a construct in it gets a block for its ops (see `LoopOp`).
+                if Operation::is_op::<LoopOp>(op, ctx) {
+                    let region = op.deref(ctx).get_region(0);
+                    let header = region.deref(ctx).iter(ctx).nth(1).expect("Should have header");
+                    if header.deref(ctx).iter(ctx).any(|op| is_construct(ctx, op)) {
+                        builder.label_id(header, BlockPos::Body);
+                    }
+                }
             }
             builder.blocks.insert((block, BlockPos::End), id);
         }
     }
+}
+
+/// Whether `op` is a selection or a loop, which starts in the block it is in.
+fn is_construct(ctx: &Context, op: Ptr<Operation>) -> bool {
+    Operation::is_op::<SelectionOp>(op, ctx) || Operation::is_op::<LoopOp>(op, ctx)
 }
 
 pub(crate) fn block_to_spirv(
@@ -1126,8 +1159,27 @@ pub(crate) fn block_to_spirv(
     builder.begin_block(Some(label_id)).into_pliron_result()?;
     let block_id = builder.selected_block();
 
+    if !is_entry {
+        phis_to_spirv(ctx, builder, block)?;
+    }
+
+    let ops = block.deref(ctx).iter(ctx).collect::<Vec<_>>();
+    for op in ops {
+        op_to_spirv(ctx, builder, op)?;
+    }
+
+    if keep_selected {
+        builder.select_block(block_id).into_pliron_result()?;
+    } else {
+        builder.select_block(None).into_pliron_result()?;
+    }
+    Ok(())
+}
+
+/// Appends an `OpPhi` for each argument of `block` to the current block.
+fn phis_to_spirv(ctx: &Context, builder: &mut PlironBuilder, block: Ptr<BasicBlock>) -> Result<()> {
     let args = block.deref(ctx).arguments().collect::<Vec<_>>();
-    if !is_entry && !args.is_empty() {
+    if !args.is_empty() {
         let predecessors = block.preds(ctx);
         let mut pred_args = vec![Vec::new(); args.len()];
         for pred in predecessors {
@@ -1148,17 +1200,6 @@ pub(crate) fn block_to_spirv(
                 .phi(result_type, Some(result_id), sources)
                 .into_pliron_result()?;
         }
-    }
-
-    let ops = block.deref(ctx).iter(ctx).collect::<Vec<_>>();
-    for op in ops {
-        op_to_spirv(ctx, builder, op)?;
-    }
-
-    if keep_selected {
-        builder.select_block(block_id).into_pliron_result()?;
-    } else {
-        builder.select_block(None).into_pliron_result()?;
     }
     Ok(())
 }

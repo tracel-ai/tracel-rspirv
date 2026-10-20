@@ -94,6 +94,9 @@ impl DerefMut for PlironBuilder {
 pub(crate) enum BlockPos {
     Start,
     End,
+    /// The block that a loop header's ops start in, after the header's phis and merge
+    /// instruction.
+    Body,
 }
 
 impl PlironBuilder {
