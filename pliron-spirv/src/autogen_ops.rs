@@ -127,8 +127,8 @@ crate::format::canonical_format!(
     crate ::format::Quantifier::One)
 );
 mod spirv_source_continued {
-    pub static ATTR_CONTINUED_SOURCE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_source_continued_continued_source".try_into().unwrap());
+    pub static ATTR_CONTINUED_SOURCE: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_source_continued_continued_source");
 }
 impl SourceContinuedOp {
     #[allow(clippy::too_many_arguments)]
@@ -210,14 +210,11 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_source {
-    pub static ATTR_SOURCE_LANGUAGE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_source_source_language".try_into().unwrap());
-    pub static ATTR_VERSION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_source_version".try_into().unwrap());
-    pub static ATTR_FILE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_source_file".try_into().unwrap());
-    pub static ATTR_SOURCE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_source_source".try_into().unwrap());
+    pub static ATTR_SOURCE_LANGUAGE: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_source_source_language");
+    pub static ATTR_VERSION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_source_version");
+    pub static ATTR_FILE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_source_file");
+    pub static ATTR_SOURCE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_source_source");
 }
 impl SourceOp {
     #[allow(clippy::too_many_arguments)]
@@ -296,7 +293,7 @@ impl SourceOp {
     }
     ///Remove the attribute named `file`.
     pub fn remove_attr_file(&self, ctx: &::pliron::context::Context) {
-        self.op.deref_mut(ctx).attributes.0.remove(&*spirv_source::ATTR_FILE);
+        self.op.deref_mut(ctx).attributes.0.remove(&spirv_source::ATTR_FILE);
     }
     ///Get a [Ref](core::cell::Ref) to the value of the attribute named `source`.
     pub fn get_attr_source<'a>(
@@ -317,7 +314,7 @@ impl SourceOp {
     }
     ///Remove the attribute named `source`.
     pub fn remove_attr_source(&self, ctx: &::pliron::context::Context) {
-        self.op.deref_mut(ctx).attributes.0.remove(&*spirv_source::ATTR_SOURCE);
+        self.op.deref_mut(ctx).attributes.0.remove(&spirv_source::ATTR_SOURCE);
     }
 }
 #[op_interface_impl]
@@ -384,8 +381,7 @@ crate::format::canonical_format!(
     LiteralStringAttr, "extension", crate ::format::Quantifier::One)
 );
 mod spirv_source_extension {
-    pub static ATTR_EXTENSION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_source_extension_extension".try_into().unwrap());
+    pub static ATTR_EXTENSION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_source_extension_extension");
 }
 impl SourceExtensionOp {
     #[allow(clippy::too_many_arguments)]
@@ -463,8 +459,7 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_name {
-    pub static ATTR_NAME: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_name_name".try_into().unwrap());
+    pub static ATTR_NAME: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_name_name");
 }
 impl NameOp {
     #[allow(clippy::too_many_arguments)]
@@ -540,10 +535,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_member_name {
-    pub static ATTR_MEMBER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_member_name_member".try_into().unwrap());
-    pub static ATTR_NAME: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_member_name_name".try_into().unwrap());
+    pub static ATTR_MEMBER: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_member_name_member");
+    pub static ATTR_NAME: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_member_name_name");
 }
 impl MemberNameOp {
     #[allow(clippy::too_many_arguments)]
@@ -649,12 +642,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_line {
-    pub static ATTR_FILE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_line_file".try_into().unwrap());
-    pub static ATTR_LINE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_line_line".try_into().unwrap());
-    pub static ATTR_COLUMN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_line_column".try_into().unwrap());
+    pub static ATTR_FILE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_line_file");
+    pub static ATTR_LINE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_line_line");
+    pub static ATTR_COLUMN: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_line_column");
 }
 impl LineOp {
     #[allow(clippy::too_many_arguments)]
@@ -775,14 +765,11 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrMore)
 );
 mod spirv_entry_point {
-    pub static ATTR_EXECUTION_MODEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_entry_point_execution_model".try_into().unwrap());
-    pub static ATTR_ENTRY_POINT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_entry_point_entry_point".try_into().unwrap());
-    pub static ATTR_NAME: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_entry_point_name".try_into().unwrap());
-    pub static ATTR_INTERFACE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_entry_point_interface".try_into().unwrap());
+    pub static ATTR_EXECUTION_MODEL: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_entry_point_execution_model");
+    pub static ATTR_ENTRY_POINT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_entry_point_entry_point");
+    pub static ATTR_NAME: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_entry_point_name");
+    pub static ATTR_INTERFACE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_entry_point_interface");
 }
 impl EntryPointOp {
     #[allow(clippy::too_many_arguments)]
@@ -931,8 +918,7 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrMore)
 );
 mod spirv_function_call {
-    pub static ATTR_FUNCTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_function_call_function".try_into().unwrap());
+    pub static ATTR_FUNCTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_function_call_function");
 }
 impl FunctionCallOp {
     #[allow(clippy::too_many_arguments)]
@@ -1028,8 +1014,7 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("initializer", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_variable {
-    pub static ATTR_STORAGE_CLASS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_variable_storage_class".try_into().unwrap());
+    pub static ATTR_STORAGE_CLASS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_variable_storage_class");
 }
 impl VariableOp {
     #[allow(clippy::too_many_arguments)]
@@ -1199,10 +1184,8 @@ crate::format::canonical_format!(
     "align", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_load {
-    pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_load_memory_access".try_into().unwrap());
-    pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_load_align".try_into().unwrap());
+    pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_load_memory_access");
+    pub static ATTR_ALIGN: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_load_align");
 }
 impl LoadOp {
     #[allow(clippy::too_many_arguments)]
@@ -1266,7 +1249,7 @@ impl LoadOp {
     }
     ///Remove the attribute named `align`.
     pub fn remove_attr_align(&self, ctx: &::pliron::context::Context) {
-        self.op.deref_mut(ctx).attributes.0.remove(&*spirv_load::ATTR_ALIGN);
+        self.op.deref_mut(ctx).attributes.0.remove(&spirv_load::ATTR_ALIGN);
     }
 }
 #[op_interface_impl]
@@ -1327,10 +1310,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_store {
-    pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_store_memory_access".try_into().unwrap());
-    pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_store_align".try_into().unwrap());
+    pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_store_memory_access");
+    pub static ATTR_ALIGN: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_store_align");
 }
 impl StoreOp {
     #[allow(clippy::too_many_arguments)]
@@ -1394,7 +1375,7 @@ impl StoreOp {
     }
     ///Remove the attribute named `align`.
     pub fn remove_attr_align(&self, ctx: &::pliron::context::Context) {
-        self.op.deref_mut(ctx).attributes.0.remove(&*spirv_store::ATTR_ALIGN);
+        self.op.deref_mut(ctx).attributes.0.remove(&spirv_store::ATTR_ALIGN);
     }
 }
 #[op_interface_impl]
@@ -1456,14 +1437,12 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_copy_memory {
-    pub static ATTR_MEMORY_ACCESS_1: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_memory_access_1".try_into().unwrap());
-    pub static ATTR_ALIGN_1: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_align_1".try_into().unwrap());
-    pub static ATTR_MEMORY_ACCESS_2: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_memory_access_2".try_into().unwrap());
-    pub static ATTR_ALIGN_2: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_align_2".try_into().unwrap());
+    pub static ATTR_MEMORY_ACCESS_1: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_copy_memory_memory_access_1");
+    pub static ATTR_ALIGN_1: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_copy_memory_align_1");
+    pub static ATTR_MEMORY_ACCESS_2: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_copy_memory_memory_access_2");
+    pub static ATTR_ALIGN_2: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_copy_memory_align_2");
 }
 impl CopyMemoryOp {
     #[allow(clippy::too_many_arguments)]
@@ -1538,7 +1517,7 @@ impl CopyMemoryOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_copy_memory::ATTR_ALIGN_1);
+            .remove(&spirv_copy_memory::ATTR_ALIGN_1);
     }
     ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory_access_2`.
     pub fn get_attr_memory_access_2<'a>(
@@ -1582,7 +1561,7 @@ impl CopyMemoryOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_copy_memory::ATTR_ALIGN_2);
+            .remove(&spirv_copy_memory::ATTR_ALIGN_2);
     }
 }
 #[op_interface_impl]
@@ -1650,14 +1629,12 @@ crate::format::canonical_format!(
     LiteralIntegerAttr, "align_2", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_copy_memory_sized {
-    pub static ATTR_MEMORY_ACCESS_1: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_sized_memory_access_1".try_into().unwrap());
-    pub static ATTR_ALIGN_1: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_sized_align_1".try_into().unwrap());
-    pub static ATTR_MEMORY_ACCESS_2: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_sized_memory_access_2".try_into().unwrap());
-    pub static ATTR_ALIGN_2: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_copy_memory_sized_align_2".try_into().unwrap());
+    pub static ATTR_MEMORY_ACCESS_1: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_copy_memory_sized_memory_access_1");
+    pub static ATTR_ALIGN_1: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_copy_memory_sized_align_1");
+    pub static ATTR_MEMORY_ACCESS_2: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_copy_memory_sized_memory_access_2");
+    pub static ATTR_ALIGN_2: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_copy_memory_sized_align_2");
 }
 impl CopyMemorySizedOp {
     #[allow(clippy::too_many_arguments)]
@@ -1733,7 +1710,7 @@ impl CopyMemorySizedOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_copy_memory_sized::ATTR_ALIGN_1);
+            .remove(&spirv_copy_memory_sized::ATTR_ALIGN_1);
     }
     ///Get a [Ref](core::cell::Ref) to the value of the attribute named `memory_access_2`.
     pub fn get_attr_memory_access_2<'a>(
@@ -1777,7 +1754,7 @@ impl CopyMemorySizedOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_copy_memory_sized::ATTR_ALIGN_2);
+            .remove(&spirv_copy_memory_sized::ATTR_ALIGN_2);
     }
 }
 #[op_interface_impl]
@@ -2070,8 +2047,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_array_length {
-    pub static ATTR_ARRAY_MEMBER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_array_length_array_member".try_into().unwrap());
+    pub static ATTR_ARRAY_MEMBER: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_array_length_array_member");
 }
 impl ArrayLengthOp {
     #[allow(clippy::too_many_arguments)]
@@ -2456,8 +2433,7 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrMore)
 );
 mod spirv_vector_shuffle {
-    pub static ATTR_COMPONENTS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_vector_shuffle_components".try_into().unwrap());
+    pub static ATTR_COMPONENTS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_vector_shuffle_components");
 }
 impl VectorShuffleOp {
     #[allow(clippy::too_many_arguments)]
@@ -2634,8 +2610,7 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrMore)
 );
 mod spirv_composite_extract {
-    pub static ATTR_INDEXES: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_composite_extract_indexes".try_into().unwrap());
+    pub static ATTR_INDEXES: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_composite_extract_indexes");
 }
 impl CompositeExtractOp {
     #[allow(clippy::too_many_arguments)]
@@ -2735,8 +2710,7 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrMore)
 );
 mod spirv_composite_insert {
-    pub static ATTR_INDEXES: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_composite_insert_indexes".try_into().unwrap());
+    pub static ATTR_INDEXES: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_composite_insert_indexes");
 }
 impl CompositeInsertOp {
     #[allow(clippy::too_many_arguments)]
@@ -3922,8 +3896,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_generic_cast_to_ptr_explicit {
-    pub static ATTR_STORAGE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_generic_cast_to_ptr_explicit_storage".try_into().unwrap());
+    pub static ATTR_STORAGE: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_generic_cast_to_ptr_explicit_storage");
 }
 impl GenericCastToPtrExplicitOp {
     #[allow(clippy::too_many_arguments)]
@@ -10159,12 +10133,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_control_barrier {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_execution".try_into().unwrap());
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_semantics".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_control_barrier_execution");
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_control_barrier_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_control_barrier_semantics");
 }
 impl ControlBarrierOp {
     #[allow(clippy::too_many_arguments)]
@@ -10290,10 +10261,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_memory_barrier {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_memory_barrier_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_memory_barrier_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_memory_barrier_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_memory_barrier_semantics");
 }
 impl MemoryBarrierOp {
     #[allow(clippy::too_many_arguments)]
@@ -10395,10 +10364,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_load {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_load_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_load_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_load_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_load_semantics");
 }
 impl AtomicLoadOp {
     #[allow(clippy::too_many_arguments)]
@@ -10516,10 +10483,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_store {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_store_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_store_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_store_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_store_semantics");
 }
 impl AtomicStoreOp {
     #[allow(clippy::too_many_arguments)]
@@ -10640,10 +10605,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_exchange {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_exchange_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_exchange_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_exchange_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_exchange_semantics");
 }
 impl AtomicExchangeOp {
     #[allow(clippy::too_many_arguments)]
@@ -10771,12 +10734,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_compare_exchange {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_compare_exchange_memory".try_into().unwrap());
-    pub static ATTR_EQUAL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_compare_exchange_equal".try_into().unwrap());
-    pub static ATTR_UNEQUAL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_compare_exchange_unequal".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_compare_exchange_memory");
+    pub static ATTR_EQUAL: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_compare_exchange_equal");
+    pub static ATTR_UNEQUAL: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_compare_exchange_unequal");
 }
 impl AtomicCompareExchangeOp {
     #[allow(clippy::too_many_arguments)]
@@ -10939,12 +10900,12 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_compare_exchange_weak {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_compare_exchange_weak_memory".try_into().unwrap());
-    pub static ATTR_EQUAL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_compare_exchange_weak_equal".try_into().unwrap());
-    pub static ATTR_UNEQUAL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_compare_exchange_weak_unequal".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_compare_exchange_weak_memory");
+    pub static ATTR_EQUAL: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_compare_exchange_weak_equal");
+    pub static ATTR_UNEQUAL: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_compare_exchange_weak_unequal");
 }
 impl AtomicCompareExchangeWeakOp {
     #[allow(clippy::too_many_arguments)]
@@ -11104,10 +11065,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_i_increment {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_increment_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_increment_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_i_increment_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_i_increment_semantics");
 }
 impl AtomicIIncrementOp {
     #[allow(clippy::too_many_arguments)]
@@ -11229,10 +11189,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_i_decrement {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_decrement_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_decrement_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_i_decrement_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_i_decrement_semantics");
 }
 impl AtomicIDecrementOp {
     #[allow(clippy::too_many_arguments)]
@@ -11354,10 +11313,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_i_add {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_add_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_add_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_i_add_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_i_add_semantics");
 }
 impl AtomicIAddOp {
     #[allow(clippy::too_many_arguments)]
@@ -11481,10 +11438,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_i_sub {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_sub_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_i_sub_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_i_sub_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_i_sub_semantics");
 }
 impl AtomicISubOp {
     #[allow(clippy::too_many_arguments)]
@@ -11608,10 +11563,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_s_min {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_s_min_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_s_min_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_s_min_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_s_min_semantics");
 }
 impl AtomicSMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -11735,10 +11688,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_u_min {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_u_min_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_u_min_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_u_min_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_u_min_semantics");
 }
 impl AtomicUMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -11862,10 +11813,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_s_max {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_s_max_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_s_max_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_s_max_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_s_max_semantics");
 }
 impl AtomicSMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -11989,10 +11938,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_u_max {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_u_max_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_u_max_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_u_max_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_u_max_semantics");
 }
 impl AtomicUMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -12116,10 +12063,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_and {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_and_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_and_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_and_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_and_semantics");
 }
 impl AtomicAndOp {
     #[allow(clippy::too_many_arguments)]
@@ -12241,10 +12186,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_or {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_or_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_or_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_or_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_or_semantics");
 }
 impl AtomicOrOp {
     #[allow(clippy::too_many_arguments)]
@@ -12366,10 +12309,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_xor {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_xor_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_xor_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_xor_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_xor_semantics");
 }
 impl AtomicXorOp {
     #[allow(clippy::too_many_arguments)]
@@ -12492,8 +12433,7 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("event", crate ::format::Quantifier::One)
 );
 mod spirv_group_async_copy {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_async_copy_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_async_copy_execution");
 }
 impl GroupAsyncCopyOp {
     #[allow(clippy::too_many_arguments)]
@@ -12605,8 +12545,7 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("events_list", crate ::format::Quantifier::One)
 );
 mod spirv_group_wait_events {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_wait_events_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_wait_events_execution");
 }
 impl GroupWaitEventsOp {
     #[allow(clippy::too_many_arguments)]
@@ -12695,8 +12634,7 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("predicate", crate ::format::Quantifier::One)
 );
 mod spirv_group_all {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_all_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_all_execution");
 }
 impl GroupAllOp {
     #[allow(clippy::too_many_arguments)]
@@ -12787,8 +12725,7 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("predicate", crate ::format::Quantifier::One)
 );
 mod spirv_group_any {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_any_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_any_execution");
 }
 impl GroupAnyOp {
     #[allow(clippy::too_many_arguments)]
@@ -12880,8 +12817,7 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("local_id", crate ::format::Quantifier::One)
 );
 mod spirv_group_broadcast {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_broadcast_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_broadcast_execution");
 }
 impl GroupBroadcastOp {
     #[allow(clippy::too_many_arguments)]
@@ -12981,10 +12917,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_i_add {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_i_add_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_i_add_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_i_add_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_i_add_operation");
 }
 impl GroupIAddOp {
     #[allow(clippy::too_many_arguments)]
@@ -13106,10 +13040,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_f_add {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_add_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_add_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_f_add_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_f_add_operation");
 }
 impl GroupFAddOp {
     #[allow(clippy::too_many_arguments)]
@@ -13231,10 +13163,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_f_min {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_min_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_min_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_f_min_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_f_min_operation");
 }
 impl GroupFMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -13356,10 +13286,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_u_min {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_u_min_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_u_min_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_u_min_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_u_min_operation");
 }
 impl GroupUMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -13481,10 +13409,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_s_min {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_s_min_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_s_min_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_s_min_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_s_min_operation");
 }
 impl GroupSMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -13606,10 +13532,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_f_max {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_max_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_max_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_f_max_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_f_max_operation");
 }
 impl GroupFMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -13731,10 +13655,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_u_max {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_u_max_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_u_max_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_u_max_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_u_max_operation");
 }
 impl GroupUMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -13856,10 +13778,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_s_max {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_s_max_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_s_max_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_s_max_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_group_s_max_operation");
 }
 impl GroupSMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -14875,10 +14795,8 @@ crate::format::canonical_format!(
     crate ::format::Quantifier::One)
 );
 mod spirv_group_reserve_read_pipe_packets {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_reserve_read_pipe_packets_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_reserve_read_pipe_packets_execution");
 }
 impl GroupReserveReadPipePacketsOp {
     #[allow(clippy::too_many_arguments)]
@@ -14992,10 +14910,8 @@ crate::format::canonical_format!(
     crate ::format::Quantifier::One)
 );
 mod spirv_group_reserve_write_pipe_packets {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_reserve_write_pipe_packets_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_reserve_write_pipe_packets_execution");
 }
 impl GroupReserveWritePipePacketsOp {
     #[allow(clippy::too_many_arguments)]
@@ -15107,8 +15023,8 @@ crate::format::canonical_format!(
     crate ::format::Quantifier::One)
 );
 mod spirv_group_commit_read_pipe {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_commit_read_pipe_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_commit_read_pipe_execution");
 }
 impl GroupCommitReadPipeOp {
     #[allow(clippy::too_many_arguments)]
@@ -15208,8 +15124,8 @@ crate::format::canonical_format!(
     crate ::format::Quantifier::One)
 );
 mod spirv_group_commit_write_pipe {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_commit_write_pipe_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_commit_write_pipe_execution");
 }
 impl GroupCommitWritePipeOp {
     #[allow(clippy::too_many_arguments)]
@@ -16455,10 +16371,10 @@ crate::format::canonical_format!(
     crate ::format::Quantifier::One)
 );
 mod spirv_atomic_flag_test_and_set {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_flag_test_and_set_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_flag_test_and_set_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_flag_test_and_set_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_atomic_flag_test_and_set_semantics");
 }
 impl AtomicFlagTestAndSetOp {
     #[allow(clippy::too_many_arguments)]
@@ -16579,10 +16495,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_atomic_flag_clear {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_flag_clear_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_flag_clear_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_flag_clear_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_flag_clear_semantics");
 }
 impl AtomicFlagClearOp {
     #[allow(clippy::too_many_arguments)]
@@ -16761,12 +16675,12 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_constant_pipe_storage {
-    pub static ATTR_PACKET_SIZE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_constant_pipe_storage_packet_size".try_into().unwrap());
-    pub static ATTR_PACKET_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_constant_pipe_storage_packet_alignment".try_into().unwrap());
-    pub static ATTR_CAPACITY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_constant_pipe_storage_capacity".try_into().unwrap());
+    pub static ATTR_PACKET_SIZE: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_constant_pipe_storage_packet_size");
+    pub static ATTR_PACKET_ALIGNMENT: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_constant_pipe_storage_packet_alignment");
+    pub static ATTR_CAPACITY: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_constant_pipe_storage_capacity");
 }
 impl ConstantPipeStorageOp {
     #[allow(clippy::too_many_arguments)]
@@ -17221,10 +17135,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_memory_named_barrier {
-    pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_memory_named_barrier_memory".try_into().unwrap());
-    pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_memory_named_barrier_semantics".try_into().unwrap());
+    pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_memory_named_barrier_memory");
+    pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_memory_named_barrier_semantics");
 }
 impl MemoryNamedBarrierOp {
     #[allow(clippy::too_many_arguments)]
@@ -17337,8 +17250,7 @@ crate::format::canonical_format!(
     LiteralStringAttr, "process", crate ::format::Quantifier::One)
 );
 mod spirv_module_processed {
-    pub static ATTR_PROCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_module_processed_process".try_into().unwrap());
+    pub static ATTR_PROCESS: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_module_processed_process");
 }
 impl ModuleProcessedOp {
     #[allow(clippy::too_many_arguments)]
@@ -17418,8 +17330,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_elect {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_elect_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_elect_execution");
 }
 impl GroupNonUniformElectOp {
     #[allow(clippy::too_many_arguments)]
@@ -17510,8 +17422,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_all {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_all_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_all_execution");
 }
 impl GroupNonUniformAllOp {
     #[allow(clippy::too_many_arguments)]
@@ -17603,8 +17515,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_any {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_any_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_any_execution");
 }
 impl GroupNonUniformAnyOp {
     #[allow(clippy::too_many_arguments)]
@@ -17696,8 +17608,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_all_equal {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_all_equal_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_all_equal_execution");
 }
 impl GroupNonUniformAllEqualOp {
     #[allow(clippy::too_many_arguments)]
@@ -17790,8 +17702,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_broadcast {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_broadcast_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_broadcast_execution");
 }
 impl GroupNonUniformBroadcastOp {
     #[allow(clippy::too_many_arguments)]
@@ -17890,10 +17802,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_broadcast_first {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_broadcast_first_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_broadcast_first_execution");
 }
 impl GroupNonUniformBroadcastFirstOp {
     #[allow(clippy::too_many_arguments)]
@@ -17985,8 +17895,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_ballot {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_ballot_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_ballot_execution");
 }
 impl GroupNonUniformBallotOp {
     #[allow(clippy::too_many_arguments)]
@@ -18078,10 +17988,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_inverse_ballot {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_inverse_ballot_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_inverse_ballot_execution");
 }
 impl GroupNonUniformInverseBallotOp {
     #[allow(clippy::too_many_arguments)]
@@ -18174,12 +18082,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_ballot_bit_extract {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_ballot_bit_extract_execution"
-                .try_into()
-                .unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_ballot_bit_extract_execution");
 }
 impl GroupNonUniformBallotBitExtractOp {
     #[allow(clippy::too_many_arguments)]
@@ -18280,14 +18184,10 @@ crate::format::canonical_format!(
     ::format::FormatVar::Value("value", crate ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_ballot_bit_count {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_ballot_bit_count_execution".try_into().unwrap()
-        });
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_ballot_bit_count_operation".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_ballot_bit_count_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_ballot_bit_count_operation");
 }
 impl GroupNonUniformBallotBitCountOp {
     #[allow(clippy::too_many_arguments)]
@@ -18408,10 +18308,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_ballot_find_lsb {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_ballot_find_lsb_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_ballot_find_lsb_execution");
 }
 impl GroupNonUniformBallotFindLSBOp {
     #[allow(clippy::too_many_arguments)]
@@ -18503,10 +18401,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_ballot_find_msb {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_ballot_find_msb_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_ballot_find_msb_execution");
 }
 impl GroupNonUniformBallotFindMSBOp {
     #[allow(clippy::too_many_arguments)]
@@ -18599,8 +18495,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_shuffle {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_shuffle_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_shuffle_execution");
 }
 impl GroupNonUniformShuffleOp {
     #[allow(clippy::too_many_arguments)]
@@ -18700,8 +18596,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_shuffle_xor {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_shuffle_xor_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_shuffle_xor_execution");
 }
 impl GroupNonUniformShuffleXorOp {
     #[allow(clippy::too_many_arguments)]
@@ -18801,8 +18697,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_shuffle_up {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_shuffle_up_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_shuffle_up_execution");
 }
 impl GroupNonUniformShuffleUpOp {
     #[allow(clippy::too_many_arguments)]
@@ -18902,10 +18798,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_shuffle_down {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_shuffle_down_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_shuffle_down_execution");
 }
 impl GroupNonUniformShuffleDownOp {
     #[allow(clippy::too_many_arguments)]
@@ -19007,10 +18901,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_i_add {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_i_add_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_i_add_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_i_add_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_i_add_operation");
 }
 impl GroupNonUniformIAddOp {
     #[allow(clippy::too_many_arguments)]
@@ -19140,10 +19034,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_f_add {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_add_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_add_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_add_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_add_operation");
 }
 impl GroupNonUniformFAddOp {
     #[allow(clippy::too_many_arguments)]
@@ -19273,10 +19167,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_i_mul {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_i_mul_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_i_mul_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_i_mul_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_i_mul_operation");
 }
 impl GroupNonUniformIMulOp {
     #[allow(clippy::too_many_arguments)]
@@ -19406,10 +19300,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_f_mul {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_mul_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_mul_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_mul_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_mul_operation");
 }
 impl GroupNonUniformFMulOp {
     #[allow(clippy::too_many_arguments)]
@@ -19539,10 +19433,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_s_min {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_s_min_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_s_min_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_s_min_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_s_min_operation");
 }
 impl GroupNonUniformSMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -19672,10 +19566,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_u_min {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_u_min_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_u_min_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_u_min_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_u_min_operation");
 }
 impl GroupNonUniformUMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -19805,10 +19699,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_f_min {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_min_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_min_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_min_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_min_operation");
 }
 impl GroupNonUniformFMinOp {
     #[allow(clippy::too_many_arguments)]
@@ -19938,10 +19832,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_s_max {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_s_max_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_s_max_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_s_max_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_s_max_operation");
 }
 impl GroupNonUniformSMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -20071,10 +19965,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_u_max {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_u_max_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_u_max_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_u_max_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_u_max_operation");
 }
 impl GroupNonUniformUMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -20204,10 +20098,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_f_max {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_max_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_f_max_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_max_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_f_max_operation");
 }
 impl GroupNonUniformFMaxOp {
     #[allow(clippy::too_many_arguments)]
@@ -20337,10 +20231,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_bitwise_and {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_bitwise_and_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_bitwise_and_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_bitwise_and_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_bitwise_and_operation");
 }
 impl GroupNonUniformBitwiseAndOp {
     #[allow(clippy::too_many_arguments)]
@@ -20470,10 +20364,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_bitwise_or {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_bitwise_or_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_bitwise_or_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_bitwise_or_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_bitwise_or_operation");
 }
 impl GroupNonUniformBitwiseOrOp {
     #[allow(clippy::too_many_arguments)]
@@ -20603,10 +20497,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_bitwise_xor {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_bitwise_xor_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_bitwise_xor_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_bitwise_xor_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_bitwise_xor_operation");
 }
 impl GroupNonUniformBitwiseXorOp {
     #[allow(clippy::too_many_arguments)]
@@ -20736,10 +20630,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_logical_and {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_logical_and_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_logical_and_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_logical_and_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_logical_and_operation");
 }
 impl GroupNonUniformLogicalAndOp {
     #[allow(clippy::too_many_arguments)]
@@ -20869,10 +20763,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_logical_or {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_logical_or_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_logical_or_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_logical_or_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_logical_or_operation");
 }
 impl GroupNonUniformLogicalOrOp {
     #[allow(clippy::too_many_arguments)]
@@ -21002,10 +20896,10 @@ crate::format::canonical_format!(
     ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_group_non_uniform_logical_xor {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_logical_xor_execution".try_into().unwrap());
-    pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_logical_xor_operation".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_logical_xor_execution");
+    pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_logical_xor_operation");
 }
 impl GroupNonUniformLogicalXorOp {
     #[allow(clippy::too_many_arguments)]
@@ -21133,10 +21027,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_quad_broadcast {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_group_non_uniform_quad_broadcast_execution".try_into().unwrap()
-        });
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_quad_broadcast_execution");
 }
 impl GroupNonUniformQuadBroadcastOp {
     #[allow(clippy::too_many_arguments)]
@@ -21236,8 +21128,8 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_group_non_uniform_quad_swap {
-    pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_non_uniform_quad_swap_execution".try_into().unwrap());
+    pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_group_non_uniform_quad_swap_execution");
 }
 impl GroupNonUniformQuadSwapOp {
     #[allow(clippy::too_many_arguments)]
@@ -21616,8 +21508,8 @@ crate::format::canonical_format!(
     "packed_vector_format", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_s_dot {
-    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_s_dot_packed_vector_format".try_into().unwrap());
+    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_s_dot_packed_vector_format");
 }
 impl SDotOp {
     #[allow(clippy::too_many_arguments)]
@@ -21667,7 +21559,7 @@ impl SDotOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_s_dot::ATTR_PACKED_VECTOR_FORMAT);
+            .remove(&spirv_s_dot::ATTR_PACKED_VECTOR_FORMAT);
     }
 }
 #[op_interface_impl]
@@ -21756,8 +21648,8 @@ crate::format::canonical_format!(
     "packed_vector_format", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_u_dot {
-    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_u_dot_packed_vector_format".try_into().unwrap());
+    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_u_dot_packed_vector_format");
 }
 impl UDotOp {
     #[allow(clippy::too_many_arguments)]
@@ -21807,7 +21699,7 @@ impl UDotOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_u_dot::ATTR_PACKED_VECTOR_FORMAT);
+            .remove(&spirv_u_dot::ATTR_PACKED_VECTOR_FORMAT);
     }
 }
 #[op_interface_impl]
@@ -21896,8 +21788,8 @@ crate::format::canonical_format!(
     "packed_vector_format", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_su_dot {
-    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_su_dot_packed_vector_format".try_into().unwrap());
+    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_su_dot_packed_vector_format");
 }
 impl SUDotOp {
     #[allow(clippy::too_many_arguments)]
@@ -21947,7 +21839,7 @@ impl SUDotOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_su_dot::ATTR_PACKED_VECTOR_FORMAT);
+            .remove(&spirv_su_dot::ATTR_PACKED_VECTOR_FORMAT);
     }
 }
 #[op_interface_impl]
@@ -22037,8 +21929,8 @@ crate::format::canonical_format!(
     "packed_vector_format", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_s_dot_acc_sat {
-    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_s_dot_acc_sat_packed_vector_format".try_into().unwrap());
+    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_s_dot_acc_sat_packed_vector_format");
 }
 impl SDotAccSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -22089,7 +21981,7 @@ impl SDotAccSatOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_s_dot_acc_sat::ATTR_PACKED_VECTOR_FORMAT);
+            .remove(&spirv_s_dot_acc_sat::ATTR_PACKED_VECTOR_FORMAT);
     }
 }
 #[op_interface_impl]
@@ -22187,8 +22079,8 @@ crate::format::canonical_format!(
     "packed_vector_format", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_u_dot_acc_sat {
-    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_u_dot_acc_sat_packed_vector_format".try_into().unwrap());
+    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_u_dot_acc_sat_packed_vector_format");
 }
 impl UDotAccSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -22239,7 +22131,7 @@ impl UDotAccSatOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_u_dot_acc_sat::ATTR_PACKED_VECTOR_FORMAT);
+            .remove(&spirv_u_dot_acc_sat::ATTR_PACKED_VECTOR_FORMAT);
     }
 }
 #[op_interface_impl]
@@ -22337,8 +22229,8 @@ crate::format::canonical_format!(
     "packed_vector_format", crate ::format::Quantifier::ZeroOrOne)
 );
 mod spirv_su_dot_acc_sat {
-    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-        ::pliron::std_deps::sync::LazyLock::new(|| "spirv_su_dot_acc_sat_packed_vector_format".try_into().unwrap());
+    pub static ATTR_PACKED_VECTOR_FORMAT: ::pliron::identifier::Identifier =
+        ::pliron::ident!("spirv_su_dot_acc_sat_packed_vector_format");
 }
 impl SUDotAccSatOp {
     #[allow(clippy::too_many_arguments)]
@@ -22389,7 +22281,7 @@ impl SUDotAccSatOp {
             .deref_mut(ctx)
             .attributes
             .0
-            .remove(&*spirv_su_dot_acc_sat::ATTR_PACKED_VECTOR_FORMAT);
+            .remove(&spirv_su_dot_acc_sat::ATTR_PACKED_VECTOR_FORMAT);
     }
 }
 #[op_interface_impl]
@@ -22489,14 +22381,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_i_add_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_i_add_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_i_add_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_i_add_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_i_add_non_uniform_amd_operation");
     }
     impl GroupIAddNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -22620,14 +22508,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_f_add_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_add_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_add_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_add_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_add_non_uniform_amd_operation");
     }
     impl GroupFAddNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -22751,14 +22635,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_f_min_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_min_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_min_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_min_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_min_non_uniform_amd_operation");
     }
     impl GroupFMinNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -22882,14 +22762,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_u_min_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_min_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_min_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_u_min_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_u_min_non_uniform_amd_operation");
     }
     impl GroupUMinNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -23013,14 +22889,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_s_min_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_min_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_min_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_s_min_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_s_min_non_uniform_amd_operation");
     }
     impl GroupSMinNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -23144,14 +23016,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_f_max_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_max_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_f_max_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_max_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_max_non_uniform_amd_operation");
     }
     impl GroupFMaxNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -23275,14 +23143,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_u_max_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_max_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_u_max_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_u_max_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_u_max_non_uniform_amd_operation");
     }
     impl GroupUMaxNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -23406,14 +23270,10 @@ pub mod amd {
         ::format::FormatVar::Value("x", crate ::format::Quantifier::One)
     );
     mod spirv_group_s_max_non_uniform_amd {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_max_non_uniform_amd_execution".try_into().unwrap()
-            });
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_s_max_non_uniform_amd_operation".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_s_max_non_uniform_amd_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_s_max_non_uniform_amd_operation");
     }
     impl GroupSMaxNonUniformOp {
         #[allow(clippy::too_many_arguments)]
@@ -23689,10 +23549,8 @@ pub mod amdx {
         crate ::format::FormatVar::Value("node_index", crate ::format::Quantifier::One)
     );
     mod spirv_allocate_node_payloads_amdx {
-        pub static ATTR_VISIBILITY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_allocate_node_payloads_amdx_visibility".try_into().unwrap()
-            });
+        pub static ATTR_VISIBILITY: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_allocate_node_payloads_amdx_visibility");
     }
     impl AllocateNodePayloadsOp {
         #[allow(clippy::too_many_arguments)]
@@ -27236,10 +27094,8 @@ pub mod ext {
         ::format::FormatVar::Value("combine_func", crate ::format::Quantifier::One)
     );
     mod spirv_cooperative_matrix_reduce_ext {
-        pub static ATTR_REDUCE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_reduce_ext_reduce".try_into().unwrap()
-            });
+        pub static ATTR_REDUCE: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_reduce_ext_reduce");
     }
     impl CooperativeMatrixReduceOp {
         #[allow(clippy::too_many_arguments)]
@@ -27342,10 +27198,8 @@ pub mod ext {
         ::format::Quantifier::ZeroOrMore)
     );
     mod spirv_cooperative_matrix_per_element_op_ext {
-        pub static ATTR_FUNC: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_per_element_op_ext_func".try_into().unwrap()
-            });
+        pub static ATTR_FUNC: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_per_element_op_ext_func");
     }
     impl CooperativeMatrixPerElementOpOp {
         #[allow(clippy::too_many_arguments)]
@@ -27513,10 +27367,9 @@ pub mod ext {
         ::format::Quantifier::One)
     );
     mod spirv_atomic_f_min_ext {
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_f_min_ext_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_f_min_ext_semantics".try_into().unwrap());
+        pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_f_min_ext_memory");
+        pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_atomic_f_min_ext_semantics");
     }
     impl AtomicFMinOp {
         #[allow(clippy::too_many_arguments)]
@@ -27647,10 +27500,9 @@ pub mod ext {
         ::format::Quantifier::One)
     );
     mod spirv_atomic_f_max_ext {
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_f_max_ext_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_f_max_ext_semantics".try_into().unwrap());
+        pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_f_max_ext_memory");
+        pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_atomic_f_max_ext_semantics");
     }
     impl AtomicFMaxOp {
         #[allow(clippy::too_many_arguments)]
@@ -27781,10 +27633,9 @@ pub mod ext {
         ::format::Quantifier::One)
     );
     mod spirv_atomic_f_add_ext {
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_f_add_ext_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_atomic_f_add_ext_semantics".try_into().unwrap());
+        pub static ATTR_MEMORY: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_atomic_f_add_ext_memory");
+        pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_atomic_f_add_ext_semantics");
     }
     impl AtomicFAddOp {
         #[allow(clippy::too_many_arguments)]
@@ -27914,16 +27765,12 @@ pub mod ext {
         "semantics", crate ::format::Quantifier::One)
     );
     mod spirv_control_barrier_arrive_ext {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_arrive_ext_execution".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_arrive_ext_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_control_barrier_arrive_ext_semantics".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_control_barrier_arrive_ext_execution");
+        pub static ATTR_MEMORY: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_control_barrier_arrive_ext_memory");
+        pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_control_barrier_arrive_ext_semantics");
     }
     impl ControlBarrierArriveOp {
         #[allow(clippy::too_many_arguments)]
@@ -28053,12 +27900,12 @@ pub mod ext {
         crate ::format::Quantifier::One)
     );
     mod spirv_control_barrier_wait_ext {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_ext_execution".try_into().unwrap());
-        pub static ATTR_MEMORY: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_ext_memory".try_into().unwrap());
-        pub static ATTR_SEMANTICS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_control_barrier_wait_ext_semantics".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_control_barrier_wait_ext_execution");
+        pub static ATTR_MEMORY: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_control_barrier_wait_ext_memory");
+        pub static ATTR_SEMANTICS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_control_barrier_wait_ext_semantics");
     }
     impl ControlBarrierWaitOp {
         #[allow(clippy::too_many_arguments)]
@@ -30128,10 +29975,8 @@ pub mod intel {
         "loop_control_parameters", crate ::format::Quantifier::ZeroOrMore)
     );
     mod spirv_loop_control_intel {
-        pub static ATTR_LOOP_CONTROL_PARAMETERS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_loop_control_intel_loop_control_parameters".try_into().unwrap()
-            });
+        pub static ATTR_LOOP_CONTROL_PARAMETERS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_loop_control_intel_loop_control_parameters");
     }
     impl LoopControlOp {
         #[allow(clippy::too_many_arguments)]
@@ -30428,12 +30273,10 @@ pub mod intel {
         LiteralIntegerAttr, "align", crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_subgroup_block_prefetch_intel {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_subgroup_block_prefetch_intel_memory_access".try_into().unwrap()
-            });
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_subgroup_block_prefetch_intel_align".try_into().unwrap());
+        pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_subgroup_block_prefetch_intel_memory_access");
+        pub static ATTR_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_subgroup_block_prefetch_intel_align");
     }
     impl SubgroupBlockPrefetchOp {
         #[allow(clippy::too_many_arguments)]
@@ -30502,7 +30345,7 @@ pub mod intel {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_subgroup_block_prefetch_intel::ATTR_ALIGN);
+                .remove(&spirv_subgroup_block_prefetch_intel::ATTR_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -31197,13 +31040,8 @@ pub mod intel {
         crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_subgroup_matrix_multiply_accumulate_intel {
-        pub static ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_subgroup_matrix_multiply_accumulate_intel_matrix_multiply_accumulate_operands"
-                .try_into()
-                .unwrap()
-        });
+        pub static ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_subgroup_matrix_multiply_accumulate_intel_matrix_multiply_accumulate_operands");
     }
     impl SubgroupMatrixMultiplyAccumulateOp {
         #[allow(clippy::too_many_arguments)]
@@ -31260,7 +31098,7 @@ pub mod intel {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS);
+                .remove(&spirv_subgroup_matrix_multiply_accumulate_intel::ATTR_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS);
         }
     }
     #[op_interface_impl]
@@ -31564,10 +31402,9 @@ pub mod intel {
         "align", crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_predicated_load_intel {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_predicated_load_intel_memory_access".try_into().unwrap());
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_predicated_load_intel_align".try_into().unwrap());
+        pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_predicated_load_intel_memory_access");
+        pub static ATTR_ALIGN: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_predicated_load_intel_align");
     }
     impl PredicatedLoadOp {
         #[allow(clippy::too_many_arguments)]
@@ -31638,7 +31475,7 @@ pub mod intel {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_predicated_load_intel::ATTR_ALIGN);
+                .remove(&spirv_predicated_load_intel::ATTR_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -31711,12 +31548,10 @@ pub mod intel {
         "align", crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_predicated_store_intel {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_predicated_store_intel_memory_access".try_into().unwrap()
-            });
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_predicated_store_intel_align".try_into().unwrap());
+        pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_predicated_store_intel_memory_access");
+        pub static ATTR_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_predicated_store_intel_align");
     }
     impl PredicatedStoreOp {
         #[allow(clippy::too_many_arguments)]
@@ -31786,7 +31621,7 @@ pub mod intel {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_predicated_store_intel::ATTR_ALIGN);
+                .remove(&spirv_predicated_store_intel::ATTR_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -31917,8 +31752,8 @@ pub mod intel {
         ::format::Quantifier::One)
     );
     mod spirv_masked_gather_intel {
-        pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_masked_gather_intel_alignment".try_into().unwrap());
+        pub static ATTR_ALIGNMENT: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_masked_gather_intel_alignment");
     }
     impl MaskedGatherOp {
         #[allow(clippy::too_many_arguments)]
@@ -32022,8 +31857,8 @@ pub mod intel {
         ::format::Quantifier::One)
     );
     mod spirv_masked_scatter_intel {
-        pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_masked_scatter_intel_alignment".try_into().unwrap());
+        pub static ATTR_ALIGNMENT: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_masked_scatter_intel_alignment");
     }
     impl MaskedScatterOp {
         #[allow(clippy::too_many_arguments)]
@@ -32599,10 +32434,8 @@ pub mod khr {
         "array_member", crate ::format::Quantifier::One)
     );
     mod spirv_untyped_array_length_khr {
-        pub static ATTR_ARRAY_MEMBER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_untyped_array_length_khr_array_member".try_into().unwrap()
-            });
+        pub static ATTR_ARRAY_MEMBER: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_untyped_array_length_khr_array_member");
     }
     impl UntypedArrayLengthOp {
         #[allow(clippy::too_many_arguments)]
@@ -32991,10 +32824,8 @@ pub mod khr {
         crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_group_non_uniform_rotate_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_group_non_uniform_rotate_khr_execution".try_into().unwrap()
-            });
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_non_uniform_rotate_khr_execution");
     }
     impl GroupNonUniformRotateOp {
         #[allow(clippy::too_many_arguments)]
@@ -33189,33 +33020,14 @@ pub mod khr {
         ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_untyped_group_async_copy_khr {
-        pub static ATTR_DESTINATION_MEMORY_OPERANDS: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_untyped_group_async_copy_khr_destination_memory_operands"
-                .try_into()
-                .unwrap()
-        });
-        pub static ATTR_DESTINATION_MEMORY_OPERANDS_ALIGN: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_untyped_group_async_copy_khr_destination_memory_operands_align"
-                .try_into()
-                .unwrap()
-        });
-        pub static ATTR_SOURCE_MEMORY_OPERANDS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_untyped_group_async_copy_khr_source_memory_operands"
-                    .try_into()
-                    .unwrap()
-            });
-        pub static ATTR_SOURCE_MEMORY_OPERANDS_ALIGN: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_untyped_group_async_copy_khr_source_memory_operands_align"
-                .try_into()
-                .unwrap()
-        });
+        pub static ATTR_DESTINATION_MEMORY_OPERANDS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_untyped_group_async_copy_khr_destination_memory_operands");
+        pub static ATTR_DESTINATION_MEMORY_OPERANDS_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_untyped_group_async_copy_khr_destination_memory_operands_align");
+        pub static ATTR_SOURCE_MEMORY_OPERANDS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_untyped_group_async_copy_khr_source_memory_operands");
+        pub static ATTR_SOURCE_MEMORY_OPERANDS_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_untyped_group_async_copy_khr_source_memory_operands_align");
     }
     impl UntypedGroupAsyncCopyOp {
         #[allow(clippy::too_many_arguments)]
@@ -33309,7 +33121,7 @@ pub mod khr {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_untyped_group_async_copy_khr::ATTR_DESTINATION_MEMORY_OPERANDS_ALIGN);
+                .remove(&spirv_untyped_group_async_copy_khr::ATTR_DESTINATION_MEMORY_OPERANDS_ALIGN);
         }
         ///Get a [Ref](core::cell::Ref) to the value of the attribute named `source_memory_operands`.
         pub fn get_attr_source_memory_operands<'a>(
@@ -33357,7 +33169,7 @@ pub mod khr {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_untyped_group_async_copy_khr::ATTR_SOURCE_MEMORY_OPERANDS_ALIGN);
+                .remove(&spirv_untyped_group_async_copy_khr::ATTR_SOURCE_MEMORY_OPERANDS_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -33826,20 +33638,12 @@ pub mod khr {
         ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_matrix_load_khr {
-        pub static ATTR_MEMORY_LAYOUT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_load_khr_memory_layout".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY_OPERAND: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_load_khr_memory_operand".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY_OPERAND_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_load_khr_memory_operand_align"
-                    .try_into()
-                    .unwrap()
-            });
+        pub static ATTR_MEMORY_LAYOUT: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_load_khr_memory_layout");
+        pub static ATTR_MEMORY_OPERAND: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_load_khr_memory_operand");
+        pub static ATTR_MEMORY_OPERAND_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_load_khr_memory_operand_align");
     }
     impl CooperativeMatrixLoadOp {
         #[allow(clippy::too_many_arguments)]
@@ -33929,7 +33733,7 @@ pub mod khr {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_matrix_load_khr::ATTR_MEMORY_OPERAND_ALIGN);
+                .remove(&spirv_cooperative_matrix_load_khr::ATTR_MEMORY_OPERAND_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -34009,20 +33813,12 @@ pub mod khr {
         ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_matrix_store_khr {
-        pub static ATTR_MEMORY_LAYOUT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_store_khr_memory_layout".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY_OPERAND: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_store_khr_memory_operand".try_into().unwrap()
-            });
-        pub static ATTR_MEMORY_OPERAND_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_store_khr_memory_operand_align"
-                    .try_into()
-                    .unwrap()
-            });
+        pub static ATTR_MEMORY_LAYOUT: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_store_khr_memory_layout");
+        pub static ATTR_MEMORY_OPERAND: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_store_khr_memory_operand");
+        pub static ATTR_MEMORY_OPERAND_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_store_khr_memory_operand_align");
     }
     impl CooperativeMatrixStoreOp {
         #[allow(clippy::too_many_arguments)]
@@ -34112,7 +33908,7 @@ pub mod khr {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_matrix_store_khr::ATTR_MEMORY_OPERAND_ALIGN);
+                .remove(&spirv_cooperative_matrix_store_khr::ATTR_MEMORY_OPERAND_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -34187,13 +33983,8 @@ pub mod khr {
         ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_matrix_mul_add_khr {
-        pub static ATTR_COOPERATIVE_MATRIX_OPERANDS: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_cooperative_matrix_mul_add_khr_cooperative_matrix_operands"
-                .try_into()
-                .unwrap()
-        });
+        pub static ATTR_COOPERATIVE_MATRIX_OPERANDS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_mul_add_khr_cooperative_matrix_operands");
     }
     impl CooperativeMatrixMulAddOp {
         #[allow(clippy::too_many_arguments)]
@@ -34249,7 +34040,7 @@ pub mod khr {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_matrix_mul_add_khr::ATTR_COOPERATIVE_MATRIX_OPERANDS);
+                .remove(&spirv_cooperative_matrix_mul_add_khr::ATTR_COOPERATIVE_MATRIX_OPERANDS);
         }
     }
     #[op_interface_impl]
@@ -34831,8 +34622,7 @@ pub mod khr {
         "scope", crate ::format::Quantifier::One)
     );
     mod spirv_read_clock_khr {
-        pub static ATTR_SCOPE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_read_clock_khr_scope".try_into().unwrap());
+        pub static ATTR_SCOPE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_read_clock_khr_scope");
     }
     impl ReadClockOp {
         #[allow(clippy::too_many_arguments)]
@@ -36671,10 +36461,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_i_mul_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_i_mul_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_i_mul_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_i_mul_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_i_mul_khr_operation");
     }
     impl GroupIMulOp {
         #[allow(clippy::too_many_arguments)]
@@ -36796,10 +36586,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_f_mul_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_mul_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_f_mul_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_mul_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_f_mul_khr_operation");
     }
     impl GroupFMulOp {
         #[allow(clippy::too_many_arguments)]
@@ -36922,10 +36712,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_bitwise_and_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_bitwise_and_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_bitwise_and_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_bitwise_and_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_bitwise_and_khr_operation");
     }
     impl GroupBitwiseAndOp {
         #[allow(clippy::too_many_arguments)]
@@ -37048,10 +36838,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_bitwise_or_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_bitwise_or_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_bitwise_or_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_bitwise_or_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_bitwise_or_khr_operation");
     }
     impl GroupBitwiseOrOp {
         #[allow(clippy::too_many_arguments)]
@@ -37174,10 +36964,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_bitwise_xor_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_bitwise_xor_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_bitwise_xor_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_bitwise_xor_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_bitwise_xor_khr_operation");
     }
     impl GroupBitwiseXorOp {
         #[allow(clippy::too_many_arguments)]
@@ -37300,10 +37090,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_logical_and_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_logical_and_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_logical_and_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_logical_and_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_logical_and_khr_operation");
     }
     impl GroupLogicalAndOp {
         #[allow(clippy::too_many_arguments)]
@@ -37426,10 +37216,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_logical_or_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_logical_or_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_logical_or_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_logical_or_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_logical_or_khr_operation");
     }
     impl GroupLogicalOrOp {
         #[allow(clippy::too_many_arguments)]
@@ -37552,10 +37342,10 @@ pub mod khr {
         ::format::Quantifier::One)
     );
     mod spirv_group_logical_xor_khr {
-        pub static ATTR_EXECUTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_logical_xor_khr_execution".try_into().unwrap());
-        pub static ATTR_OPERATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_group_logical_xor_khr_operation".try_into().unwrap());
+        pub static ATTR_EXECUTION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_logical_xor_khr_execution");
+        pub static ATTR_OPERATION: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_group_logical_xor_khr_operation");
     }
     impl GroupLogicalXorOp {
         #[allow(clippy::too_many_arguments)]
@@ -40307,13 +40097,8 @@ pub mod nv {
         ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_vector_matrix_mul_nv {
-        pub static ATTR_COOPERATIVE_MATRIX_OPERANDS: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_cooperative_vector_matrix_mul_nv_cooperative_matrix_operands"
-                .try_into()
-                .unwrap()
-        });
+        pub static ATTR_COOPERATIVE_MATRIX_OPERANDS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_vector_matrix_mul_nv_cooperative_matrix_operands");
     }
     impl CooperativeVectorMatrixMulOp {
         #[allow(clippy::too_many_arguments)]
@@ -40387,7 +40172,7 @@ pub mod nv {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_vector_matrix_mul_nv::ATTR_COOPERATIVE_MATRIX_OPERANDS);
+                .remove(&spirv_cooperative_vector_matrix_mul_nv::ATTR_COOPERATIVE_MATRIX_OPERANDS);
         }
     }
     #[op_interface_impl]
@@ -40684,13 +40469,8 @@ pub mod nv {
         ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_vector_matrix_mul_add_nv {
-        pub static ATTR_COOPERATIVE_MATRIX_OPERANDS: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_cooperative_vector_matrix_mul_add_nv_cooperative_matrix_operands"
-                .try_into()
-                .unwrap()
-        });
+        pub static ATTR_COOPERATIVE_MATRIX_OPERANDS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_vector_matrix_mul_add_nv_cooperative_matrix_operands");
     }
     impl CooperativeVectorMatrixMulAddOp {
         #[allow(clippy::too_many_arguments)]
@@ -40770,7 +40550,7 @@ pub mod nv {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_vector_matrix_mul_add_nv::ATTR_COOPERATIVE_MATRIX_OPERANDS);
+                .remove(&spirv_cooperative_vector_matrix_mul_add_nv::ATTR_COOPERATIVE_MATRIX_OPERANDS);
         }
     }
     #[op_interface_impl]
@@ -41121,12 +40901,10 @@ pub mod nv {
         LiteralIntegerAttr, "align", crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_vector_load_nv {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_vector_load_nv_memory_access".try_into().unwrap()
-            });
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_cooperative_vector_load_nv_align".try_into().unwrap());
+        pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_vector_load_nv_memory_access");
+        pub static ATTR_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_vector_load_nv_align");
     }
     impl CooperativeVectorLoadOp {
         #[allow(clippy::too_many_arguments)]
@@ -41196,7 +40974,7 @@ pub mod nv {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_vector_load_nv::ATTR_ALIGN);
+                .remove(&spirv_cooperative_vector_load_nv::ATTR_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -41260,12 +41038,10 @@ pub mod nv {
         LiteralIntegerAttr, "align", crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_vector_store_nv {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_vector_store_nv_memory_access".try_into().unwrap()
-            });
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_cooperative_vector_store_nv_align".try_into().unwrap());
+        pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_vector_store_nv_memory_access");
+        pub static ATTR_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_vector_store_nv_align");
     }
     impl CooperativeVectorStoreOp {
         #[allow(clippy::too_many_arguments)]
@@ -41335,7 +41111,7 @@ pub mod nv {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_vector_store_nv::ATTR_ALIGN);
+                .remove(&spirv_cooperative_vector_store_nv::ATTR_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -42116,12 +41892,10 @@ pub mod nv {
         LiteralIntegerAttr, "align", crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_matrix_load_nv {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_load_nv_memory_access".try_into().unwrap()
-            });
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_cooperative_matrix_load_nv_align".try_into().unwrap());
+        pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_load_nv_memory_access");
+        pub static ATTR_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_load_nv_align");
     }
     impl CooperativeMatrixLoadOp {
         #[allow(clippy::too_many_arguments)]
@@ -42192,7 +41966,7 @@ pub mod nv {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_matrix_load_nv::ATTR_ALIGN);
+                .remove(&spirv_cooperative_matrix_load_nv::ATTR_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -42267,12 +42041,10 @@ pub mod nv {
         LiteralIntegerAttr, "align", crate ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_cooperative_matrix_store_nv {
-        pub static ATTR_MEMORY_ACCESS: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_store_nv_memory_access".try_into().unwrap()
-            });
-        pub static ATTR_ALIGN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_cooperative_matrix_store_nv_align".try_into().unwrap());
+        pub static ATTR_MEMORY_ACCESS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_store_nv_memory_access");
+        pub static ATTR_ALIGN: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_cooperative_matrix_store_nv_align");
     }
     impl CooperativeMatrixStoreOp {
         #[allow(clippy::too_many_arguments)]
@@ -42343,7 +42115,7 @@ pub mod nv {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_cooperative_matrix_store_nv::ATTR_ALIGN);
+                .remove(&spirv_cooperative_matrix_store_nv::ATTR_ALIGN);
         }
     }
     #[op_interface_impl]
@@ -43775,13 +43547,8 @@ pub mod nv {
         ::format::Quantifier::ZeroOrOne)
     );
     mod spirv_raw_access_chain_nv {
-        pub static ATTR_RAW_ACCESS_CHAIN_OPERANDS: ::pliron::std_deps::sync::LazyLock<
-            ::pliron::identifier::Identifier,
-        > = ::pliron::std_deps::sync::LazyLock::new(|| {
-            "spirv_raw_access_chain_nv_raw_access_chain_operands"
-                .try_into()
-                .unwrap()
-        });
+        pub static ATTR_RAW_ACCESS_CHAIN_OPERANDS: ::pliron::identifier::Identifier =
+            ::pliron::ident!("spirv_raw_access_chain_nv_raw_access_chain_operands");
     }
     impl RawAccessChainOp {
         #[allow(clippy::too_many_arguments)]
@@ -43837,7 +43604,7 @@ pub mod nv {
                 .deref_mut(ctx)
                 .attributes
                 .0
-                .remove(&*spirv_raw_access_chain_nv::ATTR_RAW_ACCESS_CHAIN_OPERANDS);
+                .remove(&spirv_raw_access_chain_nv::ATTR_RAW_ACCESS_CHAIN_OPERANDS);
         }
     }
     #[op_interface_impl]

@@ -106,8 +106,7 @@ impl PlironGenerator {
             let const_ident = attr_const_name(&variant.symbol);
             let name = decoration_key(&variant.symbol);
             quote! {
-                pub static #const_ident: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-                    ::pliron::std_deps::sync::LazyLock::new(|| #name.try_into().unwrap());
+                pub static #const_ident: ::pliron::identifier::Identifier = ::pliron::ident!(#name);
             }
         });
 
@@ -132,7 +131,7 @@ impl PlironGenerator {
                     #[inline(never)]
                     pub fn #func_name(op: &dyn DecoratableOp, ctx: &Context) -> bool {
                         let op = op.get_operation().deref(ctx);
-                        op.attributes.0.contains_key(&*#const_ident)
+                        op.attributes.0.contains_key(&#const_ident)
                     }
                 }
             }
