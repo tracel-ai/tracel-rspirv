@@ -24406,6 +24406,77 @@ pub mod ext {
         }
     }
     #[pliron_op(
+        name = "spirv.EXT_CooperativeMatrixConvertUse",
+        operands = (matrix),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct CooperativeMatrixConvertUseOp;
+    crate::format::canonical_format!(
+        CooperativeMatrixConvertUseOp; crate ::format::FormatVar::Value("matrix", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_cooperative_matrix_convert_use_ext {}
+    impl CooperativeMatrixConvertUseOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, matrix: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![matrix],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for CooperativeMatrixConvertUseOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let matrix = builder.value_id(self.get_operand_matrix(ctx));
+            builder
+                .cooperative_matrix_convert_use_ext(result_ty, Some(result), matrix)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for CooperativeMatrixConvertUseOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![
+                Capability::CooperativeMatrixConversionsEXT,
+                Capability::CooperativeMatrixConversionsNV,
+            ]);
+            result
+        }
+    }
+    #[pliron_op(
         name = "spirv.EXT_EmitMeshTasks",
         operands = (group_count_x, group_count_y, group_count_z, payload),
         interfaces = [DecoratableOp],
@@ -26969,6 +27040,76 @@ pub mod ext {
         }
     }
     #[pliron_op(
+        name = "spirv.EXT_CooperativeMatrixGetCoordinate",
+        operands = (matrix, index),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct CooperativeMatrixGetCoordinateOp;
+    crate::format::canonical_format!(
+        CooperativeMatrixGetCoordinateOp; crate ::format::FormatVar::Value("matrix",
+        crate ::format::Quantifier::One), crate ::format::FormatVar::Value("index", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_cooperative_matrix_get_coordinate_ext {}
+    impl CooperativeMatrixGetCoordinateOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(ctx: &mut Context, result_ty: TypeHandle, matrix: Value, index: Value) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![matrix, index],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for CooperativeMatrixGetCoordinateOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let matrix = builder.value_id(self.get_operand_matrix(ctx));
+            let index = builder.value_id(self.get_operand_index(ctx));
+            builder
+                .cooperative_matrix_get_coordinate_ext(result_ty, Some(result), matrix, index)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for CooperativeMatrixGetCoordinateOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::CooperativeMatrixGetCoordinateEXT]);
+            result
+        }
+    }
+    #[pliron_op(
         name = "spirv.EXT_BeginInvocationInterlock",
         operands = (),
         interfaces = [DecoratableOp],
@@ -27075,6 +27216,216 @@ pub mod ext {
                 Capability::FragmentShaderPixelInterlockEXT,
                 Capability::FragmentShaderShadingRateInterlockEXT,
             ]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.EXT_CooperativeMatrixReduce",
+        operands = (matrix, combine_func),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct CooperativeMatrixReduceOp;
+    crate::format::canonical_format!(
+        CooperativeMatrixReduceOp; crate ::format::FormatVar::Value("matrix", crate
+        ::format::Quantifier::One), crate ::format::attr!(&
+        spirv_cooperative_matrix_reduce_ext::ATTR_REDUCE, CooperativeMatrixReduceAttr,
+        "reduce", crate ::format::Quantifier::One), crate
+        ::format::FormatVar::Value("combine_func", crate ::format::Quantifier::One)
+    );
+    mod spirv_cooperative_matrix_reduce_ext {
+        pub static ATTR_REDUCE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_cooperative_matrix_reduce_ext_reduce".try_into().unwrap()
+            });
+    }
+    impl CooperativeMatrixReduceOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            matrix: Value,
+            reduce: impl Into<CooperativeMatrixReduceAttr>,
+            combine_func: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![matrix, combine_func],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_reduce(ctx, reduce.into());
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `reduce`.
+        pub fn get_attr_reduce<'a>(
+            &self,
+            ctx: &'a ::pliron::context::Context,
+        ) -> ::core::cell::Ref<'a, CooperativeMatrixReduceAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<CooperativeMatrixReduceAttr>(&spirv_cooperative_matrix_reduce_ext::ATTR_REDUCE)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `reduce`.
+        pub fn set_attr_reduce(&self, ctx: &::pliron::context::Context, value: CooperativeMatrixReduceAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_cooperative_matrix_reduce_ext::ATTR_REDUCE.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for CooperativeMatrixReduceOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let matrix = builder.value_id(self.get_operand_matrix(ctx));
+            let reduce = self.get_attr_reduce(ctx).clone().0;
+            let combine_func = builder.value_id(self.get_operand_combine_func(ctx));
+            builder
+                .cooperative_matrix_reduce_ext(result_ty, Some(result), matrix, reduce, combine_func)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for CooperativeMatrixReduceOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            result = result.max(Operand::from(self.get_attr_reduce(ctx).clone().0).minimum_version()?);
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.extend(Operand::from(self.get_attr_reduce(ctx).clone().0).required_extensions());
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::CooperativeMatrixReductionsEXT]);
+            result.extend(Operand::from(self.get_attr_reduce(ctx).clone().0).required_capabilities());
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.EXT_CooperativeMatrixPerElementOp",
+        operands = (matrix, operands),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct CooperativeMatrixPerElementOpOp;
+    crate::format::canonical_format!(
+        CooperativeMatrixPerElementOpOp; crate ::format::FormatVar::Value("matrix", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Symbol(&
+        spirv_cooperative_matrix_per_element_op_ext::ATTR_FUNC, "func", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operands", crate
+        ::format::Quantifier::ZeroOrMore)
+    );
+    mod spirv_cooperative_matrix_per_element_op_ext {
+        pub static ATTR_FUNC: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+            ::pliron::std_deps::sync::LazyLock::new(|| {
+                "spirv_cooperative_matrix_per_element_op_ext_func".try_into().unwrap()
+            });
+    }
+    impl CooperativeMatrixPerElementOpOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            matrix: Value,
+            func: Identifier,
+            operands: Vec<Value>,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![matrix, operands],
+                    vec![],
+                    0,
+                ),
+            };
+            op.set_attr_func(ctx, IdentifierAttr::new(func));
+            op
+        }
+        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `func`.
+        pub fn get_attr_func<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, IdentifierAttr> {
+            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
+                op.attributes
+                    .get::<IdentifierAttr>(&spirv_cooperative_matrix_per_element_op_ext::ATTR_FUNC)
+                    .unwrap()
+            })
+        }
+        ///Set the value of the attribute named `func`.
+        pub fn set_attr_func(&self, ctx: &::pliron::context::Context, value: IdentifierAttr) {
+            self.op
+                .deref_mut(ctx)
+                .attributes
+                .set(spirv_cooperative_matrix_per_element_op_ext::ATTR_FUNC.clone(), value);
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for CooperativeMatrixPerElementOpOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let matrix = builder.value_id(self.get_operand_matrix(ctx));
+            let func = builder.symbol_id(self.get_attr_func(ctx).clone());
+            let operands = op
+                .operands()
+                .skip(1usize)
+                .map(|opd| builder.value_id(opd))
+                .collect::<Vec<_>>();
+            builder
+                .cooperative_matrix_per_element_op_ext(result_ty, Some(result), matrix, func, operands)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for CooperativeMatrixPerElementOpOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::CooperativeMatrixPerElementOperationsEXT]);
             result
         }
     }
@@ -40500,74 +40851,6 @@ pub mod nv {
         }
     }
     #[pliron_op(
-        name = "spirv.NV_CooperativeMatrixConvert",
-        operands = (matrix),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct CooperativeMatrixConvertOp;
-    crate::format::canonical_format!(
-        CooperativeMatrixConvertOp; crate ::format::FormatVar::Value("matrix", crate
-        ::format::Quantifier::One)
-    );
-    mod spirv_cooperative_matrix_convert_nv {}
-    impl CooperativeMatrixConvertOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(ctx: &mut Context, result_ty: TypeHandle, matrix: Value) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![matrix],
-                    vec![],
-                    0,
-                ),
-            };
-            op
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for CooperativeMatrixConvertOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let matrix = builder.value_id(self.get_operand_matrix(ctx));
-            builder
-                .cooperative_matrix_convert_nv(result_ty, Some(result), matrix)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for CooperativeMatrixConvertOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::CooperativeMatrixConversionsNV]);
-            result
-        }
-    }
-    #[pliron_op(
         name = "spirv.NV_WritePackedPrimitiveIndices4x8",
         operands = (index_offset, packed_indices),
         interfaces = [DecoratableOp],
@@ -42246,214 +42529,6 @@ pub mod nv {
             #[allow(unused_mut)]
             let mut result = vec![];
             result.push(vec![Capability::CooperativeMatrixNV]);
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.NV_CooperativeMatrixReduce",
-        operands = (matrix, combine_func),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct CooperativeMatrixReduceOp;
-    crate::format::canonical_format!(
-        CooperativeMatrixReduceOp; crate ::format::FormatVar::Value("matrix", crate
-        ::format::Quantifier::One), crate ::format::attr!(&
-        spirv_cooperative_matrix_reduce_nv::ATTR_REDUCE, CooperativeMatrixReduceAttr,
-        "reduce", crate ::format::Quantifier::One), crate
-        ::format::FormatVar::Value("combine_func", crate ::format::Quantifier::One)
-    );
-    mod spirv_cooperative_matrix_reduce_nv {
-        pub static ATTR_REDUCE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| "spirv_cooperative_matrix_reduce_nv_reduce".try_into().unwrap());
-    }
-    impl CooperativeMatrixReduceOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            matrix: Value,
-            reduce: impl Into<CooperativeMatrixReduceAttr>,
-            combine_func: Value,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![matrix, combine_func],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_reduce(ctx, reduce.into());
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `reduce`.
-        pub fn get_attr_reduce<'a>(
-            &self,
-            ctx: &'a ::pliron::context::Context,
-        ) -> ::core::cell::Ref<'a, CooperativeMatrixReduceAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<CooperativeMatrixReduceAttr>(&spirv_cooperative_matrix_reduce_nv::ATTR_REDUCE)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `reduce`.
-        pub fn set_attr_reduce(&self, ctx: &::pliron::context::Context, value: CooperativeMatrixReduceAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_cooperative_matrix_reduce_nv::ATTR_REDUCE.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for CooperativeMatrixReduceOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let matrix = builder.value_id(self.get_operand_matrix(ctx));
-            let reduce = self.get_attr_reduce(ctx).clone().0;
-            let combine_func = builder.value_id(self.get_operand_combine_func(ctx));
-            builder
-                .cooperative_matrix_reduce_nv(result_ty, Some(result), matrix, reduce, combine_func)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for CooperativeMatrixReduceOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            result = result.max(Operand::from(self.get_attr_reduce(ctx).clone().0).minimum_version()?);
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.extend(Operand::from(self.get_attr_reduce(ctx).clone().0).required_extensions());
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::CooperativeMatrixReductionsNV]);
-            result.extend(Operand::from(self.get_attr_reduce(ctx).clone().0).required_capabilities());
-            result
-        }
-    }
-    #[pliron_op(
-        name = "spirv.NV_CooperativeMatrixPerElementOp",
-        operands = (matrix, operands),
-        interfaces = [NResultsInterface<1>,
-        OneResultInterface,
-        DecoratableOp],
-        verifier = "succ"
-    )]
-    pub struct CooperativeMatrixPerElementOpOp;
-    crate::format::canonical_format!(
-        CooperativeMatrixPerElementOpOp; crate ::format::FormatVar::Value("matrix", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Symbol(&
-        spirv_cooperative_matrix_per_element_op_nv::ATTR_FUNC, "func", crate
-        ::format::Quantifier::One), crate ::format::FormatVar::Value("operands", crate
-        ::format::Quantifier::ZeroOrMore)
-    );
-    mod spirv_cooperative_matrix_per_element_op_nv {
-        pub static ATTR_FUNC: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-            ::pliron::std_deps::sync::LazyLock::new(|| {
-                "spirv_cooperative_matrix_per_element_op_nv_func".try_into().unwrap()
-            });
-    }
-    impl CooperativeMatrixPerElementOpOp {
-        #[allow(clippy::too_many_arguments)]
-        pub fn new(
-            ctx: &mut Context,
-            result_ty: TypeHandle,
-            matrix: Value,
-            func: Identifier,
-            operands: Vec<Value>,
-        ) -> Self {
-            let op = Self {
-                op: Operation::new(
-                    ctx,
-                    Self::get_concrete_op_info(),
-                    vec![result_ty],
-                    flat_vec![matrix, operands],
-                    vec![],
-                    0,
-                ),
-            };
-            op.set_attr_func(ctx, IdentifierAttr::new(func));
-            op
-        }
-        ///Get a [Ref](core::cell::Ref) to the value of the attribute named `func`.
-        pub fn get_attr_func<'a>(&self, ctx: &'a ::pliron::context::Context) -> ::core::cell::Ref<'a, IdentifierAttr> {
-            ::core::cell::Ref::map(self.op.deref(ctx), |op| {
-                op.attributes
-                    .get::<IdentifierAttr>(&spirv_cooperative_matrix_per_element_op_nv::ATTR_FUNC)
-                    .unwrap()
-            })
-        }
-        ///Set the value of the attribute named `func`.
-        pub fn set_attr_func(&self, ctx: &::pliron::context::Context, value: IdentifierAttr) {
-            self.op
-                .deref_mut(ctx)
-                .attributes
-                .set(spirv_cooperative_matrix_per_element_op_nv::ATTR_FUNC.clone(), value);
-        }
-    }
-    #[op_interface_impl]
-    impl ToSpirvOp for CooperativeMatrixPerElementOpOp {
-        #[allow(unused, clippy::all)]
-        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
-            #[allow(unused)]
-            let op = self.get_operation().deref(ctx);
-            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
-            let result = builder.value_id(self.get_result(ctx));
-            let matrix = builder.value_id(self.get_operand_matrix(ctx));
-            let func = builder.symbol_id(self.get_attr_func(ctx).clone());
-            let operands = op
-                .operands()
-                .skip(1usize)
-                .map(|opd| builder.value_id(opd))
-                .collect::<Vec<_>>();
-            builder
-                .cooperative_matrix_per_element_op_nv(result_ty, Some(result), matrix, func, operands)
-                .into_pliron_result()?;
-            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
-            Ok(())
-        }
-    }
-    #[op_interface_impl]
-    impl VerCapExtOpInterface for CooperativeMatrixPerElementOpOp {
-        #[allow(unused_variables)]
-        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
-            #[allow(unused_mut)]
-            let mut result: (u8, u8) = None?;
-            Some(result)
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result
-        }
-        #[allow(unused_variables, clippy::vec_init_then_push)]
-        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
-            #[allow(unused_mut)]
-            let mut result = vec![];
-            result.push(vec![Capability::CooperativeMatrixPerElementOperationsNV]);
             result
         }
     }
@@ -44790,6 +44865,84 @@ pub mod qcom {
             #[allow(unused_mut)]
             let mut result = vec![];
             result.push(vec![Capability::CooperativeMatrixConversionQCOM]);
+            result
+        }
+    }
+    #[pliron_op(
+        name = "spirv.QCOM_BFloat16MulAdd",
+        operands = (operand_1, operand_2, operand_3),
+        interfaces = [NResultsInterface<1>,
+        OneResultInterface,
+        DecoratableOp],
+        verifier = "succ"
+    )]
+    pub struct BFloat16MulAddOp;
+    crate::format::canonical_format!(
+        BFloat16MulAddOp; crate ::format::FormatVar::Value("operand_1", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_2", crate
+        ::format::Quantifier::One), crate ::format::FormatVar::Value("operand_3", crate
+        ::format::Quantifier::One)
+    );
+    mod spirv_b_float16_mul_add_qcom {}
+    impl BFloat16MulAddOp {
+        #[allow(clippy::too_many_arguments)]
+        pub fn new(
+            ctx: &mut Context,
+            result_ty: TypeHandle,
+            operand_1: Value,
+            operand_2: Value,
+            operand_3: Value,
+        ) -> Self {
+            let op = Self {
+                op: Operation::new(
+                    ctx,
+                    Self::get_concrete_op_info(),
+                    vec![result_ty],
+                    flat_vec![operand_1, operand_2, operand_3],
+                    vec![],
+                    0,
+                ),
+            };
+            op
+        }
+    }
+    #[op_interface_impl]
+    impl ToSpirvOp for BFloat16MulAddOp {
+        #[allow(unused, clippy::all)]
+        fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+            #[allow(unused)]
+            let op = self.get_operation().deref(ctx);
+            let result_ty = spirv_type_id(ctx, builder, self.get_result(ctx).get_type(ctx))?;
+            let result = builder.value_id(self.get_result(ctx));
+            let operand_1 = builder.value_id(self.get_operand_operand_1(ctx));
+            let operand_2 = builder.value_id(self.get_operand_operand_2(ctx));
+            let operand_3 = builder.value_id(self.get_operand_operand_3(ctx));
+            builder
+                .b_float16_mul_add_qcom(result_ty, Some(result), operand_1, operand_2, operand_3)
+                .into_pliron_result()?;
+            crate::ops::apply_all_decorations(ctx, builder, self, result)?;
+            Ok(())
+        }
+    }
+    #[op_interface_impl]
+    impl VerCapExtOpInterface for BFloat16MulAddOp {
+        #[allow(unused_variables)]
+        fn min_version(&self, ctx: &Context) -> Option<(u8, u8)> {
+            #[allow(unused_mut)]
+            let mut result: (u8, u8) = None?;
+            Some(result)
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_extensions(&self, ctx: &Context) -> Vec<Vec<&'static str>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result
+        }
+        #[allow(unused_variables, clippy::vec_init_then_push)]
+        fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
+            #[allow(unused_mut)]
+            let mut result = vec![];
+            result.push(vec![Capability::BFloat16MulAddQCOM]);
             result
         }
     }

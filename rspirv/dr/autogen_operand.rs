@@ -1187,6 +1187,8 @@ impl Operand {
                 | s::ExecutionMode::PostDepthCoverage
                 | s::ExecutionMode::NonCoherentTileAttachmentReadQCOM
                 | s::ExecutionMode::TileShadingRateQCOM
+                | s::ExecutionMode::SubgroupSizeHalfQCOM
+                | s::ExecutionMode::SubgroupSizeFullQCOM
                 | s::ExecutionMode::EarlyAndLateFragmentTestsAMD
                 | s::ExecutionMode::StencilRefReplacingEXT
                 | s::ExecutionMode::CoalescingAMDX
@@ -1521,6 +1523,7 @@ impl Operand {
                 | s::Decoration::BindlessImageNV
                 | s::Decoration::BoundSamplerNV
                 | s::Decoration::BoundImageNV
+                | s::Decoration::CooperativeMatrixTransposeEXT
                 | s::Decoration::SIMTCallINTEL
                 | s::Decoration::ReferencedIndirectlyINTEL
                 | s::Decoration::ClobberINTEL
@@ -1883,6 +1886,8 @@ impl Operand {
                 | s::Capability::TileShadingQCOM
                 | s::Capability::CooperativeMatrixConversionQCOM
                 | s::Capability::TextureBlockMatch2QCOM
+                | s::Capability::BFloat16MulAddQCOM
+                | s::Capability::SubgroupSizeQCOM
                 | s::Capability::MultipleWaitQueuesQCOM
                 | s::Capability::ImageGatherLinearQCOM
                 | s::Capability::ImageGatherExtendedModesQCOM
@@ -1944,13 +1949,15 @@ impl Operand {
                 | s::Capability::PushConstantBanksNV
                 | s::Capability::LongVectorEXT
                 | s::Capability::Shader64BitIndexingEXT
-                | s::Capability::CooperativeMatrixReductionsNV
+                | s::Capability::CooperativeMatrixConversionsEXT
+                | s::Capability::CooperativeMatrixReductionsEXT
                 | s::Capability::CooperativeMatrixConversionsNV
-                | s::Capability::CooperativeMatrixPerElementOperationsNV
+                | s::Capability::CooperativeMatrixPerElementOperationsEXT
                 | s::Capability::CooperativeMatrixTensorAddressingNV
                 | s::Capability::CooperativeMatrixBlockLoadsNV
                 | s::Capability::CooperativeVectorTrainingNV
                 | s::Capability::RayTracingClusterAccelerationStructureNV
+                | s::Capability::CooperativeMatrixGetCoordinateEXT
                 | s::Capability::TensorAddressingNV
                 | s::Capability::CooperativeMatrixDecodeVectorNV
                 | s::Capability::SubgroupShuffleINTEL
@@ -2521,6 +2528,9 @@ impl Operand {
                 s::ExecutionMode::SubgroupSize
                 | s::ExecutionMode::SubgroupsPerWorkgroup
                 | s::ExecutionMode::SubgroupsPerWorkgroupId => vec![vec![spirv::Capability::SubgroupDispatch]],
+                s::ExecutionMode::SubgroupSizeHalfQCOM | s::ExecutionMode::SubgroupSizeFullQCOM => {
+                    vec![vec![spirv::Capability::SubgroupSizeQCOM]]
+                }
                 s::ExecutionMode::SpacingEqual
                 | s::ExecutionMode::SpacingFractionalEven
                 | s::ExecutionMode::SpacingFractionalOdd
@@ -2791,6 +2801,9 @@ impl Operand {
                     vec![vec![spirv::Capability::CacheControlsINTEL]]
                 }
                 s::Decoration::UTFEncodedKHR => vec![vec![spirv::Capability::ConstantDataKHR]],
+                s::Decoration::CooperativeMatrixTransposeEXT => {
+                    vec![vec![spirv::Capability::CooperativeMatrixConversionsEXT]]
+                }
                 s::Decoration::ArrayStrideIdEXT | s::Decoration::OffsetIdEXT => {
                     vec![vec![spirv::Capability::DescriptorHeapEXT]]
                 }
@@ -3187,6 +3200,8 @@ impl Operand {
                 | s::Capability::TextureBoxFilterQCOM
                 | s::Capability::TextureBlockMatchQCOM
                 | s::Capability::TextureBlockMatch2QCOM
+                | s::Capability::BFloat16MulAddQCOM
+                | s::Capability::SubgroupSizeQCOM
                 | s::Capability::MultipleWaitQueuesQCOM
                 | s::Capability::ImageGatherLinearQCOM
                 | s::Capability::ImageGatherExtendedModesQCOM
@@ -3210,12 +3225,14 @@ impl Operand {
                 | s::Capability::RayTracingLinearSweptSpheresGeometryNV
                 | s::Capability::LongVectorEXT
                 | s::Capability::Shader64BitIndexingEXT
-                | s::Capability::CooperativeMatrixReductionsNV
+                | s::Capability::CooperativeMatrixConversionsEXT
+                | s::Capability::CooperativeMatrixReductionsEXT
                 | s::Capability::CooperativeMatrixConversionsNV
-                | s::Capability::CooperativeMatrixPerElementOperationsNV
+                | s::Capability::CooperativeMatrixPerElementOperationsEXT
                 | s::Capability::CooperativeMatrixTensorAddressingNV
                 | s::Capability::CooperativeMatrixBlockLoadsNV
                 | s::Capability::CooperativeVectorTrainingNV
+                | s::Capability::CooperativeMatrixGetCoordinateEXT
                 | s::Capability::TensorAddressingNV
                 | s::Capability::SubgroupShuffleINTEL
                 | s::Capability::SubgroupBufferBlockIOINTEL
@@ -3739,6 +3756,8 @@ impl Operand {
                 | s::ExecutionMode::NonCoherentStencilAttachmentReadEXT
                 | s::ExecutionMode::NonCoherentTileAttachmentReadQCOM
                 | s::ExecutionMode::TileShadingRateQCOM
+                | s::ExecutionMode::SubgroupSizeHalfQCOM
+                | s::ExecutionMode::SubgroupSizeFullQCOM
                 | s::ExecutionMode::CoalescingAMDX
                 | s::ExecutionMode::IsApiEntryAMDX
                 | s::ExecutionMode::MaxNodeRecursionAMDX
@@ -4074,6 +4093,7 @@ impl Operand {
                 | s::Decoration::BindlessImageNV
                 | s::Decoration::BoundSamplerNV
                 | s::Decoration::BoundImageNV
+                | s::Decoration::CooperativeMatrixTransposeEXT
                 | s::Decoration::SIMTCallINTEL
                 | s::Decoration::ClobberINTEL
                 | s::Decoration::SideEffectsINTEL
@@ -4475,6 +4495,14 @@ impl Operand {
                 | s::Capability::StorageTensorArrayDynamicIndexingARM
                 | s::Capability::StorageTensorArrayNonUniformIndexingARM => vec![vec!["SPV_ARM_tensors"]],
                 s::Capability::ArithmeticFenceEXT => vec![vec!["SPV_EXT_arithmetic_fence"]],
+                s::Capability::CooperativeMatrixConversionsEXT | s::Capability::CooperativeMatrixGetCoordinateEXT => {
+                    vec![vec!["SPV_EXT_cooperative_matrix_maintenance1"]]
+                }
+                s::Capability::CooperativeMatrixReductionsEXT
+                | s::Capability::CooperativeMatrixPerElementOperationsEXT => vec![vec![
+                    "SPV_EXT_cooperative_matrix_maintenance1",
+                    "SPV_NV_cooperative_matrix2",
+                ]],
                 s::Capability::DemoteToHelperInvocation => vec![vec!["SPV_EXT_demote_to_helper_invocation"]],
                 s::Capability::DescriptorHeapEXT => vec![vec!["SPV_EXT_descriptor_heap"]],
                 s::Capability::ShaderNonUniform
@@ -4661,9 +4689,7 @@ impl Operand {
                     ]]
                 }
                 s::Capability::CooperativeMatrixNV => vec![vec!["SPV_NV_cooperative_matrix"]],
-                s::Capability::CooperativeMatrixReductionsNV
-                | s::Capability::CooperativeMatrixConversionsNV
-                | s::Capability::CooperativeMatrixPerElementOperationsNV
+                s::Capability::CooperativeMatrixConversionsNV
                 | s::Capability::CooperativeMatrixTensorAddressingNV
                 | s::Capability::CooperativeMatrixBlockLoadsNV => vec![vec!["SPV_NV_cooperative_matrix2"]],
                 s::Capability::CooperativeMatrixDecodeVectorNV => vec![vec!["SPV_NV_cooperative_matrix_decode_vector"]],
@@ -4698,6 +4724,7 @@ impl Operand {
                 s::Capability::ShaderStereoViewNV => vec![vec!["SPV_NV_stereo_view_rendering"]],
                 s::Capability::TensorAddressingNV => vec![vec!["SPV_NV_tensor_addressing"]],
                 s::Capability::ShaderViewportMaskNV => vec![vec!["SPV_NV_viewport_array2"]],
+                s::Capability::BFloat16MulAddQCOM => vec![vec!["SPV_QCOM_bfloat16_muladd"]],
                 s::Capability::CooperativeMatrixConversionQCOM => vec![vec!["SPV_QCOM_cooperative_matrix_conversion"]],
                 s::Capability::TextureSampleWeightedQCOM
                 | s::Capability::TextureBoxFilterQCOM
@@ -4707,6 +4734,7 @@ impl Operand {
                     vec![vec!["SPV_QCOM_image_processing3"]]
                 }
                 s::Capability::MultipleWaitQueuesQCOM => vec![vec!["SPV_QCOM_multiple_wait_queues"]],
+                s::Capability::SubgroupSizeQCOM => vec![vec!["SPV_QCOM_subgroup_size"]],
                 s::Capability::TileShadingQCOM => vec![vec!["SPV_QCOM_tile_shading"]],
                 s::Capability::IntrinsicSAMSUNG => vec![vec!["SPV_SAMSUNG_intrinsic"]],
                 s::Capability::DotProductFloat16AccFloat32VALVE

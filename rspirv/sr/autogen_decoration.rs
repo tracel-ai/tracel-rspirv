@@ -91,6 +91,7 @@ pub enum Decoration {
     BindlessImageNV,
     BoundSamplerNV,
     BoundImageNV,
+    CooperativeMatrixTransposeEXT,
     SIMTCallINTEL(u32),
     ReferencedIndirectlyINTEL,
     ClobberINTEL(String),
