@@ -9303,11 +9303,9 @@ crate::format::canonical_format!(
     LiteralIntegerAttr, "n", crate ::format::Quantifier::One)
 );
 mod spirv_cl_vloadn {
-    pub static ATTR_N: ::pliron::std_deps::sync::LazyLock<
-        ::pliron::identifier::Identifier,
-    > = ::pliron::std_deps::sync::LazyLock::new(|| {
-        "spirv_cl_vloadn_n".try_into().unwrap()
-    });
+    pub static ATTR_N: ::pliron::identifier::Identifier = ::pliron::ident!(
+        "spirv_cl_vloadn_n"
+    );
 }
 impl VloadnOp {
     #[allow(clippy::too_many_arguments)]
@@ -9568,11 +9566,9 @@ crate::format::canonical_format!(
     LiteralIntegerAttr, "n", crate ::format::Quantifier::One)
 );
 mod spirv_cl_vload_halfn {
-    pub static ATTR_N: ::pliron::std_deps::sync::LazyLock<
-        ::pliron::identifier::Identifier,
-    > = ::pliron::std_deps::sync::LazyLock::new(|| {
-        "spirv_cl_vload_halfn_n".try_into().unwrap()
-    });
+    pub static ATTR_N: ::pliron::identifier::Identifier = ::pliron::ident!(
+        "spirv_cl_vload_halfn_n"
+    );
 }
 impl VloadHalfnOp {
     #[allow(clippy::too_many_arguments)]
@@ -9765,11 +9761,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_cl_vstore_half_r {
-    pub static ATTR_MODE: ::pliron::std_deps::sync::LazyLock<
-        ::pliron::identifier::Identifier,
-    > = ::pliron::std_deps::sync::LazyLock::new(|| {
-        "spirv_cl_vstore_half_r_mode".try_into().unwrap()
-    });
+    pub static ATTR_MODE: ::pliron::identifier::Identifier = ::pliron::ident!(
+        "spirv_cl_vstore_half_r_mode"
+    );
 }
 impl VstoreHalfROp {
     #[allow(clippy::too_many_arguments)]
@@ -9966,11 +9960,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_cl_vstore_halfn_r {
-    pub static ATTR_MODE: ::pliron::std_deps::sync::LazyLock<
-        ::pliron::identifier::Identifier,
-    > = ::pliron::std_deps::sync::LazyLock::new(|| {
-        "spirv_cl_vstore_halfn_r_mode".try_into().unwrap()
-    });
+    pub static ATTR_MODE: ::pliron::identifier::Identifier = ::pliron::ident!(
+        "spirv_cl_vstore_halfn_r_mode"
+    );
 }
 impl VstoreHalfnROp {
     #[allow(clippy::too_many_arguments)]
@@ -10088,11 +10080,9 @@ crate::format::canonical_format!(
     LiteralIntegerAttr, "n", crate ::format::Quantifier::One)
 );
 mod spirv_cl_vloada_halfn {
-    pub static ATTR_N: ::pliron::std_deps::sync::LazyLock<
-        ::pliron::identifier::Identifier,
-    > = ::pliron::std_deps::sync::LazyLock::new(|| {
-        "spirv_cl_vloada_halfn_n".try_into().unwrap()
-    });
+    pub static ATTR_N: ::pliron::identifier::Identifier = ::pliron::ident!(
+        "spirv_cl_vloada_halfn_n"
+    );
 }
 impl VloadaHalfnOp {
     #[allow(clippy::too_many_arguments)]
@@ -10285,11 +10275,9 @@ crate::format::canonical_format!(
     ::format::Quantifier::One)
 );
 mod spirv_cl_vstorea_halfn_r {
-    pub static ATTR_MODE: ::pliron::std_deps::sync::LazyLock<
-        ::pliron::identifier::Identifier,
-    > = ::pliron::std_deps::sync::LazyLock::new(|| {
-        "spirv_cl_vstorea_halfn_r_mode".try_into().unwrap()
-    });
+    pub static ATTR_MODE: ::pliron::identifier::Identifier = ::pliron::ident!(
+        "spirv_cl_vstorea_halfn_r_mode"
+    );
 }
 impl VstoreaHalfnROp {
     #[allow(clippy::too_many_arguments)]

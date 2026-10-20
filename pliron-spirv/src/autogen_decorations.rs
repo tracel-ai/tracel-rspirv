@@ -7,301 +7,208 @@ use crate::{
     prelude::*,
 };
 use core::cell::Ref;
-pub static ATTR_RELAXED_PRECISION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_relaxed_precision".try_into().unwrap());
-pub static ATTR_SPEC_ID: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_spec_id".try_into().unwrap());
-pub static ATTR_BLOCK: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_block".try_into().unwrap());
-pub static ATTR_BUFFER_BLOCK: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_buffer_block".try_into().unwrap());
-pub static ATTR_ROW_MAJOR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_row_major".try_into().unwrap());
-pub static ATTR_COL_MAJOR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_col_major".try_into().unwrap());
-pub static ATTR_ARRAY_STRIDE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_array_stride".try_into().unwrap());
-pub static ATTR_MATRIX_STRIDE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_matrix_stride".try_into().unwrap());
-pub static ATTR_GLSL_SHARED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_glsl_shared".try_into().unwrap());
-pub static ATTR_GLSL_PACKED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_glsl_packed".try_into().unwrap());
-pub static ATTR_C_PACKED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_c_packed".try_into().unwrap());
-pub static ATTR_BUILT_IN: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_built_in".try_into().unwrap());
-pub static ATTR_NO_PERSPECTIVE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_perspective".try_into().unwrap());
-pub static ATTR_FLAT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_flat".try_into().unwrap());
-pub static ATTR_PATCH: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_patch".try_into().unwrap());
-pub static ATTR_CENTROID: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_centroid".try_into().unwrap());
-pub static ATTR_SAMPLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_sample".try_into().unwrap());
-pub static ATTR_INVARIANT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_invariant".try_into().unwrap());
-pub static ATTR_RESTRICT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_restrict".try_into().unwrap());
-pub static ATTR_ALIASED: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_aliased".try_into().unwrap());
-pub static ATTR_VOLATILE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_volatile".try_into().unwrap());
-pub static ATTR_CONSTANT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_constant".try_into().unwrap());
-pub static ATTR_COHERENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_coherent".try_into().unwrap());
-pub static ATTR_NON_WRITABLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_non_writable".try_into().unwrap());
-pub static ATTR_NON_READABLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_non_readable".try_into().unwrap());
-pub static ATTR_UNIFORM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_uniform".try_into().unwrap());
-pub static ATTR_UNIFORM_ID: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_uniform_id".try_into().unwrap());
-pub static ATTR_SATURATED_CONVERSION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_saturated_conversion".try_into().unwrap());
-pub static ATTR_STREAM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stream".try_into().unwrap());
-pub static ATTR_LOCATION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_location".try_into().unwrap());
-pub static ATTR_COMPONENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_component".try_into().unwrap());
-pub static ATTR_INDEX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_index".try_into().unwrap());
-pub static ATTR_BINDING: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_binding".try_into().unwrap());
-pub static ATTR_DESCRIPTOR_SET: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_descriptor_set".try_into().unwrap());
-pub static ATTR_OFFSET: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_offset".try_into().unwrap());
-pub static ATTR_XFB_BUFFER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_xfb_buffer".try_into().unwrap());
-pub static ATTR_XFB_STRIDE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_xfb_stride".try_into().unwrap());
-pub static ATTR_FUNC_PARAM_ATTR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_func_param_attr".try_into().unwrap());
-pub static ATTR_FP_ROUNDING_MODE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_fp_rounding_mode".try_into().unwrap());
-pub static ATTR_FP_FAST_MATH_MODE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_fp_fast_math_mode".try_into().unwrap());
-pub static ATTR_NO_CONTRACTION: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_contraction".try_into().unwrap());
-pub static ATTR_INPUT_ATTACHMENT_INDEX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_input_attachment_index".try_into().unwrap());
-pub static ATTR_ALIGNMENT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_alignment".try_into().unwrap());
-pub static ATTR_MAX_BYTE_OFFSET: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_byte_offset".try_into().unwrap());
-pub static ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_saturated_to_largest_float8_normal_conversion_ext"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_NO_SIGNED_WRAP: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_signed_wrap".try_into().unwrap());
-pub static ATTR_NO_UNSIGNED_WRAP: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_no_unsigned_wrap".try_into().unwrap());
-pub static ATTR_WEIGHT_TEXTURE_QCOM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_weight_texture_qcom".try_into().unwrap());
-pub static ATTR_BLOCK_MATCH_TEXTURE_QCOM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_block_match_texture_qcom".try_into().unwrap());
-pub static ATTR_BLOCK_MATCH_SAMPLER_QCOM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_block_match_sampler_qcom".try_into().unwrap());
-pub static ATTR_EXPLICIT_INTERP_AMD: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_explicit_interp_amd".try_into().unwrap());
-pub static ATTR_TRACK_FINISH_WRITING_AMDX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_track_finish_writing_amdx".try_into().unwrap());
-pub static ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_payload_node_sparse_array_amdx".try_into().unwrap());
-pub static ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_payload_dispatch_indirect_amdx".try_into().unwrap());
-pub static ATTR_UTF_ENCODED_KHR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_utf_encoded_khr".try_into().unwrap());
-pub static ATTR_OVERRIDE_COVERAGE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_override_coverage_nv".try_into().unwrap());
-pub static ATTR_PASSTHROUGH_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_passthrough_nv".try_into().unwrap());
-pub static ATTR_VIEWPORT_RELATIVE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_viewport_relative_nv".try_into().unwrap());
-pub static ATTR_SECONDARY_VIEWPORT_RELATIVE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_secondary_viewport_relative_nv".try_into().unwrap());
-pub static ATTR_PER_PRIMITIVE_EXT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_primitive_ext".try_into().unwrap());
-pub static ATTR_PER_VIEW_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_view_nv".try_into().unwrap());
-pub static ATTR_PER_TASK_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_task_nv".try_into().unwrap());
-pub static ATTR_PER_VERTEX_KHR: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_per_vertex_khr".try_into().unwrap());
-pub static ATTR_NON_UNIFORM: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_non_uniform".try_into().unwrap());
-pub static ATTR_RESTRICT_POINTER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_restrict_pointer".try_into().unwrap());
-pub static ATTR_ALIASED_POINTER: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_aliased_pointer".try_into().unwrap());
-pub static ATTR_MEMBER_OFFSET_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_member_offset_nv".try_into().unwrap());
-pub static ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_hit_object_shader_record_buffer_nv"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_hit_object_shader_record_buffer_ext"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_BANK_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bank_nv".try_into().unwrap());
-pub static ATTR_BINDLESS_SAMPLER_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bindless_sampler_nv".try_into().unwrap());
-pub static ATTR_BINDLESS_IMAGE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bindless_image_nv".try_into().unwrap());
-pub static ATTR_BOUND_SAMPLER_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bound_sampler_nv".try_into().unwrap());
-pub static ATTR_BOUND_IMAGE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bound_image_nv".try_into().unwrap());
-pub static ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_cooperative_matrix_transpose_ext".try_into().unwrap());
-pub static ATTR_SIMT_CALL_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_simt_call_intel".try_into().unwrap());
-pub static ATTR_REFERENCED_INDIRECTLY_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_referenced_indirectly_intel".try_into().unwrap());
-pub static ATTR_CLOBBER_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_clobber_intel".try_into().unwrap());
-pub static ATTR_SIDE_EFFECTS_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_side_effects_intel".try_into().unwrap());
-pub static ATTR_VECTOR_COMPUTE_VARIABLE_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_vector_compute_variable_intel".try_into().unwrap());
-pub static ATTR_FUNC_PARAM_IO_KIND_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_func_param_io_kind_intel".try_into().unwrap());
-pub static ATTR_VECTOR_COMPUTE_FUNCTION_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_vector_compute_function_intel".try_into().unwrap());
-pub static ATTR_STACK_CALL_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stack_call_intel".try_into().unwrap());
-pub static ATTR_GLOBAL_VARIABLE_OFFSET_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_global_variable_offset_intel".try_into().unwrap());
-pub static ATTR_USER_SEMANTIC: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_user_semantic".try_into().unwrap());
-pub static ATTR_USER_TYPE_GOOGLE: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_user_type_google".try_into().unwrap());
-pub static ATTR_REGISTER_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_register_altera".try_into().unwrap());
-pub static ATTR_MEMORY_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_memory_altera".try_into().unwrap());
-pub static ATTR_NUMBANKS_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_numbanks_altera".try_into().unwrap());
-pub static ATTR_BANKWIDTH_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bankwidth_altera".try_into().unwrap());
-pub static ATTR_MAX_PRIVATE_COPIES_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_private_copies_altera".try_into().unwrap());
-pub static ATTR_SINGLEPUMP_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_singlepump_altera".try_into().unwrap());
-pub static ATTR_DOUBLEPUMP_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_doublepump_altera".try_into().unwrap());
-pub static ATTR_MAX_REPLICATES_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_replicates_altera".try_into().unwrap());
-pub static ATTR_SIMPLE_DUAL_PORT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_simple_dual_port_altera".try_into().unwrap());
-pub static ATTR_FORCE_POW2_DEPTH_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_force_pow2_depth_altera".try_into().unwrap());
-pub static ATTR_STRIDESIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stridesize_altera".try_into().unwrap());
-pub static ATTR_WORDSIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_wordsize_altera".try_into().unwrap());
-pub static ATTR_TRUE_DUAL_PORT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_true_dual_port_altera".try_into().unwrap());
-pub static ATTR_BURST_COALESCE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_burst_coalesce_altera".try_into().unwrap());
-pub static ATTR_CACHE_SIZE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_cache_size_altera".try_into().unwrap());
-pub static ATTR_DONT_STATICALLY_COALESCE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_dont_statically_coalesce_altera".try_into().unwrap());
-pub static ATTR_PREFETCH_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_prefetch_altera".try_into().unwrap());
-pub static ATTR_STALL_ENABLE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stall_enable_altera".try_into().unwrap());
-pub static ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_fuse_loops_in_function_altera".try_into().unwrap());
-pub static ATTR_INITIATION_INTERVAL_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_initiation_interval_altera".try_into().unwrap());
-pub static ATTR_MAX_CONCURRENCY_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_max_concurrency_altera".try_into().unwrap());
-pub static ATTR_PIPELINE_ENABLE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_pipeline_enable_altera".try_into().unwrap());
-pub static ATTR_BUFFER_LOCATION_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_buffer_location_altera".try_into().unwrap());
-pub static ATTR_IO_PIPE_STORAGE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_io_pipe_storage_altera".try_into().unwrap());
-pub static ATTR_SINGLE_ELEMENT_VECTOR_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_single_element_vector_intel".try_into().unwrap());
-pub static ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_vector_compute_callable_function_intel"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_MEDIA_BLOCK_IOINTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_media_block_iointel".try_into().unwrap());
-pub static ATTR_STALL_FREE_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stall_free_altera".try_into().unwrap());
-pub static ATTR_LATENCY_CONTROL_LABEL_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_latency_control_label_altera".try_into().unwrap());
-pub static ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_conduit_kernel_argument_altera".try_into().unwrap());
-pub static ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_register_map_kernel_argument_altera"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_address_width_altera"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_data_width_altera"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_mm_host_interface_latency_altera".try_into().unwrap());
-pub static ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_max_burst_altera"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA: ::pliron::std_deps::sync::LazyLock<
-    ::pliron::identifier::Identifier,
-> = ::pliron::std_deps::sync::LazyLock::new(|| {
-    "spirv_decoration_mm_host_interface_wait_request_altera"
-        .try_into()
-        .unwrap()
-});
-pub static ATTR_STABLE_KERNEL_ARGUMENT_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_stable_kernel_argument_altera".try_into().unwrap());
-pub static ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_implement_in_register_map_altera".try_into().unwrap());
-pub static ATTR_INTRINSIC_SAMSUNG: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_intrinsic_samsung".try_into().unwrap());
+pub static ATTR_RELAXED_PRECISION: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_relaxed_precision");
+pub static ATTR_SPEC_ID: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_spec_id");
+pub static ATTR_BLOCK: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_block");
+pub static ATTR_BUFFER_BLOCK: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_buffer_block");
+pub static ATTR_ROW_MAJOR: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_row_major");
+pub static ATTR_COL_MAJOR: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_col_major");
+pub static ATTR_ARRAY_STRIDE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_array_stride");
+pub static ATTR_MATRIX_STRIDE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_matrix_stride");
+pub static ATTR_GLSL_SHARED: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_glsl_shared");
+pub static ATTR_GLSL_PACKED: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_glsl_packed");
+pub static ATTR_C_PACKED: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_c_packed");
+pub static ATTR_BUILT_IN: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_built_in");
+pub static ATTR_NO_PERSPECTIVE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_no_perspective");
+pub static ATTR_FLAT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_flat");
+pub static ATTR_PATCH: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_patch");
+pub static ATTR_CENTROID: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_centroid");
+pub static ATTR_SAMPLE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_sample");
+pub static ATTR_INVARIANT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_invariant");
+pub static ATTR_RESTRICT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_restrict");
+pub static ATTR_ALIASED: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_aliased");
+pub static ATTR_VOLATILE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_volatile");
+pub static ATTR_CONSTANT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_constant");
+pub static ATTR_COHERENT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_coherent");
+pub static ATTR_NON_WRITABLE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_non_writable");
+pub static ATTR_NON_READABLE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_non_readable");
+pub static ATTR_UNIFORM: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_uniform");
+pub static ATTR_UNIFORM_ID: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_uniform_id");
+pub static ATTR_SATURATED_CONVERSION: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_saturated_conversion");
+pub static ATTR_STREAM: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_stream");
+pub static ATTR_LOCATION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_location");
+pub static ATTR_COMPONENT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_component");
+pub static ATTR_INDEX: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_index");
+pub static ATTR_BINDING: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_binding");
+pub static ATTR_DESCRIPTOR_SET: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_descriptor_set");
+pub static ATTR_OFFSET: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_offset");
+pub static ATTR_XFB_BUFFER: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_xfb_buffer");
+pub static ATTR_XFB_STRIDE: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_xfb_stride");
+pub static ATTR_FUNC_PARAM_ATTR: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_func_param_attr");
+pub static ATTR_FP_ROUNDING_MODE: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_fp_rounding_mode");
+pub static ATTR_FP_FAST_MATH_MODE: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_fp_fast_math_mode");
+pub static ATTR_NO_CONTRACTION: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_no_contraction");
+pub static ATTR_INPUT_ATTACHMENT_INDEX: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_input_attachment_index");
+pub static ATTR_ALIGNMENT: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_alignment");
+pub static ATTR_MAX_BYTE_OFFSET: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_max_byte_offset");
+pub static ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_saturated_to_largest_float8_normal_conversion_ext");
+pub static ATTR_NO_SIGNED_WRAP: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_no_signed_wrap");
+pub static ATTR_NO_UNSIGNED_WRAP: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_no_unsigned_wrap");
+pub static ATTR_WEIGHT_TEXTURE_QCOM: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_weight_texture_qcom");
+pub static ATTR_BLOCK_MATCH_TEXTURE_QCOM: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_block_match_texture_qcom");
+pub static ATTR_BLOCK_MATCH_SAMPLER_QCOM: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_block_match_sampler_qcom");
+pub static ATTR_EXPLICIT_INTERP_AMD: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_explicit_interp_amd");
+pub static ATTR_TRACK_FINISH_WRITING_AMDX: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_track_finish_writing_amdx");
+pub static ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_payload_node_sparse_array_amdx");
+pub static ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_payload_dispatch_indirect_amdx");
+pub static ATTR_UTF_ENCODED_KHR: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_utf_encoded_khr");
+pub static ATTR_OVERRIDE_COVERAGE_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_override_coverage_nv");
+pub static ATTR_PASSTHROUGH_NV: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_passthrough_nv");
+pub static ATTR_VIEWPORT_RELATIVE_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_viewport_relative_nv");
+pub static ATTR_SECONDARY_VIEWPORT_RELATIVE_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_secondary_viewport_relative_nv");
+pub static ATTR_PER_PRIMITIVE_EXT: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_per_primitive_ext");
+pub static ATTR_PER_VIEW_NV: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_per_view_nv");
+pub static ATTR_PER_TASK_NV: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_per_task_nv");
+pub static ATTR_PER_VERTEX_KHR: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_per_vertex_khr");
+pub static ATTR_NON_UNIFORM: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_non_uniform");
+pub static ATTR_RESTRICT_POINTER: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_restrict_pointer");
+pub static ATTR_ALIASED_POINTER: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_aliased_pointer");
+pub static ATTR_MEMBER_OFFSET_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_member_offset_nv");
+pub static ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_hit_object_shader_record_buffer_nv");
+pub static ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_hit_object_shader_record_buffer_ext");
+pub static ATTR_BANK_NV: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_bank_nv");
+pub static ATTR_BINDLESS_SAMPLER_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_bindless_sampler_nv");
+pub static ATTR_BINDLESS_IMAGE_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_bindless_image_nv");
+pub static ATTR_BOUND_SAMPLER_NV: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_bound_sampler_nv");
+pub static ATTR_BOUND_IMAGE_NV: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_bound_image_nv");
+pub static ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_cooperative_matrix_transpose_ext");
+pub static ATTR_SIMT_CALL_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_simt_call_intel");
+pub static ATTR_REFERENCED_INDIRECTLY_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_referenced_indirectly_intel");
+pub static ATTR_CLOBBER_INTEL: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_clobber_intel");
+pub static ATTR_SIDE_EFFECTS_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_side_effects_intel");
+pub static ATTR_VECTOR_COMPUTE_VARIABLE_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_vector_compute_variable_intel");
+pub static ATTR_FUNC_PARAM_IO_KIND_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_func_param_io_kind_intel");
+pub static ATTR_VECTOR_COMPUTE_FUNCTION_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_vector_compute_function_intel");
+pub static ATTR_STACK_CALL_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_stack_call_intel");
+pub static ATTR_GLOBAL_VARIABLE_OFFSET_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_global_variable_offset_intel");
+pub static ATTR_USER_SEMANTIC: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_user_semantic");
+pub static ATTR_USER_TYPE_GOOGLE: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_user_type_google");
+pub static ATTR_REGISTER_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_register_altera");
+pub static ATTR_MEMORY_ALTERA: ::pliron::identifier::Identifier = ::pliron::ident!("spirv_decoration_memory_altera");
+pub static ATTR_NUMBANKS_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_numbanks_altera");
+pub static ATTR_BANKWIDTH_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_bankwidth_altera");
+pub static ATTR_MAX_PRIVATE_COPIES_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_max_private_copies_altera");
+pub static ATTR_SINGLEPUMP_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_singlepump_altera");
+pub static ATTR_DOUBLEPUMP_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_doublepump_altera");
+pub static ATTR_MAX_REPLICATES_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_max_replicates_altera");
+pub static ATTR_SIMPLE_DUAL_PORT_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_simple_dual_port_altera");
+pub static ATTR_FORCE_POW2_DEPTH_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_force_pow2_depth_altera");
+pub static ATTR_STRIDESIZE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_stridesize_altera");
+pub static ATTR_WORDSIZE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_wordsize_altera");
+pub static ATTR_TRUE_DUAL_PORT_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_true_dual_port_altera");
+pub static ATTR_BURST_COALESCE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_burst_coalesce_altera");
+pub static ATTR_CACHE_SIZE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_cache_size_altera");
+pub static ATTR_DONT_STATICALLY_COALESCE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_dont_statically_coalesce_altera");
+pub static ATTR_PREFETCH_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_prefetch_altera");
+pub static ATTR_STALL_ENABLE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_stall_enable_altera");
+pub static ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_fuse_loops_in_function_altera");
+pub static ATTR_INITIATION_INTERVAL_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_initiation_interval_altera");
+pub static ATTR_MAX_CONCURRENCY_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_max_concurrency_altera");
+pub static ATTR_PIPELINE_ENABLE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_pipeline_enable_altera");
+pub static ATTR_BUFFER_LOCATION_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_buffer_location_altera");
+pub static ATTR_IO_PIPE_STORAGE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_io_pipe_storage_altera");
+pub static ATTR_SINGLE_ELEMENT_VECTOR_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_single_element_vector_intel");
+pub static ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_vector_compute_callable_function_intel");
+pub static ATTR_MEDIA_BLOCK_IOINTEL: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_media_block_iointel");
+pub static ATTR_STALL_FREE_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_stall_free_altera");
+pub static ATTR_LATENCY_CONTROL_LABEL_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_latency_control_label_altera");
+pub static ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_conduit_kernel_argument_altera");
+pub static ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_register_map_kernel_argument_altera");
+pub static ATTR_MM_HOST_INTERFACE_ADDRESS_WIDTH_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_mm_host_interface_address_width_altera");
+pub static ATTR_MM_HOST_INTERFACE_DATA_WIDTH_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_mm_host_interface_data_width_altera");
+pub static ATTR_MM_HOST_INTERFACE_LATENCY_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_mm_host_interface_latency_altera");
+pub static ATTR_MM_HOST_INTERFACE_MAX_BURST_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_mm_host_interface_max_burst_altera");
+pub static ATTR_MM_HOST_INTERFACE_WAIT_REQUEST_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_mm_host_interface_wait_request_altera");
+pub static ATTR_STABLE_KERNEL_ARGUMENT_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_stable_kernel_argument_altera");
+pub static ATTR_IMPLEMENT_IN_REGISTER_MAP_ALTERA: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_implement_in_register_map_altera");
+pub static ATTR_INTRINSIC_SAMSUNG: ::pliron::identifier::Identifier =
+    ::pliron::ident!("spirv_decoration_intrinsic_samsung");
 #[op_interface]
 pub trait DecoratableOp {
     fn verify(_op: &dyn Op, _ctx: &Context) -> Result<()>
@@ -2089,7 +1996,7 @@ pub trait DecoratableOp {
 #[inline(never)]
 pub fn has_decoration_relaxed_precision(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_RELAXED_PRECISION)
+    op.attributes.0.contains_key(&ATTR_RELAXED_PRECISION)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2103,25 +2010,25 @@ pub fn get_decoration_spec_id<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> O
 #[inline(never)]
 pub fn has_decoration_block(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BLOCK)
+    op.attributes.0.contains_key(&ATTR_BLOCK)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_buffer_block(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BUFFER_BLOCK)
+    op.attributes.0.contains_key(&ATTR_BUFFER_BLOCK)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_row_major(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_ROW_MAJOR)
+    op.attributes.0.contains_key(&ATTR_ROW_MAJOR)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_col_major(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_COL_MAJOR)
+    op.attributes.0.contains_key(&ATTR_COL_MAJOR)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2149,19 +2056,19 @@ pub fn get_decoration_matrix_stride<'a>(
 #[inline(never)]
 pub fn has_decoration_glsl_shared(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_GLSL_SHARED)
+    op.attributes.0.contains_key(&ATTR_GLSL_SHARED)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_glsl_packed(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_GLSL_PACKED)
+    op.attributes.0.contains_key(&ATTR_GLSL_PACKED)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_c_packed(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_C_PACKED)
+    op.attributes.0.contains_key(&ATTR_C_PACKED)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2175,85 +2082,85 @@ pub fn get_decoration_built_in<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> 
 #[inline(never)]
 pub fn has_decoration_no_perspective(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_NO_PERSPECTIVE)
+    op.attributes.0.contains_key(&ATTR_NO_PERSPECTIVE)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_flat(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_FLAT)
+    op.attributes.0.contains_key(&ATTR_FLAT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_patch(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PATCH)
+    op.attributes.0.contains_key(&ATTR_PATCH)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_centroid(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_CENTROID)
+    op.attributes.0.contains_key(&ATTR_CENTROID)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_sample(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_SAMPLE)
+    op.attributes.0.contains_key(&ATTR_SAMPLE)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_invariant(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_INVARIANT)
+    op.attributes.0.contains_key(&ATTR_INVARIANT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_restrict(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_RESTRICT)
+    op.attributes.0.contains_key(&ATTR_RESTRICT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_aliased(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_ALIASED)
+    op.attributes.0.contains_key(&ATTR_ALIASED)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_volatile(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_VOLATILE)
+    op.attributes.0.contains_key(&ATTR_VOLATILE)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_constant(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_CONSTANT)
+    op.attributes.0.contains_key(&ATTR_CONSTANT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_coherent(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_COHERENT)
+    op.attributes.0.contains_key(&ATTR_COHERENT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_non_writable(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_NON_WRITABLE)
+    op.attributes.0.contains_key(&ATTR_NON_WRITABLE)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_non_readable(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_NON_READABLE)
+    op.attributes.0.contains_key(&ATTR_NON_READABLE)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_uniform(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_UNIFORM)
+    op.attributes.0.contains_key(&ATTR_UNIFORM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2267,7 +2174,7 @@ pub fn get_decoration_uniform_id<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -
 #[inline(never)]
 pub fn has_decoration_saturated_conversion(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_SATURATED_CONVERSION)
+    op.attributes.0.contains_key(&ATTR_SATURATED_CONVERSION)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2378,7 +2285,7 @@ pub fn get_decoration_fp_fast_math_mode<'a>(
 #[inline(never)]
 pub fn has_decoration_no_contraction(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_NO_CONTRACTION)
+    op.attributes.0.contains_key(&ATTR_NO_CONTRACTION)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2416,85 +2323,85 @@ pub fn has_decoration_saturated_to_largest_float8_normal_conversion_ext(op: &dyn
     let op = op.get_operation().deref(ctx);
     op.attributes
         .0
-        .contains_key(&*ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT)
+        .contains_key(&ATTR_SATURATED_TO_LARGEST_FLOAT8_NORMAL_CONVERSION_EXT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_no_signed_wrap(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_NO_SIGNED_WRAP)
+    op.attributes.0.contains_key(&ATTR_NO_SIGNED_WRAP)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_no_unsigned_wrap(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_NO_UNSIGNED_WRAP)
+    op.attributes.0.contains_key(&ATTR_NO_UNSIGNED_WRAP)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_weight_texture_qcom(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_WEIGHT_TEXTURE_QCOM)
+    op.attributes.0.contains_key(&ATTR_WEIGHT_TEXTURE_QCOM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_block_match_texture_qcom(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BLOCK_MATCH_TEXTURE_QCOM)
+    op.attributes.0.contains_key(&ATTR_BLOCK_MATCH_TEXTURE_QCOM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_block_match_sampler_qcom(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BLOCK_MATCH_SAMPLER_QCOM)
+    op.attributes.0.contains_key(&ATTR_BLOCK_MATCH_SAMPLER_QCOM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_explicit_interp_amd(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_EXPLICIT_INTERP_AMD)
+    op.attributes.0.contains_key(&ATTR_EXPLICIT_INTERP_AMD)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_track_finish_writing_amdx(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_TRACK_FINISH_WRITING_AMDX)
+    op.attributes.0.contains_key(&ATTR_TRACK_FINISH_WRITING_AMDX)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_payload_node_sparse_array_amdx(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX)
+    op.attributes.0.contains_key(&ATTR_PAYLOAD_NODE_SPARSE_ARRAY_AMDX)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_payload_dispatch_indirect_amdx(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX)
+    op.attributes.0.contains_key(&ATTR_PAYLOAD_DISPATCH_INDIRECT_AMDX)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_utf_encoded_khr(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_UTF_ENCODED_KHR)
+    op.attributes.0.contains_key(&ATTR_UTF_ENCODED_KHR)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_override_coverage_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_OVERRIDE_COVERAGE_NV)
+    op.attributes.0.contains_key(&ATTR_OVERRIDE_COVERAGE_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_passthrough_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PASSTHROUGH_NV)
+    op.attributes.0.contains_key(&ATTR_PASSTHROUGH_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_viewport_relative_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_VIEWPORT_RELATIVE_NV)
+    op.attributes.0.contains_key(&ATTR_VIEWPORT_RELATIVE_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2512,43 +2419,43 @@ pub fn get_decoration_secondary_viewport_relative_nv<'a>(
 #[inline(never)]
 pub fn has_decoration_per_primitive_ext(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PER_PRIMITIVE_EXT)
+    op.attributes.0.contains_key(&ATTR_PER_PRIMITIVE_EXT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_per_view_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PER_VIEW_NV)
+    op.attributes.0.contains_key(&ATTR_PER_VIEW_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_per_task_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PER_TASK_NV)
+    op.attributes.0.contains_key(&ATTR_PER_TASK_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_per_vertex_khr(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_PER_VERTEX_KHR)
+    op.attributes.0.contains_key(&ATTR_PER_VERTEX_KHR)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_non_uniform(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_NON_UNIFORM)
+    op.attributes.0.contains_key(&ATTR_NON_UNIFORM)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_restrict_pointer(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_RESTRICT_POINTER)
+    op.attributes.0.contains_key(&ATTR_RESTRICT_POINTER)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_aliased_pointer(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_ALIASED_POINTER)
+    op.attributes.0.contains_key(&ATTR_ALIASED_POINTER)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2565,13 +2472,13 @@ pub fn get_decoration_member_offset_nv<'a>(
 #[inline(never)]
 pub fn has_decoration_hit_object_shader_record_buffer_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV)
+    op.attributes.0.contains_key(&ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_hit_object_shader_record_buffer_ext(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT)
+    op.attributes.0.contains_key(&ATTR_HIT_OBJECT_SHADER_RECORD_BUFFER_EXT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2585,31 +2492,31 @@ pub fn get_decoration_bank_nv<'a>(op: &dyn DecoratableOp, ctx: &'a Context) -> O
 #[inline(never)]
 pub fn has_decoration_bindless_sampler_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BINDLESS_SAMPLER_NV)
+    op.attributes.0.contains_key(&ATTR_BINDLESS_SAMPLER_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_bindless_image_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BINDLESS_IMAGE_NV)
+    op.attributes.0.contains_key(&ATTR_BINDLESS_IMAGE_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_bound_sampler_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BOUND_SAMPLER_NV)
+    op.attributes.0.contains_key(&ATTR_BOUND_SAMPLER_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_bound_image_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BOUND_IMAGE_NV)
+    op.attributes.0.contains_key(&ATTR_BOUND_IMAGE_NV)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_cooperative_matrix_transpose_ext(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT)
+    op.attributes.0.contains_key(&ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2626,7 +2533,7 @@ pub fn get_decoration_simt_call_intel<'a>(
 #[inline(never)]
 pub fn has_decoration_referenced_indirectly_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_REFERENCED_INDIRECTLY_INTEL)
+    op.attributes.0.contains_key(&ATTR_REFERENCED_INDIRECTLY_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2640,13 +2547,13 @@ pub fn get_decoration_clobber_intel<'a>(op: &dyn DecoratableOp, ctx: &'a Context
 #[inline(never)]
 pub fn has_decoration_side_effects_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_SIDE_EFFECTS_INTEL)
+    op.attributes.0.contains_key(&ATTR_SIDE_EFFECTS_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_vector_compute_variable_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_VECTOR_COMPUTE_VARIABLE_INTEL)
+    op.attributes.0.contains_key(&ATTR_VECTOR_COMPUTE_VARIABLE_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2663,13 +2570,13 @@ pub fn get_decoration_func_param_io_kind_intel<'a>(
 #[inline(never)]
 pub fn has_decoration_vector_compute_function_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_VECTOR_COMPUTE_FUNCTION_INTEL)
+    op.attributes.0.contains_key(&ATTR_VECTOR_COMPUTE_FUNCTION_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_stack_call_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_STACK_CALL_INTEL)
+    op.attributes.0.contains_key(&ATTR_STACK_CALL_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2703,7 +2610,7 @@ pub fn get_decoration_user_type_google<'a>(op: &dyn DecoratableOp, ctx: &'a Cont
 #[inline(never)]
 pub fn has_decoration_register_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_REGISTER_ALTERA)
+    op.attributes.0.contains_key(&ATTR_REGISTER_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2750,13 +2657,13 @@ pub fn get_decoration_max_private_copies_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_singlepump_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_SINGLEPUMP_ALTERA)
+    op.attributes.0.contains_key(&ATTR_SINGLEPUMP_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_doublepump_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_DOUBLEPUMP_ALTERA)
+    op.attributes.0.contains_key(&ATTR_DOUBLEPUMP_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2773,7 +2680,7 @@ pub fn get_decoration_max_replicates_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_simple_dual_port_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_SIMPLE_DUAL_PORT_ALTERA)
+    op.attributes.0.contains_key(&ATTR_SIMPLE_DUAL_PORT_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2812,13 +2719,13 @@ pub fn get_decoration_wordsize_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_true_dual_port_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_TRUE_DUAL_PORT_ALTERA)
+    op.attributes.0.contains_key(&ATTR_TRUE_DUAL_PORT_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_burst_coalesce_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_BURST_COALESCE_ALTERA)
+    op.attributes.0.contains_key(&ATTR_BURST_COALESCE_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2835,7 +2742,7 @@ pub fn get_decoration_cache_size_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_dont_statically_coalesce_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_DONT_STATICALLY_COALESCE_ALTERA)
+    op.attributes.0.contains_key(&ATTR_DONT_STATICALLY_COALESCE_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2852,13 +2759,13 @@ pub fn get_decoration_prefetch_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_stall_enable_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_STALL_ENABLE_ALTERA)
+    op.attributes.0.contains_key(&ATTR_STALL_ENABLE_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_fuse_loops_in_function_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA)
+    op.attributes.0.contains_key(&ATTR_FUSE_LOOPS_IN_FUNCTION_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2920,7 +2827,7 @@ pub fn get_decoration_io_pipe_storage_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_single_element_vector_intel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_SINGLE_ELEMENT_VECTOR_INTEL)
+    op.attributes.0.contains_key(&ATTR_SINGLE_ELEMENT_VECTOR_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2928,19 +2835,19 @@ pub fn has_decoration_vector_compute_callable_function_intel(op: &dyn Decoratabl
     let op = op.get_operation().deref(ctx);
     op.attributes
         .0
-        .contains_key(&*ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL)
+        .contains_key(&ATTR_VECTOR_COMPUTE_CALLABLE_FUNCTION_INTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_media_block_iointel(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_MEDIA_BLOCK_IOINTEL)
+    op.attributes.0.contains_key(&ATTR_MEDIA_BLOCK_IOINTEL)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_stall_free_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_STALL_FREE_ALTERA)
+    op.attributes.0.contains_key(&ATTR_STALL_FREE_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -2958,13 +2865,13 @@ pub fn get_decoration_latency_control_label_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_conduit_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA)
+    op.attributes.0.contains_key(&ATTR_CONDUIT_KERNEL_ARGUMENT_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
 pub fn has_decoration_register_map_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA)
+    op.attributes.0.contains_key(&ATTR_REGISTER_MAP_KERNEL_ARGUMENT_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3030,7 +2937,7 @@ pub fn get_decoration_mm_host_interface_wait_request_altera<'a>(
 #[inline(never)]
 pub fn has_decoration_stable_kernel_argument_altera(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
-    op.attributes.0.contains_key(&*ATTR_STABLE_KERNEL_ARGUMENT_ALTERA)
+    op.attributes.0.contains_key(&ATTR_STABLE_KERNEL_ARGUMENT_ALTERA)
 }
 #[allow(non_snake_case)]
 #[inline(never)]

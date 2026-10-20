@@ -87,8 +87,7 @@ impl PlironGenerator {
                 let const_name = attr_const_name(name);
                 let qualified_name = attr_qualified_name(namespace, name).to_string();
                 Some(quote! {
-                    pub static #const_name: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-                        ::pliron::std_deps::sync::LazyLock::new(|| #qualified_name.try_into().unwrap());
+                    pub static #const_name: ::pliron::identifier::Identifier = ::pliron::ident!(#qualified_name);
                 })
             }
             OpdKind::MemoryAccess(name, name_align) => {
@@ -97,10 +96,8 @@ impl PlironGenerator {
                 let qualified_name = attr_qualified_name(namespace, name).to_string();
                 let qualified_name_align = attr_qualified_name(namespace, name_align).to_string();
                 Some(quote! {
-                    pub static #const_name: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-                        ::pliron::std_deps::sync::LazyLock::new(|| #qualified_name.try_into().unwrap());
-                    pub static #const_name_align: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
-                        ::pliron::std_deps::sync::LazyLock::new(|| #qualified_name_align.try_into().unwrap());
+                    pub static #const_name: ::pliron::identifier::Identifier = ::pliron::ident!(#qualified_name);
+                    pub static #const_name_align: ::pliron::identifier::Identifier = ::pliron::ident!(#qualified_name_align);
                 })
             }
             OpdKind::ResultType | OpdKind::ResultValue | OpdKind::Value(..) => None,
@@ -187,7 +184,7 @@ impl PlironGenerator {
                         #[doc = #fn_comment_remove]
                         pub fn #fn_name_remove(&self, ctx: &::pliron::context::Context)
                         {
-                            self.op.deref_mut(ctx).attributes.0.remove(&*#const_name);
+                            self.op.deref_mut(ctx).attributes.0.remove(&#const_name);
                         }
                     }
                 }
