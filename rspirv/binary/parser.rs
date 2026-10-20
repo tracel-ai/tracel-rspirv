@@ -529,8 +529,8 @@ mod tests {
     #[test]
     fn test_parsing_unsupported_endianness() {
         let mut module = ZERO_BOUND_HEADER.to_vec();
-        module.as_mut_slice().swap(0, 3);
-        module.as_mut_slice().swap(1, 2);
+        module.swap(0, 3);
+        module.swap(1, 2);
         let mut c = RetainingConsumer::new();
         let p = Parser::new(&module, &mut c);
         assert_matches!(p.parse(), Err(State::EndiannessUnsupported));

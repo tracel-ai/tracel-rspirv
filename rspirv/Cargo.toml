@@ -27,3 +27,6 @@ pliron = { workspace = true, optional = true }
 
 [dev-dependencies]
 assert_matches = "1.1"
+
+[lints]
+workspace = true

@@ -170,6 +170,8 @@ pub static ATTR_BOUND_SAMPLER_NV: ::pliron::std_deps::sync::LazyLock<::pliron::i
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bound_sampler_nv".try_into().unwrap());
 pub static ATTR_BOUND_IMAGE_NV: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_bound_image_nv".try_into().unwrap());
+pub static ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
+    ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_cooperative_matrix_transpose_ext".try_into().unwrap());
 pub static ATTR_SIMT_CALL_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
     ::pliron::std_deps::sync::LazyLock::new(|| "spirv_decoration_simt_call_intel".try_into().unwrap());
 pub static ATTR_REFERENCED_INDIRECTLY_INTEL: ::pliron::std_deps::sync::LazyLock<::pliron::identifier::Identifier> =
@@ -825,6 +827,13 @@ pub trait DecoratableOp {
         Self: Sized,
     {
         has_decoration_bound_image_nv(self, ctx)
+    }
+    #[allow(non_snake_case)]
+    fn has_decoration_cooperative_matrix_transpose_ext(&self, ctx: &Context) -> bool
+    where
+        Self: Sized,
+    {
+        has_decoration_cooperative_matrix_transpose_ext(self, ctx)
     }
     #[allow(non_snake_case)]
     fn get_decoration_simt_call_intel<'a>(&self, ctx: &'a Context) -> Option<Ref<'a, LiteralIntegerAttr>>
@@ -1713,6 +1722,13 @@ pub trait DecoratableOp {
         set_decoration_bound_image_nv(self, ctx);
     }
     #[allow(non_snake_case)]
+    fn set_decoration_cooperative_matrix_transpose_ext(&self, ctx: &Context)
+    where
+        Self: Sized,
+    {
+        set_decoration_cooperative_matrix_transpose_ext(self, ctx);
+    }
+    #[allow(non_snake_case)]
     fn set_decoration_simt_call_intel(&self, ctx: &Context, value: LiteralIntegerAttr)
     where
         Self: Sized,
@@ -2588,6 +2604,12 @@ pub fn has_decoration_bound_sampler_nv(op: &dyn DecoratableOp, ctx: &Context) ->
 pub fn has_decoration_bound_image_nv(op: &dyn DecoratableOp, ctx: &Context) -> bool {
     let op = op.get_operation().deref(ctx);
     op.attributes.0.contains_key(&*ATTR_BOUND_IMAGE_NV)
+}
+#[allow(non_snake_case)]
+#[inline(never)]
+pub fn has_decoration_cooperative_matrix_transpose_ext(op: &dyn DecoratableOp, ctx: &Context) -> bool {
+    let op = op.get_operation().deref(ctx);
+    op.attributes.0.contains_key(&*ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT)
 }
 #[allow(non_snake_case)]
 #[inline(never)]
@@ -3552,6 +3574,13 @@ pub fn set_decoration_bound_image_nv(op: &dyn DecoratableOp, ctx: &Context) {
         .set(ATTR_BOUND_IMAGE_NV.clone(), UnitAttr::new());
 }
 #[allow(non_snake_case)]
+pub fn set_decoration_cooperative_matrix_transpose_ext(op: &dyn DecoratableOp, ctx: &Context) {
+    op.get_operation()
+        .deref_mut(ctx)
+        .attributes
+        .set(ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT.clone(), UnitAttr::new());
+}
+#[allow(non_snake_case)]
 pub fn set_decoration_simt_call_intel(op: &dyn DecoratableOp, ctx: &Context, value: LiteralIntegerAttr) {
     op.get_operation()
         .deref_mut(ctx)
@@ -4004,6 +4033,7 @@ impl DecorationExt for Decoration {
             Decoration::BindlessImageNV => &ATTR_BINDLESS_IMAGE_NV,
             Decoration::BoundSamplerNV => &ATTR_BOUND_SAMPLER_NV,
             Decoration::BoundImageNV => &ATTR_BOUND_IMAGE_NV,
+            Decoration::CooperativeMatrixTransposeEXT => &ATTR_COOPERATIVE_MATRIX_TRANSPOSE_EXT,
             Decoration::SIMTCallINTEL => &ATTR_SIMT_CALL_INTEL,
             Decoration::ReferencedIndirectlyINTEL => &ATTR_REFERENCED_INDIRECTLY_INTEL,
             Decoration::ClobberINTEL => &ATTR_CLOBBER_INTEL,
@@ -4136,6 +4166,7 @@ pub fn decoration_for_key(identifier: &Identifier) -> Option<Decoration> {
         "spirv_decoration_bindless_image_nv" => Some(Decoration::BindlessImageNV),
         "spirv_decoration_bound_sampler_nv" => Some(Decoration::BoundSamplerNV),
         "spirv_decoration_bound_image_nv" => Some(Decoration::BoundImageNV),
+        "spirv_decoration_cooperative_matrix_transpose_ext" => Some(Decoration::CooperativeMatrixTransposeEXT),
         "spirv_decoration_simt_call_intel" => Some(Decoration::SIMTCallINTEL),
         "spirv_decoration_referenced_indirectly_intel" => Some(Decoration::ReferencedIndirectlyINTEL),
         "spirv_decoration_clobber_intel" => Some(Decoration::ClobberINTEL),
@@ -4323,6 +4354,7 @@ impl DecorationInfo {
             | Decoration::BindlessImageNV
             | Decoration::BoundSamplerNV
             | Decoration::BoundImageNV
+            | Decoration::CooperativeMatrixTransposeEXT
             | Decoration::ReferencedIndirectlyINTEL
             | Decoration::SideEffectsINTEL
             | Decoration::VectorComputeVariableINTEL
