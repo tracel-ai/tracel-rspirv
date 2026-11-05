@@ -8,7 +8,7 @@ use pliron::{
         attributes::{IdentifierAttr, IntegerAttr, TypeAttr},
         ops::{ConstantOp, FuncOp},
         type_interfaces::FunctionTypeInterface,
-        types::{FunctionType, IntegerType},
+        types::{FunctionType, IntegerType, Signedness},
     },
     context::Ptr,
     dict_key,
@@ -28,6 +28,7 @@ use tracel_rspirv::{
         AddressingModel,
         Capability,
         ExecutionMode,
+        FPFastMathMode,
         FunctionControl,
         LoopControl,
         MemoryModel,
@@ -39,7 +40,7 @@ use tracel_rspirv::{
 use crate::{
     BlockPos,
     ToSpirvAttr,
-    autogen_attrs::StorageClassAttr,
+    autogen_attrs::{FPFastMathModeAttr, StorageClassAttr},
     decorations::all_decorations_for_op,
     format::{FormatVar, Quantifier, attr, canonical_format},
     op_to_spirv,
@@ -294,6 +295,115 @@ impl VerCapExtOpInterface for ExecutionModeIdOp {
 
     fn required_capabilities(&self, ctx: &Context) -> Vec<Vec<Capability>> {
         Operand::from(self.mode(ctx)).required_capabilities()
+    }
+}
+
+/// Sets the default fast-math mode of one floating-point type for an entry point:
+/// `OpExecutionModeId FPFastMathDefault`, from `SPV_KHR_float_controls2`.
+///
+/// `ExecutionModeIdOp` cannot express it, because the mode takes a type id, which is not a value.
+/// The flags become a 32-bit constant, as the mode requires.
+#[pliron_op(
+    name = "spirv.FPFastMathDefault",
+    attributes = (
+        spirv_fp_fast_math_default_entry_point: IdentifierAttr,
+        spirv_fp_fast_math_default_target: TypeAttr,
+        spirv_fp_fast_math_default_flags: FPFastMathModeAttr,
+    ),
+    verifier = "succ"
+)]
+pub struct FPFastMathDefaultOp;
+
+impl FPFastMathDefaultOp {
+    pub fn new(
+        ctx: &mut Context,
+        entry_point: Identifier,
+        target: TypeHandle,
+        flags: impl Into<FPFastMathModeAttr>,
+    ) -> Self {
+        let op = Self {
+            op: Operation::new(ctx, Self::get_concrete_op_info(), vec![], vec![], vec![], 0),
+        };
+        op.set_attr_spirv_fp_fast_math_default_entry_point(ctx, IdentifierAttr::new(entry_point));
+        op.set_attr_spirv_fp_fast_math_default_target(ctx, target.into());
+        op.set_attr_spirv_fp_fast_math_default_flags(ctx, flags.into());
+        op
+    }
+
+    /// The entry point the default applies to.
+    ///
+    /// # Panics
+    /// If the op has no entry point attribute, which `new` always sets.
+    pub fn entry_point(&self, ctx: &Context) -> Identifier {
+        self.get_attr_spirv_fp_fast_math_default_entry_point(ctx)
+            .unwrap()
+            .clone()
+            .into()
+    }
+
+    /// The floating-point type the default applies to.
+    ///
+    /// # Panics
+    /// If the op has no target attribute, which `new` always sets.
+    pub fn target(&self, ctx: &Context) -> TypeHandle {
+        self.get_attr_spirv_fp_fast_math_default_target(ctx)
+            .unwrap()
+            .get_type(ctx)
+    }
+
+    /// The default fast-math flags.
+    ///
+    /// # Panics
+    /// If the op has no flags attribute, which `new` always sets.
+    pub fn flags(&self, ctx: &Context) -> FPFastMathMode {
+        self.get_attr_spirv_fp_fast_math_default_flags(ctx).unwrap().0
+    }
+}
+
+canonical_format!(FPFastMathDefaultOp;
+    FormatVar::Symbol(
+        &fp_fast_math_default_op_attr_names::ATTR_KEY_SPIRV_FP_FAST_MATH_DEFAULT_ENTRY_POINT,
+        "entry_point",
+        Quantifier::One,
+    ),
+    attr!(
+        &fp_fast_math_default_op_attr_names::ATTR_KEY_SPIRV_FP_FAST_MATH_DEFAULT_TARGET,
+        TypeAttr,
+        "target",
+        Quantifier::One,
+    ),
+    attr!(
+        &fp_fast_math_default_op_attr_names::ATTR_KEY_SPIRV_FP_FAST_MATH_DEFAULT_FLAGS,
+        FPFastMathModeAttr,
+        "flags",
+        Quantifier::One,
+    )
+);
+
+#[op_interface_impl]
+impl ToSpirvOp for FPFastMathDefaultOp {
+    fn to_spirv(&self, ctx: &Context, builder: &mut PlironBuilder) -> Result<()> {
+        let entry_point = builder.symbol_id(self.entry_point(ctx));
+        let target = spirv_type_id(ctx, builder, self.target(ctx))?;
+        let u32_ty = IntegerType::get(ctx, 32, Signedness::Unsigned).to_handle();
+        let flags = builder.constant_bit32(ctx, u32_ty, self.flags(ctx).bits())?;
+        builder.execution_mode_id(entry_point, ExecutionMode::FPFastMathDefault, [target, flags]);
+        Ok(())
+    }
+}
+
+#[op_interface_impl]
+impl VerCapExtOpInterface for FPFastMathDefaultOp {
+    fn min_version(&self, _ctx: &Context) -> Option<(u8, u8)> {
+        Operand::from(ExecutionMode::FPFastMathDefault).minimum_version()
+    }
+
+    fn required_extensions(&self, _ctx: &Context) -> Vec<Vec<&'static str>> {
+        Operand::from(ExecutionMode::FPFastMathDefault).required_extensions()
+    }
+
+    fn required_capabilities(&self, _ctx: &Context) -> Vec<Vec<Capability>> {
+        Operand::from(ExecutionMode::FPFastMathDefault).required_capabilities()
     }
 }
 
